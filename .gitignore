@@ -1,4 +1,5 @@
 # compiled output
+/client/.angular/*
 /client/dist
 /server/dist
 /dist

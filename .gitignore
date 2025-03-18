@@ -1,7 +1,12 @@
 # compiled output
+/client/dist
+/server/dist
 /dist
+/tmp
 /node_modules
 /build
+/out-tsc
+/bazel-out
 
 # Logs
 logs
@@ -11,9 +16,6 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-
-# OS
-.DS_Store
 
 # Tests
 /coverage
@@ -34,6 +36,7 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.history/*
 
 # dotenv environment variable files
 .env
@@ -54,3 +57,17 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+

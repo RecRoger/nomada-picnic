@@ -1,0 +1,16 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "assets": [
+      {
+        "include": "**/*.gql",
+        "watchAssets": true,
+        "outDir": "./dist/src"
+      }
+    ]
+  },
+  "generateOptions": {
+    "spec": false
+  }
+}

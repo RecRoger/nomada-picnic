@@ -6,6 +6,9 @@ export class Place extends Document {
   @Prop({ required: true })
   name: string;
 
+  @Prop({ required: true })
+  type: string;
+
   @Prop()
   description: string;
 

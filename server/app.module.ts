@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PicnicsModule } from './modules/picnics/picnics.module';
-import { RouterModule } from '@nestjs/core';
+import { APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
 import { ProvidersModule } from './modules/providers/providers.module';
 import { PlacesModule } from './modules/places/places.module';
 import { DatabaseModule } from './database/database.module';
+import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
 
 @Module({
   imports: [
@@ -22,5 +23,11 @@ import { DatabaseModule } from './database/database.module';
     ProvidersModule,
     PlacesModule,
   ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR, // Configura APP_INTERCEPTOR
+      useClass: LoggingInterceptor, // Utiliza LoggingInterceptor como interceptor global
+    },
+  ]
 })
 export class AppModule { }

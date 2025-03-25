@@ -16,7 +16,7 @@ export class PlaceDto {
   @ApiProperty({ description: 'Nombre del lugar' })
   name: string;
 
-  @ApiProperty({ description: 'Nombre del lugar' })
+  @ApiProperty({ description: 'Tipo del lugar (public, particular)' })
   type: PLACES_TYPES = PLACES_TYPES.PUBLIC
 
   @ApiProperty({ description: 'Descripción del lugar' })

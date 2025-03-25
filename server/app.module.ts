@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PicnicsModule } from './modules/picnics/picnics.module';
 import { APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
-import { ProvidersModule } from './modules/providers/providers.module';
+import { ProductionCostsModule } from './modules/production-costs/production-costs.module';
 import { PlacesModule } from './modules/places/places.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
@@ -14,13 +14,13 @@ import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
         path: 'api',
         children: [
           { path: 'picnics', module: PicnicsModule },
-          { path: 'providers', module: ProvidersModule },
+          { path: 'costs', module: ProductionCostsModule },
           { path: 'places', module: PlacesModule },
         ],
       },
     ]),
     PicnicsModule,
-    ProvidersModule,
+    ProductionCostsModule,
     PlacesModule,
   ],
   providers: [

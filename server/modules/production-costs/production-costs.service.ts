@@ -33,9 +33,9 @@ export class ProductionCostsService {
     }
   }
 
-  async update(id: string, updateCostDto: CostDto): Promise<Cost> {
+  async update(id: string, updateCostData: CostDto): Promise<Cost> {
     this.logger.log(`[update] - ${id}`,)
-    return this.costsModel.findByIdAndUpdate(id, updateCostDto, { new: true }).exec();
+    return this.costsModel.findByIdAndUpdate(id, updateCostData, { new: true }).exec();
   }
 
   async remove(id: string): Promise<boolean> {

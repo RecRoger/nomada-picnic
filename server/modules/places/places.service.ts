@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Place } from 'server/database/schemas/places.schema';
+import { PLACES_TYPES } from 'server/enums/places.enum';
 import { PlaceDto } from 'server/models/place.dto';
 
 @Injectable()
@@ -19,7 +20,18 @@ export class PlacesService {
     this.logger.log('[create] - ' + place.name)
     const createdPlace = new this.placesModel(place);
     try {
-      return createdPlace.save();
+      const savedPlace = createdPlace.save();
+      // Actualizar el costo de transporte del lugar de tipo 'Basic'
+      const publicPlaces = await this.placesModel.find({ type: PLACES_TYPES.PUBLIC }).exec();
+      const basicPlace = await this.placesModel.findOne({ type: PLACES_TYPES.BASIC }).exec();
+      if (publicPlaces.length > 0 && basicPlace) {
+        const averageTransportationCost =
+          publicPlaces.reduce((sum, place) => sum + place.transportationCost, 0) /
+          publicPlaces.length;
+        basicPlace.transportationCost = averageTransportationCost * 1.2;
+        await basicPlace.save();
+      }
+      return savedPlace
     } catch (err) {
       this.logger.error(`Error creating Place: ${err.message}`, err.stack, PlacesService.name);
       throw new Error('Error al crear el lugar');

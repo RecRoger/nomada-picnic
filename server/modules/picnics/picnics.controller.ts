@@ -10,31 +10,31 @@ import { PicnicDto } from 'server/models/picnic.dto';
 export class PicnicsController {
   constructor(private readonly picnicsService: PicnicsService) { }
 
-  @Get()
+  @Get(':id')
   @ApiOperation({ summary: 'Obtiene la informacion de un picnic, consultan por id e email o apellido' })
   @ApiResponse({ status: 201, description: 'Informacion de un picnic', type: ResponseDto<Picnic> })
-  async findByType(@Query('id') id?: string, @Query('email') email?: string, @Query('lastname') lastname?: string): Promise<Picnic> {
+  async findByType(@Param('id') id?: string, @Query('email') email?: string, @Query('lastname') lastname?: string): Promise<Picnic> {
     return this.picnicsService.findOne(id, email, lastname);
   }
 
   @Post()
-  @ApiOperation({ summary: 'Crear un nuevo costo' })
+  @ApiOperation({ summary: 'Crear un nuevo picnic' })
   @ApiBody({ type: PicnicDto })
-  @ApiResponse({ status: 201, description: 'Nuevo costo creado', type: ResponseDto<Picnic> })
+  @ApiResponse({ status: 201, description: 'Nuevo picnic creado', type: ResponseDto<Picnic> })
   async create(@Body() picnicDto: PicnicDto): Promise<Picnic> {
     return this.picnicsService.create(picnicDto);
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Actualizar un costo existente' })
+  @ApiOperation({ summary: 'Actualizar un picnic existente' })
   @ApiBody({ type: PicnicDto })
-  @ApiResponse({ status: 201, description: 'Costo editado', type: ResponseDto<Picnic> })
+  @ApiResponse({ status: 201, description: 'Picnic editado', type: ResponseDto<Picnic> })
   async update(@Param('id') id: string, @Body() updatePlaceDto: PicnicDto): Promise<Picnic> {
     return this.picnicsService.update(id, updatePlaceDto);
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un costo existente' })
+  @ApiOperation({ summary: 'Eliminar un picnic existente' })
   @ApiResponse({ status: 201, description: 'Status de eliminacion', type: ResponseDto<boolean> })
   async remove(@Param('id') id: string): Promise<boolean> {
     return this.picnicsService.remove(id);

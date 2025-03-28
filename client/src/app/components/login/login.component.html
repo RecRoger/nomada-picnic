@@ -1,0 +1,17 @@
+<section class="login">
+  <h2>Iniciar Sesión</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+    @if (emailControl) {
+    <app-form-control [control]="emailControl" label="Email" type="email">
+    </app-form-control>
+    }
+    @if (passwordControl) {
+    <app-form-control [control]="passwordControl" label="Password" type="password">
+    </app-form-control>
+    }
+
+    <button mat-raised-button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+
+  </form>
+</section>

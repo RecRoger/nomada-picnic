@@ -9,8 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT || 3000;
 
-  app.useStaticAssets(join(__dirname, '../..', 'client/dist/browser'));
-  app.setBaseViewsDir(join(__dirname, '../..', 'client/dist/browser'));
+  app.useStaticAssets(join(__dirname, '../..', 'client/dist'));
+  app.setBaseViewsDir(join(__dirname, '../..', 'client/dist'));
   app.setViewEngine('html');
 
   // Configuración de Swagger

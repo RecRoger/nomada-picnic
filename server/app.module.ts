@@ -5,6 +5,7 @@ import { ProductionCostsModule } from './modules/production-costs/production-cos
 import { PlacesModule } from './modules/places/places.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
       {
         path: 'api',
         children: [
+          { path: 'auth', module: AuthModule },
           { path: 'picnics', module: PicnicsModule },
           { path: 'costs', module: ProductionCostsModule },
           { path: 'places', module: PlacesModule },
@@ -22,6 +24,7 @@ import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
     PicnicsModule,
     ProductionCostsModule,
     PlacesModule,
+    AuthModule,
   ],
   providers: [
     {

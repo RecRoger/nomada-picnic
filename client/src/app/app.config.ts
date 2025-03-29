@@ -9,8 +9,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  debugger
-  console.log('Cargando traducciones desde: ./assets/i18n/es.json');
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 

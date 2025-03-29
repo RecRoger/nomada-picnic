@@ -4,10 +4,10 @@
   <input matInput [type]="type" [formControl]="control">
 
   @if (control.hasError('email') && !control.hasError('required')) {
-  <mat-error>Campo invalido</mat-error>
+  <mat-error>{{ 'COMMON.INVALID_FIELD' | translate }}</mat-error>
   }
   @if (control.hasError('required')) {
-  <mat-error>Campo <strong>required</strong></mat-error>
+  <mat-error [innerHTML]="'COMMON.REQUIRED_FIELD' | translate"></mat-error>
   }
 </mat-form-field>
 }

@@ -1,17 +1,17 @@
 <section class="login">
-  <h2>Iniciar Sesión</h2>
+  <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
 
     @if (emailControl) {
-    <app-form-control [control]="emailControl" label="Email" type="email">
+    <app-form-control [control]="emailControl" label="{{ 'COMMON.EMAIL' | translate }}" type="email">
     </app-form-control>
     }
     @if (passwordControl) {
-    <app-form-control [control]="passwordControl" label="Password" type="password">
+    <app-form-control [control]="passwordControl" label="{{'COMMON.PASSWORD' | translate }}" type="password">
     </app-form-control>
     }
 
-    <button mat-raised-button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+    <button mat-raised-button type="submit" [disabled]="loginForm.invalid">{{ 'LOGIN.TITLE' | translate }}</button>
 
   </form>
 </section>

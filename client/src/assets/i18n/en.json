@@ -1,0 +1,7 @@
+{
+  "LOGIN": "Login",
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+  "INVALID_FIELD": "Invalid field",
+  "REQUIRED_FIELD": "Field is <strong>required</strong>"
+}

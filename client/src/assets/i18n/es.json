@@ -1,0 +1,11 @@
+{
+  "COMMON": {
+    "EMAIL": "Correo Electronico",
+    "PASSWORD": "Contraseña",
+    "INVALID_FIELD": "Campo inválido",
+    "REQUIRED_FIELD": "El campo es <strong>obligatorio</strong>"
+  },
+  "LOGIN": {
+    "TITLE": "Iniciar Sesión"
+  }
+}

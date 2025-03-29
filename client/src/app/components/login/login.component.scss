@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 60vh; // Centra verticalmente en la pantalla
+  height: 70vh; // Centra verticalmente en la pantalla
   width: 100%;
 
   h2 {
@@ -18,10 +18,6 @@
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
-
-    mat-form-field {
-      margin-bottom: 10px;
-    }
 
     button {
       margin-top: 40px;

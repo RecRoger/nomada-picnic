@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MAT_FORMS_MODULES } from '../../shared/material-modules';
 import { FormControlComponent } from '../form-control/form-control.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -31,10 +31,7 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private translate: TranslateService
-  ) {
-    console.log('Idioma actual:', this.translate.currentLang); // Agrega este log
-  }
+  ) { }
 
   public onSubmit(): void {
     const { email, password } = this.loginForm.value;

@@ -3,9 +3,17 @@
     "EMAIL": "Correo Electronico",
     "PASSWORD": "Contraseña",
     "INVALID_FIELD": "Campo inválido",
-    "REQUIRED_FIELD": "El campo es <strong>obligatorio</strong>"
+    "REQUIRED_FIELD": "El campo es <b>obligatorio</b>"
   },
   "LOGIN": {
     "TITLE": "Iniciar Sesión"
+  },
+  "ADMIN": {
+    "TITLE": "Bienvenido {{name}}",
+    "TABS": {
+      "PICNICS": "Presupuestos y Picnics",
+      "PLACES": "Lugares y parques",
+      "COSTS": "Costos de produccion y adicionales"
+    }
   }
 }

@@ -1,1 +1,41 @@
-<p>places works!</p>
+<div class="place-container">
+  <div class="places-list">
+    <mat-accordion>
+      @for (place of places; track $index) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ place.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p><strong>Ubicación:</strong> {{ place.name }}</p>
+        <p><strong>Descripción:</strong> {{ place.name }}</p>
+        <p><strong>Precio:</strong> {{ place.name }}</p>
+      </mat-expansion-panel>
+      }
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            AÑADIR LUGAR
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p><strong>Ubicación:</strong> CLARO</p>
+        <p><strong>Descripción:</strong> CLARO</p>
+        <p><strong>Precio:</strong> CLARO</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+  <div class="places-map">
+    @if (mapService.mapReady) {
+    <google-map width="100%" [options]="mapOptions">
+      @for (marker of markers; track $index) {
+      <map-marker [position]="marker.position" [label]="marker.label">
+      </map-marker>
+      }
+    </google-map>
+    }
+  </div>
+</div>

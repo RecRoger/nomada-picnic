@@ -31,6 +31,9 @@ export class PlaceDto {
   @ApiProperty({ description: 'Enlace a Google Maps' })
   mapsLink: string;
 
+  @ApiProperty({ description: 'Numero de Zona (del 0 al 4)' })
+  zone?: number;
+
   @ApiProperty({ description: 'Costo de transporte al lugar' })
   transportationCost: number;
 }

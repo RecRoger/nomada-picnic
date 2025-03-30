@@ -60,7 +60,7 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Miscellaneous
-client/.angular/cache
+client/.angular/cache/
 client/coverage
 .sass-cache/
 /connect.lock

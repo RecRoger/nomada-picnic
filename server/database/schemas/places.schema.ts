@@ -22,6 +22,9 @@ export class Place extends Document {
   mapsLink: string;
 
   @Prop()
+  zone: number;
+
+  @Prop()
   transportationCost: number;
 }
 

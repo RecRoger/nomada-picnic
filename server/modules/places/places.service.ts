@@ -22,8 +22,17 @@ export class PlacesService {
     try {
       const savedPlace = createdPlace.save();
       // Actualizar el costo de transporte del lugar de tipo 'Basic'
-      const publicPlaces = await this.placesModel.find({ type: PLACES_TYPES.PUBLIC }).exec();
-      const basicPlace = await this.placesModel.findOne({ type: PLACES_TYPES.BASIC }).exec();
+      const publicPlaces = await this.placesModel.find({ type: PLACES_TYPES.PUBLIC, zone: place.zone }).exec();
+      let basicPlace = await this.placesModel.findOne({ type: PLACES_TYPES.BASIC, zone: place.zone }).exec();
+      console.log(basicPlace)
+      if (!basicPlace) {
+        basicPlace = new this.placesModel({
+          name: "Basic for Zone " + place.zone || 0,
+          type: PLACES_TYPES.BASIC,
+          zone: place.zone || 0,
+          transportationCost: place.transportationCost,
+        })
+      }
       if (publicPlaces.length > 0 && basicPlace) {
         const averageTransportationCost =
           publicPlaces.reduce((sum, place) => sum + place.transportationCost, 0) /

@@ -15,5 +15,9 @@
       "PLACES": "Lugares y parques",
       "COSTS": "Costos de produccion y adicionales"
     }
+  },
+  "PUBLIC": {
+    "TITLE": "Bienvenido a Nomada",
+    "ADMIN": "Soy admin"
   }
 }

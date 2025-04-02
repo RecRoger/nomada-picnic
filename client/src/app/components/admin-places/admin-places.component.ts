@@ -6,10 +6,14 @@ import { PlacesService } from '../../services/places.service';
 import { PlaceDto } from '../../models/place.dto';
 import { MatCardModule } from '@angular/material/card'
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PlaceFormComponent } from '../place-form/place-form.component';
 import { PLACES_TYPES } from '../../enums/places-types.enum';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+
+
 
 @Component({
   selector: 'app-places',
@@ -31,6 +35,10 @@ export class AdminPlacesComponent implements OnInit {
   public readonly mapService: MapsService = inject(MapsService)
 
   public readonly placesService: PlacesService = inject(PlacesService)
+
+  private readonly translateService: TranslateService = inject(TranslateService)
+
+  public readonly dialog = inject(MatDialog);
 
   public readonly placeTypes = PLACES_TYPES
 
@@ -84,6 +92,32 @@ export class AdminPlacesComponent implements OnInit {
         this.getPlaces()
         this.newPlaceIndicator = false
         this.checkPlace(resp._id)
+      }
+    })
+  }
+
+  openDeleteDialog(place: PlaceDto): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: this.translateService.instant('ADMIN.PLACES.DIALOG_TITLE'),
+        text: this.translateService.instant('ADMIN.PLACES.DIALOG_TEXT', { name: place.name }),
+        deny: this.translateService.instant('COMMON.CANCEL'),
+        accept: this.translateService.instant('COMMON.DELETE'),
+        id: place._id
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.deletePlace(result)
+      }
+    });
+  }
+
+  deletePlace(id: string): void {
+    this.placesService.deletePlace(id).subscribe(resp => {
+      if (resp) {
+        this.getPlaces()
       }
     })
   }

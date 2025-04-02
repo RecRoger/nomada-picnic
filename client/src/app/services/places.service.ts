@@ -39,4 +39,19 @@ export class PlacesService {
       })
     );
   }
+
+  public deletePlace(id: string): Observable<boolean> {
+    return this.http.delete<ApiResponse<boolean>>('/api/places/' + id).pipe(
+      map((response) => {
+        if (response) {
+          return response.data as boolean
+        }
+        return false
+      }),
+      catchError((error) => {
+        console.error('No se eliminó el lugar:', error);
+        return of(false);
+      })
+    );
+  }
 }

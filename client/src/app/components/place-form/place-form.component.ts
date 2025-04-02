@@ -1,21 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_FORMS_MODULES } from '../../shared/material-modules';
 import { PlaceDto } from '../../models/place.dto';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControlComponent } from '../form-control/form-control.component';
-
 @Component({
   selector: 'app-place-form',
   standalone: true,
   imports: [TranslateModule, ReactiveFormsModule, FormsModule, ...MAT_FORMS_MODULES, FormControlComponent],
   templateUrl: './place-form.component.html',
-  styleUrl: './place-form.component.scss'
+  styleUrl: './place-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceFormComponent {
   @Input() public place: PlaceDto | null = null
 
   @Output() submit: EventEmitter<PlaceDto> = new EventEmitter()
+
 
   placeForm: FormGroup;
 
@@ -24,6 +25,10 @@ export class PlaceFormComponent {
       name: [this.place?.name || '', Validators.required],
       description: [this.place?.description || '', Validators.required],
       images: [null],
+      location: this.fb.group({
+        lat: [null, Validators.required],
+        lng: [null, Validators.required],
+      }),
       mapsLink: [this.place?.mapsLink || '', Validators.required],
       zone: [this.place?.zone || null, Validators.required],
       transportationCost: [this.place?.transportationCost || null, [Validators.required, Validators.min(0)]],
@@ -32,6 +37,10 @@ export class PlaceFormComponent {
 
   public getControl(controlName: string): FormControl {
     return this.placeForm.get(controlName) as FormControl
+  }
+
+  public getLocationControl(controlName: string): FormControl {
+    return (this.placeForm.get('location') as FormGroup).get(controlName) as FormControl
   }
 
   onSubmit() {

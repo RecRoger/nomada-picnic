@@ -1,11 +1,15 @@
 {
   "COMMON": {
+    "CANCEL": "Cancelar",
+    "NO": "No",
     "NAME": "Nombre",
     "EMAIL": "Correo Electronico",
     "PASSWORD": "Contraseña",
     "DESCRIPTION": "Descripcion",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
+    "LAT": "Latitud",
+    "LNG": "Longitud",
     "ADD_IMAGES": "Añadir imágenes",
     "INVALID_FIELD": "Campo inválido",
     "REQUIRED_FIELD": "El campo es <b>obligatorio</b>"
@@ -25,6 +29,8 @@
       "BASIC_PRICE": "Costo base",
       "BASIC_PRICE_TEXT": "El costo base viene a ser el costo default utilizado para cualquier lugar de la zona. Viene dado por un 20% mas del promedio de todos los lugares de la zona",
       "NEW_PLACE": "Añadir nuevo lugar",
+      "DIALOG_TITLE": "Eliminar Lugar",
+      "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista de lugares?",
       "FORM": {
         "MAPS_LINK": "Link de Maps",
         "ZONE": "Número de Zona",

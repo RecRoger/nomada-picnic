@@ -1,0 +1,25 @@
+<form [formGroup]="placeForm">
+  <app-form-control [control]="getControl('name')" label="{{ 'COMMON.NAME' | translate }}" type="text">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('description')" label="{{ 'COMMON.DESCRIPTION' | translate }}"
+    type="textarea">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('images')" label="{{ 'COMMON.ADD_IMAGES' | translate }}" type="file">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('mapsLink')" label="{{ 'ADMIN.PLACES.FORM.MAPS_LINK' | translate }}"
+    type="text">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('zone')" label="{{ 'ADMIN.PLACES.FORM.ZONE' | translate }}" type="number">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('transportationCost')" label="{{ 'ADMIN.PLACES.FORM.COST' | translate }}"
+    type="number">
+
+  </app-form-control>
+  <button mat-flat-button color="primary" type="button" (click)="onSubmit()" [disabled]="placeForm.invalid">{{
+    'ADMIN.PLACES.FORM.BUTTON' | translate}}</button>
+</form>

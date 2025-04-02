@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ResponseDto } from 'server/models/responses.dto';
-import { AuthService } from 'server/modules/auth/auth.service';
+import { AuthService } from './auth.service';
 import { User } from 'server/database/schemas/users.schema';
 import { UserDto } from 'server/models/user.dto';
 

@@ -44,7 +44,7 @@ export class AuthService {
       }),
       catchError((error) => {
         console.error('Error de autenticación:', error);
-        return of(false);
+        return of({});
       })
     );
   }

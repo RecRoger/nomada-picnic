@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
-import { PicnicsService } from 'server/modules/picnics/picnics.service';
+import { PicnicsService } from './picnics.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ResponseDto } from 'server/models/responses.dto';
 import { Picnic } from 'server/database/schemas/picnics.schema';

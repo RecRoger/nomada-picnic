@@ -15,4 +15,14 @@ export class FormControlComponent {
   @Input() label: string = '';
   @Input() type: string = 'text';
   @Input() control!: FormControl;
+
+  public readonly INPUT_TYPE = ['text', 'number', 'email', 'password']
+
+  public onFileChange(event: any) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      this.control.patchValue(fileList)
+    }
+  }
 }
+

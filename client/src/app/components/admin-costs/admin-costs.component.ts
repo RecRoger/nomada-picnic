@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-costs',
   standalone: true,
   imports: [],
-  templateUrl: './costs.component.html',
-  styleUrl: './costs.component.scss'
+  templateUrl: './admin-costs.component.html',
+  styleUrl: './admin-costs.component.scss'
 })
-export class CostsComponent {
+export class AdminCostsComponent {
 
 }

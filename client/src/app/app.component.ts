@@ -19,9 +19,7 @@ import { MapsService } from './services/maps.service';
 })
 export class AppComponent {
   constructor(private translate: TranslateService, private mapsService: MapsService) {
-    this.mapsService.load()
-      .then(() => console.log('Google Maps cargado'))
-      .catch(err => console.error('Error al cargar Google Maps', err))
+    this.mapsService.load().catch(err => console.error('Error al cargar Google Maps', err))
     this.translate.addLangs(['en', 'es']);
     this.translate.setDefaultLang('es');
     this.translate.use('es');

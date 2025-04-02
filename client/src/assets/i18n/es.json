@@ -1,7 +1,12 @@
 {
   "COMMON": {
+    "NAME": "Nombre",
     "EMAIL": "Correo Electronico",
     "PASSWORD": "Contraseña",
+    "DESCRIPTION": "Descripcion",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "ADD_IMAGES": "Añadir imágenes",
     "INVALID_FIELD": "Campo inválido",
     "REQUIRED_FIELD": "El campo es <b>obligatorio</b>"
   },
@@ -14,6 +19,18 @@
       "PICNICS": "Presupuestos y Picnics",
       "PLACES": "Lugares y parques",
       "COSTS": "Costos de produccion y adicionales"
+    },
+    "PLACES": {
+      "TITLE": "Lugares disponibles",
+      "BASIC_PRICE": "Costo base",
+      "BASIC_PRICE_TEXT": "El costo base viene a ser el costo default utilizado para cualquier lugar de la zona. Viene dado por un 20% mas del promedio de todos los lugares de la zona",
+      "NEW_PLACE": "Añadir nuevo lugar",
+      "FORM": {
+        "MAPS_LINK": "Link de Maps",
+        "ZONE": "Número de Zona",
+        "COST": "Costo de Transporte",
+        "BUTTON": "Añadir lugar"
+      }
     }
   },
   "PUBLIC": {

@@ -1,7 +1,19 @@
 @if (control) {
-<mat-form-field>
+<mat-form-field [floatLabel]="type=='file' ? 'always': 'auto'">
+
   <mat-label>{{ label }}</mat-label>
+  @if(INPUT_TYPE.indexOf(type) >= 0) {
   <input matInput [type]="type" [formControl]="control">
+  }
+  @if(type == 'textarea') {
+  <textarea matInput [type]="type" [formControl]="control"></textarea>
+  }
+
+  @if(type == 'file') {
+  <input matInput type="text" readonly="" [formControl]="control" class="fake-control" style="display: none;">
+  <input type="file" (change)="onFileChange($event)" multiple>
+  }
+
 
   @if (control.hasError('email') && !control.hasError('required')) {
   <mat-error>{{ 'COMMON.INVALID_FIELD' | translate }}</mat-error>
@@ -10,4 +22,6 @@
   <mat-error [innerHTML]="'COMMON.REQUIRED_FIELD' | translate"></mat-error>
   }
 </mat-form-field>
+
+
 }

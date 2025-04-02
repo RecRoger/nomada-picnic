@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { PlacesService } from './places.service';
 import { PlaceDto } from 'server/models/place.dto';
 import { Place } from 'server/database/schemas/places.schema';
 import { ResponseInterceptor } from 'server/interceptors/response.interceptor';
 import { ResponseDto } from 'server/models/responses.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { ParseNumberInterceptor } from 'server/interceptors/parse-number.interceptor';
 
 @Controller({ version: '1' })
 @ApiTags('Places')
@@ -23,13 +25,18 @@ export class PlacesController {
   @ApiOperation({ summary: 'Crear un nuevo lugar' })
   @ApiBody({ type: PlaceDto })
   @ApiResponse({ status: 201, description: 'Nuevo lugar creado', type: ResponseDto<Place> })
-  async create(@Body() createPlaceDto: PlaceDto): Promise<Place> {
-    return this.placesService.create(createPlaceDto);
+  @UseInterceptors(FilesInterceptor('images'), new ParseNumberInterceptor(['zone', 'transportationCost']))
+  async create(
+    @Body() createPlaceDto: PlaceDto,
+    @UploadedFiles() files: Express.Multer.File[],
+  ): Promise<Place> {
+    return this.placesService.create(createPlaceDto, files);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un lugar existente' })
   @ApiBody({ type: PlaceDto })
+  @UseInterceptors(FilesInterceptor('images'), new ParseNumberInterceptor(['zone', 'transportationCost']))
   @ApiResponse({ status: 201, description: 'Lugar editado', type: ResponseDto<Place> })
   async update(@Param('id') id: string, @Body() updatePlaceDto: PlaceDto): Promise<Place> {
     return this.placesService.update(id, updatePlaceDto);

@@ -1,0 +1,69 @@
+<h3>{{"ADMIN.PLACES.TITLE" | translate }}</h3>
+<div class="place-container">
+  <div class="places-list">
+    <mat-accordion>
+
+      @for (place of places; track place._id) {
+      <mat-expansion-panel [ngClass]="{'place-basic': place.type === placeTypes.BASIC}"
+        [expanded]="place._id === openId" (opened)="checkPlace(place._id)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ place.type == placeTypes.BASIC ? ('ADMIN.PLACES.BASIC_PRICE' | translate) : place.name }}
+          </mat-panel-title>
+          @if (place.type==placeTypes.BASIC) {
+          <mat-panel-description>
+            Zona {{ place.zone }}
+          </mat-panel-description>
+          }
+        </mat-expansion-panel-header>
+        @if (place.type==placeTypes.BASIC) {
+        <p class="basic-description">
+          {{'ADMIN.PLACES.BASIC_PRICE_TEXT' | translate}}
+        </p>
+        }
+
+        <div>
+          @if (place?.images?.length) {
+          @for (image of place.images; track $index) {
+          <img mat-card-image [src]="image" alt="{{ place.name + $index}}" class="place-image">
+          }
+          }
+          <p>{{ place.description }}</p>
+          <p><strong>Costo de transporte:</strong> {{ place.transportationCost | currency }}</p>
+          @if (place.type!=placeTypes.BASIC) {
+          <div class="place-actions">
+            <button mat-raised-button>{{'COMMON.DELETE' | translate}}</button>
+            <button mat-flat-button>{{'COMMON.EDIT' | translate}}</button>
+          </div>
+          }
+        </div>
+
+      </mat-expansion-panel>
+      }
+
+      <mat-expansion-panel [(expanded)]="newPlaceIndicator" (opened)="newPlaceIndicator = true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{'ADMIN.PLACES.NEW_PLACE' | translate}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-place-form (submit)="newPlace($event)"></app-place-form>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+
+
+
+
+  <div class="places-map">
+    @if (mapService.mapReady) {
+    <google-map width="100%" [options]="mapOptions">
+      <!-- @for (marker of markers; track $index) {
+      <map-marker [position]="marker.position" [label]="marker.label">
+      </map-marker>
+      } -->
+    </google-map>
+    }
+  </div>
+</div>

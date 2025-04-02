@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PicnicsModule } from './modules/picnics/picnics.module';
+import { PicnicsModule } from './api/picnics/picnics.module';
 import { APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
-import { ProductionCostsModule } from './modules/production-costs/production-costs.module';
-import { PlacesModule } from './modules/places/places.module';
+import { ProductionCostsModule } from './api/production-costs/production-costs.module';
+import { PlacesModule } from './api/places/places.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
-import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule } from './api/auth/auth.module';
 
 @Module({
   imports: [

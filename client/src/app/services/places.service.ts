@@ -1,0 +1,42 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { catchError, map, Observable, of } from 'rxjs';
+import { PlaceDto } from '../models/place.dto';
+import { ApiResponse } from '../models/api-response.dto';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class PlacesService {
+  private readonly http: HttpClient = inject(HttpClient)
+
+  public getPlaces(type?: string): Observable<PlaceDto[]> {
+    return this.http.get<ApiResponse<PlaceDto[]>>(`/api/places` + (type ? `/${type}` : '')).pipe(
+      map((response) => {
+        if (response) {
+          return response.data as PlaceDto[]
+        }
+        return []
+      }),
+      catchError((error) => {
+        console.error('No se cargaron los lugares:', error);
+        return of([]);
+      })
+    );
+  }
+
+  public createPlace(newPlace: FormData): Observable<PlaceDto | null> {
+    return this.http.post<ApiResponse<PlaceDto>>('/api/places', newPlace).pipe(
+      map((response) => {
+        if (response) {
+          return response.data as PlaceDto
+        }
+        return null
+      }),
+      catchError((error) => {
+        console.error('No se cargaron los lugares:', error);
+        return of(null);
+      })
+    );
+  }
+}

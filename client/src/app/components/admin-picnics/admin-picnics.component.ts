@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-picnics',
   standalone: true,
   imports: [],
-  templateUrl: './picnics.component.html',
-  styleUrl: './picnics.component.scss'
+  templateUrl: './admin-picnics.component.html',
+  styleUrl: './admin-picnics.component.scss'
 })
-export class PicnicsComponent {
+export class AdminPicnicsComponent {
 
 }

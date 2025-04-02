@@ -9,6 +9,12 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT || 3000;
 
+  // Ruta base para acceder a los archivos desde el frontend
+  const uploadDir = join(__dirname, '..', 'uploads', 'places')
+  console.log(uploadDir)
+  app.useStaticAssets(uploadDir, { prefix: '/uploads/places' });
+
+  // Ruta cliente Angular
   app.useStaticAssets(join(__dirname, '../..', 'client/dist'));
   app.setBaseViewsDir(join(__dirname, '../..', 'client/dist'));
   app.setViewEngine('html');

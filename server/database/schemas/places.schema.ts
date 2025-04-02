@@ -12,11 +12,11 @@ export class Place extends Document {
   @Prop()
   description: string;
 
-  @Prop([String])
+  @Prop({ type: [String] })
   images: string[];
 
-  @Prop({ type: { lat: String, long: String } })
-  location: { lat: string; long: string };
+  @Prop({ type: [{ lat: String, lng: String }] })
+  location: [{ lat: string; lng: string }];
 
   @Prop()
   mapsLink: string;

@@ -32,7 +32,8 @@
           <p><strong>Costo de transporte:</strong> {{ place.transportationCost | currency }}</p>
           @if (place.type!=placeTypes.BASIC) {
           <div class="place-actions">
-            <button mat-raised-button>{{'COMMON.DELETE' | translate}}</button>
+            <button mat-raised-button (click)="openDeleteDialog(place)">{{'COMMON.DELETE' |
+              translate}}</button>
             <button mat-flat-button>{{'COMMON.EDIT' | translate}}</button>
           </div>
           }

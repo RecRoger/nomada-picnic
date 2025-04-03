@@ -15,8 +15,8 @@ export class Place extends Document {
   @Prop({ type: [String] })
   images: string[];
 
-  @Prop({ type: [{ lat: String, lng: String }] })
-  location: [{ lat: string; lng: string }];
+  @Prop({ type: { lat: String, lng: String } })
+  location: { lat: string; lng: string };
 
   @Prop()
   mapsLink: string;

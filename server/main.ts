@@ -11,7 +11,6 @@ async function bootstrap() {
 
   // Ruta base para acceder a los archivos desde el frontend
   const uploadDir = join(__dirname, '..', 'uploads', 'places')
-  console.log(uploadDir)
   app.useStaticAssets(uploadDir, { prefix: '/uploads/places' });
 
   // Ruta cliente Angular

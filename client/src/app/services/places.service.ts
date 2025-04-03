@@ -40,6 +40,21 @@ export class PlacesService {
     );
   }
 
+  public editPlace(id: string, place: FormData): Observable<PlaceDto | null> {
+    return this.http.put<ApiResponse<PlaceDto>>('/api/places/' + id, place).pipe(
+      map((response) => {
+        if (response) {
+          return response.data as PlaceDto
+        }
+        return null
+      }),
+      catchError((error) => {
+        console.error('No se eliminó el lugar:', error);
+        return of(null);
+      })
+    );
+  }
+
   public deletePlace(id: string): Observable<boolean> {
     return this.http.delete<ApiResponse<boolean>>('/api/places/' + id).pipe(
       map((response) => {

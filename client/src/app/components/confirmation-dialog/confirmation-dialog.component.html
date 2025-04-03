@@ -3,6 +3,6 @@
   <p [innerHTML]="data.text"></p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>{{data.deny}}</button>
-  <button mat-flat-button [mat-dialog-close]="onAccept()">{{data.accept}}</button>
+  <button mat-button color="accent" mat-dialog-close>{{data.deny}}</button>
+  <button mat-button [mat-dialog-close]="onAccept()">{{data.accept}}</button>
 </mat-dialog-actions>

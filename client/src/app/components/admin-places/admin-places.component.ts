@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GoogleMap, MapMarker } from '@angular/google-maps';
+import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MapsService } from '../../services/maps.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PlacesService } from '../../services/places.service';
@@ -21,8 +21,9 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
   imports: [
     CommonModule,
     TranslateModule,
+    GoogleMapsModule,
     GoogleMap,
-    MapMarker,
+    MapAdvancedMarker,
     MatButtonModule,
     MatExpansionModule,
     MatCardModule,
@@ -44,40 +45,72 @@ export class AdminPlacesComponent implements OnInit {
 
   public places: PlaceDto[] = [];
 
+  public placeOnEdition = ''
+
   public mapOptions: google.maps.MapOptions = {
     center: { lat: -34.585758, lng: -58.441039 },
     zoom: 12,
   };
 
-  public markers = [
-    // { position: { lat: 37.7749, lng: -122.4194 }, label: 'San Francisco' },
-    // { position: { lat: 37.8044, lng: -122.2711 }, label: 'Oakland' }
-  ];
+  public markers: any = [];
 
   public openId?: string = ''
 
   public newPlaceIndicator: boolean = false
 
   ngOnInit(): void {
+    this.getPlaces()
+  }
+
+  private getPlaces(): void {
     this.placesService.getPlaces().subscribe(resp => {
       this.places = resp
+      this.setMarkers()
     })
   }
 
-  private getPlaces() {
-    this.placesService.getPlaces().subscribe(resp => {
-      this.places = resp
-    })
+  private setMarkers(): void {
+    this.markers = this.places.filter(place => place.location?.lat && place.location?.lng).map(place => ({
+      position: { lat: Number(place.location?.lat) || 0, lng: Number(place.location?.lng) || 0 },
+      label: place.name,
+      id: place._id
+    }));
   }
 
-  public checkPlace(id?: string): void {
+  public checkPlace(id: string = ''): void {
     this.openId = id
   }
 
   public newPlace(formPlace: PlaceDto): void {
+    const formData = this.appendForm(formPlace)
+    this.placesService.createPlace(formData).subscribe(resp => {
+      if (resp) {
+        this.getPlaces()
+        this.newPlaceIndicator = false
+        this.checkPlace(resp._id)
+      }
+    })
+  }
+
+  toggleEditForm(place?: PlaceDto): void {
+    this.placeOnEdition = place?._id || ''
+  }
+
+  editPlace(formPlace: PlaceDto): void {
+    const formData = this.appendForm(formPlace)
+    this.placesService.editPlace(this.placeOnEdition || '', formData).subscribe(resp => {
+      if (resp) {
+        this.placeOnEdition = ''
+        this.getPlaces()
+      }
+    })
+  }
+
+  private appendForm(formPlace: PlaceDto): FormData {
     const formData = new FormData();
     formData.append('name', formPlace.name)
     formData.append('type', PLACES_TYPES.PUBLIC)
+    formData.append('location', JSON.stringify(formPlace.location))
     formData.append('description', formPlace.description)
     formData.append('mapsLink', formPlace.mapsLink)
     formData.append('zone', formPlace.zone + '')
@@ -87,13 +120,7 @@ export class AdminPlacesComponent implements OnInit {
     for (let i = 0; i < images?.length; i++) {
       formData.append('images', images[i]);
     }
-    this.placesService.createPlace(formData).subscribe(resp => {
-      if (resp) {
-        this.getPlaces()
-        this.newPlaceIndicator = false
-        this.checkPlace(resp._id)
-      }
-    })
+    return formData
   }
 
   openDeleteDialog(place: PlaceDto): void {

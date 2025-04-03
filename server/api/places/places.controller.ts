@@ -38,8 +38,12 @@ export class PlacesController {
   @ApiBody({ type: PlaceDto })
   @UseInterceptors(FilesInterceptor('images'), new ParseNumberInterceptor(['zone', 'transportationCost']))
   @ApiResponse({ status: 201, description: 'Lugar editado', type: ResponseDto<Place> })
-  async update(@Param('id') id: string, @Body() updatePlaceDto: PlaceDto): Promise<Place> {
-    return this.placesService.update(id, updatePlaceDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updatePlaceDto: PlaceDto,
+    @UploadedFiles() files: Express.Multer.File[],
+  ): Promise<Place> {
+    return this.placesService.update(id, updatePlaceDto, files);
   }
 
   @Delete(':id')

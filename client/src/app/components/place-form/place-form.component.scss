@@ -7,3 +7,10 @@ app-form-control {
   justify-content: space-between;
   gap: 1rem;
 }
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}

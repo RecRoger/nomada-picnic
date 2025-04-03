@@ -26,7 +26,7 @@ export class PlaceDto {
   images: string[] = []
 
   @ApiProperty({ description: 'Ubicación del lugar (latitud y longitud)' })
-  location?: PlaceLocation[];
+  location?: PlaceLocation;
 
   @ApiProperty({ description: 'Enlace a Google Maps' })
   mapsLink: string;

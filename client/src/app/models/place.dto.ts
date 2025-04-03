@@ -11,7 +11,7 @@ export interface PlaceDto {
   type: PLACES_TYPES
   description: string;
   images: string[];
-  location?: PlaceLocation[];
+  location?: PlaceLocation;
   mapsLink: string;
   zone?: number;
   transportationCost: number;

@@ -31,6 +31,12 @@
     type="number">
 
   </app-form-control>
-  <button mat-flat-button color="primary" type="button" (click)="onSubmit()" [disabled]="placeForm.invalid">{{
-    'ADMIN.PLACES.FORM.BUTTON' | translate}}</button>
+  <div class="form-actions">
+    <button mat-button color="accent" type="button" (click)="onCancel()">
+      {{ 'COMMON.CANCEL' | translate}}
+    </button>
+    <button mat-button color="primary" type="button" (click)="onSubmit()" [disabled]="placeForm.invalid">
+      {{'ADMIN.PLACES.FORM.BUTTON' | translate}}
+    </button>
+  </div>
 </form>

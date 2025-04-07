@@ -1,11 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { ProductionCostsService } from './production-costs.service';
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Cost } from 'server/database/schemas/production-cost.schema';
 import { ResponseDto } from 'server/models/responses.dto';
 import { CostDto } from 'server/models/cost.dto';
+import { ResponseInterceptor } from 'server/interceptors/response.interceptor';
 
 @Controller({ version: '1' })
+@ApiTags('ProductionCosts')
+@UseInterceptors(ResponseInterceptor)
 export class ProductionCostsController {
   constructor(private readonly costsService: ProductionCostsService) { }
 

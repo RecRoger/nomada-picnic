@@ -1,12 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { PicnicsService } from './picnics.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ResponseDto } from 'server/models/responses.dto';
 import { Picnic } from 'server/database/schemas/picnics.schema';
 import { PicnicDto } from 'server/models/picnic.dto';
+import { ResponseInterceptor } from 'server/interceptors/response.interceptor';
 
 @Controller({ version: '1' })
 @ApiTags('Picnics')
+@UseInterceptors(ResponseInterceptor)
 export class PicnicsController {
   constructor(private readonly picnicsService: PicnicsService) { }
 

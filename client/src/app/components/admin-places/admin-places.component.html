@@ -1,4 +1,4 @@
-<h3>{{"ADMIN.PLACES.TITLE" | translate }}</h3>
+<h3>{{"PLACES.TITLE" | translate }}</h3>
 <div class="place-container">
   <div class="places-list">
     <mat-accordion>
@@ -8,7 +8,7 @@
         [expanded]="place._id === openId" (opened)="checkPlace(place._id)">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{ place.type == placeTypes.BASIC ? ('ADMIN.PLACES.BASIC_PRICE' | translate) : place.name }}
+            {{ place.type == placeTypes.BASIC ? ('PLACES.BASIC_PRICE' | translate) : place.name }}
           </mat-panel-title>
           @if (place.type==placeTypes.BASIC) {
           <mat-panel-description>
@@ -18,16 +18,18 @@
         </mat-expansion-panel-header>
         @if (place.type==placeTypes.BASIC) {
         <p class="basic-description">
-          {{'ADMIN.PLACES.BASIC_PRICE_TEXT' | translate}}
+          {{'PLACES.BASIC_PRICE_TEXT' | translate}}
         </p>
         }
 
         <div>
           @if (placeOnEdition !== place._id) {
           @if (place?.images?.length) {
-          @for (image of place.images; track $index) {
-          <img mat-card-image [src]="image" alt="{{ place.name + $index}}" class="place-image">
-          }
+          <div class="place-images">
+            @for (image of place.images; track $index) {
+            <img mat-card-image [src]="image" alt="{{ place.name + $index}}" class="place-image">
+            }
+          </div>
           }
           <p>{{ place.description }}</p>
           <p><strong>Costo de transporte:</strong> {{ place.transportationCost | currency }}</p>
@@ -48,7 +50,7 @@
       <mat-expansion-panel [(expanded)]="newPlaceIndicator" (opened)="newPlaceIndicator = true">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{'ADMIN.PLACES.NEW_PLACE' | translate}}
+            {{'PLACES.NEW_PLACE' | translate}}
           </mat-panel-title>
         </mat-expansion-panel-header>
         <app-place-form [cancelOption]="false" (submit)="newPlace($event)"></app-place-form>

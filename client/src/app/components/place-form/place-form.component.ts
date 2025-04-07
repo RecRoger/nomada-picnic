@@ -35,7 +35,7 @@ export class PlaceFormComponent implements OnInit {
         lng: [this.place?.location?.lng || null, Validators.required],
       }),
       mapsLink: [this.place?.mapsLink || '', Validators.required],
-      zone: [this.place?.zone || null, Validators.required],
+      zone: [this.place?.zone ?? '', Validators.required],
       transportationCost: [this.place?.transportationCost || null, [Validators.required, Validators.min(0)]],
     });
   }

@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ProductionCostsService } from './production-costs.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Cost } from 'server/database/schemas/production-cost.schema';
 import { ResponseDto } from 'server/models/responses.dto';
 import { CostDto } from 'server/models/cost.dto';
 import { ResponseInterceptor } from 'server/interceptors/response.interceptor';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { ParseNumberInterceptor } from 'server/interceptors/parse-number.interceptor';
 
 @Controller({ version: '1' })
 @ApiTags('ProductionCosts')
@@ -30,16 +32,31 @@ export class ProductionCostsController {
   @ApiOperation({ summary: 'Crear un nuevo costo' })
   @ApiBody({ type: CostDto })
   @ApiResponse({ status: 201, description: 'Nuevo costo creado', type: ResponseDto<Cost> })
-  async create(@Body() createPlaceDto: CostDto): Promise<Cost> {
-    return this.costsService.create(createPlaceDto);
+  @UseInterceptors(
+    FilesInterceptor('images'),
+    new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage'])
+  )
+  async create(
+    @Body() createCost: CostDto,
+    @UploadedFiles() files: Express.Multer.File[],
+  ): Promise<Cost> {
+    return this.costsService.create(createCost, files);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un costo existente' })
   @ApiBody({ type: CostDto })
   @ApiResponse({ status: 201, description: 'Costo editado', type: ResponseDto<Cost> })
-  async update(@Param('id') id: string, @Body() updatePlaceDto: CostDto): Promise<Cost> {
-    return this.costsService.update(id, updatePlaceDto);
+  @UseInterceptors(
+    FilesInterceptor('images'),
+    new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage'])
+  )
+  async update(
+    @Param('id') id: string,
+    @Body() updateCost: CostDto,
+    @UploadedFiles() files: Express.Multer.File[],
+  ): Promise<Cost> {
+    return this.costsService.update(id, updateCost, files);
   }
 
   @Delete(':id')

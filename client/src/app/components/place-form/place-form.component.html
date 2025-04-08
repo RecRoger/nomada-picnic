@@ -19,24 +19,25 @@
     </app-form-control>
   </div>
 
-  <app-form-control [control]="getControl('mapsLink')" label="{{ 'ADMIN.PLACES.FORM.MAPS_LINK' | translate }}"
-    type="text">
+  <app-form-control [control]="getControl('mapsLink')" label="{{ 'PLACES.FORM.MAPS_LINK' | translate }}" type="text">
   </app-form-control>
 
 
-  <app-form-control [control]="getControl('zone')" label="{{ 'ADMIN.PLACES.FORM.ZONE' | translate }}" type="number">
+  <app-form-control [control]="getControl('zone')" label="{{ 'PLACES.FORM.ZONE' | translate }}" type="number">
   </app-form-control>
 
-  <app-form-control [control]="getControl('transportationCost')" label="{{ 'ADMIN.PLACES.FORM.COST' | translate }}"
-    type="number">
+  <app-form-control [control]="getControl('transportationCost')" label="{{ 'PLACES.FORM.COST' | translate }}"
+    type="number" prefix="US$">
 
   </app-form-control>
   <div class="form-actions">
-    <button mat-button color="accent" type="button" (click)="onCancel()">
+    @if(cancelOption) {
+    <button mat-raised-button color="accent" type="button" (click)="onCancel()">
       {{ 'COMMON.CANCEL' | translate}}
     </button>
-    <button mat-button color="primary" type="button" (click)="onSubmit()" [disabled]="placeForm.invalid">
-      {{'ADMIN.PLACES.FORM.BUTTON' | translate}}
+    }
+    <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="placeForm.invalid">
+      {{'PLACES.FORM.BUTTON' | translate}}
     </button>
   </div>
 </form>

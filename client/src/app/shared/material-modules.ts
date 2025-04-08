@@ -8,6 +8,5 @@ export const MAT_FORMS_MODULES = [
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
-  // MatTextareaModule,
   MatButtonModule
 ]

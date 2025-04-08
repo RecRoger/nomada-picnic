@@ -35,9 +35,9 @@
           <p><strong>Costo de transporte:</strong> {{ place.transportationCost | currency }}</p>
           @if (place.type!=placeTypes.BASIC) {
           <div class="place-actions">
-            <button mat-button color="accent" (click)="openDeleteDialog(place)">{{'COMMON.DELETE' |
+            <button mat-raised-button color="accent" (click)="openDeleteDialog(place)">{{'COMMON.DELETE' |
               translate}}</button>
-            <button mat-button (click)="toggleEditForm(place)">{{'COMMON.EDIT' | translate}}</button>
+            <button mat-raised-button (click)="toggleEditForm(place)">{{'COMMON.EDIT' | translate}}</button>
           </div>
           }
           } @else {
@@ -53,7 +53,7 @@
             {{'PLACES.NEW_PLACE' | translate}}
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-place-form [cancelOption]="false" (submit)="newPlace($event)"></app-place-form>
+        <app-place-form [cancelOption]="false" (submit)="createPlace($event)"></app-place-form>
       </mat-expansion-panel>
     </mat-accordion>
 

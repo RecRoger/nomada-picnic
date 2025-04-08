@@ -81,7 +81,7 @@ export class AdminPlacesComponent implements OnInit {
     this.openId = id
   }
 
-  public newPlace(formPlace: PlaceDto): void {
+  public createPlace(formPlace: PlaceDto): void {
     const formData = this.appendForm(formPlace)
     this.placesService.createPlace(formData).subscribe(resp => {
       if (resp) {
@@ -126,8 +126,8 @@ export class AdminPlacesComponent implements OnInit {
   openDeleteDialog(place: PlaceDto): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        title: this.translateService.instant('ADMIN.PLACES.DIALOG_TITLE'),
-        text: this.translateService.instant('ADMIN.PLACES.DIALOG_TEXT', { name: place.name }),
+        title: this.translateService.instant('PLACES.DIALOG_TITLE'),
+        text: this.translateService.instant('PLACES.DIALOG_TEXT', { name: place.name }),
         deny: this.translateService.instant('COMMON.CANCEL'),
         accept: this.translateService.instant('COMMON.DELETE'),
         id: place._id

@@ -10,8 +10,10 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
 
   // Ruta base para acceder a los archivos desde el frontend
-  const uploadDir = join(__dirname, '..', 'uploads', 'places')
-  app.useStaticAssets(uploadDir, { prefix: '/uploads/places' });
+  const uploadPlacesDir = join(__dirname, '..', 'uploads', 'places')
+  app.useStaticAssets(uploadPlacesDir, { prefix: '/uploads/places' });
+  const uploadCostsDir = join(__dirname, '..', 'uploads', 'costs')
+  app.useStaticAssets(uploadCostsDir, { prefix: '/uploads/costs' });
 
   // Ruta cliente Angular
   app.useStaticAssets(join(__dirname, '../..', 'client/dist'));

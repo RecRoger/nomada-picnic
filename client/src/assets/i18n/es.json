@@ -13,6 +13,8 @@
     "ADD_IMAGES": "Añadir imágenes",
     "INVALID_FIELD": "Campo inválido",
     "REQUIRED_FIELD": "El campo es <b>obligatorio</b>",
+    "MIN_VALUE_FIELD": "El campo puede tener un valor minimo igual a {{min}}",
+    "MAX_VALUE_FIELD": "El campo es debe tener un valor no mayor a {{max}}",
     "PEOPLE": "personas",
     "TYPE": "Tipo",
     "IMAGES": "Imagenes",
@@ -50,7 +52,13 @@
     "PROVIDER_COST": "Costo de Proveedor",
     "PRODUCTION_COST": "Costo de Productor",
     "GUESTS_COVERAGE": "Alance de invitados",
-    "FULL_EVENT": "Unico por evento"
+    "FULL_EVENT": "Unico por evento",
+    "NEW": "Crear nuevo costo",
+    "DIALOG_TITLE": "Eliminar Costo",
+    "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista de costos?",
+    "FORM": {
+      "BUTTON": "Guardar Costo"
+    }
   },
   "PUBLIC": {
     "TITLE": "Bienvenido a Nomada",

@@ -2,6 +2,11 @@
 <mat-form-field [floatLabel]="type=='file' ? 'always': 'auto'">
 
   <mat-label>{{ label }}</mat-label>
+
+  @if(prefix) {
+  <span matTextPrefix>{{prefix}} &nbsp;</span>
+  }
+
   @if(INPUT_TYPE.indexOf(type) >= 0) {
   <input matInput [type]="type" [formControl]="control">
   }
@@ -9,12 +14,33 @@
   <textarea matInput [type]="type" [formControl]="control"></textarea>
   }
 
-  @if(type == 'file') {
-  <input matInput type="text" readonly="" [formControl]="control" class="fake-control" style="display: none;">
-  <input type="file" (change)="onFileChange($event)" multiple>
+  @if(type == 'select' && options?.length) {
+  <mat-select [formControl]="control">
+    @for (options of options; track options) {
+    <mat-option [value]="options.value">{{options.text}}</mat-option>
+    }
+  </mat-select>
   }
 
+  @if(type == 'file') {
+  <input matInput type="text" readonly="" [formControl]="control" class="fake-control" style="display: none;">
+  <input type="file" (change)="onFileChange($event)" multiple (cancel)="$event.stopPropagation()">
+  }
 
+  @if (suffix) {
+  <span matSuffix>{{suffix}} &nbsp;</span>
+  }
+
+  @if (hint) {
+  <mat-hint>{{hint}}</mat-hint>
+  }
+
+  @if (control.hasError('min') && !control.hasError('required')) {
+  <mat-error>{{ 'COMMON.MIN_VALUE_FIELD' | translate: (control.errors && control.errors['min']) }}</mat-error>
+  }
+  @if (control.hasError('max') && !control.hasError('required')) {
+  <mat-error>{{ 'COMMON.MAX_VALUE_FIELD' | translate: (control.errors && control.errors['max']) }}</mat-error>
+  }
   @if (control.hasError('email') && !control.hasError('required')) {
   <mat-error>{{ 'COMMON.INVALID_FIELD' | translate }}</mat-error>
   }

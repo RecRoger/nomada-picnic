@@ -23,8 +23,30 @@ tr.element-row:not(.expanded-row):active {
   display: flex;
 }
 
+.element-detail-wrapper.expanded {
+  padding: .5rem 1rem 1rem;
+}
+
 .cost-detail {
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
+}
+
+.costs-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.costs-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.cost-image {
+  width: 10rem;
+  height: auto;
+  margin: 1rem .5rem;
 }

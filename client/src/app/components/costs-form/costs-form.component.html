@@ -1,0 +1,64 @@
+<form [formGroup]="costForm">
+  <div class="cost-main">
+    <app-form-control [control]="getControl('name')" label="{{ 'COMMON.NAME' | translate }}" type="text">
+    </app-form-control>
+
+    <app-form-control [control]="getControl('type')" label="{{ 'COMMON.TYPE' | translate }}" type="select"
+      [options]="COSTS_TYPES_OPTIONS">
+    </app-form-control>
+  </div>
+
+  <app-form-control [control]="getControl('description')" label="{{ 'COMMON.DESCRIPTION' | translate }}"
+    type="textarea">
+  </app-form-control>
+
+  <div class="cost-info">
+    <app-form-control [control]="getControl('images')" label="{{ 'COMMON.ADD_IMAGES' | translate }}" type="file">
+    </app-form-control>
+
+    <app-form-control [control]="getControl('guestsCoverage')" label="{{ 'COSTS.GUESTS_COVERAGE' | translate }}"
+      [hint]="'Dejar el valor en 0 significa que se aplicará un único costo a todo el picnic'" type="number"
+      suffix="personas">
+    </app-form-control>
+  </div>
+
+  <div class="cost-amounts">
+    <app-form-control [control]="getControl('providerCost')" label="{{ 'COSTS.PROVIDER_COST' | translate }}"
+      prefix="US$" type="number">
+    </app-form-control>
+
+    <app-form-control [control]="getControl('productionCost')" label="{{ 'COSTS.PRODUCTION_COST' | translate }}"
+      prefix="US$" type="number">
+    </app-form-control>
+
+    <mat-form-field class="total-cost">
+      <mat-label>{{'COMMON.TOTAL_COST' | translate}}</mat-label>
+      <span matTextPrefix>US$ &nbsp;</span>
+      <input matInput readonly type="number" [value]="totalCost">
+    </mat-form-field>
+
+  </div>
+  <div class="cost-price">
+    <p style="width: 100%;"></p>
+
+    <app-form-control [control]="getControl('earnPercentage')" label="{{ 'COMMON.EARN_PERCENTAGE' | translate }}"
+      type="number" suffix="%">
+    </app-form-control>
+
+    <mat-form-field class="total-cost">
+      <mat-label>{{'COMMON.FINAL_PRICE' | translate}}</mat-label>
+      <span matTextPrefix>US$ &nbsp;</span>
+      <input matInput readonly type="number" [value]="totalPrice">
+    </mat-form-field>
+
+  </div>
+
+  <div class="form-actions">
+    <button mat-raised-button color="accent" type="button" (click)="onCancel()">
+      {{ 'COMMON.CANCEL' | translate}}
+    </button>
+    <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="costForm.invalid">
+      {{'COSTS.FORM.BUTTON' | translate}}
+    </button>
+  </div>
+</form>

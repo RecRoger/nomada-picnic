@@ -17,7 +17,10 @@ export class Picnic extends Document {
     date: Date;
     extraHours: number;
     place: mongoose.Types.ObjectId
-    newPlace: string;
+    newPlace: {
+      address: string;
+      zone: number
+    };
     boardText: string;
   };
 
@@ -33,6 +36,7 @@ export class Picnic extends Document {
       amount: number
     }]
     basicCost: {
+      productionCost: number;
       transportationCost: number;
       giftCost: number;
     };

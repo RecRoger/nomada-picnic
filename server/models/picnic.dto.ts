@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+
 export class PicnicClient {
   @ApiProperty({ description: 'Nombre del Cliente' })
   name: string;
@@ -9,6 +10,14 @@ export class PicnicClient {
 
   @ApiProperty({ description: 'Telefono del Cliente' })
   phone: string;
+}
+
+export class NewPlace {
+  @ApiProperty({ description: 'Nueva direccion' })
+  address: string;
+
+  @ApiProperty({ description: 'Numero de zona' })
+  zone: string;
 }
 
 export class PicnicEvent {
@@ -28,13 +37,16 @@ export class PicnicEvent {
   place: string
 
   @ApiProperty({ description: 'Descripcion nuevo lugar' })
-  newPlace?: string;
+  newPlace?: NewPlace
 
   @ApiProperty({ description: 'Cantidad de mesas' })
   boardText: string;
 }
 
 export class ProductionCost {
+  @ApiProperty({ description: 'Costo de produccion' })
+  productionCost: number;
+
   @ApiProperty({ description: 'Costo de Transporte' })
   transportationCost: number;
 

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -11,9 +10,4 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './public.component.scss'
 })
 export class PublicComponent {
-  constructor(private router: Router) { }
-
-  navigateToAdmin(): void {
-    this.router.navigate(['/admin']);
-  }
 }

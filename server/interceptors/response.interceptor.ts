@@ -1,7 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ResponseDto } from '../models/responses.dto';
+import { ResponseDto } from 'server/models/responses.dto';
 import { COM_STATUS } from 'server/enums/comunication-status.enum';
 
 @Injectable()

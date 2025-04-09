@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from '../components/notification/notification.component';
-import { NotificationData } from '../models/notification.dto';
-import { ALERT_TYPES } from '../enums/alert-types.enum';
+import { NotificationComponent } from '@components/notification/notification.component';
+import { NotificationData } from '@models/notification.dto';
+import { ALERT_TYPES } from '@enums/alert-types.enum';
 
 
 @Injectable({

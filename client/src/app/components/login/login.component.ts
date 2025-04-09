@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { MAT_FORMS_MODULES } from '../../shared/material-modules';
-import { FormControlComponent } from '../form-control/form-control.component';
+import { AuthService } from '@services/auth.service';
+import { MAT_FORMS_MODULES } from '@shared/material-modules';
+import { FormControlComponent } from '@components/form-control/form-control.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { NotificationService } from '@services/notification.service';
+import { ALERT_TYPES } from '@enums/alert-types.enum';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +16,9 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+
+  private readonly notificationService: NotificationService = inject(NotificationService)
+
   public loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -40,7 +45,7 @@ export class LoginComponent {
       if (email) {
         this.router.navigate(['/admin']);
       } else {
-        alert('Contraseña incorrecta');
+        this.notificationService.openNotification({ message: "LOGIN.INVLID_ERROR" }, ALERT_TYPES.ERROR)
       }
     })
   }

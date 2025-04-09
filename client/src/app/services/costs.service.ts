@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { ApiResponse } from '../models/api-response.dto';
-import { CostDto } from '../models/cost.dto';
-import { ALERT_TYPES } from '../enums/alert-types.enum';
-import { NotificationService } from './notification.service';
+import { ApiResponse } from '@models/api-response.dto';
+import { CostDto } from '@models/cost.dto';
+import { ALERT_TYPES } from '@enums/alert-types.enum';
+import { NotificationService } from '@services/notification.service';
 
 @Injectable({
   providedIn: 'root',

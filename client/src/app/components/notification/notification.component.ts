@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { NotificationData } from '../../models/notification.dto';
+import { NotificationData } from '@models/notification.dto';
 
 @Component({
   selector: 'app-notification',

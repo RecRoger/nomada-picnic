@@ -3,12 +3,16 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ApiResponse } from '../models/api-response.dto';
 import { CostDto } from '../models/cost.dto';
+import { ALERT_TYPES } from '../enums/alert-types.enum';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CostsService {
   private readonly http: HttpClient = inject(HttpClient)
+
+  private readonly notificationService: NotificationService = inject(NotificationService)
 
   public getCosts(type?: string): Observable<CostDto[]> {
     return this.http.get<ApiResponse<CostDto[]>>(`/api/costs` + (type ? `/${type}` : '')).pipe(
@@ -20,6 +24,7 @@ export class CostsService {
       }),
       catchError((error) => {
         console.error('No se cargaron los costos:', error);
+        this.notificationService.openNotification({ message: 'COSTS.ERROR' }, ALERT_TYPES.ERROR)
         return of([]);
       })
     );

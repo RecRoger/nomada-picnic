@@ -12,6 +12,8 @@ import { PLACES_TYPES } from '../../enums/places-types.enum';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { NotificationService } from '../../services/notification.service';
+import { ALERT_TYPES } from '../../enums/alert-types.enum';
 
 
 
@@ -39,6 +41,8 @@ export class AdminPlacesComponent implements OnInit {
 
   private readonly translateService: TranslateService = inject(TranslateService)
 
+  private readonly notificationService: NotificationService = inject(NotificationService)
+
   public readonly dialog = inject(MatDialog);
 
   public readonly placeTypes = PLACES_TYPES
@@ -63,10 +67,11 @@ export class AdminPlacesComponent implements OnInit {
   }
 
   private getPlaces(): void {
-    this.placesService.getPlaces().subscribe(resp => {
-      this.places = resp
-      this.setMarkers()
-    })
+    this.placesService.getPlaces()
+      .subscribe(resp => {
+        this.places = resp
+        this.setMarkers()
+      })
   }
 
   private setMarkers(): void {
@@ -85,9 +90,12 @@ export class AdminPlacesComponent implements OnInit {
     const formData = this.appendForm(formPlace)
     this.placesService.createPlace(formData).subscribe(resp => {
       if (resp) {
+        this.notificationService.openNotification({ message: 'PLACES.ADDED' })
         this.getPlaces()
         this.newPlaceIndicator = false
         this.checkPlace(resp._id)
+      } else {
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
       }
     })
   }
@@ -100,8 +108,11 @@ export class AdminPlacesComponent implements OnInit {
     const formData = this.appendForm(formPlace)
     this.placesService.editPlace(this.placeOnEdition || '', formData).subscribe(resp => {
       if (resp) {
+        this.notificationService.openNotification({ message: 'PLACES.EDITED' })
         this.placeOnEdition = ''
         this.getPlaces()
+      } else {
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
       }
     })
   }
@@ -144,7 +155,10 @@ export class AdminPlacesComponent implements OnInit {
   deletePlace(id: string): void {
     this.placesService.deletePlace(id).subscribe(resp => {
       if (resp) {
+        this.notificationService.openNotification({ message: 'PLACES.DELETED' })
         this.getPlaces()
+      } else {
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
       }
     })
   }

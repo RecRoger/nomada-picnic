@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { PlaceDto } from '../models/place.dto';
 import { ApiResponse } from '../models/api-response.dto';
+import { NotificationService } from './notification.service';
+import { ALERT_TYPES } from '../enums/alert-types.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,7 @@ import { ApiResponse } from '../models/api-response.dto';
 export class PlacesService {
   private readonly http: HttpClient = inject(HttpClient)
 
+  private readonly notificationService: NotificationService = inject(NotificationService)
   public getPlaces(type?: string): Observable<PlaceDto[]> {
     return this.http.get<ApiResponse<PlaceDto[]>>(`/api/places` + (type ? `/${type}` : '')).pipe(
       map((response) => {
@@ -20,6 +23,7 @@ export class PlacesService {
       }),
       catchError((error) => {
         console.error('No se cargaron los lugares:', error);
+        this.notificationService.openNotification({ message: 'PLACES.ERROR' }, ALERT_TYPES.ERROR)
         return of([]);
       })
     );

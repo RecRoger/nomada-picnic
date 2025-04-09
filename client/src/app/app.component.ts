@@ -4,6 +4,7 @@ import { AuthService } from './services/auth.service';
 import { TranslateService, TranslateStore } from '@ngx-translate/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapsService } from './services/maps.service';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { MapsService } from './services/maps.service';
     AuthService,
     MapsService,
     TranslateStore,
+    NotificationService,
   ]
 })
 export class AppComponent {

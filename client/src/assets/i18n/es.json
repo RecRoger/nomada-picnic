@@ -40,6 +40,10 @@
     "NEW_PLACE": "Añadir nuevo lugar",
     "DIALOG_TITLE": "Eliminar Lugar",
     "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista de lugares?",
+    "ADDED": "Lugar añadido correctamente",
+    "EDITED": "Lugar actualizado correctamente",
+    "DELETED": "Lugar eliminado correctamente",
+    "ERROR": "No se ha podido cargar lista lugares",
     "FORM": {
       "MAPS_LINK": "Link de Maps",
       "ZONE": "Número de Zona",
@@ -56,6 +60,10 @@
     "NEW": "Crear nuevo costo",
     "DIALOG_TITLE": "Eliminar Costo",
     "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista de costos?",
+    "ERROR": "No se ha podido cargar lista costos",
+    "ADDED": "Costo añadido correctamente",
+    "EDITED": "Costo actualizado correctamente",
+    "DELETED": "Costo eliminado correctamente",
     "FORM": {
       "BUTTON": "Guardar Costo"
     }

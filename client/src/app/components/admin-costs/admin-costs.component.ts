@@ -10,6 +10,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { CostsFormComponent } from '../costs-form/costs-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { NotificationService } from '../../services/notification.service';
+import { ALERT_TYPES } from '../../enums/alert-types.enum';
 
 
 const MAT_MODULES = [
@@ -36,6 +38,8 @@ export class AdminCostsComponent implements OnInit {
 
   public readonly dialog = inject(MatDialog);
 
+  private readonly notificationService: NotificationService = inject(NotificationService)
+
   public costList: CostDto[] = [];
 
   public columnsToDisplayWithExpand = [
@@ -58,9 +62,10 @@ export class AdminCostsComponent implements OnInit {
   }
 
   public getCosts(): void {
-    this.costsService.getCosts().subscribe(costs => {
-      this.costList = costs
-    })
+    this.costsService.getCosts()
+      .subscribe(costs => {
+        this.costList = costs
+      })
   }
 
   /** Toggles the expanded state of an element. */
@@ -80,8 +85,11 @@ export class AdminCostsComponent implements OnInit {
 
     request.subscribe(resp => {
       if (resp) {
+        this.notificationService.openNotification({ message: this.costToEdit ? 'COSTS.EDITED' : 'COSTS.ADDED' })
         this.getCosts()
         this.toggleEditForm()
+      } else {
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
       }
     })
   }
@@ -118,8 +126,11 @@ export class AdminCostsComponent implements OnInit {
   private deleteCost(id: string): void {
     this.costsService.deleteCost(id).subscribe(resp => {
       if (resp) {
+        this.notificationService.openNotification({ message: 'PLACES.DELETED' })
         this.expandedElements = []
         this.getCosts()
+      } else {
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
       }
     })
   }

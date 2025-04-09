@@ -16,8 +16,10 @@ async function bootstrap() {
   app.useStaticAssets(uploadCostsDir, { prefix: '/uploads/costs' });
 
   // Ruta cliente Angular
-  app.useStaticAssets(join(__dirname, '../..', 'client/dist'));
-  app.setBaseViewsDir(join(__dirname, '../..', 'client/dist'));
+  const appRoute = join(__dirname, '../..', 'client/dist', 'browser')
+  console.log(appRoute)
+  app.useStaticAssets(appRoute);
+  app.setBaseViewsDir(appRoute);
   app.setViewEngine('html');
 
   // Configuración de Swagger

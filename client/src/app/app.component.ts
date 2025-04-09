@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthService } from './services/auth.service';
 import { TranslateService, TranslateStore } from '@ngx-translate/core';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { MapsService } from './services/maps.service';
-import { NotificationService } from './services/notification.service';
+import { AuthService } from '@services/auth.service';
+import { MapsService } from '@services/maps.service';
+import { NotificationService } from '@services/notification.service';
+import { HeaderComponent } from '@components/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [GoogleMapsModule, RouterOutlet],
+  imports: [GoogleMapsModule, RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [

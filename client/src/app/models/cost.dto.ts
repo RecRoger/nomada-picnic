@@ -1,4 +1,4 @@
-import { COSTS_TYPES } from "../enums/cost-types.enum";
+import { COSTS_TYPES } from "@enums/cost-types.enum";
 
 export interface CostDto {
   _id?: string;

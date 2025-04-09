@@ -1,6 +1,8 @@
 <div class="costs-header">
   <h3>{{"COSTS.TITLE" | translate }}</h3>
+  @if(!showForm) {
   <button mat-raised-button (click)="showForm = true">{{'COSTS.NEW' | translate}}</button>
+  }
 </div>
 <div class="costs-container">
 

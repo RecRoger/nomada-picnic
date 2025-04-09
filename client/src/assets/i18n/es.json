@@ -20,10 +20,12 @@
     "IMAGES": "Imagenes",
     "EARN_PERCENTAGE": "Ganancia",
     "FINAL_PRICE": "Precio Final",
-    "TOTAL_COST": "Costo Total"
+    "TOTAL_COST": "Costo Total",
+    "GENERIC_ERROR": "Ha ocurrido un error"
   },
   "LOGIN": {
-    "TITLE": "Iniciar Sesión"
+    "TITLE": "Iniciar Sesión",
+    "INVLID_ERROR": "Credenciales invalidas"
   },
   "ADMIN": {
     "TITLE": "Bienvenido {{name}}",
@@ -57,7 +59,7 @@
     "PRODUCTION_COST": "Costo de Productor",
     "GUESTS_COVERAGE": "Alance de invitados",
     "FULL_EVENT": "Unico por evento",
-    "NEW": "Crear nuevo costo",
+    "NEW": "Guardar nuevo costo",
     "DIALOG_TITLE": "Eliminar Costo",
     "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista de costos?",
     "ERROR": "No se ha podido cargar lista costos",
@@ -69,7 +71,8 @@
     }
   },
   "PUBLIC": {
-    "TITLE": "Bienvenido a Nomada",
-    "ADMIN": "Soy admin"
+    "TITLE": "Organiza picnics inolvidables",
+    "DESCRIPTION": "Somos una empresa dedicada a organizar picnics personalizados en los parques más hermosos de tu ciudad. Te ayudamos a planificar cada detalle, desde la selección del lugar perfecto hasta la preparación de deliciosos menús y actividades divertidas.",
+    "ACTION": "Cotizar mi picnic"
   }
 }

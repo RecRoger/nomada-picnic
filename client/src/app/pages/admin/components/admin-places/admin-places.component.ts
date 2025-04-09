@@ -1,19 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
-import { MapsService } from '../../services/maps.service';
+import { MapsService } from '@services/maps.service';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { PlacesService } from '../../services/places.service';
-import { PlaceDto } from '../../models/place.dto';
+import { PlacesService } from '@services/places.service';
+import { PlaceDto } from '@models/place.dto';
 import { MatCardModule } from '@angular/material/card'
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { PlaceFormComponent } from '../place-form/place-form.component';
-import { PLACES_TYPES } from '../../enums/places-types.enum';
+import { PlaceFormComponent } from '@components/place-form/place-form.component';
+import { PLACES_TYPES } from '@enums/places-types.enum';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { NotificationService } from '../../services/notification.service';
-import { ALERT_TYPES } from '../../enums/alert-types.enum';
+import { ConfirmationDialogComponent } from '@components/confirmation-dialog/confirmation-dialog.component';
+import { NotificationService } from '@services/notification.service';
+import { ALERT_TYPES } from '@enums/alert-types.enum';
 
 
 

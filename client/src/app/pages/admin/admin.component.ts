@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '@services/auth.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -40,9 +40,16 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     const url = this.router.url;
     this.selectedIndex = this.tabs.findIndex(tab => url.includes(tab.link))
+    // this.checkUrl()
   }
 
-  onTabChange(event: any): void {
+  public onTabChange(event: any): void {
     this.router.navigate([this.tabs[event.index]?.link]);
+  }
+
+  private checkUrl(): void {
+    this.route.url.subscribe(() => {
+
+    })
   }
 }

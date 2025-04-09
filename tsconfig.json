@@ -16,7 +16,42 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@components/*": [
+        "./client/src/app/components/*"
+      ],
+      "@admin-components/*": [
+        "./client/src/app/pages/admin/components/*"
+      ],
+      "@models/*": [
+        "./client/src/app/models/*"
+      ],
+      "@enums/*": [
+        "./client/src/app/enums/*"
+      ],
+      "@pages/*": [
+        "./client/src/app/pages/*"
+      ],
+      "@guards/*": [
+        "./client/src/app/guards/*"
+      ],
+      "@services/*": [
+        "./client/src/app/services/*"
+      ],
+      "@shared/*": [
+        "./client/src/app/shared/*"
+      ],
+      "@assets/*": [
+        "./client/src/assets/*"
+      ],
+      "@env": [
+        "./client/src/environments/environment"
+      ],
+      "@env/*": [
+        "./client/src/environments/*"
+      ]
+    }
   },
   "generateOptions": {
     "spec": false

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MAT_FORMS_MODULES } from '../../shared/material-modules';
+import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormControlComponent } from '../form-control/form-control.component';
-import { CostDto } from '../../models/cost.dto';
-import { COSTS_TYPES } from '../../enums/cost-types.enum';
+import { FormControlComponent } from '@components/form-control/form-control.component';
+import { CostDto } from '@models/cost.dto';
+import { COSTS_TYPES } from '@enums/cost-types.enum';
 import { merge, Subject, takeUntil } from 'rxjs';
 
 @Component({

@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_FORMS_MODULES } from '../../shared/material-modules';
-import { PlaceDto } from '../../models/place.dto';
+import { MAT_FORMS_MODULES } from '@shared/material-modules';
+import { PlaceDto } from '@models/place.dto';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormControlComponent } from '../form-control/form-control.component';
+import { FormControlComponent } from '@components/form-control/form-control.component';
+
 @Component({
   selector: 'app-place-form',
   standalone: true,

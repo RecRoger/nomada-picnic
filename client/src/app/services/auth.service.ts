@@ -1,12 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { NotificationService } from '@services/notification.service';
+import { ALERT_TYPES } from '@enums/alert-types.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly notificationService: NotificationService = inject(NotificationService)
+
+  private readonly http: HttpClient = inject(HttpClient)
+
+  private readonly cookieService: CookieService = inject(CookieService)
+
   private userAdmin: { email?: string, name?: string } | undefined;
 
   private readonly SECRET_KEY = 'ultrasecret'; // Reemplaza con tu clave secreta
@@ -14,10 +22,6 @@ export class AuthService {
   private readonly COOKIE_NAME = 'NomadaAdmin'
 
   private readonly COOKIE_NAME_EMAIL = 'NomadaAdminEmail'
-
-  private readonly http: HttpClient = inject(HttpClient)
-
-  private readonly cookieService: CookieService = inject(CookieService)
 
   public isAuthenticated(): boolean {
     return this.cookieService.check(this.COOKIE_NAME);
@@ -44,7 +48,8 @@ export class AuthService {
       }),
       catchError((error) => {
         console.error('Error de autenticación:', error);
-        return of({});
+        this.notificationService.openNotification({ message: "COMMON.GENERIC_ERROR" }, ALERT_TYPES.ERROR)
+        throw error
       })
     );
   }

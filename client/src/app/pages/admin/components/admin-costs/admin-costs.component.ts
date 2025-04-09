@@ -3,15 +3,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { CostDto } from '../../models/cost.dto';
-import { CostsService } from '../../services/costs.service';
+import { CostDto } from '@models/cost.dto';
+import { CostsService } from '@services/costs.service';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CostsFormComponent } from '../costs-form/costs-form.component';
+import { CostsFormComponent } from '@components/costs-form/costs-form.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { NotificationService } from '../../services/notification.service';
-import { ALERT_TYPES } from '../../enums/alert-types.enum';
+import { ConfirmationDialogComponent } from '@components/confirmation-dialog/confirmation-dialog.component';
+import { NotificationService } from '@services/notification.service';
+import { ALERT_TYPES } from '@enums/alert-types.enum';
 
 
 const MAT_MODULES = [

@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { AdminComponent } from './sections/admin/admin.component';
-import { PublicComponent } from './sections/public/public.component';
-import { LoginComponent } from './components/login/login.component';
-import { authGuard } from './guards/auth.guard';
-import { AdminPicnicsComponent } from './components/admin-picnics/admin-picnics.component';
-import { AdminPlacesComponent } from './components/admin-places/admin-places.component';
-import { AdminCostsComponent } from './components/admin-costs/admin-costs.component';
+import { AdminComponent } from '@pages/admin/admin.component';
+import { PublicComponent } from '@pages/public/public.component';
+import { LoginComponent } from '@components/login/login.component';
+import { authGuard } from '@guards/auth.guard';
+import { AdminPicnicsComponent } from '@admin-components/admin-picnics/admin-picnics.component';
+import { AdminPlacesComponent } from '@admin-components/admin-places/admin-places.component';
+import { AdminCostsComponent } from '@admin-components/admin-costs/admin-costs.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,12 +14,22 @@ export const routes: Routes = [
     canActivate: [authGuard],
     component: AdminComponent,
     children: [
-      { path: '', redirectTo: 'picnics', pathMatch: 'full' },
-      { path: 'picnics', component: AdminPicnicsComponent },
+      { path: 'picnics', redirectTo: '', pathMatch: 'full' },
+      { path: '', component: AdminPicnicsComponent },
       { path: 'places', component: AdminPlacesComponent },
       { path: 'costs', component: AdminCostsComponent }
     ]
   },
   { path: '', component: PublicComponent },
-  { path: '*', redirectTo: '/public', pathMatch: 'full' }, // Ruta raíz redirige al módulo público
+  { path: 'availability', component: AdminPicnicsComponent },
+  {
+    path: 'picnics',
+    component: AdminCostsComponent,
+    children: [
+      { path: 'basics', component: AdminPicnicsComponent },
+      { path: 'additionals', component: AdminPicnicsComponent },
+      { path: 'food', component: AdminPicnicsComponent },
+    ]
+  },
+  { path: '*', redirectTo: '', pathMatch: 'full' }, // Ruta raíz redirige al módulo público
 ];

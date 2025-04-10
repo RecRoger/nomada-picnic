@@ -24,13 +24,14 @@ tr.element-row:not(.expanded-row):active {
 }
 
 .element-detail-wrapper.expanded {
-  padding: .5rem 1rem 1rem;
+  padding-bottom: 1.5rem;
 }
 
 .cost-detail {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: flex-start;
+  gap: 2rem;
 }
 
 .costs-header {

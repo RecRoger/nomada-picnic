@@ -27,6 +27,9 @@ export class Cost extends Document {
   @Prop()
   guestsCoverage: number;
 
+  @Prop()
+  deliveryRequired: boolean;
+
   @Prop([String])
   images?: string[];
 }

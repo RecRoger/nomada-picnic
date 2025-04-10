@@ -11,4 +11,5 @@ export interface CostDto {
   earnPercentage?: number;
   finalPrice?: number;
   guestsCoverage?: number;
+  deliveryRequired?: boolean;
 }

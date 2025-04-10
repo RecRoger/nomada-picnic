@@ -1,4 +1,4 @@
-app-form-control {
+.form-control {
   width: 100%;
 }
 
@@ -12,13 +12,14 @@ app-form-control {
   align-items: flex-start;
 }
 
-.total-cost {
-  width: 100%;
-}
 
 .form-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 1rem;
+}
+
+.delivery-check {
+  text-align: right;
 }

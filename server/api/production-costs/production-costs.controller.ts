@@ -7,6 +7,7 @@ import { CostDto } from 'server/models/cost.dto';
 import { ResponseInterceptor } from 'server/interceptors/response.interceptor';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ParseNumberInterceptor } from 'server/interceptors/parse-number.interceptor';
+import { ParseBooleanInterceptor } from 'server/interceptors/parse-boolean.interceptor';
 
 @Controller({ version: '1' })
 @ApiTags('ProductionCosts')
@@ -34,7 +35,8 @@ export class ProductionCostsController {
   @ApiResponse({ status: 201, description: 'Nuevo costo creado', type: ResponseDto<Cost> })
   @UseInterceptors(
     FilesInterceptor('images'),
-    new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage'])
+    new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage']),
+    new ParseBooleanInterceptor(['deliveryRequired'])
   )
   async create(
     @Body() createCost: CostDto,
@@ -46,10 +48,11 @@ export class ProductionCostsController {
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un costo existente' })
   @ApiBody({ type: CostDto })
-  @ApiResponse({ status: 201, description: 'Costo editado', type: ResponseDto<Cost> })
+  @ApiResponse({ status: 201, description: 'Costo editado', type: ResponseDto<CostDto> })
   @UseInterceptors(
     FilesInterceptor('images'),
-    new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage'])
+    new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage']),
+    new ParseBooleanInterceptor(['deliveryRequired'])
   )
   async update(
     @Param('id') id: string,

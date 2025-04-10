@@ -15,7 +15,7 @@ export class FormControlComponent {
   @Input() label: string = '';
   @Input() type: string = 'text';
   @Input() control!: FormControl;
-  @Input() hint?: string;
+  @Input() hints: string[] = []
   @Input() options?: { value: string, text: string }[];
   @Input() prefix?: string;
   @Input() suffix?: string;

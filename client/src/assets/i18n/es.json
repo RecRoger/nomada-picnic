@@ -66,7 +66,20 @@
     "ADDED": "Costo añadido correctamente",
     "EDITED": "Costo actualizado correctamente",
     "DELETED": "Costo eliminado correctamente",
+    "TYPES_DESCRIPTION": {
+      "PRODUCTION": "Costos de produccion",
+      "GIFTS": "Regalos de Cortesia",
+      "ADDITIONAL": "Adicionales",
+      "FOOD": "Comida",
+      "DELIVERY": "Delivery de comida",
+      "production": "Los costos de produccion son la base del picnic y se añaden automáticamente.",
+      "gifts": "Los regalos de cortesia se añaden automaticamente segun el numero de invitados al picnic",
+      "additional": "Los adicionales son decoraciones o actividades seleccionables por el cliente",
+      "food": "La comida adicional será seleccionable por el cliente",
+      "delivery": "El delivery de comida para aquellos adicionales de comida que lo requieran"
+    },
     "FORM": {
+      "DELIVERY": "Requiere pago de delivery",
       "BUTTON": "Guardar Costo"
     }
   },

@@ -17,7 +17,7 @@
   @if(type == 'select' && options?.length) {
   <mat-select [formControl]="control">
     @for (options of options; track options) {
-    <mat-option [value]="options.value">{{options.text}}</mat-option>
+    <mat-option [value]="options.value">{{options.text | translate}}</mat-option>
     }
   </mat-select>
   }
@@ -31,8 +31,12 @@
   <span matSuffix>{{suffix}} &nbsp;</span>
   }
 
-  @if (hint) {
-  <mat-hint>{{hint}}</mat-hint>
+  @if (hints.length) {
+  <mat-hint>
+    @for (hint of hints; track $index) {
+    <span class="control-hint">{{hint | translate}}</span>
+    }
+  </mat-hint>
   }
 
   @if (control.hasError('min') && !control.hasError('required')) {

@@ -8,35 +8,36 @@
 
   @if (!showForm) {
   <table mat-table [dataSource]="costList" multiTemplateDataRows>
-    <!-- fila principal. cabebcera + celda -->
+
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{'COMMON.NAME' | translate}}</th>
-      <td mat-cell *matCellDef="let element">{{element['name']}}</td>
+      <td mat-cell *matCellDef="let cost">{{cost['name']}}</td>
     </ng-container>
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef>{{'COMMON.TYPE' | translate}}</th>
-      <td mat-cell *matCellDef="let element">{{element['type']}}</td>
+      <td mat-cell *matCellDef="let cost">{{ ('COSTS.TYPES_DESCRIPTION.'+(cost['type'] | uppercase)) | translate}}
+      </td>
     </ng-container>
     <ng-container matColumnDef="totalCost">
       <th mat-header-cell *matHeaderCellDef>{{'COMMON.TOTAL_COST' | translate}}</th>
-      <td mat-cell *matCellDef="let element">US$ {{element['providerCost'] + element['productionCost'] | number:'1.2' }}
+      <td mat-cell *matCellDef="let cost">US$ {{cost['providerCost'] + cost['productionCost'] | number:'1.2' }}
       </td>
     </ng-container>
     <ng-container matColumnDef="earnPercentage">
       <th mat-header-cell *matHeaderCellDef>{{'COMMON.EARN_PERCENTAGE' | translate}}</th>
-      <td mat-cell *matCellDef="let element">{{element['earnPercentage']}}%</td>
+      <td mat-cell *matCellDef="let cost">{{cost['earnPercentage']}}%</td>
     </ng-container>
     <ng-container matColumnDef="finalPrice">
       <th mat-header-cell *matHeaderCellDef>{{'COMMON.FINAL_PRICE' | translate}}</th>
-      <td mat-cell *matCellDef="let element">US$ {{element['finalPrice'] | number:'1.2'}}</td>
+      <td mat-cell *matCellDef="let cost">US$ {{cost['finalPrice'] | number:'1.2'}}</td>
     </ng-container>
     <!-- icono de flecha para expandir -->
     <ng-container matColumnDef="expand">
       <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button aria-label="expand row" (click)="toggle(element); $event.stopPropagation()"
-          class="toggle-button" [class.toggle-button-expanded]="expandedElements.includes(element._id || '')">
-          @if (expandedElements.includes(element._id || '')) {
+      <td mat-cell *matCellDef="let cost">
+        <button mat-icon-button aria-label="expand row" (click)="toggle(cost); $event.stopPropagation()"
+          class="toggle-button" [class.toggle-button-expanded]="expandedElements.includes(cost._id || '')">
+          @if (expandedElements.includes(cost._id || '')) {
           <mat-icon>keyboard_arrow_up</mat-icon>
           } @else {
           <mat-icon>keyboard_arrow_down</mat-icon>
@@ -46,38 +47,41 @@
     </ng-container>
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-        <div class="element-detail-wrapper" [class.expanded]="expandedElements.includes(element._id || '')"
-          [@detailExpand]="expandedElements.includes(element._id || '') ? 'expanded' : 'collapsed'">
-          <p class="cost-description">{{element.description}}</p>
+      <td mat-cell *matCellDef="let cost" [attr.colspan]="columnsToDisplayWithExpand.length">
+        <div class="element-detail-wrapper" [class.expanded]="expandedElements.includes(cost._id || '')"
+          [@detailExpand]="expandedElements.includes(cost._id || '') ? 'expanded' : 'collapsed'">
+          <p class="cost-description">{{cost.description}}</p>
           <div class="cost-detail">
             <p><b>{{'COSTS.GUESTS_COVERAGE' | translate}}: </b>
-              {{element.guestsCoverage ? element.guestsCoverage + ' ' + ('COMMON.PEOPLE' | translate):
+              {{cost.guestsCoverage ? cost.guestsCoverage + ' ' + ('COMMON.PEOPLE' | translate):
               ('COSTS.FULL_EVENT' | translate)}}
             </p>
-            <p><b>{{'COSTS.PROVIDER_COST' | translate}}: </b> US$ {{element.providerCost | number:'1.2'}}</p>
-            <p><b>{{'COSTS.PRODUCTION_COST' | translate}}: </b> US$ {{element.productionCost | number:'1.2'}}</p>
+            <p><b>{{'COSTS.PROVIDER_COST' | translate}}: </b> US$ {{cost.providerCost | number:'1.2'}}</p>
+            <p><b>{{'COSTS.PRODUCTION_COST' | translate}}: </b> US$ {{cost.productionCost | number:'1.2'}}</p>
+            @if(cost.deliveryRequired) {
+            <p><b>Requiere delivery</b></p>
+            }
           </div>
-          @if (element?.images?.length) {
+          @if (cost?.images?.length) {
           <div class="costs-images">
-            @for (image of element.images; track $index) {
-            <img mat-card-image [src]="image" alt="{{ element.name + $index}}" class="cost-image">
+            @for (image of cost.images; track $index) {
+            <img mat-card-image [src]="image" alt="{{ cost.name + $index}}" class="cost-image">
             }
           </div>
           }
 
           <div class="costs-actions">
-            <button mat-raised-button color="accent" (click)="openDeleteDialog(element)">{{'COMMON.DELETE' |
+            <button mat-raised-button color="accent" (click)="openDeleteDialog(cost)">{{'COMMON.DELETE' |
               translate}}</button>
-            <button mat-raised-button (click)="toggleEditForm(element)">{{'COMMON.EDIT' | translate}}</button>
+            <button mat-raised-button (click)="toggleEditForm(cost)">{{'COMMON.EDIT' | translate}}</button>
           </div>
 
         </div>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="element-row"
-      [class.expanded-row]="expandedElements.includes(element._id || '')" (click)="toggle(element)">
+    <tr mat-row *matRowDef="let cost; columns: columnsToDisplayWithExpand;" class="element-row"
+      [class.expanded-row]="expandedElements.includes(cost._id || '')" (click)="toggle(cost)">
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
   </table>

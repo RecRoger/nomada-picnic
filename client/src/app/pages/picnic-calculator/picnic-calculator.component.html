@@ -1,0 +1,40 @@
+<div class="container">
+  <h3>{{"CALCULATOR.TITLE" | translate}}</h3>
+  <p>{{"CALCULATOR.SUBTITLE" | translate}}</p>
+  <div class="suggestions">
+    <!-- TODO - Componente de cards de sugerencias -->
+  </div>
+</div>
+<mat-stepper [selectedIndex]="selectedIndex" [orientation]="(stepperOrientation | async)!"
+  (selectedIndexChange)="selectionChanged($event)" #stepper>
+  @for (step of steps; track $index) {
+  <mat-step [label]="'Paso ' + step" [stepControl]="this.forms.controls[$index]">
+
+    @switch (step) {
+    @case ('additionals') {
+    <app-additionals-form></app-additionals-form>
+    }
+    @case ('food') {
+    <app-food-form></app-food-form>
+    }
+    @case ('contact') {
+    <app-client-contact-form></app-client-contact-form>
+    }
+    @default {
+    <app-basics-form></app-basics-form>
+    }
+    }
+
+    <div>
+      @if ($index > 0) {
+      <button mat-button (click)="goBackward(stepper)">{{'COMMON.PREVIOUS' | translate}}</button>
+      }
+      @if ($index + 1 != steps.length){
+      <button mat-button (click)="goForward(stepper)">{{'COMMON.NEXT' | translate}}</button>
+      } @else {
+      <button mat-button>{{'COMMON.FINALIZE' | translate}}</button>
+      }
+    </div>
+  </mat-step>
+  }
+</mat-stepper>

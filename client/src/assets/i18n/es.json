@@ -21,6 +21,9 @@
     "EARN_PERCENTAGE": "Ganancia",
     "FINAL_PRICE": "Precio Final",
     "TOTAL_COST": "Costo Total",
+    "NEXT": "Siguiente",
+    "PREVIOUS": "Anterior",
+    "FINALIZE": "Finalizar",
     "GENERIC_ERROR": "Ha ocurrido un error"
   },
   "LOGIN": {
@@ -87,5 +90,9 @@
     "TITLE": "Organiza picnics inolvidables",
     "DESCRIPTION": "Somos una empresa dedicada a organizar picnics personalizados en los parques más hermosos de tu ciudad. Te ayudamos a planificar cada detalle, desde la selección del lugar perfecto hasta la preparación de deliciosos menús y actividades divertidas.",
     "ACTION": "Cotizar mi picnic"
+  },
+  "CALCULATOR": {
+    "TITLE": "Cotiza tu evento",
+    "SUBTITLE": "Aca puedes armar tu evento o seleccionar y editar alguno de nuestras sugerencias"
   }
 }

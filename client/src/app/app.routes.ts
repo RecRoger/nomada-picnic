@@ -6,6 +6,7 @@ import { authGuard } from '@guards/auth.guard';
 import { AdminPicnicsComponent } from '@admin-components/admin-picnics/admin-picnics.component';
 import { AdminPlacesComponent } from '@admin-components/admin-places/admin-places.component';
 import { AdminCostsComponent } from '@admin-components/admin-costs/admin-costs.component';
+import { PicnicCalculatorComponent } from '@pages/picnic-calculator/picnic-calculator.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,15 +22,11 @@ export const routes: Routes = [
     ]
   },
   { path: '', component: PublicComponent },
-  { path: 'availability', component: AdminPicnicsComponent },
+  { path: 'availability', component: PublicComponent },
+  { path: 'picnics', redirectTo: 'picnics/basics', pathMatch: 'full' },
   {
-    path: 'picnics',
-    component: AdminCostsComponent,
-    children: [
-      { path: 'basics', component: AdminPicnicsComponent },
-      { path: 'additionals', component: AdminPicnicsComponent },
-      { path: 'food', component: AdminPicnicsComponent },
-    ]
+    path: 'picnics/:step',
+    component: PicnicCalculatorComponent,
   },
   { path: '*', redirectTo: '', pathMatch: 'full' }, // Ruta raíz redirige al módulo público
 ];

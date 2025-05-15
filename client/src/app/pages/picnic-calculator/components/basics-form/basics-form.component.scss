@@ -1,0 +1,10 @@
+.basic-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-evenly;
+}
+
+app-form-control {
+  width: 45%;
+}

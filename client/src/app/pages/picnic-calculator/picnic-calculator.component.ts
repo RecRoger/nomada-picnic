@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { MatStepper, MatStepperModule, StepperOrientation } from '@angular/material/stepper';
@@ -53,7 +53,12 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
   constructor(
   ) {
     this.forms = this.fb.array([
-      this.fb.group({}),
+      this.fb.group({
+        event: ["", Validators.required],
+        date: ["", Validators.required],
+        place: ["", Validators.required],
+        guestsNumber: [2, Validators.required],
+      }),
       this.fb.group({}),
       this.fb.group({}),
       this.fb.group({}),
@@ -80,6 +85,10 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
+  public getStepForm(index: number): FormGroup {
+    return this.forms.controls[index] as FormGroup
+  }
+
   ngAfterViewInit(): void {
     this.checkPicnicInfo()
   }
@@ -94,8 +103,12 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   goForward(stepper: MatStepper) {
-    stepper.next();
-    this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
+    if (this.getStepForm(stepper.selectedIndex).valid) {
+      stepper.next();
+      this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
+    } else {
+      this.getStepForm(stepper.selectedIndex).markAllAsTouched()
+    }
   }
 
   goBackward(stepper: MatStepper) {

@@ -14,7 +14,7 @@
   <textarea matInput [type]="type" [formControl]="control"></textarea>
   }
 
-  @if(type == 'select' && options?.length) {
+  @if(type == 'select' && options.length) {
   <mat-select [formControl]="control">
     @for (options of options; track options) {
     <mat-option [value]="options.value">{{options.text | translate}}</mat-option>
@@ -25,6 +25,16 @@
   @if(type == 'file') {
   <input matInput type="text" readonly="" [formControl]="control" class="fake-control" style="display: none;">
   <input type="file" (change)="onFileChange($event)" multiple (cancel)="$event.stopPropagation()">
+  }
+
+
+
+  @if(type == 'date') {
+  <input matInput (focus)="picker.open()" readonly [min]="today" [matDatepicker]="picker" [formControl]="control" />
+  <ng-container>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </ng-container>
   }
 
   @if (suffix) {

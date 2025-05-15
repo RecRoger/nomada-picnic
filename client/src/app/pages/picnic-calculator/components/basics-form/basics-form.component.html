@@ -1,1 +1,20 @@
-<p>basics-form works!</p>
+<p>{{ 'CALCULATOR.BASICS.EVENT' | translate }}</p>
+<form class="basic-form" [formGroup]="form">
+  <app-form-control [control]="getControl('event')" label="{{ 'CALCULATOR.BASICS.EVENT_PLACEHOLDER' | translate }}"
+    type="text">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('guestsNumber')" label="{{ 'COMMON.GUESTS_NUMBER' | translate }}"
+    type="number">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('date')" label="{{ 'COMMON.DATE' | translate }}" type="date">
+  </app-form-control>
+
+  @if(this.places$ | async) {
+  <app-form-control [control]="getControl('place')" label="{{ 'COMMON.PLACE' | translate }}" type="select"
+    [options]="placeList">
+  </app-form-control>
+  }
+
+</form>

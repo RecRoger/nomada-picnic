@@ -15,9 +15,9 @@ export class PlacesService {
     private filesService: FilesService,
   ) { }
 
-  async findAll(): Promise<Place[]> {
+  async findAll(type?: string): Promise<Place[]> {
     this.logger.log('[findAll]')
-    const places = await this.placesModel.find().exec();
+    const places = await (!type ? this.placesModel.find().exec() : this.placesModel.find({ type }).exec());
     return places.sort((a, b) => {
       // Comparar zonas
       if (a.zone !== b.zone) {

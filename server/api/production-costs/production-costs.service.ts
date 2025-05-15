@@ -15,7 +15,7 @@ export class ProductionCostsService {
   ) { }
 
   async findAll(type?: string): Promise<Cost[]> {
-    this.logger.log('[findAll]')
+    this.logger.log('[findAll]', type)
     return !type ? this.costsModel.find().exec() : this.costsModel.find({ type }).exec();
   }
 

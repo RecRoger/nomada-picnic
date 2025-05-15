@@ -2,3 +2,10 @@ mat-form-field {
   width: 100%;
   margin-bottom: 20px !important;
 }
+
+.mat-datepicker-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+}

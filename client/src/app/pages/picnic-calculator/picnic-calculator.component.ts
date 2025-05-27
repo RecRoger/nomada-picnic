@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { MatStepper, MatStepperModule, StepperOrientation } from '@angular/material/stepper';
@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { BasicsFormComponent } from './components/basics-form/basics-form.component';
+import { ProductionFormComponent } from '@pages/picnic-calculator/components/production-form/production-form.component';
 import { AdditionalsFormComponent } from '@pages/picnic-calculator/components/additionals-form/additionals-form.component';
 import { FoodFormComponent } from '@pages/picnic-calculator/components/food-form/food-form.component';
 import { ClientContactFormComponent } from '@pages/picnic-calculator/components/client-contact-form/client-contact-form.component';
@@ -25,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatButtonModule,
     MatCardModule,
     BasicsFormComponent,
+    ProductionFormComponent,
     AdditionalsFormComponent,
     FoodFormComponent,
     ClientContactFormComponent,
@@ -39,9 +41,9 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
 
   @ViewChild('stepper') stepper!: MatStepper;
 
-  forms: FormArray;
+  forms: FormGroup;
 
-  steps = ['basics', 'additionals', 'food', 'contact'];
+  steps = ['basics', 'production', 'additionals', 'food', 'contact'];
 
   selectedIndex = 0;
 
@@ -52,17 +54,34 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
 
   constructor(
   ) {
-    this.forms = this.fb.array([
-      this.fb.group({
+    this.forms = this.fb.group({
+      basics: this.fb.group({
         event: ["", Validators.required],
         date: ["", Validators.required],
         place: ["", Validators.required],
-        guestsNumber: [2, Validators.required],
+        guestsAmount: [2, Validators.required],
       }),
-      this.fb.group({}),
-      this.fb.group({}),
-      this.fb.group({}),
-    ])
+      production: this.fb.group({
+        tableAmount: [1, Validators.required],
+        archIndicator: [true],
+        bigTableIndicator: [false],
+        boardText: [null, [Validators.required, Validators.maxLength(30)]]
+      }),
+      additionals: this.fb.group({
+        petalsIndicator: [false],
+        photoAmount: [0],
+        flowersAmount: [0],
+        lightsIndicators: [false],
+        photographerIndicator: [false]
+      }),
+      food: this.fb.group({
+        giftText: ["", Validators.required],
+        items: this.fb.array([])
+      }),
+      contact: this.fb.group({
+        name: ['']
+      }),
+    })
 
     const breakpointObserver = inject(BreakpointObserver);
 
@@ -85,8 +104,8 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
-  public getStepForm(index: number): FormGroup {
-    return this.forms.controls[index] as FormGroup
+  public getStepForm(step: string): FormGroup {
+    return this.forms.controls[step] as FormGroup
   }
 
   ngAfterViewInit(): void {
@@ -103,17 +122,33 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   goForward(stepper: MatStepper) {
-    if (this.getStepForm(stepper.selectedIndex).valid) {
+    if (this.validateStep(stepper.selectedIndex)) {
       stepper.next();
       this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
     } else {
-      this.getStepForm(stepper.selectedIndex).markAllAsTouched()
+      this.getStepForm(this.steps[stepper.selectedIndex]).markAllAsTouched()
     }
   }
 
   goBackward(stepper: MatStepper) {
     stepper.previous();
     this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
+  }
+
+  validateStep(index: number): boolean {
+    switch (index) {
+      case 0:
+        if (this.getStepForm('production')!.get('tableAmount')!.untouched) {
+          const guests = Math.max(0, this.getStepForm('basics').get('guestsAmount')!.value);
+          // Calcular el número de mesas (un invitado por lado libre de cada mesa unida)
+          this.getStepForm('production').patchValue({
+            tableAmount: Math.ceil(guests <= 4 ? 1 : (guests - 2) / 2)
+          })
+        }
+        break
+    }
+
+    return this.getStepForm(this.steps[index]).valid
   }
 
   private checkPicnicInfo() {

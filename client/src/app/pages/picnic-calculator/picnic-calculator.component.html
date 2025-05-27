@@ -5,23 +5,27 @@
     <!-- TODO - Componente de cards de sugerencias -->
   </div>
 </div>
-<mat-stepper linear [selectedIndex]="selectedIndex" [orientation]="(stepperOrientation | async)!"
+<!-- TODO - añadir linear al stepper -->
+<mat-stepper [selectedIndex]="selectedIndex" [orientation]="(stepperOrientation | async)!"
   (selectedIndexChange)="selectionChanged($event);" #stepper>
   @for (step of steps; track $index) {
-  <mat-step [label]="'Paso ' + step" [stepControl]="getStepForm($index)">
+  <mat-step [label]="'Paso ' + step" [stepControl]="getStepForm(step)">
 
     @switch (step) {
+    @case ('production') {
+    <app-production-form [form]="getStepForm(step)"></app-production-form>
+    }
     @case ('additionals') {
-    <app-additionals-form></app-additionals-form>
+    <app-additionals-form [form]="getStepForm(step)"></app-additionals-form>
     }
     @case ('food') {
-    <app-food-form></app-food-form>
+    <app-food-form [form]="getStepForm(step)"></app-food-form>
     }
     @case ('contact') {
-    <app-client-contact-form></app-client-contact-form>
+    <app-client-contact-form [form]="getStepForm(step)"></app-client-contact-form>
     }
     @default {
-    <app-basics-form [form]="getStepForm(0)"></app-basics-form>
+    <app-basics-form [form]="getStepForm(step)"></app-basics-form>
     }
     }
 

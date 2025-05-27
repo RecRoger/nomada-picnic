@@ -6,7 +6,7 @@ import { authGuard } from '@guards/auth.guard';
 import { AdminPicnicsComponent } from '@admin-components/admin-picnics/admin-picnics.component';
 import { AdminPlacesComponent } from '@admin-components/admin-places/admin-places.component';
 import { AdminCostsComponent } from '@admin-components/admin-costs/admin-costs.component';
-import { PicnicCalculatorComponent } from '@pages/picnic-calculator/picnic-calculator.component';
+import { PicnicCalculatorComponent } from '@pages/calculator-stepper/calculator-stepper.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

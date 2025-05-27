@@ -7,15 +7,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { BasicsFormComponent } from './components/basics-form/basics-form.component';
-import { ProductionFormComponent } from '@pages/picnic-calculator/components/production-form/production-form.component';
-import { AdditionalsFormComponent } from '@pages/picnic-calculator/components/additionals-form/additionals-form.component';
-import { FoodFormComponent } from '@pages/picnic-calculator/components/food-form/food-form.component';
-import { ClientContactFormComponent } from '@pages/picnic-calculator/components/client-contact-form/client-contact-form.component';
+import { ProductionFormComponent } from '@pages/calculator-stepper/components/production-form/production-form.component';
+import { AdditionalsFormComponent } from '@pages/calculator-stepper/components/additionals-form/additionals-form.component';
+import { FoodFormComponent } from '@pages/calculator-stepper/components/food-form/food-form.component';
+import { ClientContactFormComponent } from '@pages/calculator-stepper/components/client-contact-form/client-contact-form.component';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-picnic-calculator',
+  selector: 'app-calculator-stepper',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,8 +31,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FoodFormComponent,
     ClientContactFormComponent,
   ],
-  templateUrl: './picnic-calculator.component.html',
-  styleUrl: './picnic-calculator.component.scss'
+  templateUrl: './calculator-stepper.component.html',
+  styleUrl: './calculator-stepper.component.scss'
 })
 export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly router: Router = inject(Router)

@@ -50,16 +50,21 @@
   }
 
   @if (control.hasError('min') && !control.hasError('required')) {
-  <mat-error>{{ 'COMMON.MIN_VALUE_FIELD' | translate: (control.errors && control.errors['min']) }}</mat-error>
+  <mat-error>{{ 'COMMON.ERRORS.MIN_VALUE_FIELD' | translate: (control.errors && control.errors['min']) }}</mat-error>
   }
   @if (control.hasError('max') && !control.hasError('required')) {
-  <mat-error>{{ 'COMMON.MAX_VALUE_FIELD' | translate: (control.errors && control.errors['max']) }}</mat-error>
+  <mat-error>{{ 'COMMON.ERRORS.MAX_VALUE_FIELD' | translate: (control.errors && control.errors['max']) }}</mat-error>
   }
   @if (control.hasError('email') && !control.hasError('required')) {
-  <mat-error>{{ 'COMMON.INVALID_FIELD' | translate }}</mat-error>
+  <mat-error>{{ 'COMMON.ERRORS.INVALID_FIELD' | translate }}</mat-error>
+  }
+  @if (control.hasError('maxlength') && !control.hasError('required')) {
+  <mat-error>
+    {{ 'COMMON.ERRORS.MAX_CHARACTERS_FIELD' | translate: {max:control.errors!['maxlength'].requiredLength} }}
+  </mat-error>
   }
   @if (control.hasError('required')) {
-  <mat-error [innerHTML]="'COMMON.REQUIRED_FIELD' | translate"></mat-error>
+  <mat-error [innerHTML]="'COMMON.ERRORS.REQUIRED_FIELD' | translate"></mat-error>
   }
 </mat-form-field>
 

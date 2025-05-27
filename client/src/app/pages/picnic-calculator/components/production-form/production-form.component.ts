@@ -7,13 +7,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
 
 @Component({
-  selector: 'app-additionals-form',
+  selector: 'app-production-form',
   standalone: true,
   imports: [CommonModule, TranslateModule, ReactiveFormsModule, ...MAT_FORMS_MODULES, FormControlComponent, MatSlideToggleModule],
-  templateUrl: './additionals-form.component.html',
-  styleUrl: './additionals-form.component.scss'
+  templateUrl: './production-form.component.html',
+  styleUrl: './production-form.component.scss'
 })
-export class AdditionalsFormComponent {
+export class ProductionFormComponent {
   @Input() public form: FormGroup = new FormGroup({})
 
   public getControl(controlName: string): FormControl {

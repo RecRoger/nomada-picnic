@@ -1,0 +1,24 @@
+.additionals-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-evenly;
+  // flex-direction: column;
+}
+
+.additinals-toogle-group {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-evenly;
+  padding-bottom: 2rem
+}
+
+// .additional-control {
+//   width: 20%;
+// }
+
+app-form-control {
+  width: 45%;
+}

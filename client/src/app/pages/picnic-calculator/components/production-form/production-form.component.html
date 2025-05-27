@@ -1,0 +1,24 @@
+<form class="production-form" [formGroup]="form">
+  <app-form-control [control]="getControl('tableAmount')" label="{{ 'CALCULATOR.PRODUCTION.TABLE' | translate }}"
+    type="number">
+  </app-form-control>
+
+  <div class="production-control">
+    <mat-slide-toggle formControlName="archIndicator" labelPosition="before">
+      {{"CALCULATOR.PRODUCTION.ARCH" | translate}}
+    </mat-slide-toggle>
+  </div>
+
+  <div class="production-control">
+    <mat-slide-toggle formControlName="bigTableIndicator" labelPosition="before">
+      {{"CALCULATOR.PRODUCTION.BIG_TABLE" | translate}}
+    </mat-slide-toggle>
+  </div>
+
+  <div class="production-control-textarea">
+    <p>{{ 'CALCULATOR.PRODUCTION.BOARD_TEXT' | translate }}</p>
+    <app-form-control [control]="getControl('boardText')"
+      label="{{ 'CALCULATOR.PRODUCTION.BOARD_PLACEHOLDER' | translate }}" type="textarea">
+    </app-form-control>
+  </div>
+</form>

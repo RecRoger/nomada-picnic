@@ -11,10 +11,13 @@
     "LAT": "Latitud",
     "LNG": "Longitud",
     "ADD_IMAGES": "Añadir imágenes",
-    "INVALID_FIELD": "Campo inválido",
-    "REQUIRED_FIELD": "El campo es <b>obligatorio</b>",
-    "MIN_VALUE_FIELD": "El campo puede tener un valor minimo igual a {{min}}",
-    "MAX_VALUE_FIELD": "El campo es debe tener un valor no mayor a {{max}}",
+    "ERRORS": {
+      "INVALID_FIELD": "Campo inválido",
+      "REQUIRED_FIELD": "El campo es <b>obligatorio</b>",
+      "MIN_VALUE_FIELD": "El campo puede tener un valor minimo igual a {{min}}",
+      "MAX_VALUE_FIELD": "El campo es debe tener un valor no mayor a {{max}}",
+      "MAX_CHARACTERS_FIELD": "El campo puede tener hasta {{max}} caracteres"
+    },
     "DATE": "Fecha",
     "PLACE": "Lugar",
     "GUESTS_NUMBER": "Número de invitados",
@@ -100,6 +103,21 @@
     "BASICS": {
       "EVENT": "Cuentanos un poco sobre tu evento",
       "EVENT_PLACEHOLDER": "¿qué celebras?"
+    },
+    "PRODUCTION": {
+      "TABLE": "Numero de mesas",
+      "ARCH": "Incluir arco decorativo",
+      "BIG_TABLE": "Incluir meson alto",
+      "BOARD_TEXT": "¿Que deseas escribir en la pizarra?",
+      "BOARD_PLACEHOLDER": "\"Feliz dia del picnic\""
+    },
+    "ADDITIONALS": {
+      "TEXT": "Algunos adicionales para agregar.",
+      "PETALS": "Decoracion con pétalos de rosas",
+      "FLOWERS": "Arreglos de Flores Naturales",
+      "PHOTOS_AMOUNT": "Numero fotos tipo Polaroid",
+      "LIGTHS": "Decoracion con guirnaldas de luces",
+      "PHOTOGRAPHER": "Contratar Fotógrafo"
     }
   }
 }

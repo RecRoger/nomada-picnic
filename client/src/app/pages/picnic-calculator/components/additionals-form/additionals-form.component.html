@@ -1,1 +1,23 @@
-<p>additionals-form works!</p>
+<p>{{ 'CALCULATOR.ADDITIONALS.TEXT' | translate }}</p>
+<form class="additionals-form" [formGroup]="form">
+  <app-form-control [control]="getControl('flowersAmount')" label="{{ 'CALCULATOR.ADDITIONALS.FLOWERS' | translate }}"
+    type="number">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('photoAmount')"
+    label="{{ 'CALCULATOR.ADDITIONALS.PHOTOS_AMOUNT' | translate }}" type="number">
+  </app-form-control>
+
+  <div class="additinals-toogle-group">
+    <mat-slide-toggle formControlName="petalsIndicator" labelPosition="before">
+      {{"CALCULATOR.ADDITIONALS.PETALS" | translate}}
+    </mat-slide-toggle>
+    <mat-slide-toggle formControlName="lightsIndicators" labelPosition="before">
+      {{"CALCULATOR.ADDITIONALS.LIGTHS" | translate}}
+    </mat-slide-toggle>
+    <mat-slide-toggle formControlName="photographerIndicator" labelPosition="before">
+      {{"CALCULATOR.ADDITIONALS.PHOTOGRAPHER" | translate}}
+    </mat-slide-toggle>
+  </div>
+
+</form>

@@ -1,1 +1,21 @@
-<p>food-form works!</p>
+<form class="food-form" [formGroup]="form">
+  <p>Hola</p>
+  <app-form-control [control]="getControl('giftText')" label="{{ 'CALCULATOR.PRODUCTION.TABLE' | translate }}"
+    type="textarea">
+  </app-form-control>
+
+  @if ((foodList$ | async); as foodList) {
+  @for (food of foodList; track $index) {
+  <p>
+    {{$index}}{{food | json}}
+  </p>
+  }
+  }
+  <!-- 
+
+  <div class="production-control">
+    <mat-slide-toggle formControlName="archIndicator" labelPosition="before">
+      {{"CALCULATOR.PRODUCTION.ARCH" | translate}}
+    </mat-slide-toggle>
+  </div> -->
+</form>

@@ -20,7 +20,12 @@ export const MY_FORMATS = {
 @Component({
   selector: 'app-form-control',
   standalone: true,
-  imports: [TranslateModule, CommonModule, ReactiveFormsModule, ...MAT_FORMS_MODULES],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    ...MAT_FORMS_MODULES
+  ],
   providers: [
     provideNativeDateAdapter(MY_FORMATS),
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
@@ -30,6 +35,7 @@ export const MY_FORMATS = {
 })
 export class FormControlComponent {
   @Input() label: string = '';
+  @Input() placeholder: string = '';
   @Input() type: string = 'text';
   @Input() control!: FormControl;
   @Input() hints: string[] = []
@@ -48,4 +54,3 @@ export class FormControlComponent {
     }
   }
 }
-

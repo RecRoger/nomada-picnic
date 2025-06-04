@@ -8,8 +8,6 @@
 .image-container {
   width: 100%;
   overflow: hidden;
-  border-top-right-radius: 28% 100%;
-  border-bottom-right-radius: 500% 510%;
 }
 
 .image-container img {
@@ -54,9 +52,6 @@ p {
 
   .image-container {
     max-height: 400px;
-    border-top-right-radius: 0%;
-    border-bottom-right-radius: 500% 510%;
-    border-bottom-left-radius: 500% 510%;
   }
 
   .image-container img {

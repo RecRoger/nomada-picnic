@@ -1,5 +1,6 @@
 @if (control) {
-<mat-form-field [floatLabel]="type=='file' ? 'always': 'auto'">
+<mat-form-field [floatLabel]="type=='file' ? 'always': 'auto'"
+  [class.mat-form-field-invalid]="control.invalid && (control.touched || control.dirty)">
 
   <mat-label>{{ label }}</mat-label>
 
@@ -11,7 +12,7 @@
   <input matInput [type]="type" [formControl]="control">
   }
   @if(type == 'textarea') {
-  <textarea matInput [type]="type" [formControl]="control"></textarea>
+  <textarea matInput [type]="type" [formControl]="control" [placeholder]="placeholder"></textarea>
   }
 
   @if(type == 'select' && options.length) {
@@ -63,7 +64,7 @@
     {{ 'COMMON.ERRORS.MAX_CHARACTERS_FIELD' | translate: {max:control.errors!['maxlength'].requiredLength} }}
   </mat-error>
   }
-  @if (control.hasError('required')) {
+  @if (control.hasError('required') && control.touched) {
   <mat-error [innerHTML]="'COMMON.ERRORS.REQUIRED_FIELD' | translate"></mat-error>
   }
 </mat-form-field>

@@ -6,8 +6,8 @@
   </div>
 </div>
 <!-- TODO - añadir linear al stepper -->
-<mat-stepper [selectedIndex]="selectedIndex" [orientation]="(stepperOrientation | async)!"
-  (selectedIndexChange)="selectionChanged($event);" #stepper>
+<mat-horizontal-stepper #stepper [selectedIndex]="selectedIndex" [orientation]="(stepperOrientation | async)!"
+  (selectedIndexChange)="selectionChanged($event);">
   @for (step of steps; track $index) {
   <mat-step [label]="'Paso ' + step" [stepControl]="getStepForm(step)">
 
@@ -29,16 +29,20 @@
     }
     }
 
-    <div>
-      @if ($index > 0) {
-      <button mat-button (click)="goBackward(stepper)">{{'COMMON.PREVIOUS' | translate}}</button>
-      }
-      @if ($index + 1 != steps.length){
-      <button mat-button (click)="goForward(stepper)">{{'COMMON.NEXT' | translate}}</button>
-      } @else {
-      <button mat-button>{{'COMMON.FINALIZE' | translate}}</button>
-      }
-    </div>
+    <ng-container *ngTemplateOutlet="stepperButtonsTemplate; context: { index: $index }"></ng-container>
   </mat-step>
   }
-</mat-stepper>
+</mat-horizontal-stepper>
+
+<ng-template #stepperButtonsTemplate let-index="index">
+  <div>
+    @if (index > 0) {
+    <button mat-button (click)="goBackward(stepper)">{{'COMMON.PREVIOUS' | translate}}</button>
+    }
+    @if (index + 1 != steps.length){
+    <button mat-button (click)="goForward(stepper)">{{'COMMON.NEXT' | translate}}</button>
+    } @else {
+    <button mat-button>{{'COMMON.FINALIZE' | translate}}</button>
+    }
+  </div>
+</ng-template>

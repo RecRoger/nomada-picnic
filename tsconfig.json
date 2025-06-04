@@ -51,6 +51,14 @@
       "@env/*": [
         "./client/src/environments/*"
       ]
+    },
+    "watchOptions": {
+      "excludeDirectories": [
+        "**/client",
+        "**/node_modules",
+        "**/dist"
+      ],
+      "excludeFiles": []
     }
   },
   "generateOptions": {

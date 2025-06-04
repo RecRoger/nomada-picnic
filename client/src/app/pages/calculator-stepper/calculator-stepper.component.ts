@@ -65,7 +65,7 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
         tableAmount: [1, Validators.required],
         archIndicator: [true],
         bigTableIndicator: [false],
-        boardText: [null, [Validators.required, Validators.maxLength(30)]]
+        boardText: ["", [Validators.required, Validators.maxLength(30)]]
       }),
       additionals: this.fb.group({
         petalsIndicator: [false],
@@ -153,8 +153,9 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
 
   private checkPicnicInfo() {
     // TODO - validar formularios y recuperar informacion previa
-    if (this.selectedIndex)
+    if (this.selectedIndex) {
       this.stepper.steps.toArray()[0].interacted = true
+    }
     // this.stepper.steps.toArray()[1].interacted = true
   }
 }

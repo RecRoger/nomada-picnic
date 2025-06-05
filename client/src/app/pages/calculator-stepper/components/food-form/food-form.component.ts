@@ -55,7 +55,7 @@ export class FoodFormComponent implements OnInit, OnDestroy {
     this.foodList$ = this.costsService.getCosts('food').pipe(
       tap(foodList => {
         const formList = (this.form.get('items') as FormArray)
-        foodList.forEach(_ => {
+        foodList.forEach(() => {
           const foodForm = this.fb.group({
             selected: [false],
             quantity: [0]

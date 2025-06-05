@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { PLACES_TYPES } from '@enums/places-types.enum';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormControlCastPipe } from '@pipes/form-control-cast.pipe';
 import { PlacesService } from '@services/places.service';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { map, Observable, of, tap } from 'rxjs';
@@ -11,7 +12,14 @@ import { map, Observable, of, tap } from 'rxjs';
 @Component({
   selector: 'app-basics-form',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ReactiveFormsModule, ...MAT_FORMS_MODULES, FormControlComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    ...MAT_FORMS_MODULES,
+    FormControlComponent,
+    FormControlCastPipe,
+  ],
   templateUrl: './basics-form.component.html',
   styleUrl: './basics-form.component.scss'
 })
@@ -26,10 +34,6 @@ export class BasicsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPlaces()
-  }
-
-  public getControl(controlName: string): FormControl {
-    return this.form.get(controlName) as FormControl
   }
 
   public getPlaces(): void {

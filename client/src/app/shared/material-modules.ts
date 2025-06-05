@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export const MAT_FORMS_MODULES = [
   MatFormFieldModule,
@@ -13,4 +14,5 @@ export const MAT_FORMS_MODULES = [
   MatButtonModule,
   MatCheckboxModule,
   MatDatepickerModule,
+  MatSlideToggleModule,
 ]

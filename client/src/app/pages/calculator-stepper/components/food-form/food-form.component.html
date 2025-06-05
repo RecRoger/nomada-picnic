@@ -1,21 +1,37 @@
 <form class="food-form" [formGroup]="form">
-  <p>Hola</p>
-  <app-form-control [control]="getControl('giftText')" label="{{ 'CALCULATOR.PRODUCTION.TABLE' | translate }}"
-    type="textarea">
+  <p>{{ 'CALCULATOR.FOOD.GIFT_TEXT' | translate }}</p>
+  <app-form-control [control]="form.get('giftText') | asFormControl"
+    label="{{ 'CALCULATOR.FOOD.GIFT_PLACEHOLDER' | translate }}" type="textarea">
   </app-form-control>
 
   @if ((foodList$ | async); as foodList) {
-  @for (food of foodList; track $index) {
-  <p>
-    {{$index}}{{food | json}}
-  </p>
-  }
-  }
-  <!-- 
+  <h6>{{'CALCULATOR.FOOD.ADDITIONAL_FOOD' | translate}}</h6>
+  @if ((form.get('items') | asFormArray)?.controls?.length) {
+  <ul formArrayName="items">
+    @for (food of foodList; track $index) {
+    <li [formGroup]="getFoodForm($index)" class="food-item">
+      <div class="food-item__detail">
+        <div class="food-item__description">
+          <mat-slide-toggle formControlName="selected" class="food-toogle">
+            {{ food.name }}
+          </mat-slide-toggle>
+          <p>
+            {{food.description}}.<br>
+            Costo: {{food.finalPrice | currency}}<br>
+            {{'CALCULATOR.FOOD.FOOD_COVERAGE' | translate: food}}
+          </p>
+        </div>
+        @if (getFoodForm($index).get('selected')?.value) {
+        <app-form-control [control]="getQuantityControl($index)" label="{{ 'CALCULATOR.FOOD.QUIANTITY' | translate }}"
+          type="number" class="food-quantity">
+        </app-form-control>
+        }
+      </div>
 
-  <div class="production-control">
-    <mat-slide-toggle formControlName="archIndicator" labelPosition="before">
-      {{"CALCULATOR.PRODUCTION.ARCH" | translate}}
-    </mat-slide-toggle>
-  </div> -->
+    </li>
+    }
+  </ul>
+  }
+  }
+
 </form>

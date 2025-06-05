@@ -37,7 +37,7 @@ export class FormControlComponent {
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() type: string = 'text';
-  @Input() control!: FormControl;
+  @Input() control?: FormControl;
   @Input() hints: string[] = []
   @Input() options: { value: string, text: string }[] = [];
   @Input() prefix?: string;
@@ -50,7 +50,7 @@ export class FormControlComponent {
   public onFileChange(event: any) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      this.control.patchValue(fileList)
+      this.control?.patchValue(fileList)
     }
   }
 }

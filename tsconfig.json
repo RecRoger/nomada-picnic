@@ -27,6 +27,9 @@
       "@models/*": [
         "./client/src/app/models/*"
       ],
+      "@pipes/*": [
+        "./client/src/app/pipes/*"
+      ],
       "@enums/*": [
         "./client/src/app/enums/*"
       ],
@@ -52,14 +55,6 @@
         "./client/src/environments/*"
       ]
     },
-    "watchOptions": {
-      "excludeDirectories": [
-        "**/client",
-        "**/node_modules",
-        "**/dist"
-      ],
-      "excludeFiles": []
-    }
   },
   "generateOptions": {
     "spec": false

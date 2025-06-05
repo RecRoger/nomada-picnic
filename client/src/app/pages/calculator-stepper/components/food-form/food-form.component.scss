@@ -1,0 +1,22 @@
+.food-toogle {
+  margin-bottom: .5rem
+}
+
+::ng-deep.food-toogle label {
+  font-size: 1.5rem
+}
+
+.food-item__detail {
+  display: flex;
+  gap: 2rem;
+}
+
+.food-item__description {
+  width: 100%;
+  margin-bottom: 1.5rem
+}
+
+
+.food-quantity {
+  width: 300px;
+}

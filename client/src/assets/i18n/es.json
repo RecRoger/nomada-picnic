@@ -118,6 +118,13 @@
       "PHOTOS_AMOUNT": "Numero fotos tipo Polaroid",
       "LIGTHS": "Decoracion con guirnaldas de luces",
       "PHOTOGRAPHER": "Contratar Fotógrafo"
+    },
+    "FOOD": {
+      "GIFT_TEXT": "En todos nuestos picnics nos gusta regalar una cesta de panes junto con hielo y alguna bebida de cortesia, que podria ser gaseosa, jugo, vino o espumante según el numero de invitados. \n Cuentanos que preferencia tenés entre estas opciones.",
+      "GIFT_PLACEHOLDER": "¿Qué bebida de cortesia te gustaria recibir?",
+      "ADDITIONAL_FOOD": "Comida adicional",
+      "FOOD_COVERAGE": "Tiene un alcance aproximado para {{guestsCoverage}} personas",
+      "QUIANTITY": "Cantidad"
     }
   }
 }

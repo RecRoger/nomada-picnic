@@ -6,14 +6,22 @@
   font-size: 1.5rem
 }
 
-.food-item__detail {
+.food-item {
   display: flex;
   gap: 2rem;
+  padding: 1rem
 }
 
-.food-item__description {
+.food-forms {
+  margin-bottom: 2rem;
+}
+
+.food-item__detail {
   width: 100%;
-  margin-bottom: 1.5rem
+
+  .food-item__description {
+    margin-left: 1.5rem
+  }
 }
 
 

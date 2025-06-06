@@ -7,6 +7,7 @@ import { FormArrayCastPipe, FormControlCastPipe } from '@pipes/form-control-cast
 import { CostsService } from '@services/costs.service';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-food-form',
@@ -19,6 +20,7 @@ import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
     ...MAT_FORMS_MODULES,
     FormControlCastPipe,
     FormArrayCastPipe,
+    MatDividerModule
   ],
   templateUrl: './food-form.component.html',
   styleUrl: './food-form.component.scss'
@@ -67,6 +69,7 @@ export class FoodFormComponent implements OnInit, OnDestroy {
               const quantityControl = foodForm.get('quantity');
               if (selected) {
                 quantityControl?.enable();
+                quantityControl?.markAsUntouched();
                 quantityControl?.setValidators([Validators.required, Validators.min(1)]); // Requerido si está seleccionado
               } else {
                 quantityControl?.disable(); // Deshabilita si no está seleccionado

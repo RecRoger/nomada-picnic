@@ -1,4 +1,6 @@
 export interface PicnicItem {
-  item: string;
+  code: string;
+  name: string;
+  selectable: boolean;
   amount: number;
 }

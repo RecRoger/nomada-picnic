@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, Subject, takeUntil } from 'rxjs';
 import { MatStepper, MatStepperModule, StepperOrientation } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,11 @@ import { FoodFormComponent } from '@pages/calculator-stepper/components/food-for
 import { ClientContactFormComponent } from '@pages/calculator-stepper/components/client-contact-form/client-contact-form.component';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { NotificationService } from '@services/notification.service';
+import { PriceBarComponent } from '@components/price-bar/price-bar.component';
+import { PriceService } from '@services/price.service';
+import { FormGroupCastPipe } from '@pipes/form-control-cast.pipe';
+import { BudgetData } from '@models/budget.dto';
 
 @Component({
   selector: 'app-calculator-stepper',
@@ -25,23 +30,27 @@ import { TranslateModule } from '@ngx-translate/core';
     MatStepperModule,
     MatButtonModule,
     MatCardModule,
+    FormGroupCastPipe,
     BasicsFormComponent,
     ProductionFormComponent,
     AdditionalsFormComponent,
     FoodFormComponent,
     ClientContactFormComponent,
+    PriceBarComponent,
   ],
   templateUrl: './calculator-stepper.component.html',
   styleUrl: './calculator-stepper.component.scss'
 })
-export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PicnicCalculatorComponent implements OnInit, OnDestroy {
   private readonly router: Router = inject(Router)
   private readonly route: ActivatedRoute = inject(ActivatedRoute)
   private readonly fb: FormBuilder = inject(FormBuilder)
+  private readonly notification: NotificationService = inject(NotificationService)
+  private readonly priceService: PriceService = inject(PriceService)
 
   @ViewChild('stepper') stepper!: MatStepper;
 
-  forms: FormGroup;
+  forms: FormGroup = this.fb.group({});
 
   steps = ['basics', 'production', 'additionals', 'food', 'contact'];
 
@@ -54,6 +63,63 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
 
   constructor(
   ) {
+    this.stepperOrientation = inject(BreakpointObserver)
+      .observe('(min-width: 800px)')
+      .pipe(
+        takeUntil(this.destroy$),
+        map(({ matches }) => (matches ? 'horizontal' : 'vertical'))
+      );
+  }
+
+  ngOnInit() {
+    this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
+      const step = params['step'];
+      this.selectedIndex = this.steps.indexOf(step);
+      if (this.selectedIndex === -1) {
+        // Redirigir a un paso válido si la URL es incorrecta
+        this.router.navigate(['/picnics', this.steps[0]]);
+      }
+    });
+
+    this.generateForms()
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  public getStepForm(step: string): FormGroup {
+    return this.forms.controls[step] as FormGroup
+  }
+
+  public selectionChanged(selectedIndex: number): void {
+    this.router.navigate(['/picnics', this.steps[selectedIndex]]);
+  }
+
+  public goForward(stepper: MatStepper): void {
+    if (this.validateStep(stepper.selectedIndex)) {
+      stepper.next();
+      this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
+    } else {
+      this.getStepForm(this.steps[stepper.selectedIndex]).markAllAsTouched()
+    }
+  }
+
+  public goBackward(stepper: MatStepper): void {
+    stepper.previous();
+    this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
+  }
+
+  public finalizeStepper(stepper: MatStepper): void {
+    if (this.validateStep(stepper.selectedIndex)) {
+      this.notification.openNotification({ message: 'Supongamos que todo salio bien' })
+    } else {
+      this.getStepForm(this.steps[stepper.selectedIndex]).markAllAsTouched()
+    }
+  }
+
+  private generateForms(): void {
     this.forms = this.fb.group({
       basics: this.fb.group({
         event: ["", Validators.required],
@@ -79,63 +145,22 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
         items: this.fb.array([])
       }),
       contact: this.fb.group({
-        name: ['']
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        phone: ['', [Validators.required]],
       }),
     })
 
-    const breakpointObserver = inject(BreakpointObserver);
-
-    this.stepperOrientation = breakpointObserver
-      .observe('(min-width: 800px)')
-      .pipe(
-        takeUntil(this.destroy$),
-        map(({ matches }) => (matches ? 'horizontal' : 'vertical'))
-      );
+    this.forms.valueChanges.pipe(
+      takeUntil(this.destroy$),
+      debounceTime(100),
+      distinctUntilChanged()
+    ).subscribe((value: BudgetData) => {
+      this.priceService.checkPrice(value)
+    })
   }
 
-  ngOnInit() {
-    this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
-      const step = params['step'];
-      this.selectedIndex = this.steps.indexOf(step);
-      if (this.selectedIndex === -1) {
-        // Redirigir a un paso válido si la URL es incorrecta
-        this.router.navigate(['/picnics', this.steps[0]]);
-      }
-    });
-  }
-
-  public getStepForm(step: string): FormGroup {
-    return this.forms.controls[step] as FormGroup
-  }
-
-  ngAfterViewInit(): void {
-    this.checkPicnicInfo()
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  selectionChanged(selectedIndex: number) {
-    this.router.navigate(['/picnics', this.steps[selectedIndex]]);
-  }
-
-  goForward(stepper: MatStepper) {
-    if (this.validateStep(stepper.selectedIndex)) {
-      stepper.next();
-      this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
-    } else {
-      this.getStepForm(this.steps[stepper.selectedIndex]).markAllAsTouched()
-    }
-  }
-
-  goBackward(stepper: MatStepper) {
-    stepper.previous();
-    this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
-  }
-
-  validateStep(index: number): boolean {
+  private validateStep(index: number): boolean {
     switch (index) {
       case 0:
         if (this.getStepForm('production')!.get('tableAmount')!.untouched) {
@@ -149,13 +174,5 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
     return this.getStepForm(this.steps[index]).valid
-  }
-
-  private checkPicnicInfo() {
-    // TODO - validar formularios y recuperar informacion previa
-    if (this.selectedIndex) {
-      this.stepper.steps.toArray()[0].interacted = true
-    }
-    // this.stepper.steps.toArray()[1].interacted = true
   }
 }

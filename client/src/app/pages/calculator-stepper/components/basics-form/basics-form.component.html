@@ -1,4 +1,5 @@
 <p>{{ 'CALCULATOR.BASICS.EVENT' | translate }}</p>
+@if (form) {
 <form class="basic-form" [formGroup]="form">
   <app-form-control [control]="form.get('event') | asFormControl"
     label="{{ 'CALCULATOR.BASICS.EVENT_PLACEHOLDER' | translate }}" type="text">
@@ -18,3 +19,4 @@
   }
 
 </form>
+}

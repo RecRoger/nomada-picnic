@@ -21,5 +21,5 @@ import { MAT_FORMS_MODULES } from '@shared/material-modules';
   styleUrl: './production-form.component.scss'
 })
 export class ProductionFormComponent {
-  @Input() public form: FormGroup = new FormGroup({})
+  @Input() public form?: FormGroup = new FormGroup({})
 }

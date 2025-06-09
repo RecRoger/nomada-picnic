@@ -4,6 +4,7 @@
     "NO": "No",
     "NAME": "Nombre",
     "EMAIL": "Correo Electronico",
+    "PHONE": "Teléfono",
     "PASSWORD": "Contraseña",
     "DESCRIPTION": "Descripcion",
     "DELETE": "Eliminar",
@@ -125,6 +126,9 @@
       "ADDITIONAL_FOOD": "Comida adicional",
       "FOOD_COVERAGE": "Tiene un alcance aproximado para {{guestsCoverage}} personas",
       "QUIANTITY": "Cantidad"
+    },
+    "CONTACT": {
+      "MESSAGE": "Para finalizar la cotizacion es necesario que nos compartas algunos datos para poder mantener el contacto con vos."
     }
   }
 }

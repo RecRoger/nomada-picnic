@@ -3,42 +3,30 @@
 </div>
 <!-- TODO - añadir linear al stepper -->
 <mat-horizontal-stepper #stepper [selectedIndex]="selectedIndex" [orientation]="(stepperOrientation | async)!"
-  (selectedIndexChange)="selectionChanged($event);">
+  (selectedIndexChange)="selectionChanged($event);" class="stepper">
   @for (step of steps; track $index) {
-  <mat-step [label]="'Paso ' + step" [stepControl]="getStepForm(step)">
+  <mat-step [label]="'Paso ' + step" [stepControl]="(forms.controls[step] | asFormGroup)!">
 
     @switch (step) {
     @case ('production') {
-    <app-production-form [form]="getStepForm(step)"></app-production-form>
+    <app-production-form [form]="forms.controls[step] | asFormGroup"></app-production-form>
     }
     @case ('additionals') {
-    <app-additionals-form [form]="getStepForm(step)"></app-additionals-form>
+    <app-additionals-form [form]="forms.controls[step] | asFormGroup"></app-additionals-form>
     }
     @case ('food') {
-    <app-food-form [form]="getStepForm(step)"></app-food-form>
+    <app-food-form [form]="forms.controls[step] | asFormGroup"></app-food-form>
     }
     @case ('contact') {
-    <app-client-contact-form [form]="getStepForm(step)"></app-client-contact-form>
+    <app-client-contact-form [form]="forms.controls[step] | asFormGroup"></app-client-contact-form>
     }
     @default {
-    <app-basics-form [form]="getStepForm(step)"></app-basics-form>
+    <app-basics-form [form]="forms.controls[step] | asFormGroup"></app-basics-form>
     }
     }
-
-    <ng-container *ngTemplateOutlet="stepperButtonsTemplate; context: { index: $index }"></ng-container>
   </mat-step>
   }
 </mat-horizontal-stepper>
 
-<ng-template #stepperButtonsTemplate let-index="index">
-  <div>
-    @if (index > 0) {
-    <button mat-button (click)="goBackward(stepper)">{{'COMMON.PREVIOUS' | translate}}</button>
-    }
-    @if (index + 1 != steps.length){
-    <button mat-button (click)="goForward(stepper)">{{'COMMON.NEXT' | translate}}</button>
-    } @else {
-    <button mat-button>{{'COMMON.FINALIZE' | translate}}</button>
-    }
-  </div>
-</ng-template>
+<app-price-bar [showBack]="selectedIndex > 0" [showNext]="selectedIndex + 1 != steps.length"
+  (onBack)="goBackward(stepper)" (onNext)="goForward(stepper)" (onFinish)="finalizeStepper(stepper)"></app-price-bar>

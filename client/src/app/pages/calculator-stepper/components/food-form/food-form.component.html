@@ -1,3 +1,4 @@
+@if (form) {
 <form class="food-form" [formGroup]="form">
   <p>{{ 'CALCULATOR.FOOD.GIFT_TEXT' | translate }}</p>
   <app-form-control [control]="form.get('giftText') | asFormControl"
@@ -9,7 +10,8 @@
   @if ((form.get('items') | asFormArray)?.controls?.length) {
   <div formArrayName="items" class="food-forms">
     @for (food of foodList; track $index) {
-    <div [formGroup]="getFoodForm($index)" class="food-item">
+    @if((form.get('items') | asFormArray); as $foodForm) {
+    <div [formGroup]="($foodForm.controls[$index] | asFormGroup)!" class="food-item">
 
       <div class="food-item__detail">
         <mat-slide-toggle formControlName="selected" class="food-toogle">
@@ -18,20 +20,22 @@
         <p class="food-item__description">
           {{food.description}}.<br>
           Costo: {{food.finalPrice | currency}}<br>
-          {{'CALCULATOR.FOOD.FOOD_COVERAGE' | translate: food}}
         </p>
       </div>
-      @if (getFoodForm($index).get('selected')?.value) {
-      <app-form-control [control]="getQuantityControl($index)" label="{{ 'CALCULATOR.FOOD.QUIANTITY' | translate }}"
-        type="number" class="food-quantity">
+      @if (($foodForm.controls[$index] | asFormGroup)!.get('selected')?.value) {
+      <app-form-control [control]="($foodForm.controls[$index] | asFormGroup)!.get('amount') | asFormControl"
+        label="{{ 'CALCULATOR.FOOD.QUIANTITY' | translate }}" type="number" class="food-quantity"
+        [hints]="[('CALCULATOR.FOOD.FOOD_COVERAGE' | translate: food)]">
       </app-form-control>
       }
     </div>
 
     <mat-divider></mat-divider>
     }
+    }
   </div>
   }
   }
 
 </form>
+}

@@ -28,7 +28,9 @@ export interface BudgetFood {
 }
 
 export interface BudgetContact {
-  name: string
+  name: string;
+  email: string;
+  phone: number;
 }
 
 export interface BudgetData {

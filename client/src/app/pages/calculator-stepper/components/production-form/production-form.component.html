@@ -1,3 +1,4 @@
+@if (form) {
 <form class="production-form" [formGroup]="form">
   <app-form-control [control]="form.get('tableAmount') | asFormControl"
     label="{{ 'CALCULATOR.PRODUCTION.TABLE' | translate }}" type="number">
@@ -22,3 +23,4 @@
     </app-form-control>
   </div>
 </form>
+}

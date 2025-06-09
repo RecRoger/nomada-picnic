@@ -26,7 +26,7 @@ import { map, Observable, of, tap } from 'rxjs';
 export class BasicsFormComponent implements OnInit {
   private readonly placesService = inject(PlacesService)
 
-  @Input() public form: FormGroup = new FormGroup({})
+  @Input() public form?: FormGroup = new FormGroup({})
 
   public places$: Observable<{ value: string, text: string }[]> = of([])
 

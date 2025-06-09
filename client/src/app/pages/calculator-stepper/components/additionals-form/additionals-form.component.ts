@@ -21,5 +21,5 @@ import { MAT_FORMS_MODULES } from '@shared/material-modules';
   styleUrl: './additionals-form.component.scss'
 })
 export class AdditionalsFormComponent {
-  @Input() public form: FormGroup = new FormGroup({})
+  @Input() public form?: FormGroup = new FormGroup({})
 }

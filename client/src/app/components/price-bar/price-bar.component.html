@@ -1,0 +1,18 @@
+<div class="price-bar">
+  <div class="price-bar__price">
+    <label class="price-bar__price-label">{{ 'Precio' | translate}}</label>
+    <span class="price-bar__price-amount">
+      {{price$ | async | currency}}
+    </span>
+  </div>
+  <div class="price-bar__buttons">
+    @if (showBack) {
+    <button mat-button (click)="onBack.emit()">{{'COMMON.PREVIOUS' | translate}}</button>
+    }
+    @if (showNext){
+    <button mat-button (click)="onNext.emit()">{{'COMMON.NEXT' | translate}}</button>
+    } @else {
+    <button mat-button (click)="onFinish.emit()">{{'COMMON.FINALIZE' | translate}}</button>
+    }
+  </div>
+</div>

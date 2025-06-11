@@ -3,18 +3,24 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: space-evenly;
 }
 
-.production-control {
-  width: 15%;
-}
+// .production-control {
+//   width: 15%;
+// }
 
 app-form-control {
-  width: 45%;
+  width: 50%;
+  // flex-grow: 1;
+}
+
+.production-control-toggle {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .production-control-textarea {
-  width: 90%;
-
+  width: 100%;
+  flex-grow: 1;
 }

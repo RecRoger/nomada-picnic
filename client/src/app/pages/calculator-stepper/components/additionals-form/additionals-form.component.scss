@@ -1,24 +1,43 @@
-.additionals-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-evenly;
-  // flex-direction: column;
+/* En tu archivo SCSS del componente (ej. my-component.component.scss) */
+
+.additionals-forms {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 10px;
+  }
 }
 
-.additinals-toogle-group {
+.additionals-item {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-evenly;
-  padding-bottom: 2rem
+  height: auto;
+  box-sizing: border-box;
 }
 
-// .additional-control {
-//   width: 20%;
-// }
+.mat-mdc-card-actions {
+  align-items: flex-end;
+  flex-direction: row-reverse;
+}
 
-app-form-control {
-  width: 45%;
+.additionals-toogle {
+  // padding: 1.5rem 1rem
+  margin-top: 5rem;
+}
+
+.additionals-quantity {
+  width: 100%;
+  padding-top: .5rem;
+  overflow-x: hidden;
 }

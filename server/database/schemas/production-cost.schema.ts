@@ -28,6 +28,9 @@ export class Cost extends Document {
   guestsCoverage: number;
 
   @Prop()
+  multipleAllowed: boolean;
+
+  @Prop()
   deliveryRequired: boolean;
 
   @Prop([String])

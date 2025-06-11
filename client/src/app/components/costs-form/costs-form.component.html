@@ -45,9 +45,14 @@
   </div>
   <div class="cost-price">
     <div class="form-control delivery-check">
-      @if(getControl('type').value === "food") {
+      @if(getControl('type').value === COSTS_TYPES.FOOD) {
       <mat-slide-toggle formControlName="deliveryRequired" labelPosition="before">
         {{"COSTS.FORM.DELIVERY" | translate}}
+      </mat-slide-toggle>
+      }
+      @if(getControl('type').value === COSTS_TYPES.ADDITIONAL) {
+      <mat-slide-toggle formControlName="multipleAllowed" labelPosition="before">
+        {{"COSTS.FORM.MULTIPLE" | translate}}
       </mat-slide-toggle>
       }
     </div>

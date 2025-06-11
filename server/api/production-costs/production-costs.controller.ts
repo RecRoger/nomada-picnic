@@ -36,7 +36,7 @@ export class ProductionCostsController {
   @UseInterceptors(
     FilesInterceptor('images'),
     new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage']),
-    new ParseBooleanInterceptor(['deliveryRequired'])
+    new ParseBooleanInterceptor(['deliveryRequired', 'multipleAllowed'])
   )
   async create(
     @Body() createCost: CostDto,
@@ -52,7 +52,7 @@ export class ProductionCostsController {
   @UseInterceptors(
     FilesInterceptor('images'),
     new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage']),
-    new ParseBooleanInterceptor(['deliveryRequired'])
+    new ParseBooleanInterceptor(['deliveryRequired', 'multipleAllowed'])
   )
   async update(
     @Param('id') id: string,

@@ -32,6 +32,9 @@ export class CostDto {
   @ApiProperty({ description: 'Numero de clientes que abarca el costo' })
   guestsCoverage?: number;
 
+  @ApiProperty({ description: 'Indicador si permite seleccion de varios' })
+  multipleAllowed?: boolean;
+
   @ApiProperty({ description: 'Indicador de delivery de comida' })
   deliveryRequired?: boolean;
 }

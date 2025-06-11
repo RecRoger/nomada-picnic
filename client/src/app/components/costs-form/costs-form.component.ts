@@ -25,6 +25,8 @@ export class CostsFormComponent implements OnInit, OnDestroy {
 
   @Output() cancel: EventEmitter<void> = new EventEmitter()
 
+  public readonly COSTS_TYPES = COSTS_TYPES
+
   public readonly COSTS_TYPES_OPTIONS = Object.entries(COSTS_TYPES)
     .filter(([key]) => isNaN(Number(key))) // Filtra las claves numéricas (inversas)
     .map(([text, value]) => ({ text: 'COSTS.TYPES_DESCRIPTION.' + text, value }));
@@ -49,6 +51,7 @@ export class CostsFormComponent implements OnInit, OnDestroy {
       providerCost: [this.cost?.providerCost || 0, [Validators.required, Validators.min(0)]],
       productionCost: [this.cost?.productionCost || 0, [Validators.required, Validators.min(0)]],
       earnPercentage: [this.cost?.earnPercentage || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      multipleAllowed: [this.cost?.multipleAllowed || false, []],
       deliveryRequired: [this.cost?.deliveryRequired || false, []],
     });
     this.calculateCostsNPrice()

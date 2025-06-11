@@ -68,6 +68,8 @@
     "PROVIDER_COST": "Costo de Proveedor",
     "PRODUCTION_COST": "Costo de Productor",
     "GUESTS_COVERAGE": "Alance de invitados",
+    "DELIVERY": "Requiere delivery",
+    "MULTIPLE": "Se puede seleccionar varios",
     "FULL_EVENT": "Unico por evento",
     "NEW": "Guardar nuevo costo",
     "DIALOG_TITLE": "Eliminar Costo",
@@ -90,6 +92,7 @@
     },
     "FORM": {
       "DELIVERY": "Requiere pago de delivery",
+      "MULTIPLE": "Permite seleccion multiple",
       "BUTTON": "Guardar Costo"
     }
   },

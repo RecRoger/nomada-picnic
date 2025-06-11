@@ -59,7 +59,10 @@
             <p><b>{{'COSTS.PROVIDER_COST' | translate}}: </b> US$ {{cost.providerCost | number:'1.2'}}</p>
             <p><b>{{'COSTS.PRODUCTION_COST' | translate}}: </b> US$ {{cost.productionCost | number:'1.2'}}</p>
             @if(cost.deliveryRequired) {
-            <p><b>Requiere delivery</b></p>
+            <p><b>{{'COSTS.DELIVERY' | translate}}</b></p>
+            }
+            @if(cost.multipleAllowed) {
+            <p><b>{{'COSTS.MULTIPLE' | translate}}</b></p>
             }
           </div>
           @if (cost?.images?.length) {

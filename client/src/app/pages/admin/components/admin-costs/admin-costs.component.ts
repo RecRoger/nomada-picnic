@@ -145,6 +145,7 @@ export class AdminCostsComponent implements OnInit {
     formData.append('productionCost', costForm.productionCost + '')
     formData.append('earnPercentage', costForm.earnPercentage + '')
     formData.append('deliveryRequired', costForm.deliveryRequired + '')
+    formData.append('multipleAllowed', costForm.multipleAllowed + '')
 
     // Añadir las imágenes a FormData    
     const images = costForm.images || []

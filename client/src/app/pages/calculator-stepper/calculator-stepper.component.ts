@@ -134,11 +134,7 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy {
         boardText: ["", [Validators.required, Validators.maxLength(30)]]
       }),
       additionals: this.fb.group({
-        petalsIndicator: [false],
-        photoAmount: [0],
-        flowersAmount: [0],
-        lightsIndicators: [false],
-        photographerIndicator: [false]
+        items: this.fb.array([])
       }),
       food: this.fb.group({
         giftText: ["", Validators.required],

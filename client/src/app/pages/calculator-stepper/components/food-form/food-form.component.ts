@@ -7,7 +7,7 @@ import { FormArrayCastPipe, FormControlCastPipe, FormGroupCastPipe } from '@pipe
 import { CostsService } from '@services/costs.service';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-food-form',
@@ -21,7 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
     FormGroupCastPipe,
     FormControlCastPipe,
     FormArrayCastPipe,
-    MatDividerModule
+    MatCardModule
   ],
   templateUrl: './food-form.component.html',
   styleUrl: './food-form.component.scss'

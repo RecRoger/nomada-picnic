@@ -1,25 +1,32 @@
 <p>{{ 'CALCULATOR.ADDITIONALS.TEXT' | translate }}</p>
-@if (form) {
+@if (form && (additionalsList$ | async); as additionalsList) {
 <form class="additionals-form" [formGroup]="form">
-  <app-form-control [control]="form.get('flowersAmount') | asFormControl"
-    label="{{ 'CALCULATOR.ADDITIONALS.FLOWERS' | translate }}" type="number">
-  </app-form-control>
+  @if ((form.get('items') | asFormArray)?.controls?.length) {
+  <div formArrayName="items" class="additionals-forms">
+    @for (additional of additionalsList; track $index) {
+    @if((form.get('items') | asFormArray); as $additionalForm) {
 
-  <app-form-control [control]="form.get('photoAmount') | asFormControl"
-    label="{{ 'CALCULATOR.ADDITIONALS.PHOTOS_AMOUNT' | translate }}" type="number">
-  </app-form-control>
 
-  <div class="additinals-toogle-group">
-    <mat-slide-toggle formControlName="petalsIndicator" labelPosition="before">
-      {{"CALCULATOR.ADDITIONALS.PETALS" | translate}}
-    </mat-slide-toggle>
-    <mat-slide-toggle formControlName="lightsIndicators" labelPosition="before">
-      {{"CALCULATOR.ADDITIONALS.LIGTHS" | translate}}
-    </mat-slide-toggle>
-    <mat-slide-toggle formControlName="photographerIndicator" labelPosition="before">
-      {{"CALCULATOR.ADDITIONALS.PHOTOGRAPHER" | translate}}
-    </mat-slide-toggle>
+    <mat-card [formGroup]="($additionalForm.controls[$index] | asFormGroup)!" class="additionals-item">
+      <mat-card-header>
+        <mat-card-title>{{ additional.name }}</mat-card-title>
+        <mat-card-subtitle>{{additional.finalPrice | currency}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{additional.description}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-slide-toggle formControlName="selected" class="additionals-toogle"></mat-slide-toggle>
+        @if (additional.multipleAllowed && ($additionalForm.controls[$index] | asFormGroup)!.get('selected')?.value) {
+        <app-form-control [control]="($additionalForm.controls[$index] | asFormGroup)!.get('amount') | asFormControl"
+          label="{{ 'CALCULATOR.FOOD.QUIANTITY' | translate }}" type="number" class="additionals-quantity">
+        </app-form-control>
+        }
+      </mat-card-actions>
+    </mat-card>
+    }
+    }
   </div>
-
+  }
 </form>
 }

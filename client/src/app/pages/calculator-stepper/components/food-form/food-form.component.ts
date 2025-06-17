@@ -8,6 +8,8 @@ import { CostsService } from '@services/costs.service';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
+import { COSTS_TYPES } from '@enums/cost-types.enum';
+import { CostDto } from '@models/cost.dto';
 
 @Component({
   selector: 'app-food-form',
@@ -29,7 +31,7 @@ import { MatCardModule } from '@angular/material/card';
 export class FoodFormComponent implements OnInit, OnDestroy {
   @Input() public form?: FormGroup = new FormGroup({})
 
-  public foodList$: Observable<any> = of([])
+  public foodList$: Observable<CostDto[]> = of([])
 
   private costsService = inject(CostsService)
 
@@ -47,7 +49,7 @@ export class FoodFormComponent implements OnInit, OnDestroy {
   }
 
   private createFoodForms() {
-    this.foodList$ = this.costsService.getCosts('food').pipe(
+    this.foodList$ = this.costsService.getCostsCached(COSTS_TYPES.FOOD).pipe(
       tap(foodList => {
         const formList = (this.form?.get('items') as FormArray)
         foodList.forEach(food => {

@@ -48,7 +48,7 @@ export class AdditionalsFormComponent implements OnDestroy {
   }
 
   private createAdditionalsForms() {
-    this.additionalsList$ = this.costsService.getCosts(COSTS_TYPES.ADDITIONAL).pipe(
+    this.additionalsList$ = this.costsService.getCostsCached(COSTS_TYPES.ADDITIONAL).pipe(
       tap(additionalsList => {
         const additionalList = (this.form?.get('items') as FormArray)
         additionalsList.forEach(additional => {

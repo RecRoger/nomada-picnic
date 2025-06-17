@@ -113,7 +113,8 @@
       "ARCH": "Incluir arco decorativo",
       "BIG_TABLE": "Incluir meson alto",
       "BOARD_TEXT": "¿Que deseas escribir en la pizarra?",
-      "BOARD_PLACEHOLDER": "\"Feliz dia del picnic\""
+      "BOARD_PLACEHOLDER": "\"Feliz dia del picnic\"",
+      "PROM_TEXT": "Contamos con una organizacion para grupos grandes que incluye solo un par de mesas como modulo central y varias mantas al rededor. Esta organizacion <b>No cuenta con platos</b> para los invitados, solamente copas y vasos para todos."
     },
     "ADDITIONALS": {
       "TEXT": "Algunos adicionales para agregar.",

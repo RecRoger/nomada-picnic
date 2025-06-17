@@ -10,7 +10,8 @@
     <mat-card [formGroup]="($additionalForm.controls[$index] | asFormGroup)!" class="additionals-item">
       <mat-card-header>
         <mat-card-title>{{ additional.name }}</mat-card-title>
-        <mat-card-subtitle>{{additional.finalPrice | currency}}</mat-card-subtitle>
+        <mat-card-subtitle>{{additional.finalPrice | currency}}
+          {{additional.multipleAllowed ? 'c/u' : ''}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <p>{{additional.description}}</p>

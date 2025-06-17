@@ -27,5 +27,5 @@ export class PriceBarComponent {
 
   @Output() onFinish = new EventEmitter<void>()
 
-  public price$ = inject(PriceService).price$
+  public price$ = inject(PriceService).totalPrice$
 }

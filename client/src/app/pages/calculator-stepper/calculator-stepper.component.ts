@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, map, Observable, Subject, takeUntil } from 'rxjs';
+import { debounceTime, map, Observable, pairwise, startWith, Subject, takeUntil } from 'rxjs';
 import { MatStepper, MatStepperModule, StepperOrientation } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -131,7 +131,8 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy {
         tableAmount: [1, Validators.required],
         archIndicator: [true],
         bigTableIndicator: [false],
-        boardText: ["", [Validators.required, Validators.maxLength(30)]]
+        boardText: ["", [Validators.required, Validators.maxLength(30)]],
+        promoIndicator: [false],
       }),
       additionals: this.fb.group({
         items: this.fb.array([])
@@ -148,11 +149,12 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy {
     })
 
     this.forms.valueChanges.pipe(
+      startWith(this.forms.value), // Emite el valor inicial
+      pairwise(), // Emite un array [previousValue, currentValue]
+      debounceTime(100), // Opcional: Espera un poco para agrupar cambios rápidos
       takeUntil(this.destroy$),
-      debounceTime(100),
-      distinctUntilChanged()
-    ).subscribe((value: BudgetData) => {
-      this.priceService.checkPrice(value)
+    ).subscribe((values: BudgetData[]) => {
+      this.priceService.checkPrice(values)
     })
   }
 

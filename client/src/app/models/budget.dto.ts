@@ -12,14 +12,11 @@ export interface BudgetProduction {
   archIndicator: boolean;
   bigTableIndicator: boolean;
   boardText: string;
+  promoIndicator: boolean;
 }
 
 export interface BudgetAdditionals {
-  petalsIndicator: boolean;
-  flowersAmount: number;
-  photoAmount: number;
-  lightsIndicators: boolean;
-  photographerIndicator: boolean;
+  items: PicnicItem[]
 }
 
 export interface BudgetFood {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { ApiResponse } from '@models/api-response.dto';
 import { CostDto } from '@models/cost.dto';
 import { ALERT_TYPES } from '@enums/alert-types.enum';
@@ -13,6 +13,15 @@ export class CostsService {
   private readonly http: HttpClient = inject(HttpClient)
 
   private readonly notificationService: NotificationService = inject(NotificationService)
+
+  private typedCosts$: { [type: string]: Observable<CostDto[]> } = {}
+
+  public getCostsCached(type: string): Observable<CostDto[]> {
+    if (!this.typedCosts$[type]) {
+      this.typedCosts$[type] = this.getCosts(type).pipe(shareReplay(1))
+    }
+    return this.typedCosts$[type]
+  }
 
   public getCosts(type?: string): Observable<CostDto[]> {
     return this.http.get<ApiResponse<CostDto[]>>(`/api/costs` + (type ? `/${type}` : '')).pipe(

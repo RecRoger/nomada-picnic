@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { PlaceDto } from '@models/place.dto';
 import { ApiResponse } from '@models/api-response.dto';
 import { NotificationService } from '@services/notification.service';
@@ -13,6 +13,16 @@ export class PlacesService {
   private readonly http: HttpClient = inject(HttpClient)
 
   private readonly notificationService: NotificationService = inject(NotificationService)
+
+  private typedCosts$: { [type: string]: Observable<PlaceDto[]> } = {}
+
+  public getPlacesCached(type: string): Observable<PlaceDto[]> {
+    if (!this.typedCosts$[type]) {
+      this.typedCosts$[type] = this.getPlaces(type).pipe(shareReplay(1))
+    }
+    return this.typedCosts$[type]
+  }
+
   public getPlaces(type?: string): Observable<PlaceDto[]> {
     return this.http.get<ApiResponse<PlaceDto[]>>(`/api/places` + (type ? `/${type}` : '')).pipe(
       map((response) => {

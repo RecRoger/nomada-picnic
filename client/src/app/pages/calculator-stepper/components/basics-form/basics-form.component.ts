@@ -37,7 +37,7 @@ export class BasicsFormComponent implements OnInit {
   }
 
   public getPlaces(): void {
-    this.places$ = this.placesService.getPlaces(PLACES_TYPES.PUBLIC).pipe(
+    this.places$ = this.placesService.getPlacesCached(PLACES_TYPES.PUBLIC).pipe(
       map(places => places
         .map(place => ({ value: place._id!, text: place.name }))
       ),

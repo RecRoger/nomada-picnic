@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormArrayCastPipe, FormControlCastPipe, FormGroupCastPipe } from '@pipes/form-control-cast.pipe';
 import { CostsService } from '@services/costs.service';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
-import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { COSTS_TYPES } from '@enums/cost-types.enum';
 import { CostDto } from '@models/cost.dto';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-food-form',
@@ -29,6 +30,9 @@ import { CostDto } from '@models/cost.dto';
   styleUrl: './food-form.component.scss'
 })
 export class FoodFormComponent implements OnInit, OnDestroy {
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
   @Input() public form?: FormGroup = new FormGroup({})
 
   public foodList$: Observable<CostDto[]> = of([])
@@ -37,16 +41,12 @@ export class FoodFormComponent implements OnInit, OnDestroy {
 
   private fb = inject(FormBuilder)
 
-  private destroy$: Subject<void> = new Subject()
+  private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit(): void {
     this.createFoodForms()
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next()
-    this.destroy$.complete()
-  }
 
   private createFoodForms() {
     this.foodList$ = this.costsService.getCostsCached(COSTS_TYPES.FOOD).pipe(
@@ -61,7 +61,7 @@ export class FoodFormComponent implements OnInit, OnDestroy {
           })
           formList.push(foodForm)
 
-          foodForm.get('selected')?.valueChanges.pipe(takeUntil(this.destroy$))
+          foodForm.get('selected')?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef),)
             .subscribe(selected => {
               const quantityControl = foodForm.get('amount');
               if (selected) {

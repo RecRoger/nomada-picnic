@@ -1,7 +1,8 @@
-import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, map, Observable, pairwise, startWith, Subject, takeUntil } from 'rxjs';
+import { debounceTime, map, Observable, pairwise, startWith } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { MatStepper, MatStepperModule, StepperOrientation } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -41,7 +42,7 @@ import { BudgetData } from '@models/budget.dto';
   templateUrl: './calculator-stepper.component.html',
   styleUrl: './calculator-stepper.component.scss'
 })
-export class PicnicCalculatorComponent implements OnInit, OnDestroy {
+export class PicnicCalculatorComponent implements OnInit {
   private readonly router: Router = inject(Router)
   private readonly route: ActivatedRoute = inject(ActivatedRoute)
   private readonly fb: FormBuilder = inject(FormBuilder)
@@ -58,7 +59,7 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  private readonly destroy$ = new Subject<void>();
+  private readonly destroyRef = inject(DestroyRef)
 
 
   constructor(
@@ -66,13 +67,13 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy {
     this.stepperOrientation = inject(BreakpointObserver)
       .observe('(min-width: 800px)')
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
         map(({ matches }) => (matches ? 'horizontal' : 'vertical'))
       );
   }
 
   ngOnInit() {
-    this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef),).subscribe(params => {
       const step = params['step'];
       this.selectedIndex = this.steps.indexOf(step);
       if (this.selectedIndex === -1) {
@@ -82,11 +83,6 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy {
     });
 
     this.generateForms()
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public getStepForm(step: string): FormGroup {
@@ -152,7 +148,7 @@ export class PicnicCalculatorComponent implements OnInit, OnDestroy {
       startWith(this.forms.value), // Emite el valor inicial
       pairwise(), // Emite un array [previousValue, currentValue]
       debounceTime(100), // Opcional: Espera un poco para agrupar cambios rápidos
-      takeUntil(this.destroy$),
+      takeUntilDestroyed(this.destroyRef),
     ).subscribe((values: BudgetData[]) => {
       this.priceService.checkPrice(values)
     })

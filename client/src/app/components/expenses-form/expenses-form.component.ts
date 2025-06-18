@@ -4,7 +4,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
-import { Subject } from 'rxjs';
 import { ExpenseDto } from '@models/expense.dto';
 
 @Component({
@@ -27,8 +26,6 @@ export class ExpensesFormComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder)
 
   public expenseForm: FormGroup = this.fb.group({})
-
-  private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
     this.expenseForm = this.fb.group({

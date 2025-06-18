@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, Input } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { FormControlComponent } from '@components/form-control/form-control.component';
@@ -8,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormArrayCastPipe, FormControlCastPipe, FormGroupCastPipe } from '@pipes/form-control-cast.pipe';
 import { CostsService } from '@services/costs.service';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
-import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-additionals-form',
@@ -27,7 +28,7 @@ import { Observable, of, Subject, takeUntil, tap } from 'rxjs';
   templateUrl: './additionals-form.component.html',
   styleUrl: './additionals-form.component.scss'
 })
-export class AdditionalsFormComponent implements OnDestroy {
+export class AdditionalsFormComponent {
   @Input() public form?: FormGroup = new FormGroup({})
 
   public additionalsList$: Observable<any> = of([])
@@ -36,15 +37,10 @@ export class AdditionalsFormComponent implements OnDestroy {
 
   private fb = inject(FormBuilder)
 
-  private destroy$: Subject<void> = new Subject()
+  private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit(): void {
     this.createAdditionalsForms()
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next()
-    this.destroy$.complete()
   }
 
   private createAdditionalsForms() {
@@ -60,7 +56,7 @@ export class AdditionalsFormComponent implements OnDestroy {
           })
           additionalList.push(additionalForm)
 
-          additionalForm.get('selected')?.valueChanges.pipe(takeUntil(this.destroy$))
+          additionalForm.get('selected')?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef),)
             .subscribe(selected => {
               const quantityControl = additionalForm.get('amount');
               if (selected) {

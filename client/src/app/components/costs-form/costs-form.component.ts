@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
@@ -6,7 +6,8 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { CostDto } from '@models/cost.dto';
 import { COSTS_TYPES } from '@enums/cost-types.enum';
-import { merge, Subject, takeUntil } from 'rxjs';
+import { merge } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-costs-form',
@@ -16,7 +17,7 @@ import { merge, Subject, takeUntil } from 'rxjs';
   styleUrl: './costs-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CostsFormComponent implements OnInit, OnDestroy {
+export class CostsFormComponent implements OnInit {
   @Input() public cancelOption: boolean = true
 
   @Input() public cost?: CostDto
@@ -39,7 +40,7 @@ export class CostsFormComponent implements OnInit, OnDestroy {
 
   public totalCost: number = 0
 
-  private readonly destroy$ = new Subject<void>();
+  private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit(): void {
     this.costForm = this.fb.group({
@@ -56,11 +57,6 @@ export class CostsFormComponent implements OnInit, OnDestroy {
     });
     this.calculateCostsNPrice()
     this.checkPrices()
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public getControl(controlName: string): FormControl {
@@ -93,7 +89,7 @@ export class CostsFormComponent implements OnInit, OnDestroy {
         this.costForm.get('productionCost')!.valueChanges,
         this.costForm.get('earnPercentage')!.valueChanges,
       )
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntilDestroyed(this.destroyRef),)
         .subscribe(() => {
           this.calculateCostsNPrice()
         })

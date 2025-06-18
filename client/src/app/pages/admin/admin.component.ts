@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@services/auth.service';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -15,8 +15,6 @@ export class AdminComponent implements OnInit {
   private readonly authService: AuthService = inject(AuthService)
 
   private readonly router: Router = inject(Router)
-
-  private readonly route: ActivatedRoute = inject(ActivatedRoute)
 
   public readonly user = this.authService.user
 
@@ -33,6 +31,10 @@ export class AdminComponent implements OnInit {
       link: 'admin/costs',
       label: 'ADMIN.TABS.COSTS'
     },
+    {
+      link: 'admin/expenses',
+      label: 'ADMIN.TABS.EXPENSES'
+    },
   ];
 
   public selectedIndex = 0
@@ -40,16 +42,9 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     const url = this.router.url;
     this.selectedIndex = this.tabs.findIndex(tab => url.includes(tab.link))
-    // this.checkUrl()
   }
 
   public onTabChange(event: any): void {
     this.router.navigate([this.tabs[event.index]?.link]);
-  }
-
-  private checkUrl(): void {
-    this.route.url.subscribe(() => {
-
-    })
   }
 }

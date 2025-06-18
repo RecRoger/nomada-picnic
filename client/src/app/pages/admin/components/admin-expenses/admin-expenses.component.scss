@@ -1,0 +1,115 @@
+.expense-list {
+  margin-bottom: 1rem;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem 1rem;
+
+  gap: 1rem;
+
+  &--header {
+    font-size: 1.25rem;
+    flex-grow: 1;
+  }
+
+  &--form {
+    padding: .5rem 1rem;
+    display: block;
+    width: 100%;
+  }
+
+  &--price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    span {
+      font-size: 0.70rem
+    }
+  }
+
+  &--actions {}
+}
+
+.expense-payments {
+  width: 50%;
+  margin-left: auto;
+  margin-right: 213px;
+  padding-top: .5rem;
+
+  .amortization-item {
+    padding: 0.125rem 1rem;
+
+    .expense-payments--item-label {
+      font-size: .875rem;
+      font-weight: 400;
+    }
+  }
+
+  &--item {
+    display: flex;
+    gap: .5rem;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+
+    &:nth-child(3n) {
+      padding-top: .5rem;
+    }
+
+    &.header-item {
+      width: 100%;
+    }
+
+    &-label {
+      font-weight: 500;
+    }
+
+    &-value {}
+
+  }
+}
+
+
+
+
+/* En tu componente SCSS */
+
+::ng-deep {
+  .mat-expansion-panel-body {
+    padding: 1rem 1rem 0rem !important;
+  }
+}
+
+mat-expansion-panel {
+  display: flex; // Habilita flexbox para el propio panel
+  flex-direction: column; // Por defecto: header arriba, contenido abajo
+  margin-bottom: 10px;
+  overflow: hidden; // Para que el borde y sombra se vean bien
+  box-shadow: none !important; // Elimina la sombra de la "card"
+  border-radius: 0 !important; // Elimina los bordes redondeados
+  border: none !important; // Elimina cualquier borde
+  background: none !important; // Elimina el fondo de la "card"
+  // margin: 0 !important; // Elimina cualquier margen predeterminado
+
+
+  // Cuando el panel está expandido
+  &.mat-expanded {
+    flex-direction: column-reverse; // ¡Invierte el orden de header y contenido!
+  }
+
+  .my-content-wrapper {
+    background-color: #ffffff;
+  }
+
+  // Estilos para el header (opcional)
+  mat-expansion-panel-header {
+    padding: 0 16px; // Ajusta el padding si es necesario
+    background: none !important; // Elimina el fondo del header
+    // min-height: 48px; // Altura mínima estándar (puedes ajustar)
+  }
+
+}

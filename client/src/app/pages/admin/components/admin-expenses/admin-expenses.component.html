@@ -1,0 +1,106 @@
+<h3>{{"EXPENSES.TITLE" | translate }}</h3>
+<div class="expenses-container">
+  <div class="expense-list">
+
+    <div class="expense-item">
+      <div class="expense-item--header">
+        {{'EXPENSES.NEW_EXPENSE' | translate}}
+      </div>
+      @if (!showForm) {
+      <button mat-button (click)="toggleEditForm()">
+        <mat-icon>add</mat-icon>
+        {{'COMMON.ADD' | translate}}
+      </button>
+      }
+    </div>
+    @if (showForm && !expenseToEdit) {
+    <app-expenses-form class="expense-item--form" (submit)="saveExpense($event)"
+      (cancel)="toggleEditForm()"></app-expenses-form>
+    }
+    <mat-divider></mat-divider>
+
+    @for (expense of expensesList; track expense._id) {
+    <div class="expense-item" [class.active]="expense._id === expenseToEdit?._id">
+      @if (expense._id === expenseToEdit?._id) {
+      <app-expenses-form class="expense-item--form" [expense]="expenseToEdit" (submit)="saveExpense($event)"
+        (cancel)="toggleEditForm()"></app-expenses-form>
+      } @else {
+      <div class="expense-item--header">
+        {{ expense.name }}
+      </div>
+      <div class="expense-item--price">
+        {{ expense.cost | currency }}
+        <span>
+          {{expense.monthly ? ('EXPENSES.MONTHLY' | translate) : ''}}
+          {{ (expense.amortization) ? ('EXPENSES.AMORTIZATED' | translate: {month: expense.amortization}) : '' }}
+        </span>
+      </div>
+      <div class="expense-item--actions">
+        <button mat-button [disabled]="showForm" (click)="toggleEditForm(expense)">
+          <mat-icon>edit</mat-icon>
+          {{'COMMON.EDIT' | translate}}
+        </button>
+        <button mat-button [disabled]="showForm" (click)="openDeleteDialog(expense)">
+          <mat-icon>delete</mat-icon>
+          {{'COMMON.DELETE' | translate}}
+        </button>
+      </div>
+      }
+    </div>
+    <mat-divider></mat-divider>
+    }
+
+    @if (!showForm && (expenseCosts$ | async); as expenseCosts) {
+    <div class="expense-payments">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <div class="expense-payments--item header-item">
+            <span class="expense-payments--item-label">
+              {{'EXPENSES.TOTAL_PAYMENT' | translate}}
+            </span>
+            <span class="expense-payments--item-value">
+              {{expenseCosts.totalValue | currency}}
+            </span>
+          </div>
+        </mat-expansion-panel-header>
+        <div class="my-content-wrapper">
+          <div class="expense-payments--item amortization-item">
+            <span class="expense-payments--item-label">
+              {{'EXPENSES.TOTAL_AMORTIZATION' | translate}}
+            </span>
+            <span class="expense-payments--item-value">
+              {{expenseCosts.toBeAmortized | currency}}
+            </span>
+          </div>
+          <div class="expense-payments--item amortization-item">
+            <span class="expense-payments--item-label">
+              {{'EXPENSES.AMORTIZATION_PERCENTAGE' | translate}}
+            </span>
+            <span class="expense-payments--item-value">
+              {{expenseCosts.amortizationPercentage | number:'1.2-2'}}%
+            </span>
+          </div>
+          <div class="expense-payments--item">
+            <span class="expense-payments--item-label">
+              {{'EXPENSES.AMORTIZATION_PAYMENT' | translate}}
+            </span>
+            <span class="expense-payments--item-value">
+              {{expenseCosts.amortizedValue | currency}}
+            </span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="expense-payments--item">
+            <span class="expense-payments--item-label">
+              {{'EXPENSES.MONTHLY_EXPENSE' | translate}}
+            </span>
+            <span class="expense-payments--item-value">
+              {{expenseCosts.monthlyValue | currency}}
+            </span>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    }
+  </div>
+</div>

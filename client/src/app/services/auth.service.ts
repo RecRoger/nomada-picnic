@@ -41,7 +41,7 @@ export class AuthService {
         if (response) {
           this.userAdmin = response
           const expirationDate = new Date();
-          expirationDate.setMinutes(expirationDate.getMinutes() + 45);
+          expirationDate.setMinutes(expirationDate.getMinutes() + 160);
           this.cookieService.set(this.COOKIE_NAME, response.name, { expires: expirationDate, sameSite: 'Strict' })
           this.cookieService.set(this.COOKIE_NAME_EMAIL, response.email, { expires: expirationDate, sameSite: 'Strict' })
         }

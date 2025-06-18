@@ -9,6 +9,9 @@
     "DESCRIPTION": "Descripcion",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
+    "NEW": "Nuevo",
+    "ADD": "Agregar",
+    "SAVE": "Guardar",
     "LAT": "Latitud",
     "LNG": "Longitud",
     "ADD_IMAGES": "Añadir imágenes",
@@ -42,7 +45,8 @@
     "TABS": {
       "PICNICS": "Presupuestos y Picnics",
       "PLACES": "Lugares y parques",
-      "COSTS": "Costos de produccion y adicionales"
+      "COSTS": "Costos de produccion y adicionales",
+      "EXPENSES": "Gastos mensuales e inversiones"
     }
   },
   "PLACES": {
@@ -94,6 +98,28 @@
       "DELIVERY": "Requiere pago de delivery",
       "MULTIPLE": "Permite seleccion multiple",
       "BUTTON": "Guardar Costo"
+    }
+  },
+  "EXPENSES": {
+    "TITLE": "Gastos Mensuales e inversiones.",
+    "ERROR": "No se ha podido cargar la lista de gastos",
+    "VALUE_ERROR": "No se ha podido cargar el monto total de gastos",
+    "AMORTIZATION": "Amortizacion",
+    "NEW_EXPENSE": "Crear nuevo gasto",
+    "DIALOG_TITLE": "Eliminar Gasto",
+    "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista gastos?",
+    "MONTHLY": "mensual",
+    "TOTAL_AMORTIZATION": "Total a amortizar",
+    "AMORTIZATION_PERCENTAGE": "Porcentaje de pago de amortizacion",
+    "AMORTIZATION_PAYMENT": "Pago de amortizacion mensual",
+    "MONTHLY_EXPENSE": "Gasto Mensual",
+    "TOTAL_PAYMENT": "Pago Mensual Total",
+    "MONTHS": "meses",
+    "AMORTIZATED": "amortizado en {{month}} meses.",
+    "FORM": {
+      "COST": "Valor del gasto",
+      "MONTHLY": "Gasto Mensual",
+      "AMORTIZATION": "Meses de amortizacion"
     }
   },
   "PUBLIC": {

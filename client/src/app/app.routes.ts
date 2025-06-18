@@ -7,6 +7,7 @@ import { AdminPicnicsComponent } from '@admin-components/admin-picnics/admin-pic
 import { AdminPlacesComponent } from '@admin-components/admin-places/admin-places.component';
 import { AdminCostsComponent } from '@admin-components/admin-costs/admin-costs.component';
 import { PicnicCalculatorComponent } from '@pages/calculator-stepper/calculator-stepper.component';
+import { AdminExpensesComponent } from '@admin-components/admin-expenses/admin-expenses.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,7 +19,8 @@ export const routes: Routes = [
       { path: 'picnics', redirectTo: '', pathMatch: 'full' },
       { path: '', component: AdminPicnicsComponent },
       { path: 'places', component: AdminPlacesComponent },
-      { path: 'costs', component: AdminCostsComponent }
+      { path: 'costs', component: AdminCostsComponent },
+      { path: 'expenses', component: AdminExpensesComponent }
     ]
   },
   { path: '', component: PublicComponent },

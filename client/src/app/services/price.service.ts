@@ -35,7 +35,7 @@ export class PriceService {
       this.giftsPrice$.asObservable()
     ]).pipe(
       debounceTime(500),
-      map(([transportationCost, productionPrice, giftsPrice]) => {
+      map(([transportationCost, productionPrice]) => {
         return ((transportationCost?.price || 0) + (productionPrice?.listPrice || 0)) || 0
       })
     )

@@ -6,6 +6,7 @@ import { PlacesModule } from './api/places/places.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
 import { AuthModule } from './api/auth/auth.module';
+import { ExpensesModule } from 'server/api/expenses/expenses.module';
 
 @Module({
   imports: [
@@ -17,12 +18,14 @@ import { AuthModule } from './api/auth/auth.module';
           { path: 'auth', module: AuthModule },
           { path: 'picnics', module: PicnicsModule },
           { path: 'costs', module: ProductionCostsModule },
+          { path: 'expenses', module: ExpensesModule },
           { path: 'places', module: PlacesModule },
         ],
       },
     ]),
     PicnicsModule,
     ProductionCostsModule,
+    ExpensesModule,
     PlacesModule,
     AuthModule,
   ],

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ProductionCostsService } from './production-costs.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Cost } from 'server/database/schemas/production-cost.schema';
@@ -15,17 +15,10 @@ import { ParseBooleanInterceptor } from 'server/interceptors/parse-boolean.inter
 export class ProductionCostsController {
   constructor(private readonly costsService: ProductionCostsService) { }
 
-  @Get()
-  @ApiOperation({ summary: 'Obtener todos los costos de produccion' })
-  @ApiResponse({ status: 201, description: 'Lista de costos entera', type: ResponseDto<Cost[]> })
-  async findAll(): Promise<Cost[]> {
-    return this.costsService.findAll();
-  }
-
-  @Get(':type')
-  @ApiOperation({ summary: 'Obtener todos los costos de produccion de cierto tipo' })
-  @ApiResponse({ status: 201, description: 'Lista de costos de cierto tipo', type: ResponseDto<Cost[]> })
-  async findByType(@Param('type') type: string): Promise<Cost[]> {
+  @Get('')
+  @ApiOperation({ summary: 'Obtener todos los costos de produccion (puede recibir cierto tipo)' })
+  @ApiResponse({ status: 201, description: 'Lista de costos', type: ResponseDto<Cost[]> })
+  async findByType(@Query('type') type: string): Promise<Cost[]> {
     return this.costsService.findAll(type);
   }
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { PlacesService } from './places.service';
 import { PlaceDto } from 'server/models/place.dto';
@@ -14,17 +14,10 @@ import { ParseNumberInterceptor } from 'server/interceptors/parse-number.interce
 export class PlacesController {
   constructor(private readonly placesService: PlacesService) { }
 
-  @Get()
-  @ApiOperation({ summary: 'Obtener todos los lugares' })
-  @ApiResponse({ status: 201, description: 'Lista de lugares entera', type: ResponseDto<Place[]> })
-  async findAll(): Promise<Place[]> {
-    return this.placesService.findAll();
-  }
-
-  @Get(':type')
-  @ApiOperation({ summary: 'Obtener todos los lugares de un tipo' })
-  @ApiResponse({ status: 201, description: 'Lista de lugares por tipo', type: ResponseDto<Place[]> })
-  async getByType(@Param('type') type: string): Promise<Place[]> {
+  @Get('')
+  @ApiOperation({ summary: 'Obtener todos los lugares (puede recibir de un tipo)' })
+  @ApiResponse({ status: 201, description: 'Lista de lugares', type: ResponseDto<Place[]> })
+  async getByType(@Query('type') type: string): Promise<Place[]> {
     return this.placesService.findAll(type);
   }
 

@@ -8,7 +8,7 @@ export interface ExpenseDto {
 }
 
 export interface ExpenseValueDto {
-  monthlyValue: number;
+  monthlyValue?: number;
   toBeAmortized?: number;
   amortizedValue?: number;
   totalValue: number;

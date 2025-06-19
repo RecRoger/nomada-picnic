@@ -16,7 +16,11 @@ export class ProductionCostsService {
 
   async findAll(type?: string): Promise<Cost[]> {
     this.logger.log('[findAll]', type)
-    return !type ? this.costsModel.find().exec() : this.costsModel.find({ type }).exec();
+    return !type ? this.costsModel.find().exec() : this.costsModel.find({ type }, {
+      providerCost: 0,
+      productionCost: 0,
+      earnPercentage: 0,
+    }).exec();
   }
 
   async create(costData: CostDto, files: Express.Multer.File[]): Promise<Cost> {

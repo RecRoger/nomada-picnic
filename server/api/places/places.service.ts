@@ -17,7 +17,10 @@ export class PlacesService {
 
   async findAll(type?: string): Promise<Place[]> {
     this.logger.log('[findAll]')
-    const places = await (!type ? this.placesModel.find().exec() : this.placesModel.find({ type }).exec());
+    const places = await (!type ?
+      this.placesModel.find().exec() :
+      this.placesModel.find({ type }, { transportationCost: 0 }).exec());
+
     return places.sort((a, b) => {
       // Comparar zonas
       if (a.zone !== b.zone) {

@@ -24,7 +24,9 @@ export class CostsService {
   }
 
   public getCosts(type?: string): Observable<CostDto[]> {
-    return this.http.get<ApiResponse<CostDto[]>>(`/api/costs` + (type ? `/${type}` : '')).pipe(
+    return this.http.get<ApiResponse<CostDto[]>>(`/api/costs`, {
+      params: { ...(type ? { type } : {}) }
+    }).pipe(
       map((response) => {
         if (response) {
           return response.data as CostDto[]

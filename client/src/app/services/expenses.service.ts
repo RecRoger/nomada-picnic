@@ -14,17 +14,17 @@ export class ExpensesService {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  private cachedExpenses$: Observable<ExpenseDto[]> = of([])
+  private cachedExpense$: { [guests: string]: Observable<ExpenseValueDto> } = {}
 
-  public getExpensesCached(): Observable<ExpenseDto[]> {
-    if (!this.cachedExpenses$) {
-      this.cachedExpenses$ = this.getExpenses().pipe(shareReplay(1))
+  public getExpensesCached(guests: number): Observable<ExpenseValueDto> {
+    if (!this.cachedExpense$[guests]) {
+      this.cachedExpense$[guests] = this.getExpensesValues(guests).pipe(shareReplay(1))
     }
-    return this.cachedExpenses$
+    return this.cachedExpense$[guests]
   }
 
   public getExpenses(): Observable<ExpenseDto[]> {
-    return this.http.get<ApiResponse<ExpenseDto[]>>(`/api/expenses`).pipe(
+    return this.http.get<ApiResponse<ExpenseDto[]>>(`/api/expenses/list`).pipe(
       map((response) => {
         if (response) {
           return response.data as ExpenseDto[]
@@ -39,18 +39,23 @@ export class ExpensesService {
     );
   }
 
-  public getExpensesValues(guests?: number, percentage?: number): Observable<ExpenseValueDto | null> {
-    return this.http.get<ApiResponse<ExpenseValueDto>>(`/api/expenses/value`).pipe(
+  public getExpensesValues(guests?: number, percentage?: number): Observable<ExpenseValueDto> {
+    return this.http.get<ApiResponse<ExpenseValueDto>>(`/api/expenses`, {
+      params: {
+        ...(guests ? { guests } : {}),
+        ...(percentage ? { percentage } : {})
+      }
+    }).pipe(
       map((response) => {
         if (response) {
           return response.data as ExpenseValueDto
         }
-        return null
+        return { totalValue: 0 }
       }),
       catchError((error) => {
         console.error('No se cargaron los valores de gastos:', error);
         this.notificationService.openNotification({ message: 'EXPENSES.VALUE_ERROR' }, ALERT_TYPES.ERROR)
-        return of(null);
+        return of({ totalValue: 0 });
       })
     );
   }

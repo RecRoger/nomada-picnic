@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,10 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './food-form.component.html',
   styleUrl: './food-form.component.scss'
 })
-export class FoodFormComponent implements OnInit, OnDestroy {
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+export class FoodFormComponent implements OnInit {
   @Input() public form?: FormGroup = new FormGroup({})
 
   public foodList$: Observable<CostDto[]> = of([])

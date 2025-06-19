@@ -6,6 +6,11 @@ export interface PriceingTransportation {
   extra?: boolean;
 }
 
+export interface PriceingExpenses {
+  price?: number;
+  percentage?: number;
+}
+
 export interface PriceingListItem {
   code?: string;
   name?: string;
@@ -20,6 +25,7 @@ export interface PriceingList {
 
 export interface Priceings {
   transportation?: PriceingTransportation;
+  expenses?: PriceingExpenses;
   production?: PriceingList;
   gifts?: PriceingList;
 }

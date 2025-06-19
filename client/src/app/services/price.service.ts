@@ -3,9 +3,11 @@ import { COSTS_TYPES } from '@enums/cost-types.enum';
 import { PLACES_TYPES } from '@enums/places-types.enum';
 import { BudgetData } from '@models/budget.dto';
 import { CostDto } from '@models/cost.dto';
+import { ExpenseValueDto } from '@models/expense.dto';
 import { PlaceDto } from '@models/place.dto';
-import { PriceingList, PriceingTransportation } from '@models/priceing.dto';
+import { PriceingExpenses, PriceingList, PriceingTransportation } from '@models/priceing.dto';
 import { CostsService } from '@services/costs.service';
+import { ExpensesService } from '@services/expenses.service';
 import { PlacesService } from '@services/places.service';
 import { BehaviorSubject, combineLatest, debounceTime, forkJoin, map, Observable, take } from 'rxjs';
 
@@ -15,12 +17,14 @@ import { BehaviorSubject, combineLatest, debounceTime, forkJoin, map, Observable
 export class PriceService {
   private transportationPrice$ = new BehaviorSubject<PriceingTransportation>({});
   private productionPrice$ = new BehaviorSubject<PriceingList>({});
+  private expensesPrice$ = new BehaviorSubject<PriceingExpenses>({});
   private giftsPrice$ = new BehaviorSubject<PriceingList>({});
-
-  private readonly costsService = inject(CostsService)
 
   private readonly placesService = inject(PlacesService)
 
+  private readonly costsService = inject(CostsService)
+
+  private readonly expensesService = inject(ExpensesService)
 
   private readonly GET_PLACE = (value: BudgetData): string => value?.basics?.place
   private readonly GET_GUESTS = (value: BudgetData): number => value?.basics?.guestsAmount
@@ -32,11 +36,18 @@ export class PriceService {
     return combineLatest([
       this.transportationPrice$.asObservable(),
       this.productionPrice$.asObservable(),
+      this.expensesPrice$.asObservable(),
       this.giftsPrice$.asObservable()
     ]).pipe(
       debounceTime(500),
-      map(([transportationCost, productionPrice]) => {
-        return ((transportationCost?.price || 0) + (productionPrice?.listPrice || 0)) || 0
+      map(([transportationCost, productionPrice, expensesPrice, giftsPrice]) => {
+        const total = (
+          (transportationCost?.price || 0) +
+          (productionPrice?.listPrice || 0) +
+          (expensesPrice?.price || 0) +
+          (giftsPrice?.listPrice || 0)
+        ) || 0
+        return total
       })
     )
   }
@@ -47,8 +58,11 @@ export class PriceService {
     const [prevValue, currentValue] = values
     this.checkTransportation(prevValue, currentValue)
     this.checkProduction(prevValue, currentValue)
+    this.checkExpenses(prevValue, currentValue)
   }
 
+
+  // Precio de transporte
   private checkTransportation(prev: BudgetData, value: BudgetData): void {
     if (this.GET_PLACE(prev) !== this.GET_PLACE(value) ||
       this.GET_GUESTS(prev) !== this.GET_GUESTS(value) ||
@@ -109,4 +123,32 @@ export class PriceService {
       ).subscribe(() => console.log('price update - production'))
 
   }
+
+  private checkExpenses(prev: BudgetData, value: BudgetData): void {
+    if (this.GET_GUESTS(value) && this.GET_GUESTS(prev) != this.GET_GUESTS(value)) {
+      this.calculateExpensesPrice(this.GET_GUESTS(value))
+    }
+  }
+  private calculateExpensesPrice(guests: number): void {
+    this.expensesService.getExpensesCached(Number(guests))
+      .pipe(
+        map((expenseValue: ExpenseValueDto | null) => {
+          if (expenseValue?.totalValue) {
+            this.expensesPrice$.next({
+              percentage: expenseValue.percentage,
+              price: expenseValue.totalValue
+            })
+          } else {
+            this.expensesPrice$.next({
+              percentage: 0,
+              price: 0,
+            })
+          }
+        }),
+        take(1)
+      ).subscribe(() => console.log('price update - expenses'))
+
+  }
+
+
 }                                   

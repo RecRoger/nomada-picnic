@@ -22,7 +22,7 @@ export class ExpenseDto {
 
 export class ExpenseValueDto {
   @ApiProperty({ description: 'Valor de Gastos mensuales' })
-  monthlyValue: number;
+  monthlyValue?: number;
 
   @ApiProperty({ description: 'Valor total de gastos de inversion' })
   toBeAmortized?: number;

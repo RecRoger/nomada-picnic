@@ -24,7 +24,9 @@ export class PlacesService {
   }
 
   public getPlaces(type?: string): Observable<PlaceDto[]> {
-    return this.http.get<ApiResponse<PlaceDto[]>>(`/api/places` + (type ? `/${type}` : '')).pipe(
+    return this.http.get<ApiResponse<PlaceDto[]>>(`/api/places`, {
+      params: { ...(type ? { type } : {}) }
+    }).pipe(
       map((response) => {
         if (response) {
           return response.data as PlaceDto[]

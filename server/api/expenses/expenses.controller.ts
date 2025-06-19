@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -13,20 +13,21 @@ import { Expense } from 'server/database/schemas/expenses.schema';
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) { }
 
-  @Get()
+  @Get('list')
   @ApiOperation({ summary: 'Obtener Lista de Gastos' })
   @ApiResponse({ status: 201, description: 'Lista de gastos', type: ResponseDto<Expense[]> })
   async findAll(): Promise<Expense[]> {
     return this.expensesService.findAll();
   }
 
-  @Get('value')
+  @Get('')
   @ApiOperation({ summary: 'Obtener valor de Gasto total' })
   @ApiResponse({ status: 201, description: 'Objeto de gastos', type: ResponseDto<any> })
   async getExpenses(
-    @Param('guests') guestsAmount: string,
-    @Param('percentage') percentage: string,
+    @Query('guests') guestsAmount: string,
+    @Query('percentage') percentage: string,
   ): Promise<any> {
+    console.log({ guestsAmount, percentage })
     return this.expensesService.getExpenses(Number(guestsAmount), Number(percentage));
   }
 

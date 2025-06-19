@@ -147,7 +147,7 @@ export class PicnicCalculatorComponent implements OnInit {
     this.forms.valueChanges.pipe(
       startWith(this.forms.value), // Emite el valor inicial
       pairwise(), // Emite un array [previousValue, currentValue]
-      debounceTime(100), // Opcional: Espera un poco para agrupar cambios rápidos
+      debounceTime(800), // Opcional: Espera un poco para agrupar cambios rápidos
       takeUntilDestroyed(this.destroyRef),
     ).subscribe((values: BudgetData[]) => {
       this.priceService.checkPrice(values)

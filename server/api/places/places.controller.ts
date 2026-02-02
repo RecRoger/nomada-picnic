@@ -21,6 +21,13 @@ export class PlacesController {
     return this.placesService.findAll(type);
   }
 
+  @Get('/price')
+  @ApiOperation({ summary: 'Obtener todos los lugares (puede recibir de un tipo)' })
+  @ApiResponse({ status: 201, description: 'Lista de lugares', type: ResponseDto<Place[]> })
+  async getPlacePrice(@Query('type') type: string): Promise<Place[]> {
+    return this.placesService.findAll(type);
+  }
+
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo lugar' })
   @ApiBody({ type: PlaceDto })

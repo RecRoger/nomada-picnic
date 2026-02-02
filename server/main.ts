@@ -9,6 +9,16 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT || 3000;
 
+  app.enableCors({
+    origin: [
+      'http://localhost:4200',
+      'https://nomadapicnic.com',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Métodos HTTP permitidos
+    credentials: true, // Importante si usas cookies o sessiones (ej. para autenticación JWT en http-only cookie)
+    allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization' // Headers permitidos
+  })
+
   // Ruta base para acceder a los archivos desde el frontend
   const uploadPlacesDir = join(__dirname, '..', 'uploads', 'places')
   app.useStaticAssets(uploadPlacesDir, { prefix: '/uploads/places' });

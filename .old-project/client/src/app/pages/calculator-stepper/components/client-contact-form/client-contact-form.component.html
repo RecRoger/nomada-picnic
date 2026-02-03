@@ -1,0 +1,17 @@
+<p>{{'CALCULATOR.CONTACT.MESSAGE' | translate}}</p>
+@if (form) {
+<form class="contact-form" [formGroup]="form">
+  <app-form-control class="contact-control" [control]="form.get('name') | asFormControl"
+    label="{{ 'COMMON.NAME' | translate }}" type="text">
+  </app-form-control>
+
+  <app-form-control class="contact-control" [control]="form.get('email') | asFormControl"
+    label="{{ 'COMMON.EMAIL' | translate }}" type="email">
+  </app-form-control>
+
+  <app-form-control class="contact-control" [control]="form.get('phone') | asFormControl"
+    label="{{ 'COMMON.PHONE' | translate }}" type="number">
+  </app-form-control>
+
+</form>
+}

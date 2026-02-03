@@ -1,75 +1,29 @@
-# compiled output
-/client/.angular/*
-/client/dist
-/server/dist
-/dist
-/tmp
-/node_modules
-/build
-/out-tsc
-/bazel-out
+# 1. Dependencias y Compilación (Global)
+node_modules/
+dist/
+api/dist/      # Cambiado de /server/dist
+client/dist/
+.angular/      # Ignora .angular en cualquier nivel (raíz o client)
 
-# Logs
-logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
+# 2. Angular 19 + Vite específicos
+client/.angular/
+.nx/cache/     # Por si en el futuro usas NX
+.vite/         # Caché de Vite que suele dar problemas
 
-# Tests
-/coverage
-/.nyc_output
+# 3. NestJS específicos
+/api/dist
+/api/node_modules
+*.tsbuildinfo  # Archivos de caché de compilación de TS
 
-# IDEs and editors
-/.idea
-.old-project
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# dotenv environment variable files
+# 4. Entorno y Secretos
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+.env.*
+!.env.example  # Es buena práctica subir el .example para que otros sepan qué variables usar
+.DS_Store      # Archivos de sistema (Mac)
+Thumbs.db      # Archivos de sistema (Windows)
 
-# temp directory
-.temp
-.tmp
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-# Miscellaneous
-client/.angular/cache/
-client/coverage
-.sass-cache/
-/connect.lock
-/libpeerconnection.log
-testem.log
-/typings
-
-# System files
-.DS_Store
-Thumbs.db
-
+# 5. IDEs y Herramientas
+.vscode/
+!.vscode/settings.json
+!.vscode/launch.json
+.old-project/  # Muy importante para no ensuciar el repo nuevo con lo viejo

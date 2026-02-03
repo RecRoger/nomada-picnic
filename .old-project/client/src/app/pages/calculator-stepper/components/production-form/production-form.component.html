@@ -1,0 +1,33 @@
+@if (form) {
+<form class="production-form" [formGroup]="form">
+  <div class="production-control-textarea">
+    <app-form-control [control]="form.get('boardText') | asFormControl"
+      label="{{ 'CALCULATOR.PRODUCTION.BOARD_TEXT' | translate }}"
+      placeholder="{{ 'CALCULATOR.PRODUCTION.BOARD_PLACEHOLDER' | translate }}" type="textarea">
+    </app-form-control>
+  </div>
+
+  <app-form-control [control]="form.get('tableAmount') | asFormControl"
+    label="{{ 'CALCULATOR.PRODUCTION.TABLE' | translate }}" type="number">
+  </app-form-control>
+
+  <div class="production-control-toggle">
+    <mat-slide-toggle formControlName="archIndicator" labelPosition="before">
+      {{"CALCULATOR.PRODUCTION.ARCH" | translate}}
+    </mat-slide-toggle>
+  </div>
+
+  <div class="production-control-toggle">
+    <mat-slide-toggle formControlName="bigTableIndicator" labelPosition="before">
+      {{"CALCULATOR.PRODUCTION.BIG_TABLE" | translate}}
+    </mat-slide-toggle>
+  </div>
+
+  <div class="production-control-toggle prom-shitch">
+    <mat-slide-toggle formControlName="promoIndicator">
+      {{"CALCULATOR.PRODUCTION.PROM_TEXT" | translate}}
+    </mat-slide-toggle>
+  </div>
+
+</form>
+}

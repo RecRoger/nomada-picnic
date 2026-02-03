@@ -1,0 +1,16 @@
+app-form-control {
+  width: 100%;
+}
+
+.place-location {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}

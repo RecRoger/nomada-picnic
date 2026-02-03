@@ -1,0 +1,27 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh; // Centra verticalmente en la pantalla
+  width: 100%;
+
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    button {
+      margin-top: 40px;
+      width: 100%;
+    }
+  }
+}

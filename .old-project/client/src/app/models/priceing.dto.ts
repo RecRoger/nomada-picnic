@@ -1,0 +1,31 @@
+export interface PriceingTransportation {
+  code?: string;
+  name?: string;
+  zone?: number;
+  price?: number;
+  extra?: boolean;
+}
+
+export interface PriceingExpenses {
+  price?: number;
+  percentage?: number;
+}
+
+export interface PriceingListItem {
+  code?: string;
+  name?: string;
+  price?: number;
+  amount?: number;
+}
+
+export interface PriceingList {
+  items?: PriceingListItem[];
+  listPrice?: number;
+}
+
+export interface Priceings {
+  transportation?: PriceingTransportation;
+  expenses?: PriceingExpenses;
+  production?: PriceingList;
+  gifts?: PriceingList;
+}

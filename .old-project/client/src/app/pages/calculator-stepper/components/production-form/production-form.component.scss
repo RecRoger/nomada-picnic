@@ -1,0 +1,26 @@
+.production-form {
+  padding-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+// .production-control {
+//   width: 15%;
+// }
+
+app-form-control {
+  width: 50%;
+  // flex-grow: 1;
+}
+
+.production-control-toggle {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.production-control-textarea {
+  width: 100%;
+  flex-grow: 1;
+}

@@ -1,0 +1,44 @@
+/* En tu archivo SCSS del componente (ej. my-component.component.scss) */
+
+.additionals-forms {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 10px;
+  }
+}
+
+.additionals-item {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.mat-mdc-card-actions {
+  align-items: flex-end;
+  flex-direction: row-reverse;
+}
+
+.additionals-toogle {
+  // padding: 1.5rem 1rem
+  margin-top: 5rem;
+}
+
+.additionals-quantity {
+  width: 100%;
+  padding-top: .5rem;
+  overflow-x: hidden;
+}

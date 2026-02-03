@@ -1,0 +1,24 @@
+.form-control {
+  width: 100%;
+}
+
+.expense-main,
+.expense-info,
+.expense-amounts,
+.expense-price {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.montly-check {
+  text-align: center;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}

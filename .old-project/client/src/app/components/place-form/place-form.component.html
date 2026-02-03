@@ -1,0 +1,43 @@
+<form [formGroup]="placeForm">
+  <app-form-control [control]="getControl('name')" label="{{ 'COMMON.NAME' | translate }}" type="text">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('description')" label="{{ 'COMMON.DESCRIPTION' | translate }}"
+    type="textarea">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('images')" label="{{ 'COMMON.ADD_IMAGES' | translate }}" type="file">
+  </app-form-control>
+
+  <div class="place-location">
+    <app-form-control class="place-location-coord" [control]="getLocationControl('lat')"
+      label="{{ 'COMMON.LAT' | translate }}" type="number">
+    </app-form-control>
+
+    <app-form-control class="place-location-coord" [control]="getLocationControl('lng')"
+      label="{{ 'COMMON.LNG' | translate }}" type="number">
+    </app-form-control>
+  </div>
+
+  <app-form-control [control]="getControl('mapsLink')" label="{{ 'PLACES.FORM.MAPS_LINK' | translate }}" type="text">
+  </app-form-control>
+
+
+  <app-form-control [control]="getControl('zone')" label="{{ 'PLACES.FORM.ZONE' | translate }}" type="number">
+  </app-form-control>
+
+  <app-form-control [control]="getControl('transportationCost')" label="{{ 'PLACES.FORM.COST' | translate }}"
+    type="number" prefix="US$">
+
+  </app-form-control>
+  <div class="form-actions">
+    @if(cancelOption) {
+    <button mat-raised-button color="accent" type="button" (click)="onCancel()">
+      {{ 'COMMON.CANCEL' | translate}}
+    </button>
+    }
+    <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="placeForm.invalid">
+      {{'PLACES.FORM.BUTTON' | translate}}
+    </button>
+  </div>
+</form>

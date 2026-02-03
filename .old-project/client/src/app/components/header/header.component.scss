@@ -1,0 +1,16 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1rem;
+  background-color: #ffd9e1;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+
+  .logo-link {
+    text-decoration: none;
+  }
+
+  .logo-image {
+    height: 4rem;
+  }
+}

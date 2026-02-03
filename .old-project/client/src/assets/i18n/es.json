@@ -1,0 +1,164 @@
+{
+  "COMMON": {
+    "CANCEL": "Cancelar",
+    "NO": "No",
+    "NAME": "Nombre",
+    "EMAIL": "Correo Electronico",
+    "PHONE": "Teléfono",
+    "PASSWORD": "Contraseña",
+    "DESCRIPTION": "Descripcion",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "NEW": "Nuevo",
+    "ADD": "Agregar",
+    "SAVE": "Guardar",
+    "LAT": "Latitud",
+    "LNG": "Longitud",
+    "ADD_IMAGES": "Añadir imágenes",
+    "ERRORS": {
+      "INVALID_FIELD": "Campo inválido",
+      "REQUIRED_FIELD": "El campo es <b>obligatorio</b>",
+      "MIN_VALUE_FIELD": "El campo puede tener un valor minimo igual a {{min}}",
+      "MAX_VALUE_FIELD": "El campo es debe tener un valor no mayor a {{max}}",
+      "MAX_CHARACTERS_FIELD": "El campo puede tener hasta {{max}} caracteres"
+    },
+    "DATE": "Fecha",
+    "PLACE": "Lugar",
+    "GUESTS_NUMBER": "Número de invitados",
+    "PEOPLE": "personas",
+    "TYPE": "Tipo",
+    "IMAGES": "Imagenes",
+    "EARN_PERCENTAGE": "Ganancia",
+    "FINAL_PRICE": "Precio Final",
+    "TOTAL_COST": "Costo Total",
+    "NEXT": "Siguiente",
+    "PREVIOUS": "Anterior",
+    "FINALIZE": "Finalizar",
+    "GENERIC_ERROR": "Ha ocurrido un error"
+  },
+  "LOGIN": {
+    "TITLE": "Iniciar Sesión",
+    "INVLID_ERROR": "Credenciales invalidas"
+  },
+  "ADMIN": {
+    "TITLE": "Bienvenido {{name}}",
+    "TABS": {
+      "PICNICS": "Presupuestos y Picnics",
+      "PLACES": "Lugares y parques",
+      "COSTS": "Costos de produccion y adicionales",
+      "EXPENSES": "Gastos mensuales e inversiones"
+    }
+  },
+  "PLACES": {
+    "TITLE": "Lugares disponibles",
+    "BASIC_PRICE": "Costo base",
+    "BASIC_PRICE_TEXT": "El costo base viene a ser el costo default utilizado para cualquier lugar de la zona. Viene dado por un 20% mas del promedio de todos los lugares de la zona",
+    "NEW_PLACE": "Añadir nuevo lugar",
+    "DIALOG_TITLE": "Eliminar Lugar",
+    "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista de lugares?",
+    "ADDED": "Lugar añadido correctamente",
+    "EDITED": "Lugar actualizado correctamente",
+    "DELETED": "Lugar eliminado correctamente",
+    "ERROR": "No se ha podido cargar lista lugares",
+    "FORM": {
+      "MAPS_LINK": "Link de Maps",
+      "ZONE": "Número de Zona",
+      "COST": "Costo de Transporte",
+      "BUTTON": "Guardar Lugar"
+    }
+  },
+  "COSTS": {
+    "TITLE": "Costos y Adicionales",
+    "PROVIDER_COST": "Costo de Proveedor",
+    "PRODUCTION_COST": "Costo de Productor",
+    "GUESTS_COVERAGE": "Alance de invitados",
+    "DELIVERY": "Requiere delivery",
+    "MULTIPLE": "Se puede seleccionar varios",
+    "FULL_EVENT": "Unico por evento",
+    "NEW": "Guardar nuevo costo",
+    "DIALOG_TITLE": "Eliminar Costo",
+    "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista de costos?",
+    "ERROR": "No se ha podido cargar lista costos",
+    "ADDED": "Costo añadido correctamente",
+    "EDITED": "Costo actualizado correctamente",
+    "DELETED": "Costo eliminado correctamente",
+    "TYPES_DESCRIPTION": {
+      "PRODUCTION": "Costos de produccion",
+      "GIFTS": "Regalos de Cortesia",
+      "ADDITIONAL": "Adicionales",
+      "FOOD": "Comida",
+      "DELIVERY": "Delivery de comida",
+      "production": "Los costos de produccion son la base del picnic y se añaden automáticamente.",
+      "gifts": "Los regalos de cortesia se añaden automaticamente segun el numero de invitados al picnic",
+      "additional": "Los adicionales son decoraciones o actividades seleccionables por el cliente",
+      "food": "La comida adicional será seleccionable por el cliente",
+      "delivery": "El delivery de comida para aquellos adicionales de comida que lo requieran"
+    },
+    "FORM": {
+      "DELIVERY": "Requiere pago de delivery",
+      "MULTIPLE": "Permite seleccion multiple",
+      "BUTTON": "Guardar Costo"
+    }
+  },
+  "EXPENSES": {
+    "TITLE": "Gastos Mensuales e inversiones.",
+    "ERROR": "No se ha podido cargar la lista de gastos",
+    "VALUE_ERROR": "No se ha podido cargar el monto total de gastos",
+    "AMORTIZATION": "Amortizacion",
+    "NEW_EXPENSE": "Crear nuevo gasto",
+    "DIALOG_TITLE": "Eliminar Gasto",
+    "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista gastos?",
+    "MONTHLY": "mensual",
+    "TOTAL_AMORTIZATION": "Total a amortizar",
+    "AMORTIZATION_PERCENTAGE": "Porcentaje de pago de amortizacion",
+    "AMORTIZATION_PAYMENT": "Pago de amortizacion mensual",
+    "MONTHLY_EXPENSE": "Gasto Mensual",
+    "TOTAL_PAYMENT": "Pago Mensual Total",
+    "MONTHS": "meses",
+    "AMORTIZATED": "amortizado en {{month}} meses.",
+    "FORM": {
+      "COST": "Valor del gasto",
+      "MONTHLY": "Gasto Mensual",
+      "AMORTIZATION": "Meses de amortizacion"
+    }
+  },
+  "PUBLIC": {
+    "TITLE": "Organiza picnics inolvidables",
+    "DESCRIPTION": "Somos una empresa dedicada a organizar picnics personalizados en los parques más hermosos de tu ciudad. Te ayudamos a planificar cada detalle, desde la selección del lugar perfecto hasta la preparación de deliciosos menús y actividades divertidas.",
+    "ACTION": "Cotizar mi picnic"
+  },
+  "CALCULATOR": {
+    "TITLE": "Cotiza tu evento",
+    "SUBTITLE": "Aca puedes armar tu evento o seleccionar y editar alguno de nuestras sugerencias",
+    "BASICS": {
+      "EVENT": "Cuentanos un poco sobre tu evento",
+      "EVENT_PLACEHOLDER": "¿qué celebras?"
+    },
+    "PRODUCTION": {
+      "TABLE": "Numero de mesas",
+      "ARCH": "Incluir arco decorativo",
+      "BIG_TABLE": "Incluir meson alto",
+      "BOARD_TEXT": "¿Que deseas escribir en la pizarra?",
+      "BOARD_PLACEHOLDER": "\"Feliz dia del picnic\"",
+      "PROM_TEXT": "Contamos con una organizacion para grupos grandes que incluye solo un par de mesas como modulo central y varias mantas al rededor. Esta organizacion <b>No cuenta con platos</b> para los invitados, solamente copas y vasos para todos."
+    },
+    "ADDITIONALS": {
+      "TEXT": "Algunos adicionales para agregar.",
+      "PETALS": "Decoracion con pétalos de rosas",
+      "FLOWERS": "Arreglos de Flores Naturales",
+      "PHOTOS_AMOUNT": "Numero fotos tipo Polaroid",
+      "LIGTHS": "Decoracion con guirnaldas de luces",
+      "PHOTOGRAPHER": "Contratar Fotógrafo"
+    },
+    "FOOD": {
+      "GIFT_TEXT": "En todos nuestos picnics nos gusta regalar una cesta de panes junto con hielo y alguna bebida de cortesia, que podria ser gaseosa, jugo, vino o espumante según el numero de invitados. \n Cuentanos que preferencia tenés entre estas opciones.",
+      "GIFT_PLACEHOLDER": "¿Qué bebida de cortesia te gustaria recibir?",
+      "ADDITIONAL_FOOD": "Comida adicional",
+      "FOOD_COVERAGE": "Tiene un alcance aproximado para {{guestsCoverage}} personas",
+      "QUIANTITY": "Cantidad"
+    },
+    "CONTACT": {
+      "MESSAGE": "Para finalizar la cotizacion es necesario que nos compartas algunos datos para poder mantener el contacto con vos."
+    }
+  }
+}

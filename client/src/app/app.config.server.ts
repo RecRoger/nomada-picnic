@@ -1,14 +1,12 @@
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
+import { provideNoopAnimations } from '@angular/platform-browser/animations'; // <-- Importa esto
 import { appConfig } from './app.config';
-import { TranslateModule } from '@ngx-translate/core';
 
 const serverConfig: ApplicationConfig = {
   providers: [
+    provideNoopAnimations(), // Esto evita que Material intente animar en el servidor
     provideServerRendering(),
-    ...TranslateModule.forRoot({
-      defaultLanguage: 'es', // Idioma por defecto
-    }).providers!,
   ]
 };
 

@@ -10,22 +10,26 @@ import { HeaderComponent } from '@components/header/header.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [GoogleMapsModule, RouterOutlet, HeaderComponent],
+  imports: [
+    // GoogleMapsModule,
+    // RouterOutlet,
+    // HeaderComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [
-    AuthService,
-    MapsService,
-    TranslateStore,
-    NotificationService,
+    // AuthService,
+    // MapsService,
+    // TranslateStore,
+    // NotificationService,
   ]
 })
 export class AppComponent {
-  constructor(private translate: TranslateService, private mapsService: MapsService) {
-    this.mapsService.load().catch(err => console.error('Error al cargar Google Maps', err))
-    this.translate.addLangs(['en', 'es']);
-    this.translate.setDefaultLang('es');
-    this.translate.use('es');
-  }
+  // constructor(private translate: TranslateService, private mapsService: MapsService) {
+  //   this.mapsService.load().catch(err => console.error('Error al cargar Google Maps', err))
+  //   this.translate.addLangs(['en', 'es']);
+  //   this.translate.setDefaultLang('es');
+  //   this.translate.use('es');
+  // }
 }
 

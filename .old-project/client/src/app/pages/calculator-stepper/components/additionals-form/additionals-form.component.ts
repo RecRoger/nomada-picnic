@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { FormControlComponent } from '@components/form-control/form-control.component';
-import { COSTS_TYPES } from '@enums/cost-types.enum';
+import { CostsTypes } from '@enums/cost-types.enum';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormArrayCastPipe, FormControlCastPipe, FormGroupCastPipe } from '@pipes/form-control-cast.pipe';
 import { CostsService } from '@services/costs.service';
@@ -44,7 +44,7 @@ export class AdditionalsFormComponent {
   }
 
   private createAdditionalsForms() {
-    this.additionalsList$ = this.costsService.getCostsCached(COSTS_TYPES.ADDITIONAL).pipe(
+    this.additionalsList$ = this.costsService.getCostsCached(CostsTypes.ADDITIONAL).pipe(
       tap(additionalsList => {
         const additionalList = (this.form?.get('items') as FormArray)
         additionalsList.forEach(additional => {

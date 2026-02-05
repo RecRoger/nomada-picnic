@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { COSTS_TYPES } from '@enums/cost-types.enum';
-import { PLACES_TYPES } from '@enums/places-types.enum';
+import { CostsTypes } from '@enums/cost-types.enum';
+import { PlacesTypes } from '@enums/places-types.enum';
 import { BudgetData } from '@models/budget.dto';
 import { CostDto } from '@models/cost.dto';
 import { ExpenseValueDto } from '@models/expense.dto';
@@ -73,8 +73,8 @@ export class PriceService {
   }
   private calculateTransportationPrice(value: BudgetData): void {
     forkJoin([
-      this.placesService.getPlacesCached(PLACES_TYPES.BASIC),
-      this.placesService.getPlacesCached(PLACES_TYPES.PUBLIC),
+      this.placesService.getPlacesCached(PlacesTypes.BASIC),
+      this.placesService.getPlacesCached(PlacesTypes.PUBLIC),
     ]).pipe(
       map(([basicPlaces, publicPlaces]: PlaceDto[][]) => {
         const selectedPlace = publicPlaces.find(place => place._id === value.basics.place)
@@ -102,7 +102,7 @@ export class PriceService {
     }
   }
   private calculateProductionPrice(value: BudgetData): void {
-    this.costsService.getCostsCached(COSTS_TYPES.PRODUCTION)
+    this.costsService.getCostsCached(CostsTypes.PRODUCTION)
       .pipe(
         map((productionCosts: CostDto[]) => {
           const costs = productionCosts.filter(cost => !cost.guestsCoverage ||

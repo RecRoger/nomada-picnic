@@ -9,10 +9,17 @@
   "scripts": {
     "install:all": "npm install",
     "start:client": "npm run start --workspace=client",
-    "start:dev": "npm run start:dev --workspace=api",
+    "start:api": "npm run start:dev --workspace=api",
     "dev": "concurrently \"npm run start:dev\" \"npm run start:client\""
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/mongoose": "^11.0.4",
+    "@nestjs/swagger": "^11.2.5",
+    "mongoose": "^9.1.5",
+    "swagger-ui-express": "^5.0.1"
   }
 }

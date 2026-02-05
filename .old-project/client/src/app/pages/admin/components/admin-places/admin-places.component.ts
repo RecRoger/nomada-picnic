@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card'
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PlaceFormComponent } from '@components/place-form/place-form.component';
-import { PLACES_TYPES } from '@enums/places-types.enum';
+import { PlacesTypes } from '@enums/places-types.enum';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@components/confirmation-dialog/confirmation-dialog.component';
@@ -45,7 +45,7 @@ export class AdminPlacesComponent implements OnInit {
 
   public readonly dialog = inject(MatDialog);
 
-  public readonly placeTypes = PLACES_TYPES
+  public readonly placeTypes = PlacesTypes
 
   public places: PlaceDto[] = [];
 
@@ -120,7 +120,7 @@ export class AdminPlacesComponent implements OnInit {
   private appendForm(formPlace: PlaceDto): FormData {
     const formData = new FormData();
     formData.append('name', formPlace.name)
-    formData.append('type', PLACES_TYPES.PUBLIC)
+    formData.append('type', PlacesTypes.PUBLIC)
     formData.append('location', JSON.stringify(formPlace.location))
     formData.append('description', formPlace.description)
     formData.append('mapsLink', formPlace.mapsLink)

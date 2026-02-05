@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { CostDto } from '@models/cost.dto';
-import { COSTS_TYPES } from '@enums/cost-types.enum';
+import { CostsTypes } from '@enums/cost-types.enum';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -26,9 +26,9 @@ export class CostsFormComponent implements OnInit {
 
   @Output() cancel: EventEmitter<void> = new EventEmitter()
 
-  public readonly COSTS_TYPES = COSTS_TYPES
+  public readonly CostsTypes = CostsTypes
 
-  public readonly COSTS_TYPES_OPTIONS = Object.entries(COSTS_TYPES)
+  public readonly CostsTypes_OPTIONS = Object.entries(CostsTypes)
     .filter(([key]) => isNaN(Number(key))) // Filtra las claves numéricas (inversas)
     .map(([text, value]) => ({ text: 'COSTS.TYPES_DESCRIPTION.' + text, value }));
 
@@ -46,7 +46,7 @@ export class CostsFormComponent implements OnInit {
     this.costForm = this.fb.group({
       name: [this.cost?.name || '', Validators.required],
       description: [this.cost?.description || '', Validators.required],
-      type: [this.cost?.type || COSTS_TYPES.PRODUCTION, Validators.required],
+      type: [this.cost?.type || CostsTypes.PRODUCTION, Validators.required],
       images: [null],
       guestsCoverage: [this.cost?.guestsCoverage || 0, [Validators.min(0)]],
       providerCost: [this.cost?.providerCost || 0, [Validators.required, Validators.min(0)]],

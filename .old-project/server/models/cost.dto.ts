@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { COSTS_TYPES } from 'server/enums/costs-types.enum';
+import { CostsTypes } from 'server/enums/costs-types.enum';
 
 export class CostDto {
   @ApiProperty({ description: 'id del costo' })
@@ -9,7 +9,7 @@ export class CostDto {
   name: string;
 
   @ApiProperty({ description: 'Tipo de costo (production, additional, food)' })
-  type: COSTS_TYPES
+  type: CostsTypes
 
   @ApiProperty({ description: 'Descripción de costo' })
   description: string;

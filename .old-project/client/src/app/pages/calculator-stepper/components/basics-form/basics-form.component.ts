@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
-import { PLACES_TYPES } from '@enums/places-types.enum';
+import { PlacesTypes } from '@enums/places-types.enum';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControlCastPipe } from '@pipes/form-control-cast.pipe';
 import { PlacesService } from '@services/places.service';
@@ -37,7 +37,7 @@ export class BasicsFormComponent implements OnInit {
   }
 
   public getPlaces(): void {
-    this.places$ = this.placesService.getPlacesCached(PLACES_TYPES.PUBLIC).pipe(
+    this.places$ = this.placesService.getPlacesCached(PlacesTypes.PUBLIC).pipe(
       map(places => places
         .map(place => ({ value: place._id!, text: place.name }))
       ),

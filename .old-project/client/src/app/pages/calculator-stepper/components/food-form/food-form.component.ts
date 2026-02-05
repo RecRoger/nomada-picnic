@@ -8,7 +8,7 @@ import { CostsService } from '@services/costs.service';
 import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { Observable, of, tap } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
-import { COSTS_TYPES } from '@enums/cost-types.enum';
+import { CostsTypes } from '@enums/cost-types.enum';
 import { CostDto } from '@models/cost.dto';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -46,7 +46,7 @@ export class FoodFormComponent implements OnInit {
 
 
   private createFoodForms() {
-    this.foodList$ = this.costsService.getCostsCached(COSTS_TYPES.FOOD).pipe(
+    this.foodList$ = this.costsService.getCostsCached(CostsTypes.FOOD).pipe(
       tap(foodList => {
         const formList = (this.form?.get('items') as FormArray)
         foodList.forEach(food => {

@@ -1,4 +1,4 @@
-import { PLACES_TYPES } from "@enums/places-types.enum";
+import { PlacesTypes } from "@enums/places-types.enum";
 
 export interface PlaceLocation {
   lat: number;
@@ -8,7 +8,7 @@ export interface PlaceLocation {
 export interface PlaceDto {
   _id?: string;
   name: string;
-  type: PLACES_TYPES
+  type: PlacesTypes
   description: string;
   images: string[];
   location?: PlaceLocation;

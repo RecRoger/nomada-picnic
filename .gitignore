@@ -26,4 +26,9 @@ Thumbs.db      # Archivos de sistema (Windows)
 .vscode/
 !.vscode/settings.json
 !.vscode/launch.json
-.old-project/  # Muy importante para no ensuciar el repo nuevo con lo viejo
+
+# Evitar archivos compilados en carpetas de fuente
+shared/**/*.js
+shared/**/*.js.map
+shared/**/*.d.ts
+!shared/package.json

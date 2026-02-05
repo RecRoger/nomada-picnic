@@ -1,4 +1,4 @@
-export enum COSTS_TYPES {
+export enum CostsTypes {
   PRODUCTION = 'production',
   GIFTS = 'gifts',
   ADDITIONAL = 'additional',

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PLACES_TYPES } from 'server/enums/places.enum';
+import { PlacesTypes } from 'server/enums/places.enum';
 
 export class PlaceLocation {
   @ApiProperty({ description: 'Latitud' })
@@ -17,7 +17,7 @@ export class PlaceDto {
   name: string;
 
   @ApiProperty({ description: 'Tipo del lugar (public, particular)' })
-  type: PLACES_TYPES = PLACES_TYPES.PUBLIC
+  type: PlacesTypes = PlacesTypes.PUBLIC
 
   @ApiProperty({ description: 'Descripción del lugar' })
   description: string;

@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { COM_STATUS } from 'server/enums/comunication-status.enum';
+import { ComunicationStatus } from 'server/enums/comunication-status.enum';
 
 export class ResponseDto<T> {
   @ApiProperty({ description: 'Estado de la peticion' })
-  status: COM_STATUS;
+  status: ComunicationStatus;
 
   @ApiProperty({ description: 'Mensaje de la peticion' })
   message?: string;

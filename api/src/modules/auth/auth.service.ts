@@ -2,32 +2,33 @@ import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as crypto from 'crypto';
-import { User } from 'server/database/schemas/users.schema';
-import { UserDto } from 'server/models/user.dto';
+import { User, UsersDocument } from 'src/database/schemas/users.schema';
+import { UserDto } from 'src/common/models/user.dto';
 
 @Injectable()
 export class AuthService {
   private readonly SECRET_PASSWORD = 'ultrasecret'
   private readonly logger = new Logger(AuthService.name)
 
-  constructor(@InjectModel(User.name) private usersModel: Model<User>) { }
+  constructor(@InjectModel(User.name) private usersModel: Model<UsersDocument>) { }
 
-  private hideUser(user: User): User {
+  private hideUser(user: UserDto): UserDto {
     const { email, name } = user
-    return { email, name } as User
+    return { email, name } as UserDto
   }
 
   private transformPassword(password: string): string {
     return crypto.createHash('sha256').update(password).digest('hex')
   }
 
-  async validate(email?: string, password?: string, ultrasecret?: string): Promise<User> {
+  async validate(email?: string, password?: string, ultrasecret?: string): Promise<UserDto> {
     this.logger.log(`[findOne] - ${email}`)
     if (ultrasecret !== this.SECRET_PASSWORD) {
       this.logger.error(`no secret`, AuthService.name);
       throw new ForbiddenException('No Secrets');
     }
-    const user = await this.usersModel.findOne({ email }).exec();
+    const userQuery = await this.usersModel.findOne({ email }).exec();
+    const user = userQuery as unknown as UserDto;
     if (user) {
       const hashedPassword = this.transformPassword(password);
       if (hashedPassword === user.password) {
@@ -48,7 +49,9 @@ export class AuthService {
     const newUser = { ...user, _id: undefined, password: this.transformPassword(user.password) }
     const createdUser = new this.usersModel(newUser);
     try {
-      return this.hideUser(await createdUser.save());
+
+      const newUser = (await createdUser.save()) as unknown as UserDto;
+      return this.hideUser(newUser);
     } catch (err) {
       this.logger.error(`Error user: ${err.message}`, err.stack, AuthService.name);
       throw new Error('Error al crear el user');
@@ -58,7 +61,8 @@ export class AuthService {
   async update(id: string, updateUserData: UserDto): Promise<User> {
     this.logger.log(`[update] - ${id}`,)
     const edited = await this.usersModel.findByIdAndUpdate(id, updateUserData, { new: true }).exec();
-    return this.hideUser(edited)
+    const editedUser = edited as unknown as UserDto;
+    return this.hideUser(editedUser)
   }
 
   async remove(id: string): Promise<boolean> {

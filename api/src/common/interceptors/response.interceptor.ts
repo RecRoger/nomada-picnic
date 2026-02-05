@@ -3,6 +3,7 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
+  Logger,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,10 +15,13 @@ export class ResponseInterceptor<T> implements NestInterceptor<
   T,
   IResponse<T>
 > {
+  private readonly logger = new Logger('RequestInterceptor');
+
   intercept(
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<IResponse<T>> {
+    this.logger.debug('START REQUEST')
     return next.handle().pipe(
       map((data) => ({
         status: ComunicationStatus.OK as ComunicationStatus,

@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { DatabaseModule } from 'src/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { PlacesModule } from 'src/modules/places/places.module';
 import { join } from 'path';
+import { AuthModule } from 'src/modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -13,9 +12,8 @@ import { join } from 'path';
       envFilePath: join(process.cwd(), '.env'),
     }),
     DatabaseModule,
+    AuthModule,
     PlacesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule { }

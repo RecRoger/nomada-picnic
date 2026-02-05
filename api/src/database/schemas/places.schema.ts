@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { PlacesTypes } from '@shared/enums';
 import { HydratedDocument } from 'mongoose';
-// import { IPlace } from '@shared'; // Descomenta cuando tengas la interfaz en shared
 
 export type PlacesDocument = HydratedDocument<Place>;
 
@@ -12,9 +12,10 @@ export class Place {
   @Prop({ required: true, trim: true })
   name: string;
 
-  @Prop({ required: true, index: true }) // Indexado para filtros rápidos
+  @Prop({ required: true, index: true, enum: PlacesTypes }) // Indexado para filtros rápidos
   type: string;
 
+  // TODO - volver varios idiomas
   @Prop()
   description: string;
 
@@ -25,10 +26,14 @@ export class Place {
     type: {
       lat: { type: Number, required: true },
       lng: { type: Number, required: true },
+      _id: false, // Evita que Mongoose cree un ID interno para este objeto anidado
     },
     _id: false, // Evita que Mongoose cree un ID interno para este objeto anidado
   })
-  location: { lat: number; lng: number };
+  location: {
+    lat: number;
+    lng: number;
+  };
 
   @Prop({ trim: true })
   mapsLink: string;

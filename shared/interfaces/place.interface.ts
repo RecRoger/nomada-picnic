@@ -11,7 +11,7 @@ export interface IPlace {
   type: PlacesTypes;
   description?: string;
   images?: string[];
-  location: IPlaceLocation;
+  location?: IPlaceLocation;
   mapsLink?: string;
   zone: number;
   transportationCost: number;

@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PlacesTypes } from '@shared/enums';
-import { IPlace } from '@shared/interfaces';
 import { Model } from 'mongoose';
 import { PlaceDto } from 'src/common/models/place.dto';
 import { Place, PlacesDocument } from 'src/database/schemas/places.schema';
@@ -16,13 +15,14 @@ export class PlacesService {
     private filesService: FilesService,
   ) { }
 
-  async findAll(type?: string): Promise<IPlace[]> {
-    this.logger.log('[findAll]');
+  async findPlace(type?: string): Promise<PlaceDto[]> {
+    this.logger.log('[findPlace]', 'type:' + (type || 'all'));
     const placesQuery = await (!type
       ? this.placesModel.find().exec()
       : this.placesModel.find({ type }, { transportationCost: 0 }).exec());
 
-    const places = placesQuery as unknown as IPlace[];
+    const places = placesQuery as unknown as PlaceDto[];
+    this.logger.log(`[places found : ${places.length}]`);
 
     return places.sort((a, b) => {
       // Comparar zonas
@@ -36,8 +36,8 @@ export class PlacesService {
     });
   }
 
-  async create(place: PlaceDto, files: Express.Multer.File[]): Promise<IPlace> {
-    this.logger.log('[create] - ' + place.name);
+  async create(place: PlaceDto, files: Express.Multer.File[]): Promise<PlaceDto> {
+    this.logger.log('[create]', place.name);
 
     try {
       // if (place.location === 'string') {
@@ -51,12 +51,13 @@ export class PlacesService {
         );
       }
       const createdPlace = new this.placesModel(place);
-      const savedPlace = (await createdPlace.save()) as unknown as IPlace;
+      const savedPlace = (await createdPlace.save()) as unknown as PlaceDto;
+      this.logger.log('[place created]')
       await this.evaluateZoneCost(place.zone);
 
       return savedPlace;
     } catch (err) {
-      this.logger.error(`Error creating Place: ${err.message}`, err.stack);
+      this.logger.error(` - Error creating Place: ${err.message}`, err.stack);
       throw new Error('Error al crear el lugar');
     }
   }
@@ -65,8 +66,8 @@ export class PlacesService {
     id: string,
     place: PlaceDto,
     files?: Express.Multer.File[],
-  ): Promise<IPlace> {
-    this.logger.log(`[update] - ${id}`);
+  ): Promise<PlaceDto> {
+    this.logger.log(`[update]`, `id: ${id}`);
     try {
       // if (typeof place.location === 'string') {
       //   place.location = this.castLocation(place.location);
@@ -81,6 +82,7 @@ export class PlacesService {
       const update = await this.placesModel
         .findByIdAndUpdate(id, place, { new: true })
         .exec();
+      this.logger.log('[place updated]')
       await this.evaluateZoneCost(update?.zone);
       return place;
     } catch (err) {
@@ -90,8 +92,9 @@ export class PlacesService {
   }
 
   async remove(id: string): Promise<boolean> {
-    this.logger.log(`[remove] - ${id}`);
+    this.logger.log('[removed]', `id: ${id}`);
     await this.placesModel.findByIdAndDelete(id).exec();
+    this.logger.log('[place removed]');
     return true;
   }
 
@@ -104,7 +107,7 @@ export class PlacesService {
   // }
 
   private async evaluateZoneCost(zone: number = 0): Promise<void> {
-    this.logger.log(`[evaluateZoneCost] - Zone ${zone}`);
+    this.logger.log('[evaluateZoneCost]', `Zone: ${zone}`);
     try {
       const publicPlaces = await this.placesModel
         .find({ type: PlacesTypes.PUBLIC, zone: zone })
@@ -113,7 +116,7 @@ export class PlacesService {
         .findOne({ type: PlacesTypes.BASIC, zone: zone })
         .exec();
       if (!basicPlace) {
-        this.logger.log(`Create new basic Zone`);
+        this.logger.log(`- Create new basic Zone`);
         basicPlace = new this.placesModel({
           name: 'Basic Zone ' + zone || 0,
           type: PlacesTypes.BASIC,
@@ -130,10 +133,10 @@ export class PlacesService {
         // el costo por zona es el promedio mas el 20%
         basicPlace.transportationCost = averageTransportationCost * 1.2;
         await basicPlace.save();
-        this.logger.log(`Basic Zone ${zone} Updated`);
+        this.logger.log(`[Basic Zone ${zone} updated]`);
       }
     } catch (err) {
-      this.logger.error(`Error update BaseCost: ${err.message}`, err.stack);
+      this.logger.error(` - Error update BaseCost: ${err.message}`, err.stack);
     }
   }
 }

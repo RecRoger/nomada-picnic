@@ -13,6 +13,7 @@ export class AuthService {
   constructor(@InjectModel(User.name) private usersModel: Model<UsersDocument>) { }
 
   private hideUser(user: UserDto): UserDto {
+    this.logger.log('[hideUser]')
     const { email, name } = user
     return { email, name } as UserDto
   }
@@ -22,7 +23,7 @@ export class AuthService {
   }
 
   async validate(email?: string, password?: string, ultrasecret?: string): Promise<UserDto> {
-    this.logger.log(`[findOne] - ${email}`)
+    this.logger.log('[validate]', email)
     if (ultrasecret !== this.SECRET_PASSWORD) {
       this.logger.error(`no secret`, AuthService.name);
       throw new ForbiddenException('No Secrets');
@@ -30,11 +31,13 @@ export class AuthService {
     const userQuery = await this.usersModel.findOne({ email }).exec();
     const user = userQuery as unknown as UserDto;
     if (user) {
+      this.logger.log('[fund one]', user?.name)
       const hashedPassword = this.transformPassword(password);
       if (hashedPassword === user.password) {
         return this.hideUser(user);
       }
     }
+    this.logger.warn('[not fund]')
     return null;
   }
 
@@ -51,6 +54,7 @@ export class AuthService {
     try {
 
       const newUser = (await createdUser.save()) as unknown as UserDto;
+      this.logger.log('[created]', newUser.name)
       return this.hideUser(newUser);
     } catch (err) {
       this.logger.error(`Error user: ${err.message}`, err.stack, AuthService.name);
@@ -59,15 +63,20 @@ export class AuthService {
   }
 
   async update(id: string, updateUserData: UserDto): Promise<User> {
-    this.logger.log(`[update] - ${id}`,)
-    const edited = await this.usersModel.findByIdAndUpdate(id, updateUserData, { new: true }).exec();
+    this.logger.log('[update]', id)
+    const edited = await this.usersModel.findByIdAndUpdate(id, {
+      ...updateUserData,
+      ...(updateUserData.password ? { password: this.transformPassword(updateUserData.password) } : {})
+    }, { new: true }).exec();
     const editedUser = edited as unknown as UserDto;
+    this.logger.log('[updated]')
     return this.hideUser(editedUser)
   }
 
   async remove(id: string): Promise<boolean> {
     this.logger.log(`[remove] - ${id}`,)
     await this.usersModel.findByIdAndDelete(id).exec();
+    this.logger.log(`[removed]`,)
     return true
   }
 }

@@ -17,6 +17,7 @@ import {
   ApiBody,
   getSchemaPath,
   ApiQuery,
+  ApiParam,
 } from '@nestjs/swagger';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { PlacesService } from './places.service';
@@ -83,6 +84,7 @@ export class PlacesController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un lugar existente' })
+  @ApiParam({ name: 'id', required: true })
   @ApiBody({ type: PlaceDto })
   @ApiResponse({
     status: 200,
@@ -111,7 +113,7 @@ export class PlacesController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un lugar existente' })
-  @ApiQuery({ name: 'id', required: true })
+  @ApiParam({ name: 'id', required: true })
   @ApiResponse({
     status: 201,
     description: 'Lugar eliminado',

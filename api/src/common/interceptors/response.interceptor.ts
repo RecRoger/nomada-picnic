@@ -21,13 +21,16 @@ export class ResponseInterceptor<T> implements NestInterceptor<
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<IResponse<T>> {
-    this.logger.debug('START REQUEST')
+    this.logger.debug('--> START REQUEST')
     return next.handle().pipe(
-      map((data) => ({
-        status: ComunicationStatus.OK as ComunicationStatus,
-        message: 'Operación exitosa',
-        data: data as T, // Aquí van tus lugares, usuarios, etc.
-      })),
+      map((data) => {
+        this.logger.debug('--> END REQUEST')
+        return ({
+          status: ComunicationStatus.OK as ComunicationStatus,
+          message: 'Operación exitosa',
+          data: data as T, // Aquí van tus lugares, usuarios, etc.
+        })
+      }),
     );
   }
 }

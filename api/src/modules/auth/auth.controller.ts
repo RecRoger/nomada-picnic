@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, HttpException, HttpStatus, Param, Post, Put, UseInterceptors } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, getSchemaPath, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, getSchemaPath, ApiQuery, ApiParam } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
 import { UserDto } from 'src/common/models/user.dto';
@@ -65,7 +65,7 @@ export class AuthController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un usuario existente' })
-  @ApiQuery({ name: 'id', required: true })
+  @ApiParam({ name: 'id', required: true })
   @ApiBody({ type: UserDto })
   @ApiResponse({
     status: 201, description: 'Usuario editado', schema: {
@@ -84,7 +84,7 @@ export class AuthController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un usuario existente' })
-  @ApiQuery({ name: 'id', required: true })
+  @ApiParam({ name: 'id', required: true })
   @ApiResponse({
     status: 201, description: 'Status de eliminacion', schema: {
       properties: {

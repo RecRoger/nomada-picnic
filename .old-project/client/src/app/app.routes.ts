@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AdminComponent } from '@pages/admin/admin.component';
 import { PublicComponent } from '@pages/public/public.component';
-import { LoginComponent } from '@components/login/login.component';
+import { LoginComponent } from '../../../../client/src/app/components/login/login.component';
 import { authGuard } from '@guards/auth.guard';
 import { AdminPicnicsComponent } from '@admin-components/admin-picnics/admin-picnics.component';
 import { AdminPlacesComponent } from '@admin-components/admin-places/admin-places.component';

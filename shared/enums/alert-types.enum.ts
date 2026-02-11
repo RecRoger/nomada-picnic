@@ -1,4 +1,4 @@
-export enum ALERT_TYPES {
+export enum AlertTypes {
   SUCCESS = 'success',
   ERROR = 'error',
   WARNING = 'warning',

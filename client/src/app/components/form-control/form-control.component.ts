@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_FORMS_MODULES } from '@constants/material-modules';
 import { TranslateModule } from '@ngx-translate/core';
 
 export const MY_FORMATS = {

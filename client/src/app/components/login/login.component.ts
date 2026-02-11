@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
-import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService } from '@services/notification.service';
-import { ALERT_TYPES } from '@enums/alert-types.enum';
+import { AlertTypes } from '@shared/enums';
+import { MAT_FORMS_MODULES } from '@constants/material-modules';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,8 @@ import { ALERT_TYPES } from '@enums/alert-types.enum';
 })
 export class LoginComponent {
 
-  private readonly notificationService: NotificationService = inject(NotificationService)
+
+  protected readonly fb = inject(FormBuilder)
 
   public loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -31,12 +32,11 @@ export class LoginComponent {
   public get passwordControl(): FormControl {
     return this.loginForm.get('password') as FormControl
   }
+  private readonly notificationService: NotificationService = inject(NotificationService)
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private fb: FormBuilder,
-  ) { }
+  private readonly authService = inject(AuthService)
+
+  private readonly router = inject(Router)
 
   public onSubmit(): void {
     const { email, password } = this.loginForm.value;
@@ -45,7 +45,7 @@ export class LoginComponent {
       if (email) {
         this.router.navigate(['/admin']);
       } else {
-        this.notificationService.openNotification({ message: "LOGIN.INVLID_ERROR" }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: "LOGIN.INVLID_ERROR" }, AlertTypes.ERROR)
       }
     })
   }

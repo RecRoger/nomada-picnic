@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { NotificationData } from '@models/notification.dto';
+import { INotification } from '@shared/interfaces';
 
 @Component({
   selector: 'app-notification',
@@ -15,6 +15,6 @@ import { NotificationData } from '@models/notification.dto';
   `,
 })
 export class NotificationComponent {
-  data: NotificationData = inject(MAT_SNACK_BAR_DATA);
+  data: INotification = inject(MAT_SNACK_BAR_DATA);
 
 }

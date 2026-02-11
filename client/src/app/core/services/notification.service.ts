@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationComponent } from '@components/notification/notification.component';
-import { NotificationData } from '@models/notification.dto';
-import { ALERT_TYPES } from '@enums/alert-types.enum';
+import { INotification } from '@shared/interfaces';
+import { AlertTypes } from '@shared/enums';
 
 
 @Injectable({
@@ -13,7 +13,7 @@ export class NotificationService {
 
   durationInSeconds = 5;
 
-  openNotification(data: NotificationData, type: ALERT_TYPES = ALERT_TYPES.SUCCESS) {
+  openNotification(data: INotification, type: AlertTypes = AlertTypes.SUCCESS) {
     this._snackBar.openFromComponent(NotificationComponent, {
       data: { ...data, type },
       duration: this.durationInSeconds * 1000,

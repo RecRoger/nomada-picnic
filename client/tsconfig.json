@@ -15,14 +15,18 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "baseUrl": "./", // Importante
+    "baseUrl": "./",
     "paths": {
       "@shared/*": ["../shared/*"],
-      "@shared": ["../shared/index"]
+      "@shared": ["../shared/index"],
+      "@components/*": ["./src/app/components/*"],
+      "@constants/*": ["./src/app/core/constants/*"],
+      "@models/*": ["./src/app/core/models/*"],
+      "@services/*": ["./src/app/core/services/*"]
     },
     "lib": ["ES2022", "dom"]
   }

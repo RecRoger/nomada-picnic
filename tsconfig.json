@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["shared/*"],
+      "rxjs": ["node_modules/rxjs"],
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

@@ -5,7 +5,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { AuthService } from '@services/auth.service';
 import { MapsService } from '@services/maps.service';
 import { NotificationService } from '@services/notification.service';
-import { HeaderComponent } from '@components/header/header.component';
+import { HeaderComponent } from '../../../../client/src/app/components/header/header.component';
 
 @Component({
   selector: 'app-root',

@@ -14,7 +14,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Valida el usuario por email y password' })
   @ApiBody({ type: UserDto })
   @ApiResponse({
-    status: 201, description: 'token', schema: {
+    status: 200, description: 'token', schema: {
       properties: {
         status: { type: 'string', example: 'SUCCESS' },
         message: { type: 'string', example: 'Operación exitosa' },

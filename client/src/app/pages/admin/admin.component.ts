@@ -2,19 +2,20 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@services/auth.service';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [TranslateModule, MatTabsModule, RouterOutlet],
+  imports: [CommonModule, TranslateModule, MatTabsModule, RouterModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
 export class AdminComponent implements OnInit {
-  private readonly authService: AuthService = inject(AuthService)
+  protected readonly authService: AuthService = inject(AuthService)
 
-  private readonly router: Router = inject(Router)
 
   public readonly user = this.authService.user
 
@@ -37,14 +38,18 @@ export class AdminComponent implements OnInit {
     },
   ];
 
-  public selectedIndex = 0
+  public activeTabIndex = 0
+
+  private readonly router: Router = inject(Router)
 
   ngOnInit(): void {
-    const url = this.router.url;
-    this.selectedIndex = this.tabs.findIndex(tab => url.includes(tab.link))
-  }
 
-  public onTabChange(event: any): void {
-    this.router.navigate([this.tabs[event.index]?.link]);
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.activeTabIndex = this.tabs.indexOf(
+        this.tabs.find(tab => this.router.url.includes(tab.link))!
+      );
+    });
   }
 }

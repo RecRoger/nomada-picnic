@@ -8,6 +8,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT || 3000;
+  app.setGlobalPrefix('api')
 
   // 1. CORS - Configurarlo desde el inicio evita dolores de cabeza
   app.enableCors({
@@ -19,6 +20,8 @@ async function bootstrap() {
     credentials: true,
     allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
   });
+
+
 
   // 2. Archivos Estáticos (Uploads)
   // Nota: Ahora 'uploads' debería estar dentro de 'api'

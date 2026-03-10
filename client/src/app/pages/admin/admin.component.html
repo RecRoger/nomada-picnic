@@ -1,0 +1,22 @@
+<div class="page-container">
+  <h2 class="admin-title">{{ "ADMIN.TITLE" | translate: user }}</h2>
+  <h4 class="admin-title">{{ "ADMIN.WELCOME" | translate: user }}</h4>
+
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    @for (tab of tabs; track $index) {
+      <a
+        mat-tab-link
+        [routerLink]="tab.link"
+        (click)="activeLinkIndex = $index"
+        [active]="activeLinkIndex === $index"
+      >
+        {{ tab.label | translate }}
+      </a>
+    }
+  </nav>
+  <mat-tab-nav-panel #tabPanel>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-tab-nav-panel>
+</div>

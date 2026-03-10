@@ -41,7 +41,7 @@ export class LoginComponent {
   public onSubmit(): void {
     const { email, password } = this.loginForm.value;
     this.authService.login(email as string, password as string).subscribe((resp) => {
-      const { email } = (resp || {})
+      const { email } = (resp?.data || {})
       if (email) {
         this.router.navigate(['/admin']);
       } else {

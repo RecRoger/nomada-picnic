@@ -8,19 +8,19 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComunicationStatus } from '@shared/enums';
-import { IResponse } from '@shared/interfaces';
+import { IApiResponse } from '@shared/interfaces';
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<
   T,
-  IResponse<T>
+  IApiResponse<T>
 > {
   private readonly logger = new Logger('RequestInterceptor');
 
   intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Observable<IResponse<T>> {
+  ): Observable<IApiResponse<T>> {
     this.logger.debug('--> START REQUEST')
     return next.handle().pipe(
       map((data) => {

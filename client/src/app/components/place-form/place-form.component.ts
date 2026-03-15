@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_FORMS_MODULES } from '@shared/material-modules';
-import { PlaceDto } from '@models/place.dto';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControlComponent } from '@components/form-control/form-control.component';
+import { MAT_FORMS_MODULES } from '@constants/material-modules';
+import { IPlace } from '@shared/interfaces';
 
 @Component({
   selector: 'app-place-form',
@@ -16,9 +16,9 @@ import { FormControlComponent } from '@components/form-control/form-control.comp
 export class PlaceFormComponent implements OnInit {
   @Input() public cancelOption: boolean = true
 
-  @Input() public place: PlaceDto | null = null
+  @Input() public place: IPlace | null = null
 
-  @Output() submit: EventEmitter<PlaceDto> = new EventEmitter()
+  @Output() submit: EventEmitter<IPlace> = new EventEmitter()
 
   @Output() cancel: EventEmitter<void> = new EventEmitter()
 

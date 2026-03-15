@@ -4,6 +4,7 @@ import { catchError, Observable, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { NotificationService } from '@services/notification.service';
 import { AlertTypes, ComunicationStatus } from '@shared/enums';
+import { IApiResponse, IUser } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -34,9 +35,9 @@ export class AuthService {
     };
   }
 
-  public login(email: string, password: string): Observable<any> {
+  public login(email: string, password: string): Observable<IApiResponse<IUser>> {
     const secret = this.SECRET_KEY
-    return this.http.post<any>('/api/auth/validate', { email, password, secret })
+    return this.http.post<IApiResponse<IUser>>('/api/auth/validate', { email, password, secret })
       .pipe(
         tap((response) => {
           if (response.status === ComunicationStatus.OK && response?.data?.email) {

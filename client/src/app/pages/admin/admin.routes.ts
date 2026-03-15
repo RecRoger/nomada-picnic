@@ -1,0 +1,22 @@
+import { Routes } from '@angular/router';
+import { authGuard } from 'src/app/core/guards/auth.guard';
+import { AdminComponent } from 'src/app/pages/admin/admin.component';
+
+export const AdminRoutes: Routes = [
+  {
+    path: '',
+    canActivate: [authGuard],
+    component: AdminComponent,
+    children: [
+      {
+        path: 'places',
+        loadComponent: () => import('./components/admin-places/admin-places.component').then(c => c.AdminPlacesComponent)
+      },
+      // {
+      //   path: 'costs',
+      //   loadComponent: () => import('./components/admin-costs/admin-costs.component').then(c => c.AdminCostsComponent)
+      // },
+      { path: '', redirectTo: 'places', pathMatch: 'full' }
+    ]
+  }
+];

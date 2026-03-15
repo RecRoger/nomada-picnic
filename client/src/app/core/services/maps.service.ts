@@ -5,7 +5,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
   providedIn: 'root',
 })
 export class MapsService {
-  private readonly MAPS_KEY = 'AIzaSyDzcw4ywwInbMbNsAcNTCqBKcWRwv_Dm0w';
+  private readonly MAPS_KEY = 'AIzaSyDn5YTJHHUovnxgM0dmZAjpSAr95R-Hi0o';
 
   private scriptLoaded = false;
 
@@ -33,7 +33,8 @@ export class MapsService {
       }
 
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.MAPS_KEY}&libraries=places`;
+      (window as any).initMap = () => { };
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.MAPS_KEY}&libraries=places,marker`;
       script.async = true;
       script.defer = true;
       script.onload = () => {

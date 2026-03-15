@@ -1,75 +1,110 @@
-<h3>{{"PLACES.TITLE" | translate }}</h3>
+<h3>{{ "PLACES.TITLE" | translate }}</h3>
 <div class="place-container">
   <div class="places-list">
     <mat-accordion>
-
       @for (place of places; track place._id) {
-      <mat-expansion-panel [ngClass]="{'place-basic': place.type === placeTypes.BASIC}"
-        [expanded]="place._id === openId" (opened)="checkPlace(place._id)">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ place.type == placeTypes.BASIC ? ('PLACES.BASIC_PRICE' | translate) : place.name }}
-          </mat-panel-title>
-          @if (place.type==placeTypes.BASIC) {
-          <mat-panel-description>
-            Zona {{ place.zone }}
-          </mat-panel-description>
+        <mat-expansion-panel
+          [ngClass]="{ 'place-basic': place.type === placeTypes.BASIC }"
+          [expanded]="place._id === openId"
+          (opened)="checkPlace(place._id)"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{
+                place.type == placeTypes.BASIC
+                  ? ("PLACES.BASIC_PRICE" | translate)
+                  : place.name
+              }}
+            </mat-panel-title>
+            @if (place.type == placeTypes.BASIC) {
+              <mat-panel-description>
+                Zona {{ place.zone }}
+              </mat-panel-description>
+            }
+          </mat-expansion-panel-header>
+          @if (place.type == placeTypes.BASIC) {
+            <p class="basic-description">
+              {{ "PLACES.BASIC_PRICE_TEXT" | translate }}
+            </p>
           }
-        </mat-expansion-panel-header>
-        @if (place.type==placeTypes.BASIC) {
-        <p class="basic-description">
-          {{'PLACES.BASIC_PRICE_TEXT' | translate}}
-        </p>
-        }
 
-        <div>
-          @if (placeOnEdition !== place._id) {
-          @if (place?.images?.length) {
-          <div class="place-images">
-            @for (image of place.images; track $index) {
-            <img mat-card-image [src]="image" alt="{{ place.name + $index}}" class="place-image">
+          <div>
+            @if (placeOnEdition !== place._id) {
+              @if (place?.images?.length) {
+                <div class="place-images">
+                  @for (image of place.images; track $index) {
+                    <img
+                      mat-card-image
+                      [src]="image"
+                      alt="{{ place.name + $index }}"
+                      class="place-image"
+                    />
+                  }
+                </div>
+              }
+              <p>{{ place.description }}</p>
+              <p>
+                <strong>Costo de transporte:</strong>
+                {{ place.transportationCost | currency }}
+              </p>
+              @if (place.type != placeTypes.BASIC) {
+                <div class="place-actions">
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    (click)="openDeleteDialog(place)"
+                  >
+                    {{ "COMMON.DELETE" | translate }}
+                  </button>
+                  <button mat-raised-button (click)="toggleEditForm(place)">
+                    {{ "COMMON.EDIT" | translate }}
+                  </button>
+                </div>
+              }
+            } @else {
+              <app-place-form
+                [place]="place"
+                (submit)="editPlace($event)"
+                (cancel)="toggleEditForm()"
+              ></app-place-form>
             }
           </div>
-          }
-          <p>{{ place.description }}</p>
-          <p><strong>Costo de transporte:</strong> {{ place.transportationCost | currency }}</p>
-          @if (place.type!=placeTypes.BASIC) {
-          <div class="place-actions">
-            <button mat-raised-button color="accent" (click)="openDeleteDialog(place)">{{'COMMON.DELETE' |
-              translate}}</button>
-            <button mat-raised-button (click)="toggleEditForm(place)">{{'COMMON.EDIT' | translate}}</button>
-          </div>
-          }
-          } @else {
-          <app-place-form [place]="place" (submit)="editPlace($event)" (cancel)="toggleEditForm()"></app-place-form>
-          }
-        </div>
-      </mat-expansion-panel>
+        </mat-expansion-panel>
       }
 
-      <mat-expansion-panel [(expanded)]="newPlaceIndicator" (opened)="newPlaceIndicator = true">
+      <mat-expansion-panel
+        [(expanded)]="newPlaceIndicator"
+        (opened)="newPlaceIndicator = true"
+      >
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{'PLACES.NEW_PLACE' | translate}}
+            {{ "PLACES.NEW_PLACE" | translate }}
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-place-form [cancelOption]="false" (submit)="createPlace($event)"></app-place-form>
+        <app-place-form
+          [cancelOption]="false"
+          (submit)="createPlace($event)"
+        ></app-place-form>
       </mat-expansion-panel>
     </mat-accordion>
-
   </div>
-
-
-
 
   <div class="places-map">
     @if (mapService.mapReady) {
-    <google-map width="100%" [options]="mapOptions" [mapId]="mapService.apiKey">
-      @for (marker of markers; track $index) {
-      <map-advanced-marker [position]="marker.position" [title]="marker.label" (mapClick)="checkPlace(marker.id)">
-      </map-advanced-marker>
-      }
-    </google-map>
+      <google-map
+        width="100%"
+        [options]="mapOptions"
+        [mapId]="mapService.apiKey"
+      >
+        @for (marker of markers; track $index) {
+          <map-advanced-marker
+            [position]="marker.position"
+            [title]="marker.label"
+            (mapClick)="checkPlace(marker.id)"
+          >
+          </map-advanced-marker>
+        }
+      </google-map>
     }
   </div>
 </div>

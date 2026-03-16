@@ -23,25 +23,17 @@ import { map, Observable, of, tap } from 'rxjs';
   templateUrl: './basics-form.component.html',
   styleUrl: './basics-form.component.scss'
 })
-export class BasicsFormComponent implements OnInit {
+export class BasicsFormComponent {
   private readonly placesService = inject(PlacesService)
 
   @Input() public form?: FormGroup = new FormGroup({})
 
-  public places$: Observable<{ value: string, text: string }[]> = of([])
+  public places$: Observable<{ value: string, text: string }[] | null> = this.placesService.getPlacesCached(PlacesTypes.PUBLIC).pipe(
+    map(places => places.length ?
+      places.map(place => ({ value: place._id!, text: place.name })) : null
+    ),
+    tap(places => { if (places) { this.placeList = places } })
+  )
 
   public placeList: { value: string, text: string }[] = []
-
-  ngOnInit(): void {
-    this.getPlaces()
-  }
-
-  public getPlaces(): void {
-    this.places$ = this.placesService.getPlacesCached(PlacesTypes.PUBLIC).pipe(
-      map(places => places
-        .map(place => ({ value: place._id!, text: place.name }))
-      ),
-      tap(places => this.placeList = places)
-    )
-  }
 }

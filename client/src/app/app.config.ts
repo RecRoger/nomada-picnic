@@ -3,7 +3,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { TRANSLATE_HTTP_LOADER_CONFIG, TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideTranslateService, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export const appConfig: ApplicationConfig = {
@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: TRANSLATE_HTTP_LOADER_CONFIG,
       useValue: {
-        prefix: '/assets/i18n/',
+        prefix: './assets/i18n/',
         suffix: '.json',
       },
     },

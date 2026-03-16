@@ -11,12 +11,13 @@
 
   <app-form-control [control]="form.get('date') | asFormControl" label="{{ 'COMMON.DATE' | translate }}" type="date">
   </app-form-control>
-
+  
   @if(this.places$ | async) {
   <app-form-control [control]="form.get('place') | asFormControl" label="{{ 'COMMON.PLACE' | translate }}" type="select"
     [options]="placeList">
   </app-form-control>
-  }
+  } 
+  
 
 </form>
 }

@@ -15,13 +15,13 @@ export class ProductionCostsService {
   ) { }
 
   async findAll(type?: string): Promise<CostDto[]> {
-    this.logger.log('[findAll]', type)
-    const costsQuery = await !type ? this.costsModel.find().exec() : this.costsModel.find({ type }, {
+    this.logger.log('[findAll]', type || 'All')
+    const costsQuery = !type ? this.costsModel.find().exec() : this.costsModel.find({ type }, {
       providerCost: 0,
       productionCost: 0,
       earnPercentage: 0,
     }).exec()
-    const costsList = costsQuery as unknown as CostDto[];
+    const costsList = await costsQuery as unknown as CostDto[];
 
     this.logger.log(`[cost found : ${costsList.length}]`);
 

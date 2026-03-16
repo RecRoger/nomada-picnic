@@ -1,11 +1,9 @@
 import { Routes } from '@angular/router';
 import { PicnicCalculatorComponent } from '@pages/calculator-stepper/calculator-stepper.component';
+import { PublicRoutes } from '@pages/public/public.routes';
 
 export const routes: Routes = [
-  {
-    path: '',
-    loadComponent: () => import('./pages/public/public.component').then(m => m.PublicComponent),
-  },
+  ...PublicRoutes,
   {
     path: 'login',
     loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
@@ -14,9 +12,9 @@ export const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin.routes').then(m => m.AdminRoutes),
   },
-  { path: 'picnics', redirectTo: 'picnics/basics', pathMatch: 'full' },
+  { path: 'calculator', redirectTo: 'calculator/basics', pathMatch: 'full' },
   {
-    path: 'picnics/:step',
+    path: 'calculator/:step',
     component: PicnicCalculatorComponent,
   },
 

@@ -1,10 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@services/auth.service';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavLink } from '@models/nav-link';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +21,7 @@ export class AdminComponent implements OnInit {
 
   public readonly user = this.authService.user
 
-  public tabs: { link: string, label: string }[] = [
+  public tabs: NavLink[] = [
     {
       link: 'picnics',
       label: 'ADMIN.TABS.PICNICS'
@@ -42,10 +44,13 @@ export class AdminComponent implements OnInit {
 
   private readonly router: Router = inject(Router)
 
+  private readonly destroyRef = inject(DestroyRef)
+
   ngOnInit(): void {
 
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationEnd),
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       this.activeLinkIndex = this.tabs.indexOf(
         this.tabs.find(tab => this.router.url.includes(tab.link))!

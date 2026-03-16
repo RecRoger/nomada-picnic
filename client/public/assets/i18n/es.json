@@ -124,9 +124,28 @@
     }
   },
   "PUBLIC": {
-    "TITLE": "Organiza picnics inolvidables",
-    "DESCRIPTION": "Somos una empresa dedicada a organizar picnics personalizados en los parques más hermosos de tu ciudad. Te ayudamos a planificar cada detalle, desde la selección del lugar perfecto hasta la preparación de deliciosos menús y actividades divertidas.",
-    "ACTION": "Cotizar mi picnic"
+    "HERO": {
+      "TITLE": "Picnics Inolvidables",
+      "DESCRIPTION": "Desconecta, disfruta, celebra"
+    },
+    "ACTION": "Cotizar mi picnic",
+    "MENU": {
+      "TABS": {
+        "HOME": "Inicio",
+        "PLACES": "Parques y Lugares",
+        "ADDITIONALS": "Comida y adicionales",
+        "PICNICS": "Nuestros Picnics",
+        "CALCULATOR": "Cotizador",
+        "CONTACT": "FAQ y Contacto"
+      }
+    },
+    "RESUME": {
+      "DESCRIPTION": "Creamos experiencias de picnic inolvidables para parejas, amigos y familias, con todo el encanto y la comodidad que buscas",
+      "DECORATION": "Decoración Única y Estilosa",
+      "INCLUDED": "Todo Incluido y Listo para Disfrutar",
+      "PRODUCTION": "Montaje y Desmontaje sin Esfuerzo",
+      "MEMORIES": "Momentos Inolvidables en la Naturaleza"
+    }
   },
   "CALCULATOR": {
     "TITLE": "Cotiza tu evento",

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CostDto } from 'src/common/models/cost.dto';
-import { Cost, CostDocument } from 'src/database/schemas/production-cost.schema';
+import { Cost, CostDocument } from 'src/common/database/schemas/production-cost.schema';
 import { FilesService } from 'src/modules/files/files.service';
 
 @Injectable()

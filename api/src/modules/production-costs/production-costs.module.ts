@@ -4,7 +4,7 @@ import { ProductionCostsService } from './production-costs.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FilesModule } from 'src/modules/files/files.module';
 import { FilesService } from 'src/modules/files/files.service';
-import { Cost, ProductionCostsSchema } from 'src/database/schemas/production-cost.schema';
+import { Cost, ProductionCostsSchema } from 'src/common/database/schemas/production-cost.schema';
 
 @Module({
   imports: [

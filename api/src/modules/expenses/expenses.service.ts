@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ExpenseDto, ExpenseValueDto } from 'src/common/models/expense.dto';
-import { Expense, ExpenseDocument } from 'src/database/schemas/expenses.schema';
+import { Expense, ExpenseDocument } from 'src/common/database/schemas/expenses.schema';
 
 @Injectable()
 export class ExpensesService {

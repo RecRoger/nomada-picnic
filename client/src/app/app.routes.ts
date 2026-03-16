@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { PicnicCalculatorComponent } from '@pages/calculator-stepper/calculator-stepper.component';
 
 export const routes: Routes = [
   {
@@ -13,5 +14,11 @@ export const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin.routes').then(m => m.AdminRoutes),
   },
+  { path: 'picnics', redirectTo: 'picnics/basics', pathMatch: 'full' },
+  {
+    path: 'picnics/:step',
+    component: PicnicCalculatorComponent,
+  },
+
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

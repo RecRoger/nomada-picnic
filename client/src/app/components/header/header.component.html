@@ -1,16 +1,39 @@
-<header class="app-header">
-  <a routerLink="/" class="logo-link">
-    <img src="assets/images/nomada_logo_black.png" alt="Logo de la Aplicación" class="logo-image">
-  </a>
+<header class="c-header">
+  <div class="c-header--menu" [class.is-open]="openMenu">
+    <button mat-icon-button aria-label="Close" (click)="openMenu = false">
+      <mat-icon>close</mat-icon>
+    </button>
+    <div class="c-header--menu-links">
+      @for (link of menuLinks; track $index ) {
+      <a class="c-header--menu-links_item"
+        mat-button
+        [routerLink]="link.link"
+        routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="link.options || {}"
+        (click)="openMenu = false" 
+      >{{link.label | translate}}</a>
+      }
+    </div>
+    <div class="c-header--menu-admin">
+      @if(logged) {
+      <button mat-icon-button aria-label="Cerrar Sesion" (click)="logout(); openMenu = false">
+        <mat-icon>logout</mat-icon>
+      </button>
+      }
+      <button mat-icon-button routerLink="/admin" aria-label="Ir a la sección de administración" (click)="openMenu = false">
+        <mat-icon>admin_panel_settings</mat-icon>
+      </button>
+    </div>
+  </div>
 
-  <nav>
-    @if(logged) {
-    <button mat-icon-button aria-label="Cerrar Sesion" (click)="logout()">
-      <mat-icon>logout</mat-icon>
+  <div class="c-header--content">
+    <a routerLink="/" class="logo-link">
+      <img src="assets/images/nomada_logo_black.png" alt="Logo de la Aplicación" class="logo-image">
+    </a>
+    
+    <button mat-icon-button aria-label="Menu" (click)="openMenu = !openMenu">
+      <mat-icon>dehaze</mat-icon>
     </button>
-    }
-    <button mat-icon-button routerLink="/admin" aria-label="Ir a la sección de administración">
-      <mat-icon>admin_panel_settings</mat-icon>
-    </button>
-  </nav>
+  </div>
+  
 </header>

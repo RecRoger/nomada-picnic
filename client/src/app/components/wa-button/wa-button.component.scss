@@ -1,0 +1,12 @@
+.c-wa-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #25d366 !important;
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+  }
+}

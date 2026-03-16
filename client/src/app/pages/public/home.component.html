@@ -1,0 +1,31 @@
+<section class="s-hero">
+  <div class="s-hero--media">
+    <img src="assets/images/home_image.jpg" alt="Experiencia Nómada Picnic">
+  </div>
+
+  <div class="s-hero--content">
+    <h1>{{ 'PUBLIC.HERO.TITLE' | translate }}</h1>
+    <p>{{ 'PUBLIC.HERO.DESCRIPTION' | translate }}</p>
+  </div>
+
+  <button class="s-hero--arrow" (click)="scrollToNext(nextSection)">
+    <mat-icon>expand_more</mat-icon>
+  </button>
+</section>
+
+<section #nextSection class="s-info-icons">
+  <p class="s-info-icons--message">{{ 'PUBLIC.RESUME.DESCRIPTION' | translate }}</p>
+  <div class="s-info-icons--list">
+    @for (card of infoCards; track $index) {
+      <div class="s-info-icons--list-card">
+        <mat-icon class="s-info-icons--list-card__icon">{{card.icon}}</mat-icon>
+        <span>{{card.label | translate}}</span>
+      </div>
+    }
+  </div>
+</section>
+
+
+
+<a mat-raised-button [routerLink]="'/picnics'" class="button">{{'PUBLIC.ACTION' | translate}}</a>
+

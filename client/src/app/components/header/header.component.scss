@@ -1,16 +1,113 @@
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 1rem;
+.c-header {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
   background-color: #ffd9e1;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
 
+  &--content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  &--menu {
+    position: fixed;
+    top: 0;
+    background-color: #ffd9e1;
+    padding: 1rem;
+    width: stretch;
+    height: 100%;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+
+    // ESTADO INICIAL (Oculto)
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease-in-out,
+      visibility 0.3s ease-in-out;
+
+    &.is-open {
+      visibility: visible;
+      opacity: 1;
+
+      .c-header--menu-links_item.active-link::before {
+        // Animación sutil (opcional)
+        animation: fadeInArrow 0.3s ease-out;
+      }
+    }
+
+    &-links {
+      display: flex;
+      flex-direction: column;
+      padding: 0 2rem;
+      margin: auto;
+      gap: 1rem;
+
+      &_item {
+        padding: 1rem;
+
+        position: relative; // 👈 Vital para que el :before se posicione respecto al link
+        overflow: visible; // Asegúrate de que no corte la flecha si el botón tiene overflow hidden
+
+        &.active-link {
+          color: #8f0045; // Cambia esto por el color de tu marca
+          font-weight: 600;
+
+          &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 6px solid transparent;
+            border-top: 6px solid transparent;
+            border-left: 6px solid #8f0045;
+          }
+        }
+      }
+    }
+
+    &-admin {
+      margin: auto 0 2rem auto;
+    }
+  }
+
   .logo-link {
     text-decoration: none;
+    margin-right: auto;
   }
 
   .logo-image {
     height: 4rem;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInArrow {
+  0% {
+    opacity: 0;
+    transform: translateX(-15px); // Empieza lejos
+  }
+  60% {
+    transform: translateX(3px); // Se pasa un poco (el rebote)
+  }
+  80% {
+    transform: translateX(-1px); // Vuelve apenas hacia atrás
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0); // Reposo final
   }
 }

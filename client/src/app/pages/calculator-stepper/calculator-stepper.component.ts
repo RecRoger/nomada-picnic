@@ -78,7 +78,7 @@ export class PicnicCalculatorComponent implements OnInit {
       this.selectedIndex = this.steps.indexOf(step);
       if (this.selectedIndex === -1) {
         // Redirigir a un paso válido si la URL es incorrecta
-        this.router.navigate(['/picnics', this.steps[0]]);
+        this.router.navigate(['/calculator', this.steps[0]]);
       }
     });
 
@@ -90,13 +90,13 @@ export class PicnicCalculatorComponent implements OnInit {
   }
 
   public selectionChanged(selectedIndex: number): void {
-    this.router.navigate(['/picnics', this.steps[selectedIndex]]);
+    this.router.navigate(['/calculator', this.steps[selectedIndex]]);
   }
 
   public goForward(stepper: MatStepper): void {
     if (this.validateStep(stepper.selectedIndex)) {
       stepper.next();
-      this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
+      this.router.navigate(['/calculator', this.steps[stepper.selectedIndex]]);
     } else {
       this.getStepForm(this.steps[stepper.selectedIndex]).markAllAsTouched()
     }
@@ -104,7 +104,7 @@ export class PicnicCalculatorComponent implements OnInit {
 
   public goBackward(stepper: MatStepper): void {
     stepper.previous();
-    this.router.navigate(['/picnics', this.steps[stepper.selectedIndex]]);
+    this.router.navigate(['/calculator', this.steps[stepper.selectedIndex]]);
   }
 
   public finalizeStepper(stepper: MatStepper): void {

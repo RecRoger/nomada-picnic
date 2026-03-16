@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { PlacesTypes } from '@shared/enums';
 import { Model } from 'mongoose';
 import { PlaceDto } from 'src/common/models/place.dto';
-import { Place, PlacesDocument } from 'src/database/schemas/places.schema';
+import { Place, PlacesDocument } from 'src/common/database/schemas/places.schema';
 import { FilesService } from 'src/modules/files/files.service';
 
 @Injectable()

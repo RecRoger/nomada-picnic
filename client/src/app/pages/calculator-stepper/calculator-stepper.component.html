@@ -1,0 +1,54 @@
+<div class="container">
+  <h3>{{ "CALCULATOR.TITLE" | translate }}</h3>
+</div>
+<!-- TODO - añadir linear al stepper -->
+<mat-horizontal-stepper
+  #stepper
+  [selectedIndex]="selectedIndex"
+  [orientation]="(stepperOrientation | async)!"
+  (selectedIndexChange)="selectionChanged($event)"
+  class="stepper"
+>
+  @for (step of steps; track $index) {
+    <mat-step
+      [label]="'Paso ' + step"
+      [stepControl]="(forms.controls[step] | asFormGroup)!"
+    >
+      @switch (step) {
+        @case ("production") {
+          <app-production-form
+            [form]="forms.controls[step] | asFormGroup"
+          ></app-production-form>
+        }
+        @case ("additionals") {
+          <app-additionals-form
+            [form]="forms.controls[step] | asFormGroup"
+          ></app-additionals-form>
+        }
+        @case ("food") {
+          <app-food-form
+            [form]="forms.controls[step] | asFormGroup"
+          ></app-food-form>
+        }
+        @case ("contact") {
+          <app-client-contact-form
+            [form]="forms.controls[step] | asFormGroup"
+          ></app-client-contact-form>
+        }
+        @default {
+          <app-basics-form
+            [form]="forms.controls[step] | asFormGroup"
+          ></app-basics-form>
+        }
+      }
+    </mat-step>
+  }
+</mat-horizontal-stepper>
+
+<app-price-bar
+  [showBack]="selectedIndex > 0"
+  [showNext]="selectedIndex + 1 != steps.length"
+  (onBack)="goBackward(stepper)"
+  (onNext)="goForward(stepper)"
+  (onFinish)="finalizeStepper(stepper)"
+></app-price-bar>

@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as crypto from 'crypto';
-import { User, UsersDocument } from 'src/database/schemas/users.schema';
+import { User, UsersDocument } from 'src/common/database/schemas/users.schema';
 import { UserDto } from 'src/common/models/user.dto';
 
 @Injectable()

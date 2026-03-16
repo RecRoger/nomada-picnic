@@ -1,8 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 
-@Schema()
-export class Cost extends Document {
+export type CostDocument = HydratedDocument<Cost>;
+
+@Schema({
+  timestamps: true,
+  collection: 'costs',
+})
+export class Cost {
   @Prop({ required: true })
   type: string;
 
@@ -33,7 +38,7 @@ export class Cost extends Document {
   @Prop()
   deliveryRequired: boolean;
 
-  @Prop([String])
+  @Prop({ type: [String], default: [] })
   images?: string[];
 }
 

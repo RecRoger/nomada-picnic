@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, shareReplay } from 'rxjs';
-import { ApiResponse } from '@models/api-response.dto';
-import { CostDto } from '@models/cost.dto';
-import { ALERT_TYPES } from '@enums/alert-types.enum';
 import { NotificationService } from '@services/notification.service';
+import { IApiResponse, ICost } from '@shared/interfaces';
+import { AlertTypes } from '@shared/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -14,38 +13,38 @@ export class CostsService {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  private typedCosts$: { [type: string]: Observable<CostDto[]> } = {}
+  private typedCosts$: { [type: string]: Observable<ICost[]> } = {}
 
-  public getCostsCached(type: string): Observable<CostDto[]> {
+  public getCostsCached(type: string): Observable<ICost[]> {
     if (!this.typedCosts$[type]) {
       this.typedCosts$[type] = this.getCosts(type).pipe(shareReplay(1))
     }
     return this.typedCosts$[type]
   }
 
-  public getCosts(type?: string): Observable<CostDto[]> {
-    return this.http.get<ApiResponse<CostDto[]>>(`/api/costs`, {
+  public getCosts(type?: string): Observable<ICost[]> {
+    return this.http.get<IApiResponse<ICost[]>>(`/api/costs`, {
       params: { ...(type ? { type } : {}) }
     }).pipe(
       map((response) => {
         if (response) {
-          return response.data as CostDto[]
+          return response.data as ICost[]
         }
         return []
       }),
       catchError((error) => {
         console.error('No se cargaron los costos:', error);
-        this.notificationService.openNotification({ message: 'COSTS.ERROR' }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: 'COSTS.ERROR' }, AlertTypes.ERROR)
         return of([]);
       })
     );
   }
 
-  public createCost(cost: FormData): Observable<CostDto | null> {
-    return this.http.post<ApiResponse<CostDto>>('/api/costs', cost).pipe(
+  public createCost(cost: FormData): Observable<ICost | null> {
+    return this.http.post<IApiResponse<ICost>>('/api/costs', cost).pipe(
       map((response) => {
         if (response) {
-          return response.data as CostDto
+          return response.data as ICost
         }
         return null
       }),
@@ -56,11 +55,11 @@ export class CostsService {
     );
   }
 
-  public editCost(id: string, cost: FormData): Observable<CostDto | null> {
-    return this.http.put<ApiResponse<CostDto>>('/api/costs/' + id, cost).pipe(
+  public editCost(id: string, cost: FormData): Observable<ICost | null> {
+    return this.http.put<IApiResponse<ICost>>('/api/costs/' + id, cost).pipe(
       map((response) => {
         if (response) {
-          return response.data as CostDto
+          return response.data as ICost
         }
         return null
       }),
@@ -72,7 +71,7 @@ export class CostsService {
   }
 
   public deleteCost(id: string): Observable<boolean> {
-    return this.http.delete<ApiResponse<boolean>>('/api/costs/' + id).pipe(
+    return this.http.delete<IApiResponse<boolean>>('/api/costs/' + id).pipe(
       map((response) => {
         if (response) {
           return response.data as boolean

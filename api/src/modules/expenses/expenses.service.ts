@@ -1,16 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Expense } from 'server/database/schemas/expenses.schema';
-import { CostDto } from 'server/models/cost.dto';
-import { ExpenseValueDto } from 'server/models/expense.dto';
+import { ExpenseDto, ExpenseValueDto } from 'src/common/models/expense.dto';
+import { Expense, ExpenseDocument } from 'src/database/schemas/expenses.schema';
 
 @Injectable()
 export class ExpensesService {
   private readonly logger = new Logger(ExpensesService.name)
 
   constructor(
-    @InjectModel(Expense.name) private expenseModel: Model<Expense>,
+    @InjectModel(Expense.name) private expenseModel: Model<ExpenseDocument>,
   ) { }
 
   async findAll(): Promise<Expense[]> {
@@ -54,7 +53,7 @@ export class ExpensesService {
     return expenseValue
   }
 
-  async create(expenseData: CostDto): Promise<Expense> {
+  async create(expenseData: ExpenseDto): Promise<Expense> {
     this.logger.log('[create] - ', expenseData.name)
     try {
       const createdCost = new this.expenseModel({ ...expenseData, expenseDate: new Date() });
@@ -65,7 +64,7 @@ export class ExpensesService {
     }
   }
 
-  async update(id: string, costData: CostDto): Promise<Expense> {
+  async update(id: string, costData: ExpenseDto): Promise<Expense> {
     this.logger.log(`[update] - ${id}`,)
     try {
       return this.expenseModel.findByIdAndUpdate(id, costData, { new: true }).exec();

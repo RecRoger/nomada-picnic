@@ -6,7 +6,7 @@ import { PlacesModule } from './api/places/places.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggingInterceptor } from 'server/interceptors/logger.interceptor';
 import { AuthModule } from './api/auth/auth.module';
-import { ExpensesModule } from 'server/api/expenses/expenses.module';
+import { ExpensesModule } from '../../api/src/modules/expenses/expenses.module';
 
 @Module({
   imports: [

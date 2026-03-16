@@ -40,9 +40,6 @@ export class PlacesService {
     this.logger.log('[create]', place.name);
 
     try {
-      // if (place.location === 'string') {
-      //   place.location = this.castLocation(place.location);
-      // }
       if (files && files.length > 0) {
         place.images = await this.filesService.saveFiles(
           files,
@@ -69,9 +66,6 @@ export class PlacesService {
   ): Promise<PlaceDto> {
     this.logger.log(`[update]`, `id: ${id}`);
     try {
-      // if (typeof place.location === 'string') {
-      //   place.location = this.castLocation(place.location);
-      // }
       if (files && files.length > 0) {
         place.images = await this.filesService.saveFiles(
           files,
@@ -97,14 +91,6 @@ export class PlacesService {
     this.logger.log('[place removed]');
     return true;
   }
-
-  // private castLocation(location: any): IPlaceLocation {
-  //   const parseLocation: any = JSON.parse(location) || {};
-  //   return {
-  //     lat: Number(parseLocation.lat),
-  //     lng: Number(parseLocation.lng),
-  //   };
-  // }
 
   private async evaluateZoneCost(zone: number = 0): Promise<void> {
     this.logger.log('[evaluateZoneCost]', `Zone: ${zone}`);

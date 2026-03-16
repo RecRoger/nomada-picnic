@@ -1,20 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { Component, inject, ProviderToken } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { INotification } from '@shared/interfaces';
 
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [MatSnackBarModule, CommonModule, TranslateModule],
   template: `
-    <span class="notification-title">
+    <span matSnackBarLabel class="notification-title">
       {{data.message | translate}}
     </span>
   `,
 })
 export class NotificationComponent {
-  data: INotification = inject(MAT_SNACK_BAR_DATA);
+  public data: INotification = inject(MAT_SNACK_BAR_DATA as unknown as ProviderToken<INotification>)
+
 
 }

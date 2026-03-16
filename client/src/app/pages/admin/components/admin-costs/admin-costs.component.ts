@@ -3,15 +3,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { CostDto } from '@models/cost.dto';
-import { CostsService } from '@services/costs.service';
-import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CostsFormComponent } from '@components/costs-form/costs-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@components/confirmation-dialog/confirmation-dialog.component';
 import { NotificationService } from '@services/notification.service';
-import { ALERT_TYPES } from '@enums/alert-types.enum';
+import { CostsFormComponent } from '@components/costs-form/costs-form.component';
+import { CostsService } from '@services/costs.service';
+import { ICost } from '@shared/interfaces';
+import { AlertTypes } from '@shared/enums';
+import { CommonModule } from '@angular/common';
 
 
 const MAT_MODULES = [
@@ -40,7 +40,7 @@ export class AdminCostsComponent implements OnInit {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  public costList: CostDto[] = [];
+  public costList: ICost[] = [];
 
   public columnsToDisplayWithExpand = [
     "name",
@@ -55,7 +55,7 @@ export class AdminCostsComponent implements OnInit {
 
   public showForm?: boolean
 
-  public costToEdit?: CostDto
+  public costToEdit?: ICost
 
   ngOnInit(): void {
     this.getCosts()
@@ -69,7 +69,7 @@ export class AdminCostsComponent implements OnInit {
   }
 
   /** Toggles the expanded state of an element. */
-  public toggle(element: CostDto): void {
+  public toggle(element: ICost): void {
     if (this.expandedElements.includes(element._id || '')) {
       this.expandedElements = this.expandedElements.filter(exp => exp !== element._id)
       return
@@ -77,7 +77,7 @@ export class AdminCostsComponent implements OnInit {
     this.expandedElements.push(element._id || '')
   }
 
-  public saveCost(formCost: CostDto) {
+  public saveCost(formCost: ICost) {
     const formData = this.appendForm(formCost)
     const request = (this.costToEdit)
       ? this.costsService.editCost(this.costToEdit._id || '', formData)
@@ -89,12 +89,12 @@ export class AdminCostsComponent implements OnInit {
         this.getCosts()
         this.toggleEditForm()
       } else {
-        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, AlertTypes.ERROR)
       }
     })
   }
 
-  public toggleEditForm(cost?: CostDto) {
+  public toggleEditForm(cost?: ICost) {
     if (this.showForm) {
       this.showForm = undefined
       this.costToEdit = undefined
@@ -105,7 +105,7 @@ export class AdminCostsComponent implements OnInit {
     }
   }
 
-  public openDeleteDialog(cost: CostDto): void {
+  public openDeleteDialog(cost: ICost): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: this.translateService.instant('COSTS.DIALOG_TITLE'),
@@ -130,12 +130,12 @@ export class AdminCostsComponent implements OnInit {
         this.expandedElements = []
         this.getCosts()
       } else {
-        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, AlertTypes.ERROR)
       }
     })
   }
 
-  private appendForm(costForm: CostDto): FormData {
+  private appendForm(costForm: ICost): FormData {
     const formData = new FormData();
     formData.append('name', costForm.name)
     formData.append('type', costForm.type)

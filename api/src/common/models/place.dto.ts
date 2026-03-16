@@ -29,7 +29,7 @@ export class PlaceDto implements IPlace {
   @IsArray()
   @IsOptional()
   @IsString({ each: true })
-  @ApiProperty({ required: false, isArray: true, description: 'links y urls de archivos', example: [] })
+  @ApiProperty({ required: false, isArray: true, description: 'links y urls de archivos de fotos del lugar', example: [] })
   images?: string[];
 
   @IsObject()

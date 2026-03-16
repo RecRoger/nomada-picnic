@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class MapsService {
     return this.MAPS_KEY
   }
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) { }
+  private platformId: any = inject(PLATFORM_ID)
 
   public load(): Promise<void> {
     return new Promise((resolve, reject) => {

@@ -12,11 +12,19 @@ export const AdminRoutes: Routes = [
         path: 'places',
         loadComponent: () => import('./components/admin-places/admin-places.component').then(c => c.AdminPlacesComponent)
       },
-      // {
-      //   path: 'costs',
-      //   loadComponent: () => import('./components/admin-costs/admin-costs.component').then(c => c.AdminCostsComponent)
-      // },
-      { path: '', redirectTo: 'places', pathMatch: 'full' }
+      {
+        path: 'costs',
+        loadComponent: () => import('./components/admin-costs/admin-costs.component').then(c => c.AdminCostsComponent)
+      },
+      {
+        path: 'expenses',
+        loadComponent: () => import('./components/admin-expenses/admin-expenses.component').then(c => c.AdminExpensesComponent)
+      },
+      {
+        path: 'picnics',
+        loadComponent: () => import('./components/admin-picnics/admin-picnics.component').then(c => c.AdminPicnicsComponent)
+      },
+      { path: '', redirectTo: 'picnics', pathMatch: 'full' }
     ]
   }
 ];

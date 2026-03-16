@@ -7,12 +7,12 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@components/confirmation-dialog/confirmation-dialog.component';
 import { NotificationService } from '@services/notification.service';
-import { ALERT_TYPES } from '@enums/alert-types.enum';
 import { ExpensesService } from '@services/expenses.service';
-import { ExpenseDto, ExpenseValueDto } from '@models/expense.dto';
 import { ExpensesFormComponent } from '@components/expenses-form/expenses-form.component';
 import { Observable, of } from 'rxjs';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { IExpense, IExpenseValue } from '@shared/interfaces';
+import { AlertTypes } from '@shared/enums';
 
 
 const MAT_MODULES = [
@@ -39,13 +39,13 @@ export class AdminExpensesComponent implements OnInit {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  public expenseCosts$: Observable<ExpenseValueDto | null> = of(null)
+  public expenseCosts$: Observable<IExpenseValue | null> = of(null)
 
-  public expensesList: ExpenseDto[] = [];
+  public expensesList: IExpense[] = [];
 
   public showForm?: boolean
 
-  public expenseToEdit?: ExpenseDto
+  public expenseToEdit?: IExpense
 
   ngOnInit(): void {
     this.getExpenses()
@@ -60,7 +60,7 @@ export class AdminExpensesComponent implements OnInit {
     this.expenseCosts$ = this.expenseService.getExpensesValues()
   }
 
-  public saveExpense(formData: ExpenseDto) {
+  public saveExpense(formData: IExpense) {
     const request = (this.expenseToEdit)
       ? this.expenseService.editExpense(this.expenseToEdit._id || '', formData)
       : this.expenseService.createExpense(formData)
@@ -71,12 +71,12 @@ export class AdminExpensesComponent implements OnInit {
         this.getExpenses()
         this.toggleEditForm()
       } else {
-        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, AlertTypes.ERROR)
       }
     })
   }
 
-  public toggleEditForm(expense?: ExpenseDto) {
+  public toggleEditForm(expense?: IExpense) {
     if (this.showForm) {
       this.showForm = undefined
       this.expenseToEdit = undefined
@@ -86,7 +86,7 @@ export class AdminExpensesComponent implements OnInit {
     }
   }
 
-  public openDeleteDialog(expense: ExpenseDto): void {
+  public openDeleteDialog(expense: IExpense): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: this.translateService.instant('EXPENSES.DIALOG_TITLE'),
@@ -111,7 +111,7 @@ export class AdminExpensesComponent implements OnInit {
         // this.expandedElements = []
         this.getExpenses()
       } else {
-        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: 'COMMON.GENERIC_ERROR' }, AlertTypes.ERROR)
       }
     })
   }

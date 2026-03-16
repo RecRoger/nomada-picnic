@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, ProviderToken } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './confirmation-dialog.component.scss'
 })
 export class ConfirmationDialogComponent {
-  data = inject(MAT_DIALOG_DATA);
+  public data: any = inject(MAT_DIALOG_DATA as unknown as ProviderToken<any>);
 
-  readonly onAccept = model(this.data.id)
+  readonly onAccept = model(this.data?.id)
 }

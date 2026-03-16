@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
-import { CostDto } from '@models/cost.dto';
-import { CostsTypes } from '@enums/cost-types.enum';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MAT_FORMS_MODULES } from '@constants/material-modules';
+import { ICost } from '@shared/interfaces';
+import { CostsTypes } from '@shared/enums';
 
 @Component({
   selector: 'app-costs-form',
@@ -20,9 +20,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class CostsFormComponent implements OnInit {
   @Input() public cancelOption: boolean = true
 
-  @Input() public cost?: CostDto
+  @Input() public cost?: ICost
 
-  @Output() submit: EventEmitter<CostDto> = new EventEmitter()
+  @Output() submit: EventEmitter<ICost> = new EventEmitter()
 
   @Output() cancel: EventEmitter<void> = new EventEmitter()
 

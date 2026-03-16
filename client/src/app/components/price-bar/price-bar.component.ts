@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { PriceService } from '@services/price.service';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -10,6 +10,7 @@ import { PriceService } from '@services/price.service';
   standalone: true,
   imports: [
     CommonModule,
+    AsyncPipe,
     TranslateModule,
     MatButton,
   ],
@@ -27,5 +28,6 @@ export class PriceBarComponent {
 
   @Output() onFinish = new EventEmitter<void>()
 
-  public price$ = inject(PriceService).totalPrice$
+  public price$ = of(1)
+  // public price$ = inject(PriceService).totalPrice$
 }

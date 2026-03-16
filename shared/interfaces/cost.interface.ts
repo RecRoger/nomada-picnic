@@ -1,9 +1,9 @@
-import { CostsTypes } from "@enums/cost-types.enum";
+import { CostsTypes } from "../enums";
 
-export interface CostDto {
+export interface ICost {
   _id?: string;
   name: string;
-  type: CostsTypes
+  type: CostsTypes;
   description: string;
   images?: string[];
   providerCost?: number;

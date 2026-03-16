@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { MAT_FORMS_MODULES } from '@shared/material-modules';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
-import { ExpenseDto } from '@models/expense.dto';
+import { MAT_FORMS_MODULES } from '@constants/material-modules';
+import { IExpense } from '@shared/interfaces';
 
 @Component({
   selector: 'app-expenses-form',
@@ -17,9 +17,9 @@ import { ExpenseDto } from '@models/expense.dto';
 export class ExpensesFormComponent implements OnInit {
   @Input() public cancelOption: boolean = true
 
-  @Input() public expense?: ExpenseDto
+  @Input() public expense?: IExpense
 
-  @Output() submit: EventEmitter<ExpenseDto> = new EventEmitter()
+  @Output() submit: EventEmitter<IExpense> = new EventEmitter()
 
   @Output() cancel: EventEmitter<void> = new EventEmitter()
 

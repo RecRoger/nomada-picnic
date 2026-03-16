@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, shareReplay } from 'rxjs';
-import { ApiResponse } from '@models/api-response.dto';
-import { ALERT_TYPES } from '@enums/alert-types.enum';
 import { NotificationService } from '@services/notification.service';
-import { ExpenseDto, ExpenseValueDto } from '@models/expense.dto';
+import { IApiResponse, IExpense, IExpenseValue } from '@shared/interfaces';
+import { AlertTypes } from '@shared/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -14,33 +13,33 @@ export class ExpensesService {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  private cachedExpense$: { [guests: string]: Observable<ExpenseValueDto> } = {}
+  private cachedExpense$: { [guests: string]: Observable<IExpenseValue> } = {}
 
-  public getExpensesCached(guests: number): Observable<ExpenseValueDto> {
+  public getExpensesCached(guests: number): Observable<IExpenseValue> {
     if (!this.cachedExpense$[guests]) {
       this.cachedExpense$[guests] = this.getExpensesValues(guests).pipe(shareReplay(1))
     }
     return this.cachedExpense$[guests]
   }
 
-  public getExpenses(): Observable<ExpenseDto[]> {
-    return this.http.get<ApiResponse<ExpenseDto[]>>(`/api/expenses/list`).pipe(
+  public getExpenses(): Observable<IExpense[]> {
+    return this.http.get<IApiResponse<IExpense[]>>(`/api/expenses/list`).pipe(
       map((response) => {
         if (response) {
-          return response.data as ExpenseDto[]
+          return response.data as IExpense[]
         }
         return []
       }),
       catchError((error) => {
         console.error('No se cargaron los gastos:', error);
-        this.notificationService.openNotification({ message: 'EXPENSES.ERROR' }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: 'EXPENSES.ERROR' }, AlertTypes.ERROR)
         return of([]);
       })
     );
   }
 
-  public getExpensesValues(guests?: number, percentage?: number): Observable<ExpenseValueDto> {
-    return this.http.get<ApiResponse<ExpenseValueDto>>(`/api/expenses`, {
+  public getExpensesValues(guests?: number, percentage?: number): Observable<IExpenseValue> {
+    return this.http.get<IApiResponse<IExpenseValue>>(`/api/expenses`, {
       params: {
         ...(guests ? { guests } : {}),
         ...(percentage ? { percentage } : {})
@@ -48,23 +47,23 @@ export class ExpensesService {
     }).pipe(
       map((response) => {
         if (response) {
-          return response.data as ExpenseValueDto
+          return response.data as IExpenseValue
         }
         return { totalValue: 0 }
       }),
       catchError((error) => {
         console.error('No se cargaron los valores de gastos:', error);
-        this.notificationService.openNotification({ message: 'EXPENSES.VALUE_ERROR' }, ALERT_TYPES.ERROR)
+        this.notificationService.openNotification({ message: 'EXPENSES.VALUE_ERROR' }, AlertTypes.ERROR)
         return of({ totalValue: 0 });
       })
     );
   }
 
-  public createExpense(expense: ExpenseDto): Observable<ExpenseDto | null> {
-    return this.http.post<ApiResponse<ExpenseDto>>('/api/expenses', expense).pipe(
+  public createExpense(expense: IExpense): Observable<IExpense | null> {
+    return this.http.post<IApiResponse<IExpense>>('/api/expenses', expense).pipe(
       map((response) => {
         if (response) {
-          return response.data as ExpenseDto
+          return response.data as IExpense
         }
         return null
       }),
@@ -75,11 +74,11 @@ export class ExpensesService {
     );
   }
 
-  public editExpense(id: string, expense: ExpenseDto): Observable<ExpenseDto | null> {
-    return this.http.put<ApiResponse<ExpenseDto>>('/api/expenses/' + id, expense).pipe(
+  public editExpense(id: string, expense: IExpense): Observable<IExpense | null> {
+    return this.http.put<IApiResponse<IExpense>>('/api/expenses/' + id, expense).pipe(
       map((response) => {
         if (response) {
-          return response.data as ExpenseDto
+          return response.data as IExpense
         }
         return null
       }),
@@ -91,7 +90,7 @@ export class ExpensesService {
   }
 
   public deleteCost(id: string): Observable<boolean> {
-    return this.http.delete<ApiResponse<boolean>>('/api/expenses/' + id).pipe(
+    return this.http.delete<IApiResponse<boolean>>('/api/expenses/' + id).pipe(
       map((response) => {
         if (response) {
           return response.data as boolean

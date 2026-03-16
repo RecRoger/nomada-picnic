@@ -21,24 +21,24 @@ export class AdminComponent implements OnInit {
 
   public tabs: { link: string, label: string }[] = [
     {
-      link: 'admin/picnics',
+      link: 'picnics',
       label: 'ADMIN.TABS.PICNICS'
     },
     {
-      link: 'admin/places',
+      link: 'places',
       label: 'ADMIN.TABS.PLACES'
     },
     {
-      link: 'admin/costs',
+      link: 'costs',
       label: 'ADMIN.TABS.COSTS'
     },
     {
-      link: 'admin/expenses',
+      link: 'expenses',
       label: 'ADMIN.TABS.EXPENSES'
     },
   ];
 
-  public activeTabIndex = 0
+  public activeLinkIndex = 0
 
   private readonly router: Router = inject(Router)
 
@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      this.activeTabIndex = this.tabs.indexOf(
+      this.activeLinkIndex = this.tabs.indexOf(
         this.tabs.find(tab => this.router.url.includes(tab.link))!
       );
     });

@@ -45,13 +45,15 @@
       flex-direction: column;
       padding: 0 2rem;
       margin: auto;
-      gap: 1rem;
+      gap: 4vw;
 
       &_item {
+        font-size: 5vw;
         padding: 1rem;
 
         position: relative; // 👈 Vital para que el :before se posicione respecto al link
         overflow: visible; // Asegúrate de que no corte la flecha si el botón tiene overflow hidden
+        font-weight: 400;
 
         &.active-link {
           color: #8f0045; // Cambia esto por el color de tu marca
@@ -60,12 +62,13 @@
           &::before {
             content: "";
             position: absolute;
+            height: 2rem;
             left: 0;
             width: 0;
             height: 0;
-            border-bottom: 6px solid transparent;
-            border-top: 6px solid transparent;
-            border-left: 6px solid #8f0045;
+            border-bottom: 12px solid transparent;
+            border-top: 12px solid transparent;
+            border-left: 16px solid #8f0045;
           }
         }
       }

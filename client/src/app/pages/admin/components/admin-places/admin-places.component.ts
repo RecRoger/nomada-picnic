@@ -34,15 +34,9 @@ import { IPlace } from '@shared/interfaces';
   styleUrl: './admin-places.component.scss'
 })
 export class AdminPlacesComponent implements OnInit {
-  public readonly mapService: MapsService = inject(MapsService)
+  protected readonly mapService: MapsService = inject(MapsService)
 
-  public readonly placesService: PlacesService = inject(PlacesService)
-
-  private readonly translateService: TranslateService = inject(TranslateService)
-
-  private readonly notificationService: NotificationService = inject(NotificationService)
-
-  public readonly dialog = inject(MatDialog);
+  protected readonly dialog = inject(MatDialog);
 
   public readonly placeTypes = PlacesTypes
 
@@ -60,6 +54,12 @@ export class AdminPlacesComponent implements OnInit {
   public openId?: string = ''
 
   public newPlaceIndicator: boolean = false
+
+  private readonly placesService: PlacesService = inject(PlacesService)
+
+  private readonly translateService: TranslateService = inject(TranslateService)
+
+  private readonly notificationService: NotificationService = inject(NotificationService)
 
   ngOnInit(): void {
     this.getPlaces()

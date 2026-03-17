@@ -32,8 +32,11 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/rose-red.css",
-              "src/styles.scss"
+              "public/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["public/styles"]
+            },
             "scripts": []
           },
           "configurations": {
@@ -95,8 +98,11 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/rose-red.css",
-              "src/styles.scss"
+              "public/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["public/styles"]
+            },
             "scripts": []
           }
         }

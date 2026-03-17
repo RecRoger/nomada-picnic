@@ -133,6 +133,7 @@
     "MENU": {
       "TABS": {
         "HOME": "Inicio",
+        "STORY": "Nuestra historia",
         "PLACES": "Parques y Lugares",
         "ADDITIONALS": "Comida y adicionales",
         "PICNICS": "Nuestros Picnics",
@@ -166,6 +167,16 @@
       "THIRD": "Seleccioná cualquiera de los diferentes adicionales decorativos y nuestra oferta de comida",
       "FORTH": "Confirmá el dia del evento.",
       "FIFTH": "Asistí al picnic y disfrutá."
+    },
+    "ADDITIONALS": {
+      "TITLE": "Comida y adicionales",
+      "SUBTITLE": "Ir a ver todos los adicionales",
+      "LIST": {
+        "TITLE": "Adicionales"
+      },
+      "COVERAGE": "Alcance para {{coverage}} personas.",
+      "DELIVERY": "Requiere delivery.",
+      "ADD": "Quiero este adicional."
     }
   },
   "CALCULATOR": {

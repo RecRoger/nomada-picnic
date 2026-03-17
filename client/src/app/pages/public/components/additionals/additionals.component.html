@@ -1,1 +1,32 @@
-<p>additionals works!</p>
+<div class="c-additionals">
+  <h1 class="c-additionals--title">
+    {{'PUBLIC.ADDITIONALS.LIST.TITLE' | translate}}
+  </h1>
+
+  <div class="c-additionals--filters">
+    <!-- // TODO - aca irian los filtros -->
+  </div>
+
+  @if (additionalsList?.length) {
+    <div class="c-additionals--list">
+      @for (card of additionalsList; track $index) {
+        <div class="c-additionals--list-card" (click)="checkAdditional(card)">
+          @if (card.images?.length) {
+            <div class="c-additionals--list-card__image">
+              <img  [src]="card.images[0]" alt="">
+            </div>
+          }
+          <h4 class="c-additionals--list-card__title">{{card.name}}</h4>
+          <p class="c-additionals--list-card__description">{{card.description}}</p>
+          <div class="c-additionals--list-card__footer">
+            <div class="c-additionals--list-card__price">
+              {{card.finalPrice  | number:'1.2-2'}} US$
+            </div>
+            <mat-icon class="c-additionals--list-card__icon">chevron_right</mat-icon>
+          </div>
+        </div>
+      }
+
+    </div>
+  }
+</div>

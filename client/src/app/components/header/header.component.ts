@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
+import { NavLink } from '@models/nav-link';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@services/auth.service';
 
@@ -17,11 +18,15 @@ import { AuthService } from '@services/auth.service';
 export class HeaderComponent {
   public openMenu = false
 
-  public menuLinks: any[] = [
+  public menuLinks: NavLink[] = [
     {
       link: '',
       label: 'PUBLIC.MENU.TABS.HOME',
       options: { exact: true }
+    },
+    {
+      link: 'story',
+      label: 'PUBLIC.MENU.TABS.STORY'
     },
     {
       link: 'places',

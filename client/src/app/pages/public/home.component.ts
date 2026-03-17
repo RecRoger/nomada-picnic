@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PlacesCarouselComponent } from '@components/places-carousel/places-carousel.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatIconModule,
     MatButtonModule,
     PlacesCarouselComponent,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

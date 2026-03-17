@@ -15,6 +15,7 @@
     "LAT": "Latitud",
     "LNG": "Longitud",
     "ADD_IMAGES": "Añadir imágenes",
+    "SEE_MORE": "Ver mas",
     "ERRORS": {
       "INVALID_FIELD": "Campo inválido",
       "REQUIRED_FIELD": "El campo es <b>obligatorio</b>",
@@ -145,6 +146,17 @@
       "INCLUDED": "Todo Incluido y Listo para Disfrutar",
       "PRODUCTION": "Montaje y Desmontaje sin Esfuerzo",
       "MEMORIES": "Momentos Inolvidables en la Naturaleza"
+    },
+    "PLACES": {
+      "TITLE": "Parques y lugares destacados"
+    },
+    "STEPS": {
+      "TITLE": "¿CÓMO FUNCIONA?",
+      "FIRST": "Contáctanos para consultar disponibilidad.",
+      "SECOND": "Elige una fecha, lugar y numero de invitados para tu picnic.",
+      "THIRD": "Seleccioná cualquiera de los diferentes adicionales decorativos y nuestra oferta de comida",
+      "FORTH": "Confirmá el dia del evento.",
+      "FIFTH": "Asistí al picnic y disfrutá."
     }
   },
   "CALCULATOR": {

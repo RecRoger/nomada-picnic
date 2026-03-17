@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
 import { IApiResponse, IPlace } from '@shared/interfaces';
-import { AlertTypes, ComunicationStatus } from '@shared/enums';
+import { AlertTypes, ComunicationStatus, PlacesTypes } from '@shared/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -13,16 +13,16 @@ export class PlacesService {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  private typedCosts$: { [type: string]: Observable<IPlace[]> } = {}
+  private typedPlaces$: { [type: string]: Observable<IPlace[]> } = {}
 
-  public getPlacesCached(type: string): Observable<IPlace[]> {
-    if (!this.typedCosts$[type]) {
-      this.typedCosts$[type] = this.getPlaces(type).pipe(shareReplay(1))
+  public getPlacesCached(type: PlacesTypes): Observable<IPlace[]> {
+    if (!this.typedPlaces$[type]) {
+      this.typedPlaces$[type] = this.getPlaces(type).pipe(shareReplay(1))
     }
-    return this.typedCosts$[type]
+    return this.typedPlaces$[type]
   }
 
-  public getPlaces(type?: string): Observable<IPlace[]> {
+  public getPlaces(type?: PlacesTypes): Observable<IPlace[]> {
     return this.http.get<IApiResponse<IPlace[]>>(`/api/places`, {
       params: { ...(type ? { type } : {}) }
     }).pipe(

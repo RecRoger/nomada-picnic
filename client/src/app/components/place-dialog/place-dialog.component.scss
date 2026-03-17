@@ -1,0 +1,22 @@
+.c-place-dialog {
+  position: relative;
+  padding: 1rem 0;
+
+  .close-btn {
+    position: absolute;
+    right: 1rem;
+    color: gray;
+  }
+
+  &--images {
+    // height: 180px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    overflow-x: scroll;
+    &-item {
+      height: 200px;
+    }
+  }
+}

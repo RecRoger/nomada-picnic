@@ -63,7 +63,7 @@ export class HomeComponent {
   scrollToNext(element: HTMLElement) {
     element.scrollIntoView({
       behavior: 'smooth', // Hace que el scroll sea fluido
-      block: 'start'
+      block: 'start',
     });
   }
 }

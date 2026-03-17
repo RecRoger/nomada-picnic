@@ -30,7 +30,7 @@
 </section>
 
 <section class="s-steps-info">
-  <h2 class="s-steps-info--title">{{'PUBLIC.STEPS.TITLE'}}</h2>
+  <h2 class="s-steps-info--title">{{'PUBLIC.STEPS.TITLE' | translate}}</h2>
   <div class="s-steps-info--list">
     @for (step of stepCards; track $index){
       <div class="s-steps-info--list-item" [class.invert]="!($index%2)">

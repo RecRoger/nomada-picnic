@@ -18,7 +18,7 @@ import { PlaceDialogComponent } from '@components/place-dialog/place-dialog.comp
 
 
 @Component({
-  selector: 'app-public-places',
+  selector: 'app-places-map',
   imports: [
     CommonModule,
     TranslateModule,
@@ -31,11 +31,11 @@ import { PlaceDialogComponent } from '@components/place-dialog/place-dialog.comp
     ReactiveFormsModule,
     MatCardModule,
   ],
-  templateUrl: './public-places.component.html',
-  styleUrl: './public-places.component.scss',
+  templateUrl: './places-map.component.html',
+  styleUrl: './places-map.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class PublicPlacesComponent implements OnInit {
+export class PlacesMapComponent implements OnInit {
 
   protected readonly mapService = inject(MapsService)
 

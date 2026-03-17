@@ -1,6 +1,13 @@
 
-<div class="c-public-places">
+<div class="c-places-map">
     @if (mapService.mapReady) {
+      <div class="c-places-map--info">
+        <h2 class="c-places-map--info-title">
+          {{'PUBLIC.PLACES.MAP.TITLE' | translate}}
+        </h2>
+        <p class="c-places-map--info-text" [innerHTML]="'PUBLIC.PLACES.MAP.MESSAGE' | translate"></p>
+      </div>
+
       <google-map
         width="100%"
         height="100%"
@@ -16,8 +23,8 @@
     }
     
     @if (options?.length) {
-      <form class="c-public-places--search">
-        <mat-form-field class="c-public-places--search-input">
+      <form class="c-places-map--search">
+        <mat-form-field class="c-places-map--search-input">
           <mat-label>{{'PUBLIC.PLACES.FILTER.LABEL' | translate}}</mat-label>
           <input type="text"
             aria-label="Places"

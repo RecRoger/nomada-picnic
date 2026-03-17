@@ -1,11 +1,13 @@
 <div class="c-place-dialog">
   <mat-icon mat-dialog-close class="close-btn" cdkFocusInitial>close</mat-icon>
   <mat-dialog-content>
-    <div class="c-place-dialog--images">
-      @for (image of place.images; track $index) {
-        <img src="{{image}}" [alt]="place.name+$index" class="c-place-dialog--images-item">
-      }
-    </div>
+    @if (place.images?.length) {
+      <div class="c-place-dialog--images">
+        @for (image of place.images; track $index) {
+          <img src="{{image}}" [alt]="place.name+$index" class="c-place-dialog--images-item">
+        }
+      </div>
+    }
     <h3 class="c-place-dialog--title">{{place.name}}</h3>
     <p class="c-place-dialog--description">{{place.description}}</p>
   </mat-dialog-content>

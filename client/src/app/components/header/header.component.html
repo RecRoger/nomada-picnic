@@ -1,8 +1,5 @@
 <header class="c-header">
   <div class="c-header--menu" [class.is-open]="openMenu">
-    <button mat-icon-button aria-label="Close" (click)="openMenu = false">
-      <mat-icon>close</mat-icon>
-    </button>
     <div class="c-header--menu-links">
       @for (link of menuLinks; track $index ) {
       <a class="c-header--menu-links_item"
@@ -27,12 +24,12 @@
   </div>
 
   <div class="c-header--content">
-    <a routerLink="/" class="logo-link">
+    <a routerLink="/" class="logo-link" (click)="openMenu = false">
       <img src="assets/images/nomada_logo_black.png" alt="Logo de la Aplicación" class="logo-image">
     </a>
     
     <button mat-icon-button aria-label="Menu" (click)="openMenu = !openMenu">
-      <mat-icon>dehaze</mat-icon>
+      <mat-icon>{{!openMenu ? 'dehaze' : 'close'}}</mat-icon>
     </button>
   </div>
   

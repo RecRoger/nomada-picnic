@@ -7,6 +7,10 @@ export const PublicRoutes: Routes = [
     loadComponent: () => import('./home.component').then(m => m.HomeComponent),
   },
   {
+    path: 'story',
+    loadComponent: () => import('./components/our-story/our-story.component').then(m => m.OurStoryComponent),
+  },
+  {
     path: 'places',
     loadComponent: () => import('./components/places-map/places-map.component').then(m => m.PlacesMapComponent),
   },

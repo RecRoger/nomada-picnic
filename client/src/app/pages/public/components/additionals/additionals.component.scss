@@ -1,0 +1,90 @@
+.c-additionals {
+  padding: 5rem 1rem 1rem;
+
+  &--title {
+    text-align: center;
+  }
+
+  &--list {
+    margin: 1rem auto;
+    display: grid;
+    gap: 2rem; // Espacio entre los elementos
+    width: 90%;
+    grid-template-columns: repeat(4, 1fr);
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &-card {
+      padding: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+
+      background: rgba(233, 233, 233, 0.2274509804);
+      border-radius: 20px;
+      border: none;
+      box-shadow:
+        8px 8px 16px #d1d1d1,
+        -8px -8px 16px #ffffff;
+
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+      &:hover {
+        // 1. Elevación física
+        transform: translateY(-5px);
+
+        // 2. Elevación visual (Sombras más profundas y difusas)
+        // Aumentamos el desenfoque (de 16px a 24px) y el desplazamiento
+        box-shadow:
+          12px 12px 24px #bebebe,
+          -12px -12px 24px #ffffff;
+      }
+
+      &__image {
+        width: 20vw;
+        height: 20vw;
+        border-radius: 50%;
+        overflow: hidden;
+        display: block;
+        margin: 0 auto;
+        border: 1px solid #ffd9e1; // Tu rosa de marca
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Sombra suave
+        & img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+
+      &__title {
+        margin-bottom: 0;
+      }
+
+      &__description {
+        margin: 1rem 0 2rem;
+      }
+
+      &__footer {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+      }
+
+      &__price {
+        font-size: 1.25rem;
+        margin-left: auto;
+      }
+
+      &__icon {
+        font-size: 2rem;
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+}

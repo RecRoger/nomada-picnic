@@ -1,5 +1,7 @@
 <div class="c-place-dialog">
-  <mat-icon mat-dialog-close class="close-btn" cdkFocusInitial>close</mat-icon>
+  <button mat-icon-button mat-dialog-close class="close-btn" type="button" cdkFocusInitial>
+    <mat-icon>close</mat-icon>
+  </button>
   <mat-dialog-content>
     @if (place.images?.length) {
       <div class="c-place-dialog--images">

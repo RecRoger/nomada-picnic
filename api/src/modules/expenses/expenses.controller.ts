@@ -54,7 +54,6 @@ export class ExpensesController {
     @Query('guests') guestsAmount: string,
     @Query('percentage') percentage: string,
   ): Promise<ExpenseValueDto> {
-    console.log({ guestsAmount, percentage })
     return this.expensesService.getExpenses(Number(guestsAmount), Number(percentage));
   }
 

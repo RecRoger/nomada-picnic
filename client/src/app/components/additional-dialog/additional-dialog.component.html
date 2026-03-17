@@ -1,0 +1,46 @@
+<div class="c-additional-dialog">
+  <button mat-icon-button mat-dialog-close class="close-btn" type="button" cdkFocusInitial>
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-dialog-content>
+    @if (additional.images?.length) {
+      <div class="c-additional-dialog--images">
+        @for (image of additional.images; track $index) {
+          <img src="{{image}}" [alt]="additional.name+$index" class="c-additional-dialog--images-item">
+        }
+      </div>
+    }
+    <h3 class="c-additional-dialog--title">{{additional.name}}</h3>
+    <p class="c-additional-dialog--description">{{additional.description}}</p>
+    @if(additional.guestsCoverage) {
+      <p class="c-additional-dialog--description">{{'PUBLIC.ADDITIONALS.COVERAGE' | translate: {coverage: additional.guestsCoverage} }}</p>
+    }
+    @if(additional.deliveryRequired) {
+      <p class="c-additional-dialog--description">{{'PUBLIC.ADDITIONALS.DELIVERY' | translate }}</p>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    @if (additional.multipleAllowed) {
+      <div class="c-additional-dialog--footer-counter">
+        <button mat-icon-button class="c-additional-dialog--footer-left" type="button" [disabled]="count==1" (click)="moveCounter(false)">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span>{{count}}</span>
+        <button mat-icon-button class="c-additional-dialog--footer-right" type="button" (click)="moveCounter()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    }
+    <div class="c-additional-dialog--footer-price">
+      <div class="c-additional-dialog--footer-price__unit" [class.main-price]="count === 1">
+        {{additional.finalPrice | number:'1.2-2'}} US$
+      </div>
+      @if (additional.multipleAllowed && count > 1) { 
+        <div class="c-additional-dialog--footer-price__multi">
+          x{{count}} <span class="main-price"> {{(additional?.finalPrice * count) | number:'1.2-2'}} US$</span>
+        </div>
+      }
+    </div>
+    <button mat-raised-button [mat-dialog-close]="count">{{'PUBLIC.ADDITIONALS.ADD' | translate}}</button>
+  </mat-dialog-actions>
+</div>

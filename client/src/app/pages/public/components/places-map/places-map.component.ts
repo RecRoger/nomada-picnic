@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
@@ -15,6 +15,7 @@ import { MAP_OPTIONS } from '@constants/map-options';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { PlaceDialogComponent } from '@components/place-dialog/place-dialog.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -51,7 +52,9 @@ export class PlacesMapComponent implements OnInit {
 
   public filteredOptions: Observable<string[]> = of([])
 
-  private readonly placesService: PlacesService = inject(PlacesService)
+  private readonly placesService = inject(PlacesService)
+
+  private readonly destroyRef = inject(DestroyRef)
 
   readonly dialog = inject(MatDialog);
 
@@ -65,16 +68,7 @@ export class PlacesMapComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPlaces()
-
-    this.filteredOptions = this.searchControl.valueChanges.pipe(
-      startWith(''),
-      tap(value => {
-        if (!value) {
-          this.mapOptions = MAP_OPTIONS
-        }
-      }),
-      map(value => this._filter(value || '')),
-    );
+    this.setSearchFilter()
   }
 
   public selectSearch(value: string): void {
@@ -98,6 +92,19 @@ export class PlacesMapComponent implements OnInit {
         console.log("Añadir al carrito", id)
       }
     });
+  }
+
+  private setSearchFilter(): void {
+    this.filteredOptions = this.searchControl.valueChanges.pipe(
+      takeUntilDestroyed(this.destroyRef),
+      startWith(''),
+      tap(value => {
+        if (!value) {
+          this.mapOptions = MAP_OPTIONS
+        }
+      }),
+      map(value => this._filter(value || '')),
+    );
   }
 
 

@@ -1,17 +1,45 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { PlacesCarouselComponent } from '@components/places-carousel/places-carousel.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TranslateModule, MatIconModule, MatButtonModule, RouterLink],
+  imports: [
+    TranslateModule,
+    MatIconModule,
+    MatButtonModule,
+    PlacesCarouselComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+
+  public stepCards = [
+    {
+      step: 1,
+      label: "PUBLIC.STEPS.FIRST"
+    },
+    {
+      step: 2,
+      label: "PUBLIC.STEPS.SECOND"
+    },
+    {
+      step: 3,
+      label: "PUBLIC.STEPS.THIRD"
+    },
+    {
+      step: 4,
+      label: "PUBLIC.STEPS.FORTH"
+    },
+    {
+      step: 5,
+      label: "PUBLIC.STEPS.FIFTH"
+    },
+  ]
 
   public infoCards = [
     {

@@ -1,0 +1,23 @@
+@if (places$ | async; as places) {
+<div class="c-places-carousel">
+  <h3 class="c-places-carousel--title">{{ 'PUBLIC.PLACES.TITLE' | translate }}</h3>
+  
+  <div class="c-places-carousel--slider">
+    @for(place of places; track $index) {
+      <div class="c-places-carousel--slider-card">
+        <h4 class="c-places-carousel--slider-card__title">
+          {{place.name}}
+        </h4>
+        <p class="c-places-carousel--slider-card__description">{{place.description}}</p>
+      </div>
+    }
+    <a class="c-places-carousel--slider-card__see-more" routerLink="/places">
+      <mat-icon class="c-places-carousel--slider-card__see-more-icon">chevron_right</mat-icon>
+      <div class="c-places-carousel--slider-card__see-more-text">
+        {{'COMMON.SEE_MORE'}}
+      </div>
+
+    </a>
+  </div>
+</div>
+}

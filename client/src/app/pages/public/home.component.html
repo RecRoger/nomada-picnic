@@ -8,12 +8,12 @@
     <p>{{ 'PUBLIC.HERO.DESCRIPTION' | translate }}</p>
   </div>
 
-  <button class="s-hero--arrow" (click)="scrollToNext(nextSection)">
+  <button class="s-hero--arrow" (click)="scrollToNext(infoSection)">
     <mat-icon>expand_more</mat-icon>
   </button>
 </section>
 
-<section #nextSection class="s-info-icons">
+<section #infoSection class="s-info-icons">
   <p class="s-info-icons--message">{{ 'PUBLIC.RESUME.DESCRIPTION' | translate }}</p>
   <div class="s-info-icons--list">
     @for (card of infoCards; track $index) {
@@ -25,7 +25,19 @@
   </div>
 </section>
 
+<section #infoSection class="s-places-carousel">
+  <app-places-carousel></app-places-carousel>  
+</section>
 
-
-<a mat-raised-button [routerLink]="'/picnics'" class="button">{{'PUBLIC.ACTION' | translate}}</a>
+<section class="s-steps-info">
+  <h2 class="s-steps-info--title">{{'PUBLIC.STEPS.TITLE'}}</h2>
+  <div class="s-steps-info--list">
+    @for (step of stepCards; track $index){
+      <div class="s-steps-info--list-item" [class.invert]="!($index%2)">
+        <div class="s-steps-info--list-item__number"><span>{{step.step}}</span></div>
+        <div class="s-steps-info--list-item__text">{{step.label | translate}}</div>
+      </div>
+    }
+  </div>
+</section>
 

@@ -1,7 +1,7 @@
 // src/styles.scss
-@use "styles/variables";
-@use "styles/mixins";
-@use "styles/utilities";
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+@use "styles/utilities" as *;
 
 html,
 body {
@@ -10,8 +10,7 @@ body {
 
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
-  // background-color: #f0f0f0; // Fondo para el neumorfismo
+  font-family: $font-main;
 }
 
 .construction {

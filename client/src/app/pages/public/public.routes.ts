@@ -8,7 +8,7 @@ export const PublicRoutes: Routes = [
   },
   {
     path: 'places',
-    loadComponent: () => import('./components/public-places/public-places.component').then(m => m.PublicPlacesComponent),
+    loadComponent: () => import('./components/places-map/places-map.component').then(m => m.PlacesMapComponent),
   },
   {
     path: 'additionals',
@@ -20,6 +20,6 @@ export const PublicRoutes: Routes = [
   },
   {
     path: 'contact',
-    loadComponent: () => import('./components/public-contact/public-contact.component').then(m => m.PublicContactComponent),
+    loadComponent: () => import('./components/faq-contact/faq-contact.component').then(m => m.FAQContactComponent),
   },
 ];

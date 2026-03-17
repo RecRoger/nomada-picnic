@@ -152,6 +152,10 @@
       "FILTER": {
         "LABEL": "¿Qué lugar te interesa conocer?"
       },
+      "MAP": {
+        "TITLE": "Parques y lugares",
+        "MESSAGE": "Tenemos varias opciones para ti.Estos son parques de la ciudad que hemos logrado analizar y evaluar en cuanto a producción, estacionamiento y logística.<br> <br>En el siguiente mapa puedes ver y seleccionar el que mas te guste. Al seleccionarlo en la parte de abajo puedes ver toda la información correspondiente."
+      },
       "ADD": "Quiero este lugar",
       "CHECK_MAPS": "Ver en maps"
     },

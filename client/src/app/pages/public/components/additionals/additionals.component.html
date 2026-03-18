@@ -13,7 +13,7 @@
         <div class="c-additionals--list-card" (click)="checkAdditional(card)">
           @if (card.images?.length) {
             <div class="c-additionals--list-card__image">
-              <img  [src]="card.images[0]" alt="">
+              <img  [src]="card.images[0] | apiImageUrl" alt="">
             </div>
           }
           <h4 class="c-additionals--list-card__title">{{card.name}}</h4>

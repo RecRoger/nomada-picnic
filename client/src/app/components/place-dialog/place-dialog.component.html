@@ -6,7 +6,7 @@
     @if (place.images?.length) {
       <div class="c-place-dialog--images">
         @for (image of place.images; track $index) {
-          <img src="{{image}}" [alt]="place.name+$index" class="c-place-dialog--images-item">
+          <img src="{{image | apiImageUrl}}" [alt]="place.name+$index" class="c-place-dialog--images-item">
         }
       </div>
     }

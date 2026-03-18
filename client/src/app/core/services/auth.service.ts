@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { NotificationService } from '@services/notification.service';
 import { AlertTypes, ComunicationStatus } from '@shared/enums';
 import { IApiResponse, IUser } from '@shared/interfaces';
+import { API_URL } from '@constants/api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class AuthService {
 
   public login(email: string, password: string): Observable<IApiResponse<IUser>> {
     const secret = this.SECRET_KEY
-    return this.http.post<IApiResponse<IUser>>('/api/auth/validate', { email, password, secret })
+    return this.http.post<IApiResponse<IUser>>(API_URL + '/api/auth/validate', { email, password, secret })
       .pipe(
         tap((response) => {
           if (response.status === ComunicationStatus.OK && response?.data?.email) {

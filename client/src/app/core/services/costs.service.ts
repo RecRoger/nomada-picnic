@@ -4,6 +4,7 @@ import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
 import { IApiResponse, ICost } from '@shared/interfaces';
 import { AlertTypes } from '@shared/enums';
+import { API_URL } from '@constants/api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class CostsService {
   }
 
   public getCosts(type?: string): Observable<ICost[]> {
-    return this.http.get<IApiResponse<ICost[]>>(`/api/costs`, {
+    return this.http.get<IApiResponse<ICost[]>>(`${API_URL}/api/costs`, {
       params: { ...(type ? { type } : {}) }
     }).pipe(
       map((response) => {
@@ -41,7 +42,7 @@ export class CostsService {
   }
 
   public createCost(cost: FormData): Observable<ICost | null> {
-    return this.http.post<IApiResponse<ICost>>('/api/costs', cost).pipe(
+    return this.http.post<IApiResponse<ICost>>(API_URL + '/api/costs', cost).pipe(
       map((response) => {
         if (response) {
           return response.data as ICost
@@ -56,7 +57,7 @@ export class CostsService {
   }
 
   public editCost(id: string, cost: FormData): Observable<ICost | null> {
-    return this.http.put<IApiResponse<ICost>>('/api/costs/' + id, cost).pipe(
+    return this.http.put<IApiResponse<ICost>>(`${API_URL}/api/costs/${id}`, cost).pipe(
       map((response) => {
         if (response) {
           return response.data as ICost
@@ -71,7 +72,7 @@ export class CostsService {
   }
 
   public deleteCost(id: string): Observable<boolean> {
-    return this.http.delete<IApiResponse<boolean>>('/api/costs/' + id).pipe(
+    return this.http.delete<IApiResponse<boolean>>(`${API_URL}/api/costs/${id}`).pipe(
       map((response) => {
         if (response) {
           return response.data as boolean

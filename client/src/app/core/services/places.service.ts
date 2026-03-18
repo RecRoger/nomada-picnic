@@ -4,6 +4,7 @@ import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
 import { IApiResponse, IPlace } from '@shared/interfaces';
 import { AlertTypes, ComunicationStatus, PlacesTypes } from '@shared/enums';
+import { API_URL } from '@constants/api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class PlacesService {
   }
 
   public getPlaces(type?: PlacesTypes): Observable<IPlace[]> {
-    return this.http.get<IApiResponse<IPlace[]>>(`/api/places`, {
+    return this.http.get<IApiResponse<IPlace[]>>(`${API_URL}/api/places`, {
       params: { ...(type ? { type } : {}) }
     }).pipe(
       map((response) => {
@@ -41,7 +42,7 @@ export class PlacesService {
   }
 
   public createPlace(newPlace: FormData): Observable<IPlace | null> {
-    return this.http.post<IApiResponse<IPlace>>('/api/places', newPlace).pipe(
+    return this.http.post<IApiResponse<IPlace>>(`${API_URL}/api/places`, newPlace).pipe(
       map((response) => {
         if (response) {
           return response.data as IPlace
@@ -56,7 +57,7 @@ export class PlacesService {
   }
 
   public editPlace(id: string, place: FormData): Observable<IPlace | null> {
-    return this.http.put<IApiResponse<IPlace>>('/api/places/' + id, place).pipe(
+    return this.http.put<IApiResponse<IPlace>>(`${API_URL}/api/places/${id}`, place).pipe(
       map((response) => {
         if (response) {
           return response.data as IPlace
@@ -71,7 +72,7 @@ export class PlacesService {
   }
 
   public deletePlace(id: string): Observable<boolean> {
-    return this.http.delete<IApiResponse<boolean>>('/api/places/' + id).pipe(
+    return this.http.delete<IApiResponse<boolean>>(`${API_URL}/api/places/${id}`).pipe(
       map((response) => {
         if (response) {
           return response.data as boolean

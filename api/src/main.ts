@@ -13,7 +13,8 @@ async function bootstrap() {
   // 1. CORS - Configurarlo desde el inicio evita dolores de cabeza
   app.enableCors({
     origin: [
-      process.env.CORS_ORIGIN || 'http://localhost:4200', // Desarrollo Angular
+      process.env.CORS_ORIGIN || '*',
+      'http://localhost:4200', // Desarrollo Angular
       'https://nomadapicnic.com',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

@@ -68,7 +68,7 @@
           @if (cost?.images?.length) {
           <div class="costs-images">
             @for (image of cost.images; track $index) {
-            <img mat-card-image [src]="image" alt="{{ cost.name + $index}}" class="cost-image">
+            <img mat-card-image [src]="image | apiImageUrl" alt="{{ cost.name + $index}}" class="cost-image">
             }
           </div>
           }

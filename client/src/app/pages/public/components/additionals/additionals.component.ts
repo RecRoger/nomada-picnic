@@ -8,11 +8,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CostsService } from '@services/costs.service';
 import { CostsTypes } from '@shared/enums';
 import { ICost } from '@shared/interfaces';
-import { forkJoin, Observable } from 'rxjs';
+import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-additionals',
-  imports: [CommonModule, TranslateModule, MatButtonModule, DecimalPipe, MatIconModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, DecimalPipe, MatIconModule, ApiImageUrlPipe],
   templateUrl: './additionals.component.html',
   styleUrl: './additionals.component.scss'
 })

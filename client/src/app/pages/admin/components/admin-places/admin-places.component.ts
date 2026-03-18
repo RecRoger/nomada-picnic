@@ -13,6 +13,7 @@ import { NotificationService } from '@services/notification.service';
 import { PlaceFormComponent } from '@components/place-form/place-form.component';
 import { AlertTypes, PlacesTypes } from '@shared/enums';
 import { IPlace } from '@shared/interfaces';
+import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 
 
 
@@ -28,6 +29,7 @@ import { IPlace } from '@shared/interfaces';
     MatButtonModule,
     MatExpansionModule,
     MatCardModule,
+    ApiImageUrlPipe,
     PlaceFormComponent,
   ],
   templateUrl: './admin-places.component.html',

@@ -12,6 +12,7 @@ import { CostsService } from '@services/costs.service';
 import { ICost } from '@shared/interfaces';
 import { AlertTypes } from '@shared/enums';
 import { CommonModule } from '@angular/common';
+import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 
 
 const MAT_MODULES = [
@@ -20,7 +21,7 @@ const MAT_MODULES = [
 @Component({
   selector: 'app-costs',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ...MAT_MODULES, CostsFormComponent],
+  imports: [CommonModule, TranslateModule, ...MAT_MODULES, CostsFormComponent, ApiImageUrlPipe],
   templateUrl: './admin-costs.component.html',
   styleUrl: './admin-costs.component.scss',
   animations: [

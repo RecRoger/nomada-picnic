@@ -35,7 +35,7 @@
                   @for (image of place.images; track $index) {
                     <img
                       mat-card-image
-                      [src]="image"
+                      [src]="image | apiImageUrl"
                       alt="{{ place.name + $index }}"
                       class="place-image"
                     />

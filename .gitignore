@@ -32,3 +32,4 @@ shared/**/*.js
 shared/**/*.js.map
 shared/**/*.d.ts
 !shared/package.json
+deploy.sh

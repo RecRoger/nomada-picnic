@@ -13,7 +13,7 @@ async function bootstrap() {
   // 1. CORS - Configurarlo desde el inicio evita dolores de cabeza
   app.enableCors({
     origin: [
-      'http://localhost:4200', // Desarrollo Angular
+      process.env.CORS_ORIGIN || 'http://localhost:4200', // Desarrollo Angular
       'https://nomadapicnic.com',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
@@ -42,15 +42,20 @@ async function bootstrap() {
   );
 
   // 3. Swagger
-  const config = new DocumentBuilder()
-    .setTitle('Nómada Picnic API')
-    .setDescription('Documentación de la API de reservas y logística')
-    .setVersion('1.0')
-    .addBearerAuth() // Útil si vas a usar JWT más adelante
-    .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  if (process.env.SHOW_SWAGGER === 'true') {
+    const config = new DocumentBuilder()
+      .setTitle('Nómada Picnic API')
+      .setDescription('Documentación de la API de reservas y logística')
+      .setVersion('1.0')
+      // .addServer('https://nomada-backend-389141432152.us-east1.run.app')
+      // .addBearerAuth() // Útil si vas a usar JWT más adelante
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('docs', app, document);
+
+    console.log('✅ Swagger habilitado en: http://localhost:8080/docs');
+  }
 
   await app.listen(port);
   console.log(`🚀 API lista en: http://localhost:${port}/docs`);

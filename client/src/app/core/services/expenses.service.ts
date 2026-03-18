@@ -4,6 +4,7 @@ import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
 import { IApiResponse, IExpense, IExpenseValue } from '@shared/interfaces';
 import { AlertTypes } from '@shared/enums';
+import { API_URL } from '@constants/api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class ExpensesService {
   }
 
   public getExpenses(): Observable<IExpense[]> {
-    return this.http.get<IApiResponse<IExpense[]>>(`/api/expenses/list`).pipe(
+    return this.http.get<IApiResponse<IExpense[]>>(`${API_URL}/api/expenses/list`).pipe(
       map((response) => {
         if (response) {
           return response.data as IExpense[]
@@ -39,7 +40,7 @@ export class ExpensesService {
   }
 
   public getExpensesValues(guests?: number, percentage?: number): Observable<IExpenseValue> {
-    return this.http.get<IApiResponse<IExpenseValue>>(`/api/expenses`, {
+    return this.http.get<IApiResponse<IExpenseValue>>(`${API_URL}/api/expenses`, {
       params: {
         ...(guests ? { guests } : {}),
         ...(percentage ? { percentage } : {})
@@ -60,7 +61,7 @@ export class ExpensesService {
   }
 
   public createExpense(expense: IExpense): Observable<IExpense | null> {
-    return this.http.post<IApiResponse<IExpense>>('/api/expenses', expense).pipe(
+    return this.http.post<IApiResponse<IExpense>>(API_URL + '/api/expenses', expense).pipe(
       map((response) => {
         if (response) {
           return response.data as IExpense
@@ -75,7 +76,7 @@ export class ExpensesService {
   }
 
   public editExpense(id: string, expense: IExpense): Observable<IExpense | null> {
-    return this.http.put<IApiResponse<IExpense>>('/api/expenses/' + id, expense).pipe(
+    return this.http.put<IApiResponse<IExpense>>(`${API_URL}/api/expenses/${id}`, expense).pipe(
       map((response) => {
         if (response) {
           return response.data as IExpense
@@ -90,7 +91,7 @@ export class ExpensesService {
   }
 
   public deleteCost(id: string): Observable<boolean> {
-    return this.http.delete<IApiResponse<boolean>>('/api/expenses/' + id).pipe(
+    return this.http.delete<IApiResponse<boolean>>(`${API_URL}/api/expenses/${id}`).pipe(
       map((response) => {
         if (response) {
           return response.data as boolean

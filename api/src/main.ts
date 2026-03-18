@@ -22,18 +22,6 @@ async function bootstrap() {
     allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
   });
 
-
-
-  // 2. Archivos Estáticos (Uploads)
-  // Nota: Ahora 'uploads' debería estar dentro de 'api'
-  const rootDir = process.cwd(); // Raíz del proyecto /api
-  app.useStaticAssets(join(rootDir, 'uploads', 'places'), {
-    prefix: '/uploads/places',
-  });
-  app.useStaticAssets(join(rootDir, 'uploads', 'costs'), {
-    prefix: '/uploads/costs',
-  });
-
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // Elimina propiedades que no estén en el DTO
@@ -41,8 +29,6 @@ async function bootstrap() {
       transform: true, // Convierte tipos automáticamente (ej: string a number)
     }),
   );
-
-  // 3. Swagger
 
   if (process.env.SHOW_SWAGGER === 'true') {
     const config = new DocumentBuilder()

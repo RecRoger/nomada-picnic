@@ -14,7 +14,6 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       process.env.CORS_ORIGIN || 'http://localhost:4200', // Desarrollo Angular
-      'https://nomada-client-389141432152.us-east1.run.app/',
       'https://nomadapicnic.com',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

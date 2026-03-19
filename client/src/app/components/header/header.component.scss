@@ -38,7 +38,7 @@
 
       .c-header--menu-links_item.active-link::before {
         // Animación sutil (opcional)
-        animation: fadeInArrow 0.3s ease-out;
+        animation: fadeInArrow 0.6s ease-out;
       }
     }
 
@@ -88,15 +88,6 @@
 
   .logo-image {
     height: 4rem;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }
 

@@ -1,17 +1,4 @@
-<section class="s-hero">
-  <div class="s-hero--media">
-    <img src="assets/images/home_image.jpg" alt="Experiencia Nómada Picnic">
-  </div>
-
-  <div class="s-hero--content">
-    <h1>{{ 'PUBLIC.HERO.TITLE' | translate }}</h1>
-    <p>{{ 'PUBLIC.HERO.DESCRIPTION' | translate }}</p>
-  </div>
-
-  <button class="s-hero--arrow" (click)="scrollToNext(infoSection)">
-    <mat-icon>expand_more</mat-icon>
-  </button>
-</section>
+<app-hero [nextSection]="infoSection"></app-hero>
 
 <section #infoSection class="s-info-icons">
   <p class="s-info-icons--message">{{ 'PUBLIC.RESUME.DESCRIPTION' | translate }}</p>

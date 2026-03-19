@@ -17,6 +17,9 @@ export class Cost {
   @Prop()
   description: string;
 
+  @Prop()
+  detail: string;
+
   @Prop({ required: true })
   providerCost: number;
 

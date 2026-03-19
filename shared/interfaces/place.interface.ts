@@ -10,6 +10,7 @@ export interface IPlace {
   name: string;
   type: PlacesTypes;
   description?: string;
+  detail?: string;
   images?: string[];
   location?: IPlaceLocation;
   mapsLink?: string;

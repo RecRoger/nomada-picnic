@@ -30,6 +30,7 @@ export class PlaceFormComponent implements OnInit {
     this.placeForm = this.fb.group({
       name: [this.place?.name || '', Validators.required],
       description: [this.place?.description || '', Validators.required],
+      detail: [this.place?.detail || ''],
       images: [null],
       location: this.fb.group({
         lat: [this.place?.location?.lat || null, Validators.required],

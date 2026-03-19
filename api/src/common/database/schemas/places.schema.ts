@@ -19,6 +19,9 @@ export class Place {
   @Prop()
   description: string;
 
+  @Prop()
+  detail: string;
+
   @Prop({ type: [String], default: [] })
   images: string[];
 

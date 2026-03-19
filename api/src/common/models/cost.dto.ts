@@ -19,6 +19,11 @@ export class CostDto implements ICost {
   @ApiProperty({ description: 'Descripcion del costo', example: 'Costo referente a armado de picnic en el lugar del evento' })
   description: string;
 
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ description: 'Detalle en html del costo para mostrar en la vista de detalle de adicionales', example: 'Costo referente a armado de <b>picnic</b> en el lugar del evento' })
+  detail: string;
+
   @IsArray()
   @IsOptional()
   @IsString({ each: true })

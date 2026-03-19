@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PlacesCarouselComponent } from '@components/places-carousel/places-carousel.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from "@angular/router";
+import { HeroComponent } from '@components/hero/hero.component';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { RouterLink } from "@angular/router";
     MatIconModule,
     MatButtonModule,
     PlacesCarouselComponent,
-    RouterLink
+    RouterLink,
+    HeroComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -61,11 +63,4 @@ export class HomeComponent {
       label: "PUBLIC.RESUME.MEMORIES"
     },
   ]
-
-  scrollToNext(element: HTMLElement) {
-    element.scrollIntoView({
-      behavior: 'smooth', // Hace que el scroll sea fluido
-      block: 'start',
-    });
-  }
 }

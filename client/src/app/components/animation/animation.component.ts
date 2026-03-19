@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
 import lottie, { AnimationItem } from 'lottie-web'; // La librería base de Lottie
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,90 +13,95 @@ gsap.registerPlugin(ScrollTrigger);
   styleUrl: './animation.component.scss'
 })
 export class AnimationComponent implements AfterViewInit, OnDestroy {
-
   @ViewChild('lottieContainer', { static: true }) lottieContainer!: ElementRef;
 
-  @Input() src: string = ''
+  @Input() src = '';
+  @Input() clickeable = false;
+  @Input() autoplay = false;
+  @Input() loop = false;
+  @Input() scrollOptions: any | null = null;
 
-  @Input() clickeable: boolean = false
+  private animation?: AnimationItem;
+  private scrollTween?: gsap.core.Tween;
 
-  @Input() autoplay: boolean = false
+  constructor(private ngZone: NgZone) { }
 
-  @Input() loop: boolean = false
-
-  @Input() scrollOptions: any = null
-
-  private animation: AnimationItem | undefined; // Instancia de la animación de Lottie
-
-  private tl: any;   // Timeline de GSAP
-
-  constructor() { }
+  ngOnChanges(changes: SimpleChanges): void {
+    // Si cambia el src dinámicamente, reiniciamos la animación
+    if (changes['src'] && !changes['src'].firstChange) {
+      this.loadAnimation();
+    }
+  }
 
   ngAfterViewInit(): void {
-    // 1. Cargar la animación de Lottie (Tu JSON)
-    this.animation = lottie.loadAnimation({
-      container: this.lottieContainer.nativeElement, // Dónde renderizar
-      renderer: 'svg',
-      loop: this.loop, // Importante: 'false' para controlarlo con GSAP
-      autoplay: this.autoplay, // Importante: 'false'
-      path: this.src
-    });
+    this.loadAnimation();
+  }
 
-    if (this.scrollOptions) {
-      // Esperar a que Lottie esté listo para obtener su duración total
+  private loadAnimation(): void {
+    if (this.animation) this.animation.destroy();
+
+    // Ejecutamos fuera de Angular para mejorar performance
+    this.ngZone.runOutsideAngular(() => {
+      this.animation = lottie.loadAnimation({
+        container: this.lottieContainer.nativeElement,
+        renderer: 'svg',
+        loop: this.loop,
+        autoplay: this.autoplay,
+        path: this.src
+      });
+
       this.animation.addEventListener('DOMLoaded', () => {
-        this.initScrollAnimation();
+        if (this.scrollOptions) {
+          this.initScrollAnimation();
+        }
+      });
+    });
+  }
+
+  private initScrollAnimation(): void {
+    if (!this.animation) return;
+
+    const playhead = { frame: 0 };
+
+    // Matar animaciones previas si existen
+    if (this.scrollTween) this.scrollTween.kill();
+    if (this.scrollTween?.vars.scrollTrigger) {
+      ScrollTrigger.getById('lottieTrigger')?.kill();
+    }
+
+    this.scrollTween = gsap.to(playhead, {
+      frame: this.animation.totalFrames - 1,
+      ease: this.scrollOptions?.ease || 'none',
+      scrollTrigger: {
+        id: 'lottieTrigger',
+        trigger: this.scrollOptions?.trigger || this.lottieContainer.nativeElement,
+        start: this.scrollOptions?.start || "top center",
+        end: this.scrollOptions?.end || "bottom center",
+        scrub: this.scrollOptions?.scrub ?? 1,
+        markers: this.scrollOptions?.markers || false,
+      },
+      onUpdate: () => {
+        // Usamos requestAnimationFrame implícito de GSAP para suavidad total
+        this.animation?.goToAndStop(playhead.frame, true);
+      }
+    });
+  }
+
+  toggleAnimation(): void {
+    if (this.clickeable && this.animation) {
+      this.ngZone.run(() => { // Aquí sí volvemos a Angular si necesitas disparar eventos
+        this.animation?.isPaused ? this.animation.play() : this.animation!.pause();
       });
     }
   }
 
-  // INTERACCIÓN 1: Control por Scroll (GSAP ScrollTrigger)
-  initScrollAnimation() {
-    // 1. Creamos un objeto simple que GSAP SÍ puede animar
-    const playhead = { frame: 0 };
-
-    // 2. Vinculamos el scroll a este objeto
-    gsap.to(playhead, {
-      frame: this.animation!.totalFrames - 1, // Animamos hasta el último frame
-      ease: this.scrollOptions.ease || 'none',
-      scrollTrigger: {
-        trigger: this.scrollOptions.triger || this.lottieContainer.nativeElement,
-        start: this.scrollOptions.start,
-        end: this.scrollOptions.end,
-        scrub: 1, // Suavizado de 1 segundo
-        markers: true
-      },
-      // 3. ¡LA CLAVE! En cada paso de la animación, actualizamos Lottie
-      onUpdate: () => {
-        this.animation!.goToAndStop(playhead.frame, true);
+  ngOnDestroy(): void {
+    this.ngZone.runOutsideAngular(() => {
+      if (this.animation) this.animation.destroy();
+      if (this.scrollTween) {
+        this.scrollTween.kill();
+        this.scrollTween.scrollTrigger?.kill();
       }
     });
-  }
-
-  // INTERACCIÓN 2: Control por Clic (Ejemplo)
-  toggleAnimation() {
-    if (this.clickeable && !this.scrollOptions) {
-      if (this.animation!.isPaused) {
-        this.animation!.play();
-      } else {
-        this.animation!.pause();
-      }
-
-    }
-  }
-
-  // INTERACCIÓN 3: Cambio de Estado (Lógica de Angular)
-  // Imagina un botón que cambia un booleano `estaReservado`
-  actualizarPorEstado(estaReservado: boolean) {
-    if (estaReservado) {
-      // Ir a un frame específico de 'confirmación'
-      this.animation!.goToAndStop(50, true); // Frame 50
-    }
-  }
-
-  ngOnDestroy(): void {
-    // Limpieza para evitar fugas de memoria
-    if (this.animation) this.animation.destroy();
-    if (this.tl) this.tl.kill();
   }
 }

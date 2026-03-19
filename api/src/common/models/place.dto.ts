@@ -23,8 +23,13 @@ export class PlaceDto implements IPlace {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ description: 'Descripcion del parque', example: 'Un Hermoso parque' })
+  @ApiProperty({ description: 'Descripcion corta del parque', example: 'Un Hermoso parque' })
   description?: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ description: 'Html envevible al detalle del parque', example: 'Bla Bla <b>Bla</b>' })
+  detail?: string;
 
   @IsArray()
   @IsOptional()

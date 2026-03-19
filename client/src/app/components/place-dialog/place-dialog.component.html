@@ -12,6 +12,7 @@
     }
     <h3 class="c-place-dialog--title">{{place.name}}</h3>
     <p class="c-place-dialog--description">{{place.description}}</p>
+    <div class="c-place-dialog--detail" [innerHTML]="place.detail"></div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <a mat-button [href]="place.mapsLink" target="_blank">{{'PUBLIC.PLACES.CHECK_MAPS' | translate}}</a>

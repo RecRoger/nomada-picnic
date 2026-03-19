@@ -24,11 +24,11 @@
   </div>
 
   <div class="c-header--content">
-    <a routerLink="/" class="logo-link" (click)="openMenu = false">
-      <img src="assets/images/nomada_logo_black.png" alt="Logo de la Aplicación" class="logo-image">
+    <a routerLink="/" class="c-header--logo" [class.is-open]="openMenu" (click)="openMenu = false">
+      <img src="assets/images/nomada_logo_black.png" alt="Logo de la Aplicación">
     </a>
     
-    <button mat-icon-button aria-label="Menu" (click)="openMenu = !openMenu">
+    <button mat-icon-button aria-label="Menu" class="c-header--menu-btn" [class.is-open]="openMenu"  (click)="openMenu = !openMenu">
       <mat-icon>{{!openMenu ? 'dehaze' : 'close'}}</mat-icon>
     </button>
   </div>

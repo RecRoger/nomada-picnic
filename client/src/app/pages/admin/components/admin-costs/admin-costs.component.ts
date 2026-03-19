@@ -140,7 +140,8 @@ export class AdminCostsComponent implements OnInit {
     const formData = new FormData();
     formData.append('name', costForm.name)
     formData.append('type', costForm.type)
-    formData.append('description', costForm.description)
+    formData.append('description', costForm.description + '')
+    formData.append('detail', costForm.detail + '')
     formData.append('guestsCoverage', costForm.guestsCoverage + '')
     formData.append('providerCost', costForm.providerCost + '')
     formData.append('productionCost', costForm.productionCost + '')

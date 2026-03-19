@@ -124,6 +124,7 @@ export class AdminPlacesComponent implements OnInit {
     formData.append('type', PlacesTypes.PUBLIC)
     formData.append('location', JSON.stringify(formPlace.location))
     formData.append('description', formPlace.description as string)
+    formData.append('detail', formPlace.detail as string)
     formData.append('mapsLink', formPlace.mapsLink as string)
     formData.append('zone', formPlace.zone + '')
     formData.append('transportationCost', formPlace.transportationCost + '')

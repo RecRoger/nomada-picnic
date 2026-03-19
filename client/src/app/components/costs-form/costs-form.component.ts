@@ -46,6 +46,7 @@ export class CostsFormComponent implements OnInit {
     this.costForm = this.fb.group({
       name: [this.cost?.name || '', Validators.required],
       description: [this.cost?.description || '', Validators.required],
+      detail: [this.cost?.detail || ''],
       type: [this.cost?.type || CostsTypes.PRODUCTION, Validators.required],
       images: [null],
       guestsCoverage: [this.cost?.guestsCoverage || 0, [Validators.min(0)]],

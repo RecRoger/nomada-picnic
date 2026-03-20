@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
       },
     },
     provideTranslateService({
-      defaultLanguage: 'es',
+      fallbackLang: 'es',
       loader: {
         provide: TranslateLoader,
         useClass: TranslateHttpLoader,

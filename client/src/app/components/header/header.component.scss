@@ -25,12 +25,19 @@
     border-radius: 15px;
     text-decoration: none;
     margin-right: auto;
-    padding: 0.5rem 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: background-color 0.1s ease-in-out;
+    display: flex;
 
     &.is-open {
       box-shadow: none;
+    }
+
+    &.is-scrolled {
+      img {
+        height: 3.5rem;
+        margin: auto;
+      }
     }
 
     &:hover {
@@ -39,6 +46,8 @@
 
     img {
       height: 4rem;
+      transition: all 0.5s linear;
+      filter: grayscale(100%);
     }
   }
 

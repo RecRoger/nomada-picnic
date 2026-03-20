@@ -95,8 +95,7 @@
       <google-map
         width="100%"
         [options]="mapOptions"
-        [mapId]="mapService.apiKey"
-      >
+        >
         @for (marker of markers; track $index) {
           <map-advanced-marker
             [position]="marker.position"

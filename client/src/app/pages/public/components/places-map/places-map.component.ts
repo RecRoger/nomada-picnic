@@ -52,6 +52,8 @@ export class PlacesMapComponent implements OnInit {
 
   public filteredOptions: Observable<string[]> = of([])
 
+  public hide = false;
+
   private readonly placesService = inject(PlacesService)
 
   private readonly destroyRef = inject(DestroyRef)

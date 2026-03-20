@@ -15,6 +15,7 @@ import { AlertTypes, PlacesTypes } from '@shared/enums';
 import { IPlace } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
+import { MAP_OPTIONS } from '@constants/map-options';
 
 
 
@@ -48,10 +49,7 @@ export class AdminPlacesComponent implements OnInit {
 
   public placeOnEdition = ''
 
-  public mapOptions: google.maps.MapOptions = {
-    center: { lat: -34.585758, lng: -58.441039 },
-    zoom: 12,
-  };
+  public mapOptions: google.maps.MapOptions = MAP_OPTIONS;
 
   public markers: any = [];
 

@@ -43,7 +43,7 @@
                 </div>
               }
               <p>{{ place.description }}</p>
-              <div [innerHTML]="place.detail"></div>
+              <div [innerHTML]="place.detail | safeHtml"></div>
               <p>
                 <strong>Costo de transporte:</strong>
                 {{ place.transportationCost | currency }}

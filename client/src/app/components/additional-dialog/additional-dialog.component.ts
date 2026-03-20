@@ -6,10 +6,11 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { ICost } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
+import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-additional-dialog',
-  imports: [CommonModule, TranslateModule, MatDialogModule, MatButtonModule, MatIcon, DecimalPipe, ApiImageUrlPipe],
+  imports: [CommonModule, TranslateModule, MatDialogModule, MatButtonModule, MatIcon, DecimalPipe, ApiImageUrlPipe, SafeHtmlPipe],
   templateUrl: './additional-dialog.component.html',
   styleUrl: './additional-dialog.component.scss'
 })

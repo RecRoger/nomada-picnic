@@ -27,6 +27,7 @@
     "@angular/ssr": "19.2.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "@tinymce/tinymce-angular": "^9.1.1",
     "express": "^4.18.2",
     "gsap": "^3.14.2",
     "lottie-web": "^5.13.0",

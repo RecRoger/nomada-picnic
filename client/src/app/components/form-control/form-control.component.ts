@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
 import { TranslateModule } from '@ngx-translate/core';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 export const MY_FORMATS = {
   parse: {
@@ -24,6 +25,7 @@ export const MY_FORMATS = {
     CommonModule,
     TranslateModule,
     ReactiveFormsModule,
+    EditorModule,
     ...MAT_FORMS_MODULES
   ],
   providers: [

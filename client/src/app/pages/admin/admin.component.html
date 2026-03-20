@@ -1,6 +1,6 @@
-<div class="page-container">
-  <h2 class="admin-title">{{ "ADMIN.TITLE" | translate: user }}</h2>
-  <h4 class="admin-title">{{ "ADMIN.WELCOME" | translate: user }}</h4>
+<div class="c-admin">
+  <h2 class="c-admin--title">{{ "ADMIN.TITLE" | translate: user }}</h2>
+  <h4 class="c-admin--subtitle">{{ "ADMIN.WELCOME" | translate: user }}</h4>
 
   <nav mat-tab-nav-bar [tabPanel]="tabPanel">
     @for (tab of tabs; track $index) {
@@ -15,7 +15,7 @@
     }
   </nav>
   <mat-tab-nav-panel #tabPanel>
-    <div class="container">
+    <div class="c-admin--container">
       <router-outlet></router-outlet>
     </div>
   </mat-tab-nav-panel>

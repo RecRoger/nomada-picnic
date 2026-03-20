@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { PlaceDto } from 'src/common/models/place.dto';
 import { Place, PlacesDocument } from 'src/common/database/schemas/places.schema';
 import { FilesService } from 'src/modules/files/files.service';
+import { sanitizeContent } from 'src/common/constants/html-sanitizer';
 
 @Injectable()
 export class PlacesService {
@@ -47,6 +48,9 @@ export class PlacesService {
           'places',
         );
       }
+      if (place.detail) {
+        place.detail = sanitizeContent(place.detail)
+      }
       const createdPlace = new this.placesModel(place);
       const savedPlace = (await createdPlace.save()) as unknown as PlaceDto;
       this.logger.log('[place created]')
@@ -72,6 +76,9 @@ export class PlacesService {
           place.name.replaceAll(' ', '-'),
           'places',
         );
+      }
+      if (place.detail) {
+        place.detail = sanitizeContent(place.detail)
       }
       const update = await this.placesModel
         .findByIdAndUpdate(id, place, { new: true })

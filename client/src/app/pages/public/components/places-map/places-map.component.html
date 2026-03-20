@@ -1,7 +1,7 @@
 
 <div class="c-places-map">
     @if (mapService.mapReady) {
-      <div class="c-places-map--info">
+      <div class="c-places-map--info" [class.hidden]="hide" (click)="hide=true">
         <h1 class="c-places-map--info-title">
           {{'PUBLIC.PLACES.MAP.TITLE' | translate}}
         </h1>
@@ -11,8 +11,7 @@
       <google-map
         width="100%"
         height="100%"
-        [options]="mapOptions"
-        [mapId]="mapService.apiKey">
+        [options]="mapOptions">
         @for (marker of markers; track $index) {
           <map-advanced-marker [position]="marker.position" [title]="marker.label"
           (mapClick)="checkPlace(marker.id)"

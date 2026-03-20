@@ -14,6 +14,7 @@ import { PlaceFormComponent } from '@components/place-form/place-form.component'
 import { AlertTypes, PlacesTypes } from '@shared/enums';
 import { IPlace } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
+import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
 
 
 
@@ -30,6 +31,7 @@ import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
     MatExpansionModule,
     MatCardModule,
     ApiImageUrlPipe,
+    SafeHtmlPipe,
     PlaceFormComponent,
   ],
   templateUrl: './admin-places.component.html',

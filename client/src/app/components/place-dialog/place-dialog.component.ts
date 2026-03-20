@@ -6,10 +6,11 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { IPlace } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
+import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-place-dialog',
-  imports: [CommonModule, TranslateModule, MatDialogModule, MatButtonModule, MatIcon, ApiImageUrlPipe],
+  imports: [CommonModule, TranslateModule, MatDialogModule, MatButtonModule, MatIcon, ApiImageUrlPipe, SafeHtmlPipe],
   templateUrl: './place-dialog.component.html',
   styleUrl: './place-dialog.component.scss'
 })

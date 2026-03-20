@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CostDto } from 'src/common/models/cost.dto';
 import { Cost, CostDocument } from 'src/common/database/schemas/production-cost.schema';
 import { FilesService } from 'src/modules/files/files.service';
+import { sanitizeContent } from 'src/common/constants/html-sanitizer';
 
 @Injectable()
 export class ProductionCostsService {
@@ -40,7 +41,9 @@ export class ProductionCostsService {
           'costs',
         );
       }
-
+      if (cost.detail) {
+        cost.detail = sanitizeContent(cost.detail)
+      }
       const createdCost = new this.costsModel(cost);
       const savedCost = (await createdCost.save() as unknown as CostDto)
       this.logger.log('[cost created]')
@@ -65,7 +68,9 @@ export class ProductionCostsService {
           'costs',
         );
       }
-
+      if (cost.detail) {
+        cost.detail = sanitizeContent(cost.detail)
+      }
       const update = await this.costsModel.findByIdAndUpdate(id, cost, { new: true }).exec()
       this.logger.log(`[cost updated]`)
 

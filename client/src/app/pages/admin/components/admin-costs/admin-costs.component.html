@@ -51,7 +51,10 @@
         <div class="element-detail-wrapper" [class.expanded]="expandedElements.includes(cost._id || '')"
           [@detailExpand]="expandedElements.includes(cost._id || '') ? 'expanded' : 'collapsed'">
           <p class="cost-description">{{cost.description}}</p>
-          <div [innerHTML]="cost.detail"></div>
+          
+          @if(cost.detail) {
+            <div [innerHTML]="cost.detail | safeHtml"></div>
+          }
           <div class="cost-detail">
             <p><b>{{'COSTS.GUESTS_COVERAGE' | translate}}: </b>
               {{cost.guestsCoverage ? cost.guestsCoverage + ' ' + ('COMMON.PEOPLE' | translate):

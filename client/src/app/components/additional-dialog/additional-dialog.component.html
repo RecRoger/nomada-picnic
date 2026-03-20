@@ -12,7 +12,7 @@
     }
     <h3 class="c-additional-dialog--title">{{additional.name}}</h3>
     <p class="c-additional-dialog--description">{{additional.description}}</p>
-    <div class="c-additional-dialog--detail" [innerHTML]="additional.detail"></div>
+    <div class="c-additional-dialog--detail" [innerHTML]="additional.detail | safeHtml"></div>
     @if(additional.guestsCoverage) {
       <p class="c-additional-dialog--description">{{'PUBLIC.ADDITIONALS.COVERAGE' | translate: {coverage: additional.guestsCoverage} }}</p>
     }

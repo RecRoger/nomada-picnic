@@ -2,7 +2,9 @@
 
 **Nómada Picnic** is a production-ready, highly interactive web application designed for a luxury picnic rental business. The platform management features complex user interactions, premium smooth animations, and an automated backend workflow to streamline inquiries, inventory management, and event scheduling.
 
-🌐 **Live Demo:** [Link a la web si está productiva, si no borrá esta línea]
+🌐 **Live Demo:**
+
+- [Nomada Picnic development web](https://nomada-client-389141432152.us-east1.run.app/)
 
 ---
 

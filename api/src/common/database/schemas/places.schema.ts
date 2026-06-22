@@ -19,6 +19,10 @@ export class Place {
   @Prop()
   description: string;
 
+
+  @Prop({ type: [String], default: [] })
+  tags: string[];
+
   @Prop()
   detail: string;
 

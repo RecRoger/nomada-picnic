@@ -12,6 +12,8 @@ import path from 'path';
         uri: configService.get<string>('MONGO_URI'),
         ssl: true,
         tls: true,
+        serverSelectionTimeoutMS: 5000,
+        connectTimeoutMS: 10000,
       }),
     }),
   ],

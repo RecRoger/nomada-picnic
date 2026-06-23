@@ -5,8 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT || 3000;
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.setGlobalPrefix('api')
 
   // 1. CORS - Configurarlo desde el inicio evita dolores de cabeza
@@ -43,7 +43,7 @@ async function bootstrap() {
     console.log('✅ Swagger habilitado en: http://localhost:8080/docs');
   }
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   console.log(`🚀 API lista en: http://localhost:${port}/docs`);
 }
 bootstrap();

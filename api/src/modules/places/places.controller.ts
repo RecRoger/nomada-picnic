@@ -26,6 +26,7 @@ import { PlaceDto } from 'src/common/models/place.dto';
 import { PlacesTypes } from '@shared/enums';
 import { ParseNumberInterceptor } from 'src/common/interceptors/parse-number.interceptor';
 import { ParseLocationInterceptor } from 'src/common/interceptors/parse-location.interceptor';
+import { ParseArrayInterceptor } from 'src/common/interceptors/parse-array.interceptor';
 
 @Controller({ path: 'places', version: '1' })
 @ApiTags('Places')
@@ -75,6 +76,7 @@ export class PlacesController {
   @UseInterceptors(
     FilesInterceptor('images'),
     new ParseNumberInterceptor(['zone', 'transportationCost']),
+    new ParseArrayInterceptor(['tags']),
     new ParseLocationInterceptor(),
   )
   async create(
@@ -104,6 +106,7 @@ export class PlacesController {
   @UseInterceptors(
     FilesInterceptor('images'),
     new ParseNumberInterceptor(['zone', 'transportationCost']),
+    new ParseArrayInterceptor(['tags']),
     new ParseLocationInterceptor(),
   )
   async update(

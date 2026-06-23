@@ -43,6 +43,13 @@
                 </div>
               }
               <p>{{ place.description }}</p>
+              @if (place.tags?.length) {
+                <mat-chip-set class="example-chip">
+                  @for (tag of place.tags; track $index) {
+                    <mat-chip class="example-box" cdkDrag>{{tag}}</mat-chip>
+                  }
+                </mat-chip-set>
+              }
               <div [innerHTML]="place.detail | safeHtml"></div>
               <p>
                 <strong>Costo de transporte:</strong>

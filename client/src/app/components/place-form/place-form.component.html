@@ -5,6 +5,27 @@
   <app-form-control [control]="getControl('description')" label="{{ 'COMMON.DESCRIPTION' | translate }}"
     type="textarea">
   </app-form-control>
+
+  <mat-form-field class="app-form-control">
+    <mat-label>{{ 'COMMON.TAGS' | translate }}</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Selección de tags">
+      @for (tag of tagsFormArray.value; track tag; let i = $index) {
+        <mat-chip-row (removed)="removeTag(i)">
+          {{ tag }}
+          <button matChipRemove [attr.aria-label]="'Remover ' + tag">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      }
+      <input 
+        placeholder="Nuevo tag..."
+        [matChipInputFor]="chipGrid"
+        (keypress.enter)="onTagInputEvent($event)"
+        (matChipInputTokenEnd)="onTagInputEvent($event)"
+        (blur)="onTagInputEvent($event)">
+        
+    </mat-chip-grid>
+  </mat-form-field>
   
   <app-form-control [control]="getControl('detail')" label="{{ 'COMMON.DETAIL' | translate }}"
     type="htmlEditor">

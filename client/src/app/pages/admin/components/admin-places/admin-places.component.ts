@@ -16,6 +16,7 @@ import { IPlace } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
 import { MAP_OPTIONS } from '@constants/map-options';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -33,6 +34,7 @@ import { MAP_OPTIONS } from '@constants/map-options';
     MatCardModule,
     ApiImageUrlPipe,
     SafeHtmlPipe,
+    MatChipsModule,
     PlaceFormComponent,
   ],
   templateUrl: './admin-places.component.html',
@@ -125,6 +127,7 @@ export class AdminPlacesComponent implements OnInit {
     formData.append('location', JSON.stringify(formPlace.location))
     formData.append('description', formPlace.description as string)
     formData.append('detail', formPlace.detail as string)
+    formData.append('tags', formPlace.tags?.join(',') as string)
     formData.append('mapsLink', formPlace.mapsLink as string)
     formData.append('zone', formPlace.zone + '')
     formData.append('transportationCost', formPlace.transportationCost + '')

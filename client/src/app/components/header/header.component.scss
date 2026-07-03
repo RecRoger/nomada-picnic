@@ -14,7 +14,7 @@
     transition: all 100ms ease-out;
     padding: 100px 100px 0;
     &.is-scrolled {
-      padding: var(--space-lg) 100px;
+      padding: var(--space-lg) 100px 0;
 
       .c-header--logo img {
         height: 54px;
@@ -44,6 +44,7 @@
 
   &--book-btn {
     @include u.custom-button(var(--color-brand-blue), var(--color-white));
+    text-align: center;
   }
 
   &--menu {
@@ -102,7 +103,7 @@
             height: 0;
             border-bottom: 12px solid transparent;
             border-top: 12px solid transparent;
-            border-left: 16px solid #8f0045;
+            border-left: 16px solid var(--color-white);
           }
         }
       }

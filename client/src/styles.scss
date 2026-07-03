@@ -1,0 +1,70 @@
+// src/styles.scss
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+@use "styles/breakpoints" as b;
+@use "sass:map";
+@use "sass:meta";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: $font-main;
+}
+
+:root {
+  // Mapeo automático de Colores corrigiendo el warning
+  @each $name, $value in $colors {
+    // meta.inspect asegura que $name se lea como texto puro, eliminando el warning de "white"
+    --color-#{meta.inspect($name)}: #{$value};
+  }
+
+  // Los demás bucles pueden quedarse igual o asegurar con inspect por consistencia:
+  @each $name, $value in $spacings {
+    --space-#{meta.inspect($name)}: #{$value};
+  }
+
+  @each $name, $value in $radii {
+    --radius-#{meta.inspect($name)}: #{$value};
+  }
+
+  @each $name, $value in $font-sizes {
+    --font-#{meta.inspect($name)}: #{$value};
+  }
+}
+
+// Por defecto en mobile todo es visible, pero creamos las reglas de ocultado
+.hide-mobile {
+  @media (max-width: 575px) {
+    display: none !important;
+  }
+}
+
+.hide-tablet {
+  @media (min-width: 576px) and (max-width: 1023px) {
+    display: none !important;
+  }
+}
+
+.hide-desktop {
+  @include b.respond-start(desktop) {
+    display: none !important;
+  }
+}
+
+
+
+
+.construction {
+  padding: 6rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &--icon {
+    color: #8f0045;
+    font-size: 10vw;
+    height: 10vw !important;
+    width: 10vw !important;
+  }
+}

@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TranslateModule, RouterModule, MatIconModule, MatButtonModule, NgClass],
+  imports: [TranslateModule, RouterModule, MatIconModule, MatButtonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -45,10 +45,10 @@ export class HeaderComponent implements AfterViewInit {
       link: 'picnics',
       label: 'PUBLIC.MENU.TABS.PICNICS'
     },
-    {
-      link: 'calculator',
-      label: 'PUBLIC.MENU.TABS.CALCULATOR'
-    },
+    // {
+    //   link: 'calculator',
+    //   label: 'PUBLIC.MENU.TABS.CALCULATOR'
+    // },
     {
       link: 'contact',
       label: 'PUBLIC.MENU.TABS.CONTACT'

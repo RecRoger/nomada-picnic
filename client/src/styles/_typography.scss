@@ -1,0 +1,21 @@
+@use "sass:map";
+
+$font-sizes: (
+  small: 0.8rem,
+  // 16px
+  body: 1rem,
+  // 16px
+  h4: 1.25rem,
+  // 20px
+  h3: 1.75rem,
+  // 28px -> Títulos de secciones secundarias
+  h2: 2.5rem,
+  // 40px -> ¿Por qué elegirnos?
+  h1: 4.5rem, // 72px -> El gigante del Hero
+);
+
+$font-main: "elza", sans-serif;
+
+@function font-size($key) {
+  @return var(--font-#{$key});
+}

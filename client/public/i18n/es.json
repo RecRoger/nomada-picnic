@@ -136,8 +136,9 @@
     },
     "ACTION": "Cotizar mi picnic",
     "MENU": {
+      "BOOKING_BTN": "Reserva ahora",
       "TABS": {
-        "HOME": "Inicio",
+        "HOME": "Home",
         "STORY": "Nuestra historia",
         "PLACES": "Parques y Lugares",
         "ADDITIONALS": "Comida y adicionales",

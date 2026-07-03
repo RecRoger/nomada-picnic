@@ -1,0 +1,16 @@
+@use "sass:map";
+$colors: (
+  brand-blue: #4d61ff,
+  brand-lime: #c4ff00,
+  brand-coral: #f3703c,
+  brand-pink: #f3a0a7,
+  bg-cream: #fdf6ec,
+  text-dark: #1a1a1a,
+  text-muted: #555555,
+  white: #ffffff,
+);
+
+// Función utilitaria para acceder fácil
+@function get-color($key) {
+  @return var(--color-#{$key});
+}

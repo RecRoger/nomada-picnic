@@ -3,7 +3,6 @@
     <div class="c-header--menu-links">
       @for (link of menuLinks; track $index ) {
       <a class="c-header--menu-links_item"
-        mat-button
         [routerLink]="link.link"
         routerLinkActive="active-link" 
         [routerLinkActiveOptions]="link.options || {}"
@@ -25,14 +24,36 @@
 
   
 
-  <div class="c-header--content">
-    <a routerLink="/" class="c-header--logo" [ngClass]="{'is-open': openMenu, 'is-scrolled': isScrolled}"  (click)="openMenu = false">
-      <img [src]="'assets/images/'+(isScrolled ? 'nomada_isologo.png': 'nomada_logo_black.png')" alt="Logo de la Aplicación">
+  <div class="c-header--content" [class.is-scrolled]="isScrolled || openMenu">
+    <a routerLink="/" class="c-header--logo" [class.is-open]="openMenu"  (click)="openMenu = false">
+      <img src="images/logos/NOMADA_LOGO_C_BLANCO.svg" alt="Logo de la Aplicación">
     </a>
+
+    <nav class="c-header--nav hide-tablet hide-mobile">
+      @for (link of menuLinks; track $index; let index = $index) {
+        <a class="c-header--nav-link"
+        [routerLink]="link.link"
+        routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="link.options || {}"
+      >{{link.label | translate}}</a>
+      }
+    </nav>
     
-    <button mat-icon-button aria-label="Menu" class="c-header--menu-btn" [class.is-open]="openMenu"  (click)="openMenu = !openMenu">
+    <button aria-label="book" class="c-header--book-btn hide-tablet hide-mobile">
+      {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}
+    </button>
+    
+    <button mat-icon-button aria-label="Menu" class="c-header--menu-btn hide-desktop" [class.is-open]="openMenu"  (click)="openMenu = !openMenu">
       <mat-icon>{{!openMenu ? 'dehaze' : 'close'}}</mat-icon>
     </button>
+
+  </div>
+
+  <div class="c-header--wave">
+    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,0 L1440,0 L1440,40 C1320,60 1200,80 960,80 C720,80 480,40 240,40 C120,40 0,60 0,60 Z" 
+            fill="var(--color-brand-blue)"/>
+    </svg>
   </div>
   
 </header>

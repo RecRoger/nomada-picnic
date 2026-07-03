@@ -1,61 +1,56 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/utils" as u;
+
 .c-header {
   position: fixed;
   z-index: 2;
   width: 100%;
 
   &--content {
-    display: flex;
-    justify-content: space-between;
-    align-items: top;
-    padding: 1rem;
+    background-color: var(--color-brand-blue);
+    @include u.flex(row, space-between, center, 0);
     position: relative;
     z-index: 11;
-  }
+    transition: all 100ms ease-out;
+    padding: 100px 100px 0;
+    &.is-scrolled {
+      padding: var(--space-lg) 100px;
 
-  &--menu-btn {
-    background-color: #ffd9e1;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    &.is-open {
-      box-shadow: none;
+      .c-header--logo img {
+        height: 54px;
+        margin: auto;
+      }
     }
   }
 
   &--logo {
-    background-color: #ffd9e1;
-    border-radius: 15px;
-    text-decoration: none;
-    margin-right: auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.1s ease-in-out;
     display: flex;
-
-    &.is-open {
-      box-shadow: none;
-    }
-
-    &.is-scrolled {
-      img {
-        height: 3.5rem;
-        margin: auto;
-      }
-    }
-
-    &:hover {
-      background-color: #ecb6c2;
-    }
-
     img {
-      height: 4rem;
-      transition: all 0.5s linear;
-      filter: grayscale(100%);
+      height: 6rem;
+      transition: all 100ms ease-out;
     }
+  }
+
+  &--nav {
+    @include u.flex(row, space-between, center, var(--space-md));
+    text-align: center;
+    padding: 0 5rem;
+
+    &-link {
+      @include u.custom-button(var(--color-white));
+      @include u.button-compact();
+    }
+  }
+
+  &--book-btn {
+    @include u.custom-button(var(--color-brand-blue), var(--color-white));
   }
 
   &--menu {
     position: fixed;
     top: 0;
-    background-color: #ffd9e1;
-    padding: 1rem;
+    background-color: var(--color-brand-pink);
+    // padding: var(--space-lg);
     width: stretch;
     height: 100%;
     z-index: 10;
@@ -80,14 +75,14 @@
     }
 
     &-links {
-      display: flex;
-      flex-direction: column;
-      padding: 0 2rem;
+      @include u.flex(column, space-between, center, var(--space-lg));
+
+      padding: 0 var(--space-lg);
       margin: auto;
-      gap: 4vw;
 
       &_item {
-        font-size: 5vw;
+        @include u.custom-button(var(--color-white), var(--color-brand-pink));
+        font-size: var(--font-h4);
         padding: 1rem;
 
         position: relative; // 👈 Vital para que el :before se posicione respecto al link
@@ -95,14 +90,14 @@
         font-weight: 400;
 
         &.active-link {
-          color: #8f0045; // Cambia esto por el color de tu marca
-          font-weight: 600;
+          // color: #8f0045; // Cambia esto por el color de tu marca
+          // font-weight: 600;
 
           &::before {
             content: "";
             position: absolute;
             height: 2rem;
-            left: 0;
+            left: -50px;
             width: 0;
             height: 0;
             border-bottom: 12px solid transparent;
@@ -114,7 +109,32 @@
     }
 
     &-admin {
-      margin: auto 0 2rem auto;
+      margin: 0 var(--space-lg) var(--space-md) auto;
+    }
+  }
+
+  &--menu-btn {
+    background-color: var(--color-brand-pink);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    &.is-open {
+      box-shadow: none;
+    }
+  }
+
+  &--wave {
+    position: absolute;
+    top: 100%; // Se posiciona exactamente donde termina el c-header
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 90; // Asegura quedar por encima de las secciones de abajo (cards, textos, etc.)
+    pointer-events: none; // Evita que la curva transparente bloquee clics en elementos de abajo
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 50px; // Altura de la curva
     }
   }
 }

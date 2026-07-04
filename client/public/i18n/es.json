@@ -131,8 +131,14 @@
   },
   "PUBLIC": {
     "HERO": {
-      "TITLE": "Picnics Inolvidables",
-      "DESCRIPTION": "Desconecta, disfruta, celebra"
+      "TITLE": {
+        "LINE_1_1": "NO ES SOLO UN",
+        "LINE_1_2": "PICNIC",
+        "LINE_2_1": "ES UNA",
+        "LINE_2_2": "EXPERIENCIA",
+        "LINE_2_3": "NÓMADA"
+      },
+      "DESCRIPTION": "Creamos picnics únicos en Buenos Aires, <br> diseñados para celebrar, sorprender y conectar."
     },
     "ACTION": "Cotizar mi picnic",
     "MENU": {

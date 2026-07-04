@@ -6,10 +6,6 @@ $breakpoints: (
   widescreen: 1200px,
 );
 
-@function get-color($key) {
-  @return map.get($breakpoints, $key);
-}
-
 // 2. Mixin para Media Queries ascendentes (Mobile-First / "A partir de...")
 @mixin respond-start($breakpoint) {
   @if map.has-key($breakpoints, $breakpoint) {

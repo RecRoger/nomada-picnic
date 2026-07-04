@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hero',
-  imports: [TranslateModule, MatIconModule, MatButtonModule],
+  imports: [TranslateModule, MatIconModule],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss'
 })

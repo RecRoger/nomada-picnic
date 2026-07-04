@@ -1,4 +1,6 @@
+@let isHome = isHome$ | async;
 <header class="c-header">
+   
   <div class="c-header--menu" [class.is-open]="openMenu">
     <div class="c-header--menu-links">
       @for (link of menuLinks; track $index ) {
@@ -24,7 +26,7 @@
 
   
 
-  <div class="c-header--content" [class.is-scrolled]="isScrolled || openMenu">
+  <div class="c-header--content" [class.is-big]="isHome && !openMenu && !isScrolled">
     <a routerLink="/" class="c-header--logo" [class.is-open]="openMenu"  (click)="openMenu = false">
       <img src="images/logos/NOMADA_LOGO_C_BLANCO.svg" alt="Logo de la Aplicación">
     </a>
@@ -43,7 +45,7 @@
       {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}
     </a>
     
-    <button mat-icon-button aria-label="Menu" class="c-header--menu-btn hide-desktop" [class.is-open]="openMenu"  (click)="openMenu = !openMenu">
+    <button aria-label="Menu" class="c-header--menu-btn hide-desktop" [class.is-open]="openMenu"  (click)="openMenu = !openMenu">
       <mat-icon>{{!openMenu ? 'dehaze' : 'close'}}</mat-icon>
     </button>
 

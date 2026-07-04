@@ -1,11 +1,18 @@
 <section class="c-hero">
-  <div class="c-hero--media">
-    <img src="images/home_image.jpg" alt="Experiencia Nómada Picnic">
-  </div>
   
   <div class="c-hero--content">
-    <h1>{{ 'PUBLIC.HERO.TITLE' | translate }}</h1>
-    <p>{{ 'PUBLIC.HERO.DESCRIPTION' | translate }}</p>
+    <h1 class="c-hero--title">
+      <!-- 'PUBLIC.HERO.TITLE' | translate -->
+      <span class="title-line line-1">
+        {{'PUBLIC.HERO.TITLE.LINE_1_1' | translate}} 
+        <span class="highlight">{{'PUBLIC.HERO.TITLE.LINE_1_2' | translate}}</span>
+      </span>
+      <span class="title-line line-2">
+        {{'PUBLIC.HERO.TITLE.LINE_2_1' | translate}}
+        <span class="highlight">{{'PUBLIC.HERO.TITLE.LINE_2_2' | translate}}</span>
+        {{'PUBLIC.HERO.TITLE.LINE_2_3' | translate}}</span>
+    </h1>
+    <p class="c-hero--subtitle" [innerHTML]="'PUBLIC.HERO.DESCRIPTION' | translate"></p>
   </div>
   
   
@@ -24,7 +31,7 @@
   </div>
   
   @if (nextSection) {
-    <button mat-fab class="c-hero--arrow" (click)="scrollToNext(nextSection)">
+    <button class="c-hero--arrow" (click)="scrollToNext(nextSection)">
       <mat-icon>expand_more</mat-icon>
     </button>
   }

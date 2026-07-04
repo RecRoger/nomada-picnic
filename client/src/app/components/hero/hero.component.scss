@@ -1,46 +1,86 @@
+@use "../../../styles/utils" as u;
+
 .c-hero {
   position: relative;
   width: 100%;
   height: 90vh; // 100% del alto de la vista
+  background-color: var(--color-brand-blue);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  &--media {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+  @include u.flex(row, $justify: center, $align: center);
 
-    img,
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; // Mantiene proporción y centra automáticamente
-      object-position: top;
+  &--content {
+    @include u.flex(column, center, center, 1.5rem);
+    max-width: 900px; // Evita que el texto se estire infinito en monitores gigantes
+    margin: 0 auto;
+    text-align: center;
+
+    @include u.respond-end(mobile) {
+      padding: var(--space-lg);
     }
   }
 
-  &--content {
-    padding: 1rem 2rem;
-    margin: auto;
-    background-color: #ffd9e1;
-    box-shadow: 0 8px 32px #0000001a;
-    border-radius: 15px;
-    color: #8e0045;
-    text-decoration: none;
+  &--title {
+    // font-family:
+    //   "TuFuenteHeavy", "Arial Black", sans-serif; // Usá tu fuente corporativa
+    color: var(--color-bg-cream);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin: 0;
+    text-transform: uppercase;
+
+    .title-line {
+      display: block;
+      width: 100%;
+
+      &.line-1 {
+        font-size: clamp(
+          2rem,
+          5vw,
+          4.5rem
+        ); // Responsive fluido según tamaño de pantalla
+        margin-bottom: 0.5rem;
+      }
+      &.line-2 {
+        font-size: clamp(
+          1.7rem,
+          2vw,
+          2rem
+        ); // Responsive fluido según tamaño de pantalla
+      }
+    }
+    .highlight {
+      display: inline-block;
+      background: linear-gradient(
+        1deg,
+        var(--color-brand-coral) 60%,
+        transparent 40%
+      );
+      padding: 0 0.4rem; // Espaciado interno horizontal para que el naranja respire
+      margin: 0 0.1rem;
+
+      span {
+        display: inline-block;
+      }
+    }
+  }
+
+  &--subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 300; // Un grosor más fino para generar contraste con el h1
+    color: var(--color-bg-cream);
+    max-width: 650px; // Mantiene el subtexto compacto en 2 líneas como tu mockup
+    line-height: 1.5;
+    margin: 0;
   }
 
   &--arrow {
     position: absolute;
-    bottom: 30px;
-    // background: transparent;
-    border: none;
-    color: #8f0045;
-    cursor: pointer;
+    @include u.custom-button(var(--color-brand-blue), var(--color-white));
+    padding: 0;
+    aspect-ratio: 1;
+    bottom: 12rem;
     animation: bounceArrowY 2s infinite; // Animación de rebote sutil
 
     mat-icon {

@@ -1,25 +1,37 @@
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { AfterViewInit, Component, inject, NgZone } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NavLink } from '@models/nav-link';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@services/auth.service';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
+import { filter, map, Observable } from 'rxjs';
 
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TranslateModule, RouterModule, MatIconModule, MatButtonModule],
+  imports: [TranslateModule, RouterModule, MatIconModule, MatButtonModule, AsyncPipe, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements AfterViewInit {
   public openMenu = false
+
+  protected readonly router = inject(Router)
+
+  public isHome$: Observable<boolean> =
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => {
+        // Evaluamos si la URL actual es exactamente '/' o vacía
+        return event.urlAfterRedirects === '/' || event.url === '/';
+      })
+    );
 
   public isScrolled = false
 
@@ -56,8 +68,6 @@ export class HeaderComponent implements AfterViewInit {
   ];
 
   public activeLinkIndex = 0
-
-  private readonly router = inject(Router)
 
   private readonly authService = inject(AuthService)
 

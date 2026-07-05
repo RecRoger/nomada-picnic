@@ -1,4 +1,4 @@
-@use "../../../styles/utils" as u;
+@use "utils" as u;
 
 .c-header {
   position: fixed;
@@ -12,7 +12,7 @@
     z-index: 11;
     transition: all 100ms ease-out;
     padding: var(--space-lg) 100px 0;
-    @include u.respond-end(mobile) {
+    @include u.style-up-to(mobile) {
       padding: 30px 30px 0;
     }
     &.is-big {
@@ -20,7 +20,7 @@
       .c-header--logo img {
         height: 6rem;
       }
-      @include u.respond-end(mobile) {
+      @include u.style-up-to(mobile) {
         padding: 50px 30px 0;
         .c-header--logo img {
           height: 100px;

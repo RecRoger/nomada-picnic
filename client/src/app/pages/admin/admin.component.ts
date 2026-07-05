@@ -53,7 +53,7 @@ export class AdminComponent implements OnInit {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       this.activeLinkIndex = this.tabs.indexOf(
-        this.tabs.find(tab => this.router.url.includes(tab.link))!
+        this.tabs.find(tab => this.router.url.includes(tab.link!))!
       );
     });
   }

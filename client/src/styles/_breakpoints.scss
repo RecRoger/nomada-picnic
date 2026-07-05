@@ -6,8 +6,7 @@ $breakpoints: (
   widescreen: 1200px,
 );
 
-// 2. Mixin para Media Queries ascendentes (Mobile-First / "A partir de...")
-@mixin respond-start($breakpoint) {
+@mixin style-starting-from($breakpoint) {
   @if map.has-key($breakpoints, $breakpoint) {
     @media (min-width: map.get($breakpoints, $breakpoint)) {
       @content;
@@ -18,10 +17,33 @@ $breakpoints: (
 }
 
 // 3. Mixin complementario para casos donde necesitás un límite máximo ("Hasta...")
-@mixin respond-end($breakpoint) {
+@mixin style-up-to($breakpoint) {
   @if map.has-key($breakpoints, $breakpoint) {
     @media (max-width: (map.get($breakpoints, $breakpoint) - 1px)) {
       @content;
     }
+  }
+}
+
+// 2. Mixin para Media Queries ascendentes (Mobile-First / "A partir de...")
+@mixin style-only-for($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @if ($breakpoint == tablet) {
+      @media (min-width: 576px) and (max-width: 1023px) {
+        @content;
+      }
+    }
+    @if ($breakpoint == desktop) {
+      @include style-starting-from(tablet) {
+        @content;
+      }
+    }
+    @if ($breakpoint == mobile) {
+      @include style-up-to(tablet) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "El breakpoint '#{$breakpoint}' no existe en el mapa.";
   }
 }

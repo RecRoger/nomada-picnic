@@ -24,7 +24,11 @@ export const AdminRoutes: Routes = [
         path: 'picnics',
         loadComponent: () => import('./components/admin-picnics/admin-picnics.component').then(c => c.AdminPicnicsComponent)
       },
-      { path: '', redirectTo: 'picnics', pathMatch: 'full' }
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
     ]
-  }
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./../../components/login/login.component').then(m => m.LoginComponent)
+  },
 ];

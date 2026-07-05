@@ -130,6 +130,39 @@
     }
   },
   "PUBLIC": {
+    "FOOTER": {
+      "CTA": {
+        "TITLE": "¿Tenés dudas?",
+        "MESSAGE": "Encontrá toda la información sobre reservas, ubicaciones, pagos, clima y mucho más en nuestra sección de <strong>preguntas frecuentes</strong>",
+        "BUTTON": "Ver preguntas frecuentes"
+      },
+      "BRAND": {
+        "TITLE": "Nómada Picnic",
+        "TEXT": "Creamos picnics únicos en Buenos Aires, diseñados para celebrar, sorprender y conectar.",
+        "ADDRESS": "📍 Buenos Aires, Argentina"
+      },
+      "EXPLORE": {
+        "TITLE": "Explorar",
+        "HOME": "Inicio",
+        "PICNICS": "Picnics",
+        "ADDITIONALS": "Adicionales",
+        "STORY": "Quiénes somos",
+        "CONTACT": "FAQ"
+      },
+      "CONTACT": {
+        "TITLE": "Contacto",
+        "PHONE": "+54 9 11 2690 8781",
+        "MAIL": "contacto@nomadapicnic.com",
+        "INSTAGRAM": "@nomadapicnic"
+      },
+      "LEGAL": {
+        "TITLE": "Información",
+        "TYC": "Términos y Condiciones",
+        "PP": "Política de Privacidad",
+        "PHONE_SUPERT": "Soporte por WhatsApp"
+      },
+      "COPYRIGHT": "Copyright @ 2026. All rights reserved by Nómada Picnic"
+    },
     "HERO": {
       "TITLE": {
         "LINE_1_1": "NO ES SOLO UN",
@@ -154,11 +187,24 @@
       }
     },
     "RESUME": {
-      "DESCRIPTION": "Creamos experiencias de picnic inolvidables para parejas, amigos y familias, con todo el encanto y la comodidad que buscas",
-      "DECORATION": "Decoración Única y Estilosa",
-      "INCLUDED": "Todo Incluido y Listo para Disfrutar",
-      "PRODUCTION": "Montaje y Desmontaje sin Esfuerzo",
-      "MEMORIES": "Momentos Inolvidables en la Naturaleza"
+      "TITLE": "¿Por qué elegirnos?",
+      "DESCRIPTION": "En Nómada Picnic no solo armamos picnics, creamos experiencias pensadas en cada detalle para que vos solo tengas que llegar y disfrutar.",
+      "DECORATION": {
+        "TITLE": "Diseño cuidado y estético",
+        "TEXT": "Cada picnic está pensado para verse increíble y sentirse aún mejor."
+      },
+      "INCLUDED": {
+        "TITLE": "Todo listo para disfrutar",
+        "TEXT": "Nos encargamos del montaje, la decoración y cada detalle. Vos solo venís."
+      },
+      "PRODUCTION": {
+        "TITLE": "Experiencias personalizadas",
+        "TEXT": "Adaptamos cada picnic a tu ocasión, estilo y forma de celebrar."
+      },
+      "MEMORIES": {
+        "TITLE": "Espacios únicos en Buenos ",
+        "TEXT": "Creamos momentos especiales en los lugares más lindos de la ciudad."
+      }
     },
     "PLACES": {
       "TITLE": "Parques y lugares destacados",

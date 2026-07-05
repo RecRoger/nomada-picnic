@@ -1,3 +1,7 @@
 export interface NavLink {
-  link: string, label: string, options?: any
+  link?: string,
+  label: string,
+  href?: string,
+  target?: string,
+  options?: any
 }

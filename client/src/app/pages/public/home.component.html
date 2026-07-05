@@ -1,18 +1,13 @@
 <app-hero [nextSection]="infoSection"></app-hero>
 
-<section #infoSection class="s-info-icons">
-  <p class="s-info-icons--message">{{ 'PUBLIC.RESUME.DESCRIPTION' | translate }}</p>
-  <div class="s-info-icons--list">
-    @for (card of infoCards; track $index) {
-      <div class="s-info-icons--list-card">
-        <mat-icon class="s-info-icons--list-card__icon">{{card.icon}}</mat-icon>
-        <span>{{card.label | translate}}</span>
-      </div>
-    }
-  </div>
-</section>
 
-<section #infoSection class="s-places-carousel">
+<div #infoSection>
+  <app-features-cards ></app-features-cards>
+</div>
+
+
+
+<section class="s-places-carousel">
   <app-places-carousel></app-places-carousel>  
 </section>
 

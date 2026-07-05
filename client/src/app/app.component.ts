@@ -4,10 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from "@components/header/header.component";
 import { MapsService } from '@services/maps.service';
 import { WaButtonComponent } from '@components/wa-button/wa-button.component';
+import { FooterComponent } from '@components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, WaButtonComponent],
+  imports: [RouterOutlet, HeaderComponent, WaButtonComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

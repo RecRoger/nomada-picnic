@@ -5,6 +5,7 @@ import { PlacesCarouselComponent } from '@components/places-carousel/places-caro
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from "@angular/router";
 import { HeroComponent } from '@components/hero/hero.component';
+import { FeaturesCardsComponent } from '@components/features-cards/features-cards.component';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +16,13 @@ import { HeroComponent } from '@components/hero/hero.component';
     MatButtonModule,
     PlacesCarouselComponent,
     RouterLink,
-    HeroComponent
+    HeroComponent,
+    FeaturesCardsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-
   public stepCards = [
     {
       step: 1,
@@ -42,25 +43,6 @@ export class HomeComponent {
     {
       step: 5,
       label: "PUBLIC.STEPS.FIFTH"
-    },
-  ]
-
-  public infoCards = [
-    {
-      icon: "local_florist",
-      label: "PUBLIC.RESUME.DECORATION"
-    },
-    {
-      icon: "redeem",
-      label: "PUBLIC.RESUME.INCLUDED"
-    },
-    {
-      icon: "local_shipping",
-      label: "PUBLIC.RESUME.PRODUCTION"
-    },
-    {
-      icon: "bookmark_heart",
-      label: "PUBLIC.RESUME.MEMORIES"
     },
   ]
 }

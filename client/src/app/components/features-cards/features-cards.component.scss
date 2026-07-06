@@ -6,7 +6,7 @@
   text-align: center;
 
   @include u.style-up-to(tablet) {
-    padding: var(--space-xl) var(--space-sm);
+    padding: var(--space-xl) var(--space-md);
   }
 
   &--header {
@@ -29,13 +29,13 @@
 
   &--grid {
     max-width: 900px;
-    margin: var(--space-xxl) auto;
+    margin: var(--space-xxl) auto var(--space-xl);
     @include u.grid-columns(4, 0);
     justify-items: center;
     @include u.style-up-to(desktop) {
       margin: var(--space-lg) auto;
       grid-template-columns: repeat(2, 1fr);
-      max-width: 500px;
+      max-width: 450px;
     }
     @include u.style-up-to(mobile) {
       margin-top: 0rem;
@@ -45,7 +45,7 @@
     &-card {
       @include u.flex(column, center, center, 0.8rem);
       background-color: var(--color-bg-cream);
-      border: 3px solid var(--color-text-dark);
+      border: 2px solid var(--color-text-dark);
       border-radius: var(--radius-card-xl);
       padding: 3rem 3.5rem;
       width: 145px;
@@ -55,7 +55,7 @@
         transform 0.3s ease,
         box-shadow 0.3s ease;
 
-      @include u.style-starting-from(tablet) {
+      @include u.style-starting-from(mobile) {
         margin-right: -20px;
         margin-left: -20px;
         &:nth-child(odd) {
@@ -69,42 +69,29 @@
       }
 
       @include u.style-up-to(desktop) {
-        &:nth-child(1) {
-          margin-right: -20px;
-          margin-bottom: -20px;
-          transform: translateX(-10px) translateY(-10px);
-          // --hover-offset: 25px;
-        }
+        margin-right: -30px;
+        margin-left: -30px;
+        &:nth-child(1),
         &:nth-child(2) {
-          margin-left: -20px;
           margin-bottom: -20px;
-          transform: translateX(-10px) translateY(10px);
-          // --hover-offset: -35px;
         }
-        &:nth-child(3) {
-          margin-right: -20px;
-          margin-top: -20px;
-          transform: translateX(10px) translateY(-10px);
-          // --hover-offset: 25px;
-        }
+        &:nth-child(3),
         &:nth-child(4) {
-          margin-left: -20px;
           margin-top: -20px;
-          transform: translateX(15px) translateY(20px);
-          // --hover-offset: -35px;
         }
       }
 
       @include u.style-up-to(mobile) {
-        margin: -15px 0 -30px;
+        margin: -20px 0 -30px;
         &:nth-child(odd) {
-          transform: translateX(15px);
-          --hover-offset: 25px;
+          // transform: translateX(15px);
+          // --hover-offset: 25px;
+          margin-right: auto;
         }
         &:nth-child(even) {
-          transform: none;
-          transform: translateX(-15px);
-          --hover-offset: -35px;
+          margin-left: auto;
+          // transform: translateX(-15px);
+          // --hover-offset: -35px;
         }
       }
 
@@ -115,11 +102,8 @@
       }
 
       &__icon {
-        // font-size: 10vw;
-        font-size: 2.5rem; // Tamaño para los emojis o imágenes
-        width: 2.6rem;
-        height: 2.6rem;
-        // margin: auto;
+        width: 4rem;
+        height: 4rem;
         margin-bottom: 0.5rem;
       }
 

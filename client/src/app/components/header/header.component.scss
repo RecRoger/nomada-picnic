@@ -13,7 +13,7 @@
     transition: all 100ms ease-out;
     padding: var(--space-lg) 100px 0;
     @include u.style-up-to(mobile) {
-      padding: 30px 30px 0;
+      padding: 1rem 30px 0;
       .c-header--book-btn {
         @include u.button-compact();
       }
@@ -32,10 +32,7 @@
         }
       }
       @include u.style-up-to(mobile) {
-        padding: 80px 30px 0;
-        .c-header--logo img {
-          height: 4rem;
-        }
+        padding: 50px 30px 0;
       }
     }
 
@@ -84,7 +81,6 @@
     display: flex;
     flex-direction: column;
 
-    // ESTADO INICIAL (Oculto)
     visibility: hidden;
     opacity: 0;
     transform: translateY(-100%);
@@ -135,28 +131,24 @@
     }
 
     &-button {
-      @include u.flex(row, center, flex-start);
-      width: 100%;
       position: absolute;
-      z-index: 25;
-      top: 0;
+      @include u.flex(row, start, flex-start);
+      background-color: var(--color-white);
+      width: 85px;
+      height: 70px;
+      right: -40px;
+      top: -30px;
+      padding: 1.5rem 1.1rem 0.5rem 0.7rem;
       z-index: 15;
-      svg {
-        height: 100%; // Alto total que descuelga
-        width: 100%;
-        position: absolute;
-        z-index: 1;
-        top: 0;
-      }
+      border-bottom-left-radius: 45%;
+      border-bottom-right-radius: 100%;
+      border-top-left-radius: 100%;
       button {
         @include u.custom-button(var(--color-brand-blue));
         @include u.button-compact();
         padding: 10px;
-        margin: auto;
+        margin-top: auto;
         z-index: 2;
-      }
-      &.is-big {
-        height: 80px;
       }
     }
   }

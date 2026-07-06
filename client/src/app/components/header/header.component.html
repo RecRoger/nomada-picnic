@@ -14,9 +14,6 @@
     </div>
   </div>
   <div class="c-header--menu-button hide-desktop" [class.is-big]="isHome && !openMenu && !isScrolled">
-    <svg viewBox="0 0 1440 160" fill="none" preserveAspectRatio="none">
-      <path d="M0,0 H1440 V60 C1300,60 1150,55 1000,55 C880,55 830,140 720,140 C610,140 560,55 440,55 C290,55 140,60 0,60 Z" fill="var(--color-white)"/>
-    </svg>
     <button aria-label="Menu" [class.is-open]="openMenu"  (click)="openMenu = !openMenu">
       <mat-icon>{{!openMenu ? 'dehaze' : 'close'}}</mat-icon>
     </button>
@@ -40,7 +37,7 @@
     </nav>
     
 
-    <a aria-label="book" href="https://wa.me/5491126908781" class="c-header--book-btn">
+    <a aria-label="book" href="https://wa.me/5491126908781" class="c-header--book-btn hide-mobile hide-tablet">
       {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}
     </a>
     

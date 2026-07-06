@@ -6,7 +6,7 @@
   <div class="s-features-cards--grid">
     @for (card of infoCards; track $index) {
       <div class="s-features-cards--grid-card">
-        <mat-icon class="s-features-cards--grid-card__icon" [fontIcon]="card.icon"></mat-icon>
+        <img src="/images/graphics/{{card.imgSrc}}" class="s-features-cards--grid-card__icon" />
         <h3 class="s-features-cards--grid-card__title">{{card.title | translate}}</h3>
         <p class="s-features-cards--grid-card__text">{{card.label | translate}}</p>
       </div>

@@ -11,22 +11,22 @@ import { TranslateModule } from '@ngx-translate/core';
 export class FeaturesCardsComponent {
   public infoCards = [
     {
-      icon: "local_florist",
+      imgSrc: "emoji_home_why_art_01.png",
       title: 'PUBLIC.FEATURES.DECORATION.TITLE',
       label: "PUBLIC.FEATURES.DECORATION.TEXT"
     },
     {
-      icon: "redeem",
+      imgSrc: "emoji_home_why_check_02.png",
       title: "PUBLIC.FEATURES.INCLUDED.TITLE",
       label: "PUBLIC.FEATURES.INCLUDED.TEXT"
     },
     {
-      icon: "local_shipping",
+      imgSrc: "emoji_home_why_sparkles_03.png",
       title: "PUBLIC.FEATURES.PRODUCTION.TITLE",
       label: "PUBLIC.FEATURES.PRODUCTION.TEXT"
     },
     {
-      icon: "bookmark_heart",
+      imgSrc: "emoji_home_why_tree_04.png",
       title: "PUBLIC.FEATURES.MEMORIES.TITLE",
       label: "PUBLIC.FEATURES.MEMORIES.TEXT"
     },

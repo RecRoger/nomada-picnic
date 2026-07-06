@@ -30,7 +30,7 @@
   </div>
   
   @if (nextSection) {
-    <button class="c-hero--arrow" (click)="scrollToNext(nextSection)">
+    <button class="c-hero--arrow" (click)="scrollToNext(nextSection)" (touchmove)="scrollToNext(nextSection)">
       <mat-icon>expand_more</mat-icon>
     </button>
   }

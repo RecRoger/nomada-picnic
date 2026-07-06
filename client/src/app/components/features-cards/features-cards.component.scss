@@ -2,8 +2,12 @@
 
 .s-features-cards {
   // @include u.flex(column, center);
-  padding: var(--space-xl) var(--space-xl) var(--space-md);
+  padding: var(--space-xl);
   text-align: center;
+
+  @include u.style-up-to(tablet) {
+    padding: var(--space-xl) var(--space-sm);
+  }
 
   &--header {
     @include u.flex(column, center, center, 1rem);
@@ -28,7 +32,8 @@
     margin: var(--space-xxl) auto;
     @include u.grid-columns(4, 0);
     justify-items: center;
-    @include u.style-up-to(tablet) {
+    @include u.style-up-to(desktop) {
+      margin: var(--space-lg) auto;
       grid-template-columns: repeat(2, 1fr);
       max-width: 500px;
     }
@@ -40,10 +45,11 @@
     &-card {
       @include u.flex(column, center, center, 0.8rem);
       background-color: var(--color-bg-cream);
-      border: 2px solid var(--color-text-dark);
-      border-radius: var(--radius-speech-bubble);
-      padding: 3rem 3rem;
-      max-width: 300px;
+      border: 3px solid var(--color-text-dark);
+      border-radius: var(--radius-card-xl);
+      padding: 3rem 3.5rem;
+      width: 145px;
+
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       transition:
         transform 0.3s ease,
@@ -62,7 +68,7 @@
         }
       }
 
-      @include u.style-only-for(tablet) {
+      @include u.style-up-to(desktop) {
         &:nth-child(1) {
           margin-right: -20px;
           margin-bottom: -20px;
@@ -90,18 +96,15 @@
       }
 
       @include u.style-up-to(mobile) {
-        margin: 0 0 -30px;
-        max-width: 200px;
+        margin: -15px 0 -30px;
         &:nth-child(odd) {
-          // margin: -10px 0;
           transform: translateX(15px);
-          // --hover-offset: 25px;
+          --hover-offset: 25px;
         }
         &:nth-child(even) {
-          // margin: 1px;
-          // transform: none;
+          transform: none;
           transform: translateX(-15px);
-          // --hover-offset: -35px;
+          --hover-offset: -35px;
         }
       }
 

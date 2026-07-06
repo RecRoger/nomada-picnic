@@ -186,7 +186,16 @@
         "CONTACT": "FAQ y Contacto"
       }
     },
-    "RESUME": {
+    "BANNERS": {
+      "PICNICS": {
+        "IMG_ALT": "Vivir la experiencia Nómada Picnic",
+        "PRE_TITLE": "ELEGÍ CÓMO QUERÉS",
+        "TITLE": "VIVIR TU PICNIC",
+        "TEXT": "Descubrí todo lo que incluye cada experiencia y encontrá la opción perfecta para tu momento.",
+        "BUTTON": "Ver picnics"
+      }
+    },
+    "FEATURES": {
       "TITLE": "¿Por qué elegirnos?",
       "DESCRIPTION": "En Nómada Picnic no solo armamos picnics, creamos experiencias pensadas en cada detalle para que vos solo tengas que llegar y disfrutar.",
       "DECORATION": {

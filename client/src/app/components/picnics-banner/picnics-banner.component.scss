@@ -1,0 +1,117 @@
+@use "utils" as u;
+
+.s-picnics-banner {
+  padding: 2rem 1rem;
+  margin-bottom: 18rem;
+  background-color: var(--color-white); // Fondo general de la página
+
+  @include u.style-starting-from(mobile) {
+    padding: 2rem;
+    margin-bottom: 20rem;
+  }
+  @include u.style-starting-from(tablet) {
+    margin-bottom: 1rem;
+    padding: 4rem 3rem;
+  }
+
+  &--container {
+    background-color: var(--color-brand-lime);
+    border-radius: var(--radius-card-xl);
+    padding: 2rem;
+    @include u.flex(column-reverse);
+    max-width: 900px;
+    margin: 0 auto;
+
+    @include u.style-starting-from(mobile) {
+      padding: 3rem;
+    }
+    @include u.style-starting-from(tablet) {
+      padding: 4rem 5rem;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+  }
+
+  &--content {
+    z-index: 2;
+    text-align: right;
+    color: var(--color-brand-purple);
+
+    .banner-subtitle {
+      // font-family: "TuFuenteHeavy", sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      font-weight: 800;
+      display: block;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .banner-title {
+      // font-family: "TuFuenteHeavy", sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem); // Escalado fluido tipográfico
+      font-weight: 900;
+      margin: 0 0 1.5rem 0;
+      line-height: 0.95;
+    }
+
+    .banner-text {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      max-width: 480px;
+      margin: 0 auto 2rem auto;
+      font-weight: 500;
+    }
+
+    .btn-nomada-purple {
+      @include u.custom-button(var(--color-brand-purple), var(--color-white));
+      font-weight: 500;
+    }
+  }
+
+  &--media {
+    @include u.flex(row, left, center);
+    margin: -3rem 0 -20rem -4rem;
+    z-index: 1;
+
+    @include u.style-starting-from(mobile) {
+      margin: -3rem 6rem -25rem -1rem;
+    }
+
+    @include u.style-starting-from(tablet) {
+      margin: -8rem -2rem;
+
+      position: relative;
+    }
+
+    .polaroid-wrapper {
+      background-color: var(--color-soft-gray);
+      padding: 32px 24px 125px 24px;
+      box-shadow: 2px 6px 2px 2px rgba(0, 0, 0, 0.12);
+      border-radius: var(--radius-polaroid);
+      transform: rotate(-8deg) translateX(-40px); // Se sale ligeramente del contenedor hacia la izquierda
+      width: 100%;
+      max-width: 200px; // Tamaño controlado en mobile
+      transition: transform 0.3s ease;
+
+      @include u.style-starting-from(mobile) {
+        max-width: 290px; // Crece un poco más en pantallas de escritorio
+      }
+      @include u.style-starting-from(tablet) {
+        max-width: 360px; // Crece un poco más en pantallas de escritorio
+      }
+
+      &:hover {
+        transform: rotate(-2deg) scale(1.02); // Pequeño feedback al pasar el mouse
+      }
+
+      .polaroid-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1; // Hace que la foto interna sea un cuadrado perfecto
+        object-fit: cover;
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@
   border-radius: $border-radius;
   padding: 0.6rem 1.5rem;
   font-size: var(--font-sm, 14px);
-  font-weight: 200;
+  font-weight: 400;
   letter-spacing: 0.3px;
   cursor: pointer;
   text-decoration: none; // Por si lo aplicás a etiquetas <a>
@@ -51,4 +51,5 @@
 @mixin button-compact() {
   padding: 0.3rem 0.7rem;
   font-size: var(--font-small, 14px);
+  font-weight: 300;
 }

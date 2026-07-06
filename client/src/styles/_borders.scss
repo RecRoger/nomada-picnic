@@ -2,12 +2,11 @@
 
 $radii: (
   button: 100px,
-  // Para los botones tipo "píldora" (Reserva ahora)
+  polaroid: 8px,
   card-sm: 16px,
-  // Fotos de la galería inferior
   card-md: 40px,
-  // Tarjetas de beneficios e "Historias"
-  speech-bubble: 50px, // El radio asimétrico de tus globos de reseña
+  speech-bubble: 50px,
+  card-xl: 70px, // El radio asimétrico de tus globos de reseña
 );
 
 @function get-radius($key) {

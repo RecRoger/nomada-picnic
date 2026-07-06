@@ -8,7 +8,7 @@
 
   &--wave {
     position: absolute;
-    bottom: 100%; // Se clava justo por encima del borde del footer
+    bottom: 99%; // Se clava justo por encima del borde del footer
     left: 0;
     width: 100%;
     overflow: hidden;
@@ -18,10 +18,11 @@
     svg {
       display: block;
       width: 100%;
-      height: 100px; // Altura en mobile
+      height: 80px; // Altura en mobile
 
+      fill: var(--color-brand-blue);
       @media (min-width: 1024px) {
-        height: 180px; // Más pronunciada en desktop
+        height: 130px; // Más pronunciada en desktop
       }
     }
   }
@@ -30,6 +31,9 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    @include u.style-up-to(mobile) {
+      padding: 0 1rem;
+    }
   }
 
   &--cta {
@@ -96,6 +100,11 @@
 
     // Ajustes específicos de la columna de marca
     &.brand-col {
+      order: 0;
+      @include u.style-up-to(mobile) {
+        order: 1;
+      }
+
       h3 {
         font-size: 1.4rem;
         font-weight: 800;

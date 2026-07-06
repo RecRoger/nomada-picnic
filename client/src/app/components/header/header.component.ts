@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NavLink } from '@models/nav-link';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthService } from '@services/auth.service';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 import { filter, map, Observable } from 'rxjs';
@@ -69,21 +68,10 @@ export class HeaderComponent implements AfterViewInit {
 
   public activeLinkIndex = 0
 
-  private readonly authService = inject(AuthService)
-
   private ngZone = inject(NgZone)
 
   ngAfterViewInit() {
     this.initScrollHeader();
-  }
-
-  public get logged(): boolean {
-    return this.authService.isAuthenticated()
-  }
-
-  public logout() {
-    this.authService.logout()
-    this.router.navigate(['/'])
   }
 
   initScrollHeader() {

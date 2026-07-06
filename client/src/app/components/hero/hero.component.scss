@@ -24,7 +24,7 @@
   &--title {
     // font-family:
     //   "TuFuenteHeavy", "Arial Black", sans-serif; // Usá tu fuente corporativa
-    color: var(--color-bg-cream);
+    color: var(--color-white);
     font-weight: 900;
     line-height: 1.2;
     letter-spacing: -0.5px;
@@ -37,7 +37,7 @@
 
       &.line-1 {
         font-size: clamp(
-          2rem,
+          3rem,
           5vw,
           5rem
         ); // Responsive fluido según tamaño de pantalla
@@ -45,7 +45,7 @@
       }
       &.line-2 {
         font-size: clamp(
-          1.5rem,
+          1.8rem,
           3.5vw,
           3rem
         ); // Responsive fluido según tamaño de pantalla
@@ -68,7 +68,7 @@
   }
 
   &--subtitle {
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-size: clamp(1rem, 2vw, 1.5rem);
     font-weight: 300; // Un grosor más fino para generar contraste con el h1
     color: var(--color-bg-cream);
     max-width: 650px; // Mantiene el subtexto compacto en 2 líneas como tu mockup

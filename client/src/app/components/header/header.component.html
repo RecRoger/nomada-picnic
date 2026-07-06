@@ -12,19 +12,9 @@
       >{{link.label | translate}}</a>
       }
     </div>
-    <div class="c-header--menu-admin">
-      @if(logged) {
-      <button mat-icon-button aria-label="Cerrar Sesion" (click)="logout(); openMenu = false">
-        <mat-icon>logout</mat-icon>
-      </button>
-      }
-      <button mat-icon-button routerLink="/admin" aria-label="Ir a la sección de administración" (click)="openMenu = false">
-        <mat-icon>admin_panel_settings</mat-icon>
-      </button>
-    </div>
   </div>
   <div class="c-header--menu-button hide-desktop" [class.is-big]="isHome && !openMenu && !isScrolled">
-    <svg viewBox="0 0 1440 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <svg viewBox="0 0 1440 160" fill="none" preserveAspectRatio="none">
       <path d="M0,0 H1440 V60 C1300,60 1150,55 1000,55 C880,55 830,140 720,140 C610,140 560,55 440,55 C290,55 140,60 0,60 Z" fill="var(--color-white)"/>
     </svg>
     <button aria-label="Menu" [class.is-open]="openMenu"  (click)="openMenu = !openMenu">
@@ -59,7 +49,7 @@
 
   @if ((!isHome || isScrolled) && !openMenu){
     <div class="c-header--wave">
-      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <svg viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none">
         <path d="M0,0 L1440,0 L1440,40 C1320,60 1200,80 960,80 C720,80 480,40 240,40 C120,40 0,60 0,60 Z" 
               fill="var(--color-brand-blue)"/>
       </svg>

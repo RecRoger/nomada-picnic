@@ -12,23 +12,23 @@ export class FeaturesCardsComponent {
   public infoCards = [
     {
       icon: "local_florist",
-      title: 'PUBLIC.RESUME.DECORATION.TITLE',
-      label: "PUBLIC.RESUME.DECORATION.TEXT"
+      title: 'PUBLIC.FEATURES.DECORATION.TITLE',
+      label: "PUBLIC.FEATURES.DECORATION.TEXT"
     },
     {
       icon: "redeem",
-      title: "PUBLIC.RESUME.INCLUDED.TITLE",
-      label: "PUBLIC.RESUME.INCLUDED.TEXT"
+      title: "PUBLIC.FEATURES.INCLUDED.TITLE",
+      label: "PUBLIC.FEATURES.INCLUDED.TEXT"
     },
     {
       icon: "local_shipping",
-      title: "PUBLIC.RESUME.PRODUCTION.TITLE",
-      label: "PUBLIC.RESUME.PRODUCTION.TEXT"
+      title: "PUBLIC.FEATURES.PRODUCTION.TITLE",
+      label: "PUBLIC.FEATURES.PRODUCTION.TEXT"
     },
     {
       icon: "bookmark_heart",
-      title: "PUBLIC.RESUME.MEMORIES.TITLE",
-      label: "PUBLIC.RESUME.MEMORIES.TEXT"
+      title: "PUBLIC.FEATURES.MEMORIES.TITLE",
+      label: "PUBLIC.FEATURES.MEMORIES.TEXT"
     },
   ]
 }

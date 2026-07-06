@@ -2,7 +2,7 @@
 
 .c-header {
   position: fixed;
-  z-index: 2;
+  z-index: 10;
   width: 100%;
 
   &--content {
@@ -14,17 +14,36 @@
     padding: var(--space-lg) 100px 0;
     @include u.style-up-to(mobile) {
       padding: 30px 30px 0;
+      .c-header--book-btn {
+        @include u.button-compact();
+      }
     }
     &.is-big {
-      padding: 100px 100px 0;
-      .c-header--logo img {
-        height: 6rem;
+      padding: 80px 100px 0;
+      @include u.style-starting-from(desktop) {
+        .c-header--logo img {
+          height: 6rem;
+        }
+      }
+      @include u.style-up-to(widescreen) {
+        padding: 80px 50px 0;
+        .c-header--logo img {
+          height: 5rem;
+        }
       }
       @include u.style-up-to(mobile) {
-        padding: 50px 30px 0;
+        padding: 80px 30px 0;
         .c-header--logo img {
-          height: 100px;
+          height: 4rem;
         }
+      }
+    }
+
+    &.is-open {
+      background-color: var(--color-white);
+      .c-header--book-btn {
+        @include u.custom-button(var(--color-white), var(--color-brand-blue));
+        @include u.button-compact();
       }
     }
   }
@@ -57,7 +76,7 @@
   &--menu {
     position: fixed;
     top: 0;
-    background-color: var(--color-brand-blue);
+    background-color: var(--color-white);
     width: stretch;
     height: stretch;
     padding: 70px 0 0;
@@ -68,18 +87,15 @@
     // ESTADO INICIAL (Oculto)
     visibility: hidden;
     opacity: 0;
+    transform: translateY(-100%);
     transition:
-      opacity 0.3s ease-in-out,
-      visibility 0.3s ease-in-out;
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      visibility 0.4s ease-in-out;
 
     &.is-open {
       visibility: visible;
       opacity: 1;
-
-      .c-header--menu-links_item.active-link::before {
-        // Animación sutil (opcional)
-        animation: fadeInArrow 0.6s ease-out;
-      }
+      transform: translateY(0);
     }
 
     &-links {
@@ -90,7 +106,7 @@
       // margin-top: var(--space-xl);
 
       &_item {
-        @include u.custom-button(var(--color-white), var(--color-brand-blue));
+        @include u.custom-button(var(--color-brand-blue), var(--color-white));
         font-size: var(--font-h3);
         padding: 0.1rem auto;
 
@@ -107,21 +123,42 @@
             var(--color-brand-pink) 10%
           );
         }
+
+        @include u.style-up-to(tablet) {
+          font-size: var(--font-sm);
+        }
       }
     }
 
     &-admin {
       margin: 0 var(--space-lg) var(--space-md) auto;
     }
-  }
 
-  &--menu-btn {
-    @include u.custom-button(var(--color-bg-cream));
-    @include u.button-compact();
-    aspect-ratio: 1;
-    // &.is-open {
-    //   box-shadow: none;
-    // }
+    &-button {
+      @include u.flex(row, center, flex-start);
+      width: 100%;
+      position: absolute;
+      z-index: 25;
+      top: 0;
+      z-index: 15;
+      svg {
+        height: 100%; // Alto total que descuelga
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+      }
+      button {
+        @include u.custom-button(var(--color-brand-blue));
+        @include u.button-compact();
+        padding: 10px;
+        margin: auto;
+        z-index: 2;
+      }
+      &.is-big {
+        height: 80px;
+      }
+    }
   }
 
   &--wave {
@@ -131,7 +168,7 @@
     width: 100%;
     overflow: hidden;
     line-height: 0;
-    z-index: 90; // Asegura quedar por encima de las secciones de abajo (cards, textos, etc.)
+    z-index: 10; // Asegura quedar por encima de las secciones de abajo (cards, textos, etc.)
     pointer-events: none; // Evita que la curva transparente bloquee clics en elementos de abajo
 
     svg {

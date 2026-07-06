@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { AfterViewInit, Component, inject, NgZone } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TranslateModule, RouterModule, MatIconModule, MatButtonModule, AsyncPipe],
+  imports: [TranslateModule, RouterModule, MatIconModule, MatButtonModule, AsyncPipe, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

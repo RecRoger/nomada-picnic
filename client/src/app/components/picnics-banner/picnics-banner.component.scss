@@ -1,17 +1,20 @@
+@use "variables" as *;
 @use "utils" as u;
 
 .s-picnics-banner {
-  padding: 2rem 1rem;
-  margin-bottom: 18rem;
+  position: relative;
+  padding: 2rem 1rem 0;
+  // margin-bottom: 18rem;
   background-color: var(--color-white); // Fondo general de la página
+  @include u.flex(column);
 
   @include u.style-starting-from(mobile) {
-    padding: 2rem;
-    margin-bottom: 20rem;
+    padding: 2rem 2rem 0;
+    margin-bottom: 0;
   }
   @include u.style-starting-from(tablet) {
     margin-bottom: 1rem;
-    padding: 4rem 3rem;
+    padding: 4rem 3rem 0;
   }
 
   &--container {
@@ -39,7 +42,7 @@
     color: var(--color-brand-purple);
 
     .banner-subtitle {
-      // font-family: "TuFuenteHeavy", sans-serif;
+      font-family: $font-title;
       font-size: clamp(1.4rem, 2.5vw, 1.8rem);
       font-weight: 800;
       display: block;
@@ -71,16 +74,19 @@
 
   &--media {
     @include u.flex(row, left, center);
-    margin: -3rem 0 -20rem -4rem;
+    margin: -3rem 0 -20rem 0rem;
     z-index: 1;
 
+    @include u.style-up-to(small) {
+      margin: -3rem 0 -20rem -4rem;
+    }
+
     @include u.style-starting-from(mobile) {
-      margin: -3rem 6rem -25rem -1rem;
+      margin: -3rem 10rem -22rem -1rem;
     }
 
     @include u.style-starting-from(tablet) {
       margin: -8rem -2rem;
-
       position: relative;
     }
 
@@ -91,14 +97,14 @@
       border-radius: var(--radius-polaroid);
       transform: rotate(-8deg) translateX(-40px); // Se sale ligeramente del contenedor hacia la izquierda
       width: 100%;
-      max-width: 200px; // Tamaño controlado en mobile
+      max-width: 200px;
       transition: transform 0.3s ease;
 
       @include u.style-starting-from(mobile) {
-        max-width: 290px; // Crece un poco más en pantallas de escritorio
+        max-width: 290px;
       }
       @include u.style-starting-from(tablet) {
-        max-width: 360px; // Crece un poco más en pantallas de escritorio
+        max-width: 360px;
       }
 
       &:hover {
@@ -111,6 +117,22 @@
         height: auto;
         aspect-ratio: 1 / 1; // Hace que la foto interna sea un cuadrado perfecto
         object-fit: cover;
+      }
+    }
+  }
+
+  &--divider {
+    z-index: 0;
+    div {
+      margin: 0rem auto 0;
+      background-color: var(--color-black);
+      width: 2px;
+      height: 20rem;
+      @include u.style-starting-from(mobile) {
+        height: 23rem;
+      }
+      @include u.style-starting-from(tablet) {
+        height: 7rem;
       }
     }
   }

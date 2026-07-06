@@ -12,6 +12,14 @@ body {
   font-family: $font-main;
 }
 
+h1,
+h2,
+h3 {
+  font-family: $font-title;
+  font-weight: 900;
+  font-style: normal;
+}
+
 :root {
   // Mapeo automático de Colores corrigiendo el warning
   @each $name, $value in $colors {

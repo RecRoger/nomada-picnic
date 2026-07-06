@@ -15,6 +15,7 @@ $font-sizes: (
 );
 
 $font-main: "elza", sans-serif;
+$font-title: "noka", sans-serif;
 
 @function font-size($key) {
   @return var(--font-#{$key});

@@ -228,12 +228,27 @@
       "CHECK_MAPS": "Ver en maps"
     },
     "STEPS": {
-      "TITLE": "¿Cómo funciona?",
-      "FIRST": "Contáctanos para consultar disponibilidad.",
-      "SECOND": "Elige una fecha, lugar y numero de invitados para tu picnic.",
-      "THIRD": "Seleccioná cualquiera de los diferentes adicionales decorativos y nuestra oferta de comida",
-      "FORTH": "Confirmá el dia del evento.",
-      "FIFTH": "Asistí al picnic y disfrutá."
+      "TITLE": "Tu picnic en 5 pasos simples",
+      "FIRST": {
+        "TITLE": "Elegí tu picnic",
+        "TEXT": "Encontrá la experiencia ideal según la <b>cantidad de personas</b> y el tipo de ocasión."
+      },
+      "SECOND": {
+        "TITLE": "Personalizá los detalles",
+        "TEXT": "Seleccioná la <b>fecha</b>, el <b>lugar</b> y agregá extras como comida, decoración o servicios especiales."
+      },
+      "THIRD": {
+        "TITLE": "Confirmá tu reserva",
+        "TEXT": "Finalizá tu pedido y <b>coordiná el pago por WhatsApp</b> con nuestro equipo."
+      },
+      "FORTH": {
+        "TITLE": "Recibí todo listo",
+        "TEXT": "Te enviaremos la confirmación de tu picnic junto con una <b>invitación a Google Calendar</b> con toda a información del evento."
+      },
+      "FIFTH": {
+        "TITLE": "Llegá y disfrutá",
+        "TEXT": "El día del picnic solo tendrán que <b>acercarse al punto de encuentro indicado en Calendar, en el horario coordinado.</b><br>Nosotros nos encargamos del resto."
+      }
     },
     "ADDITIONALS": {
       "TITLE": "Comida y adicionales",

@@ -7,23 +7,15 @@
 
 <app-picnics-banner></app-picnics-banner>
 
+
+<app-info-steps></app-info-steps>
+
 <section class="s-places-carousel">
   <app-places-carousel></app-places-carousel>  
 </section>
 
 
 
-<section class="s-steps-info">
-  <h2 class="s-steps-info--title">{{'PUBLIC.STEPS.TITLE' | translate}}</h2>
-  <div class="s-steps-info--list">
-    @for (step of stepCards; track $index){
-      <div class="s-steps-info--list-item" [class.invert]="!($index%2)">
-        <div class="s-steps-info--list-item__number"><span>{{step.step}}</span></div>
-        <div class="s-steps-info--list-item__text">{{step.label | translate}}</div>
-      </div>
-    }
-  </div>
-</section>
 
 <section class="s-additionals-info">
   <a class="s-additionals-info--container" routerLink="/additionals">

@@ -1,0 +1,14 @@
+<section class="s-info-steps">
+  <h2 class="s-info-steps--title">{{'PUBLIC.STEPS.TITLE' | translate}}</h2>
+  <div class="s-info-steps--grid">
+    @for (step of stepCards; track $index){
+      <div class="step-card">
+        <div class="step-number-badge">
+          {{ step.number }}
+        </div>
+        <h3 class="step-title">{{ step.title | translate }}</h3>
+        <p class="step-desc" [innerHTML]="step.text | translate"></p>
+      </div>
+    }
+  </div>
+</section>

@@ -7,6 +7,7 @@ import { RouterLink } from "@angular/router";
 import { HeroComponent } from '@components/hero/hero.component';
 import { FeaturesCardsComponent } from '@components/features-cards/features-cards.component';
 import { PicnicsBannerComponent } from '@components/picnics-banner/picnics-banner.component';
+import { InfoStepsComponent } from '@components/info-steps/info-steps.component';
 
 @Component({
   selector: 'app-home',
@@ -20,32 +21,11 @@ import { PicnicsBannerComponent } from '@components/picnics-banner/picnics-banne
     HeroComponent,
     FeaturesCardsComponent,
     PicnicsBannerComponent,
-
+    InfoStepsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  public stepCards = [
-    {
-      step: 1,
-      label: "PUBLIC.STEPS.FIRST"
-    },
-    {
-      step: 2,
-      label: "PUBLIC.STEPS.SECOND"
-    },
-    {
-      step: 3,
-      label: "PUBLIC.STEPS.THIRD"
-    },
-    {
-      step: 4,
-      label: "PUBLIC.STEPS.FORTH"
-    },
-    {
-      step: 5,
-      label: "PUBLIC.STEPS.FIFTH"
-    },
-  ]
+
 }

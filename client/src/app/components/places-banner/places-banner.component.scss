@@ -1,0 +1,76 @@
+@use "utils" as u;
+
+.s-places-banner {
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+
+  &--media-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 2rem 0;
+    @include u.flex(row, center, center);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100vw;
+      height: 35%;
+      background-color: var(--color-brand-purple);
+      z-index: 1;
+    }
+
+    .image-container {
+      position: relative;
+      z-index: 2;
+      width: 90%;
+      max-width: 1000px;
+      border-radius: var(--radius-card-md);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+      @include u.style-starting-from(tablet) {
+        border-radius: var(--radius-speech-bubble);
+      }
+      .banner-video {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover; // Hace que el video se adapte sin deformarse
+        aspect-ratio: 16 / 9; // Mantiene la misma proporción que la foto
+
+        @include u.style-up-to(mobile) {
+          aspect-ratio: 4 / 3; // En mobile se recorta verticalmente para rellenar mejor la pantalla
+        }
+      }
+    }
+  }
+  &--content {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    max-width: 800px; // Centra y agrupa las líneas de texto para que no queden eternas
+    margin: 0 auto;
+
+    .places-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--color-text-dark);
+      // margin-bottom: 1.5rem;
+      // line-height: 1.1;
+    }
+
+    .places-desc {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+      text-wrap: balance;
+    }
+
+    .btn-nomada-purple {
+      @include u.custom-button(var(--color-white), var(--color-brand-purple));
+    }
+  }
+}

@@ -5,7 +5,11 @@
   position: relative;
   padding: 2rem 1rem 0;
   // margin-bottom: 18rem;
-  background-color: var(--color-white); // Fondo general de la página
+  background: url("/images/graphics/trazo_home_picnics_01.png") no-repeat
+    var(--color-white);
+  background-size: auto;
+  background-position: bottom;
+  // background-color: var(--color-white); // Fondo general de la página
   @include u.flex(column);
 
   @include u.style-starting-from(mobile) {
@@ -52,7 +56,7 @@
 
     .banner-title {
       // font-family: "TuFuenteHeavy", sans-serif;
-      font-size: clamp(2.8rem, 5vw, 4.5rem); // Escalado fluido tipográfico
+      font-size: clamp(2.7rem, 5vw, 3.5rem); // Escalado fluido tipográfico
       font-weight: 900;
       margin: 0 0 1.5rem 0;
       line-height: 0.95;
@@ -78,7 +82,7 @@
     z-index: 1;
 
     @include u.style-up-to(small) {
-      margin: -3rem 0 -20rem -4rem;
+      margin: -3rem 0 -20rem -6rem;
     }
 
     @include u.style-starting-from(mobile) {
@@ -86,7 +90,7 @@
     }
 
     @include u.style-starting-from(tablet) {
-      margin: -8rem -2rem;
+      margin: -9rem -2rem;
       position: relative;
     }
 
@@ -107,8 +111,10 @@
         max-width: 360px;
       }
 
-      &:hover {
-        transform: rotate(-2deg) scale(1.02); // Pequeño feedback al pasar el mouse
+      @include u.style-starting-from(small) {
+        &:hover {
+          transform: rotate(-2deg) scale(1.02); // Pequeño feedback al pasar el mouse
+        }
       }
 
       .polaroid-img {

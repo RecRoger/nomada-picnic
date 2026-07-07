@@ -12,7 +12,11 @@
   &--header {
     @include u.flex(column, center, center, 1rem);
     max-width: 750px;
-    margin: 0 auto var(--space-xl) auto; // Margen generoso abajo para dar espacio al escalonado
+    margin: 0 auto var(--space-xl) auto;
+    @include u.style-up-to(desktop) {
+      margin-bottom: 4.5rem;
+    }
+
     &-title {
       font-size: clamp(2rem, 4vw, 3rem);
       color: var(--color-text-dark);

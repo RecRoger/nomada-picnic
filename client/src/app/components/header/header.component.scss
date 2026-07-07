@@ -120,7 +120,7 @@
           );
         }
 
-        @include u.style-up-to(tablet) {
+        @include u.style-up-to(mobiel) {
           font-size: var(--font-sm);
         }
       }

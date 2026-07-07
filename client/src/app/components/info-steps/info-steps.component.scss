@@ -1,0 +1,121 @@
+@use "variables" as *;
+@use "utils" as u;
+
+.s-info-steps {
+  padding: 0 0 2rem;
+  text-align: center;
+
+  &--title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    // color: var(--color-black);
+    margin-bottom: 4rem;
+  }
+
+  &--grid {
+    @include u.grid-columns(1, 4rem 2rem);
+    // max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+
+    @include u.style-starting-from(mobile) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include u.style-starting-from(desktop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .step-card {
+    position: relative;
+    @include u.flex(column, center, center);
+    padding: 0 1rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: var(--color-black);
+      top: 22px;
+      left: -50%;
+      width: 200%;
+      height: 2px;
+      z-index: 1;
+    }
+
+    @include u.style-up-to(mobile) {
+      &::before {
+        left: 0;
+        width: 100%;
+      }
+      &:first-child::before {
+        left: 50%;
+        width: 50%;
+      }
+      &:last-child::before {
+        left: 0;
+        width: 50%;
+      }
+    }
+
+    @include u.style-starting-from(mobile) {
+      &:first-child::before {
+        left: 50%;
+        width: 100%;
+      }
+      &:last-child::before {
+        left: -50%;
+        width: 100%;
+      }
+    }
+
+    @include u.style-starting-from(desktop) {
+      &:first-child::before {
+        left: 50%; // Empieza justo en el centro del número 1
+        width: 100%; // Se extiende solo hacia la derecha cubriendo su celda
+      }
+
+      // 2. EL ÚLTIMO PASO DE TODOS (Paso 5): Solo viene desde la izquierda
+      &:last-child::before {
+        left: -50%; // Viene del paso anterior
+        width: 100%; // Muere justo en el centro del número 5
+      }
+    }
+  }
+
+  .step-number-badge {
+    position: relative;
+    z-index: 5;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--color-black);
+    background-color: var(
+      --color-bg-cream
+    ); // Súper importante: oculta la línea que cruza por detrás
+    border-radius: 50%;
+    @include u.flex(row, center, center);
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--color-black);
+    margin: 0 0 0.8rem 0;
+  }
+
+  .step-desc {
+    font-size: 1rem;
+    // color: #555555;
+    line-height: 1.5;
+    max-width: 320px;
+    margin: 0;
+
+    strong {
+      color: var(--color-black);
+      font-weight: 700;
+    }
+  }
+}

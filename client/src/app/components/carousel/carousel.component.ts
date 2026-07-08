@@ -3,12 +3,12 @@ import { AfterViewInit, Component, ContentChild, ElementRef, Inject, Input, OnCh
 import Glide from '@glidejs/glide';
 
 @Component({
-  selector: 'app-carrousel',
-  templateUrl: './carrousel.component.html',
-  styleUrl: './carrousel.component.scss',
+  selector: 'app-carousel',
+  templateUrl: './carousel.component.html',
+  styleUrl: './carousel.component.scss',
   imports: [NgTemplateOutlet],
 })
-export class CarrouselComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('glideRef', { static: false }) glideRef!: ElementRef;
 
   // Recibimos los datos del componente padre (ej. los productos adicionales)

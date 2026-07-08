@@ -9,6 +9,7 @@
   "scripts": {
     "install:all": "npm install --legacy-peer-deps",
     "start:client": "npm run start --workspace=client",
+    "build:client": "npm run build --workspace=client",
     "start:client:pro": "npm run start:pre --workspace=client",
     "start:api": "npm run start:dev --workspace=api",
     "start:debug": "npm run start:debug --workspace=api",

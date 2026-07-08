@@ -1,0 +1,67 @@
+import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
+import { AfterViewInit, Component, ContentChild, ElementRef, Inject, Input, OnChanges, OnDestroy, PLATFORM_ID, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import Glide from '@glidejs/glide';
+
+@Component({
+  selector: 'app-carrousel',
+  templateUrl: './carrousel.component.html',
+  styleUrl: './carrousel.component.scss',
+  imports: [NgTemplateOutlet],
+})
+export class CarrouselComponent implements AfterViewInit, OnDestroy, OnChanges {
+  @ViewChild('glideRef', { static: false }) glideRef!: ElementRef;
+
+  // Recibimos los datos del componente padre (ej. los productos adicionales)
+  @Input() items: any[] = [];
+
+  @Input() options: {
+    type?: 'slider' | 'carousel',
+    perView?: number,
+    gap?: number,
+    breakpoints?: any,
+    autoplay?: number
+  } = {};
+
+
+  @ContentChild(TemplateRef) cardTemplate!: TemplateRef<any>;
+
+  private glideInstance: any;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.initGlide();
+    }
+  }
+
+  private initGlide(): void {
+    this.glideInstance = new Glide(this.glideRef.nativeElement, {
+      type: this.options.type ?? 'carousel', // 'slider' o 'carousel' (infinito)
+      startAt: 0,
+      perView: this.options.perView ?? 3, // Cuántas cards se ven en desktop
+      gap: this.options.gap ?? 24, // Espacio entre cards en px
+      autoplay: this.options.autoplay ?? undefined,
+      hoverpause: true,
+      focusAt: 0,
+
+      breakpoints: this.options.breakpoints ?? {},
+    });
+
+    this.glideInstance.mount();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.glideInstance) {
+      this.glideInstance.update()
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Limpieza de memoria al destruir el componente de Angular
+    if (this.glideInstance) {
+      this.glideInstance.destroy();
+    }
+  }
+}

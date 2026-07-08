@@ -199,6 +199,12 @@
         "TITLE": "El lugar también hace la experiencia",
         "TEXT": "Descubrí algunos de los espacios más lindos de Buenos Aires para vivir una experiencia Nómada al aire libre. Desde parques rodeados de naturaleza hasta rincones tranquilos con vistas increíbles, cada ubicación fue elegida para crear momentos especiales, cómodos y llenos de encanto.",
         "BUTTON": "Ver ubicaciones"
+      },
+      "ADDITIONALS": {
+        "SUBTITLE": "HACÉ TU <br> EXPERIENCIA AÚN",
+        "TITLE": "MÁS ESPECIAL",
+        "TEXT": "Descubrí nuestra selección de comida, bebidas, decoración y servicios adicionales para <b>personalizar tu picnic a tu manera</b>.",
+        "BUTTON": "Ver adicionales"
       }
     },
     "FEATURES": {

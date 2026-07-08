@@ -82,6 +82,7 @@
       max-width: 250px;
 
       @include u.style-starting-from(desktop) {
+        min-width: 200px;
         max-width: 360px;
         margin: -8rem 0;
       }
@@ -135,4 +136,8 @@
       }
     }
   }
+}
+
+app-carrousel {
+  width: 100%;
 }

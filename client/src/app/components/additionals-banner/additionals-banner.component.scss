@@ -1,0 +1,138 @@
+@use "utils" as u;
+
+.s-additionals-banner {
+  width: 100%;
+  background-color: var(--color-brand-pink);
+  margin: 2rem 0;
+
+  @include u.style-starting-from(desktop) {
+    margin: 8rem 0 15rem;
+  }
+
+  &--container {
+    @include u.flex(column-reverse, center, center, var(--space-lg));
+    padding: 1rem;
+    margin: 0 0 34rem;
+
+    @include u.style-starting-from(desktop) {
+      @include u.flex(row, center, center, var(--space-xl));
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+
+  &--content {
+    @include u.flex(column, start);
+    color: var(--color-white);
+    max-width: 600px;
+    @include u.style-starting-from(desktop) {
+      max-width: 450px;
+    }
+
+    &-title {
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+      .grand-title {
+        font-size: clamp(2rem, 4.5vw, 3rem);
+        display: block;
+      }
+    }
+    &-desc {
+      line-height: 1.4;
+      margin-bottom: 2rem;
+    }
+
+    &-button {
+      @include u.custom-button(var(--color-brand-pink), var(--color-white));
+      @include u.button-compact();
+      font-weight: 500;
+      margin-left: auto;
+      padding-left: 2rem;
+
+      .icon-circle {
+        width: 36px;
+        height: 36px;
+        background-color: var(--color-brand-pink);
+        color: var(--color-white);
+        border-radius: var(--radius-button);
+        @include u.flex(row, center, center);
+        margin-left: 1.5rem;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  &--carousel {
+    position: relative;
+
+    &-card {
+      background-color: var(--color-bg-cream);
+      border: 1.5px solid var(--color-black);
+      border-radius: var(--radius-card-xl); // Curvaturas idénticas
+      padding: 3.5rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      aspect-ratio: 3 / 4;
+      margin-bottom: -125%;
+      max-width: 250px;
+
+      @include u.style-starting-from(desktop) {
+        max-width: 360px;
+        margin: -8rem 0;
+      }
+
+      @include u.flex(column, center, center);
+
+      .product-image-wrapper {
+        position: relative;
+        width: 100%;
+        // max-width: 250px;
+        margin-bottom: 1.5rem;
+
+        .product-img {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+          border-radius: var(--radius-card-md);
+        }
+
+        .badge-tag {
+          position: absolute;
+          top: 15px;
+          left: -10px;
+          background-color: var(--color-brand-pink);
+          color: var(--color-white);
+          font-weight: 700;
+          font-size: 0.85rem;
+          padding: 0.4rem 1.1rem;
+          border-radius: var(--radius-button);
+        }
+      }
+
+      .card-content {
+        &--title {
+          font-family: var(--font-main);
+          font-size: 1.5rem;
+          margin: 0 0 0.5rem 0;
+        }
+
+        &--desc {
+          color: var(--color-text-muted);
+          line-height: 1.4;
+          margin: 0 0 1rem 0;
+        }
+
+        &--price {
+          font-family: var(--font-main);
+          font-weight: 500;
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}

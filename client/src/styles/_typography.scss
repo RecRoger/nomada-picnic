@@ -1,5 +1,10 @@
 @use "sass:map";
 
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap");
+@import url("https://use.typekit.net/iyv1kbg.css");
+@import url("https://use.typekit.net/olv3xsk.css");
+
 $font-sizes: (
   small: 0.8rem,
   // 16px
@@ -14,8 +19,8 @@ $font-sizes: (
   h1: 4.5rem, // 72px -> El gigante del Hero
 );
 
-$font-main: "elza", sans-serif;
-$font-title: "noka", sans-serif;
+$font-main: "elza", "Google Sans Flex", sans-serif;
+$font-title: "noka", "DM Sans", sans-serif;
 
 @function font-size($key) {
   @return var(--font-#{$key});

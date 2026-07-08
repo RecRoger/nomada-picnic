@@ -8,6 +8,7 @@ import { FeaturesCardsComponent } from '@components/features-cards/features-card
 import { PicnicsBannerComponent } from '@components/picnics-banner/picnics-banner.component';
 import { InfoStepsComponent } from '@components/info-steps/info-steps.component';
 import { PlacesBannerComponent } from '@components/places-banner/places-banner.component';
+import { AdditionalsBannerComponent } from '@components/additionals-banner/additionals-banner.component';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ import { PlacesBannerComponent } from '@components/places-banner/places-banner.c
     PicnicsBannerComponent,
     InfoStepsComponent,
     PlacesBannerComponent,
+    AdditionalsBannerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

@@ -10,13 +10,23 @@ async function bootstrap() {
   app.setGlobalPrefix('api')
 
   // 1. CORS - Configurarlo desde el inicio evita dolores de cabeza
+  const allowedOrigins = [
+    'https://nomada-client-389141432152.us-east1.run.app', // 👈 SIN LA BARRA DIAGONAL AL FINAL
+    'https://nomadapicnic.com'
+  ];
+
+  // Si la variable de entorno existe, le quitamos la barra final por seguridad y la sumamos al array
+  if (process.env.CORS_ORIGIN) {
+    const sanitizedOrigin = process.env.CORS_ORIGIN.replace(/\/$/, ""); // Remueve / si existe al final
+    if (!allowedOrigins.includes(sanitizedOrigin)) {
+      allowedOrigins.push(sanitizedOrigin);
+    }
+  }
+  if (process.env.NODE_ENV == 'development') {
+    allowedOrigins.push('http://localhost:4200');
+  }
   app.enableCors({
-    origin: [
-      process.env.CORS_ORIGIN || '*',
-      'https://nomada-client-389141432152.us-east1.run.app/',
-      'http://localhost:4200', // Desarrollo Angular
-      'https://nomadapicnic.com',
-    ],
+    origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
     allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',

@@ -45,10 +45,12 @@ export class AdditionalsComponent implements OnInit {
 
   private getAdditionals(): void {
     forkJoin([
+      this.costService.getCostsCached(CostsTypes.FURNITURE),
+      this.costService.getCostsCached(CostsTypes.DRINKS),
       this.costService.getCostsCached(CostsTypes.ADDITIONAL),
       this.costService.getCostsCached(CostsTypes.FOOD)
-    ]).subscribe(([respAdditional, respFood]) => {
-      this.additionalsList = [...respAdditional, ...respFood]
+    ]).subscribe(([respFurniture, respDrinks, respAdditional, respFood]) => {
+      this.additionalsList = [...respFurniture, ...respDrinks, ...respAdditional, ...respFood]
     })
   }
 }

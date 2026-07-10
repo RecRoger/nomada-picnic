@@ -7,6 +7,7 @@ import { CostsTypes } from '@shared/enums';
 import { CostDto } from 'src/common/models/cost.dto';
 import { ParseNumberInterceptor } from 'src/common/interceptors/parse-number.interceptor';
 import { ParseBooleanInterceptor } from 'src/common/interceptors/parse-boolean.interceptor';
+import { ParseArrayInterceptor } from 'src/common/interceptors/parse-array.interceptor';
 
 
 @Controller({ path: 'costs', version: '1' })
@@ -55,7 +56,8 @@ export class ProductionCostsController {
   @UseInterceptors(
     FilesInterceptor('images'),
     new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'guestsCoverage']),
-    new ParseBooleanInterceptor(['deliveryRequired', 'multipleAllowed'])
+    new ParseBooleanInterceptor(['deliveryRequired', 'multipleAllowed']),
+    new ParseArrayInterceptor(['tags']),
   )
   async create(
     @Body() createCost: CostDto,
@@ -84,7 +86,8 @@ export class ProductionCostsController {
   @UseInterceptors(
     FilesInterceptor('images'),
     new ParseNumberInterceptor(['providerCost', 'productionCost', 'earnPercentage', 'finalPrice', 'guestsCoverage']),
-    new ParseBooleanInterceptor(['deliveryRequired', 'multipleAllowed'])
+    new ParseBooleanInterceptor(['deliveryRequired', 'multipleAllowed']),
+    new ParseArrayInterceptor(['tags'])
   )
   async update(
     @Param('id') id: string,

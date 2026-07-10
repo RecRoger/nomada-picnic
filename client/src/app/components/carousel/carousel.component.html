@@ -9,18 +9,26 @@
     </ul>
   </div>
 
+  @if(options.arrows) {
   <div class="glide__arrows nomad-arrows" data-glide-el="controls">
-    <button class="nomad-arrow glide__arrow glide__arrow--left" data-glide-dir="<">Anterior</button>
-    <button class="nomad-arrow glide__arrow glide__arrow--right" data-glide-dir=">">Siguiente</button>
+    <button class="nomad-arrow glide__arrow glide__arrow--left" data-glide-dir="<">
+      <mat-icon fontIcon="chevron_left"></mat-icon>
+    </button>
+    <button class="nomad-arrow glide__arrow glide__arrow--right" data-glide-dir=">">
+      <mat-icon fontIcon="chevron_right"></mat-icon>
+    </button>
   </div>
+  }
 
-  <div class="glide__bullets nomad-dots" data-glide-el="controls[nav]">
-    @for (item of items; track $index; let i = $index) {
-      <button 
-        class="nomad-dot" 
-        [attr.data-glide-dir]="'=' + i"
-        [attr.aria-label]="'Ir a la diapositiva ' + (i + 1)">
-      </button>
-    }
-  </div>
+  @if(options.dots) {
+    <div class="glide__bullets nomad-dots" data-glide-el="controls[nav]">
+      @for (item of items; track $index; let i = $index) {
+        <button 
+          class="nomad-dot" 
+          [attr.data-glide-dir]="'=' + i"
+          [attr.aria-label]="'Ir a la diapositiva ' + (i + 1)">
+        </button>
+      }
+    </div>
+  }
 </div>

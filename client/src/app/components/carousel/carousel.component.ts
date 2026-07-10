@@ -1,12 +1,24 @@
 import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { AfterViewInit, Component, ContentChild, ElementRef, Inject, Input, OnChanges, OnDestroy, PLATFORM_ID, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import Glide from '@glidejs/glide';
 
+
+export interface CarouselOptions {
+  type?: 'slider' | 'carousel',
+  perView?: number,
+  gap?: number,
+  breakpoints?: any,
+  dots?: boolean,
+  arrows?: boolean,
+  autoplay?: number,
+  animationDuration?: number
+}
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, MatIconModule],
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('glideRef', { static: false }) glideRef!: ElementRef;
@@ -14,13 +26,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   // Recibimos los datos del componente padre (ej. los productos adicionales)
   @Input() items: any[] = [];
 
-  @Input() options: {
-    type?: 'slider' | 'carousel',
-    perView?: number,
-    gap?: number,
-    breakpoints?: any,
-    autoplay?: number
-  } = {};
+  @Input() options: CarouselOptions = {};
 
 
   @ContentChild(TemplateRef) cardTemplate!: TemplateRef<any>;
@@ -45,7 +51,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       autoplay: this.options.autoplay ?? undefined,
       hoverpause: true,
       focusAt: 0,
-
+      animationDuration: this.options.animationDuration ?? undefined,
       breakpoints: this.options.breakpoints ?? {},
     });
 

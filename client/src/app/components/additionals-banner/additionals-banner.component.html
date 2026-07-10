@@ -1,53 +1,57 @@
 <section class="s-additionals-banner">
-  <div class="s-additionals-banner--container">
-    
-
-    
-    <div class="s-additionals-banner--carousel">
-      <div class="s-additionals-banner--carousel-card">
-        
-        <app-carousel 
-          [items]="additionals" 
-          [options]="carouselOptions">
-
-          <ng-template let-producto>
-            <div class="product-image-wrapper">
-              <span class="badge-tag">Más vendido</span>
-              <img class="product-img" src="/images/picnics/additionals_image.jpg" alt="Box Mixto Pequeño">
-            </div>
-            <div class="card-content">
-              <h3 class="card-content--title">Box Mixto Pequeño</h3>
-              <p class="card-content--desc">Una box diseñada para degustar bocados dulces y salados.</p>
-              <span class="card-content--price">US$ 60</span>
-            </div>
-
-          </ng-template>
-        
-        </app-carousel>
-    
-
-      </div>  
-    </div>
-
-    <div class="s-additionals-banner--content">
-      <h2 class="s-additionals-banner--content-title">
-        <span [innerHTML]="'PUBLIC.BANNERS.ADDITIONALS.SUBTITLE' | translate"></span>
-        <span class="grand-title">
-          {{'PUBLIC.BANNERS.ADDITIONALS.TITLE' | translate}}
-        </span>
-      </h2>
-      <p class="s-additionals-banner--content-desc" [innerHTML]="'PUBLIC.BANNERS.ADDITIONALS.TEXT' | translate">
-      </p>
+  @if(additionals$ | async; as additionals) {
+    <div class="s-additionals-banner--container">
       
-      <a routerLink="/additionals" class="s-additionals-banner--content-button">
-        <span> {{'PUBLIC.BANNERS.ADDITIONALS.BUTTON' | translate}}</span>
-        <div class="icon-circle">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8.5 5L15.5 12L8.5 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </a>
+  
+      
+      <div class="s-additionals-banner--carousel">
+        <div class="s-additionals-banner--carousel-card">
+          
+          <app-carousel 
+            [items]="additionals" 
+            [options]="carouselOptions">
+  
+            <ng-template let-product>
+              <div class="product-image-wrapper">
+                @if (product?.tags?.includes(popularTag)) {
+                  <span class="badge-tag">Más vendido</span>
+                }
+                <img class="product-img" [src]="product.images[0] | apiImageUrl" [alt]="product.name">
+              </div>
+              <div class="card-content">
+                <h3 class="card-content--title">{{product.name}}</h3>
+                <p class="card-content--desc">{{product.description}}</p>
+                <span class="card-content--price">{{product.finalPrice | currency:'US$ '}}</span>
+              </div>
+  
+            </ng-template>
+          
+          </app-carousel>
+      
+  
+        </div>  
+      </div>
+  
+      <div class="s-additionals-banner--content">
+        <h2 class="s-additionals-banner--content-title">
+          <span [innerHTML]="'PUBLIC.BANNERS.ADDITIONALS.SUBTITLE' | translate"></span>
+          <span class="grand-title">
+            {{'PUBLIC.BANNERS.ADDITIONALS.TITLE' | translate}}
+          </span>
+        </h2>
+        <p class="s-additionals-banner--content-desc" [innerHTML]="'PUBLIC.BANNERS.ADDITIONALS.TEXT' | translate">
+        </p>
+        
+        <a routerLink="/additionals" class="s-additionals-banner--content-button">
+          <span> {{'PUBLIC.BANNERS.ADDITIONALS.BUTTON' | translate}}</span>
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 5L15.5 12L8.5 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
+  }
 
 </section>

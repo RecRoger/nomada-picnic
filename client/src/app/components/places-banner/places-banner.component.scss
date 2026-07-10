@@ -8,7 +8,7 @@
   &--media-wrapper {
     position: relative;
     width: 100%;
-    padding: 2rem 0;
+    padding: 2rem 0 0 0;
     @include u.flex(row, center, center);
 
     &::before {

@@ -43,6 +43,9 @@ export class Cost {
 
   @Prop({ type: [String], default: [] })
   images?: string[];
+
+  @Prop({ type: [String], default: [] })
+  tags?: string[];
 }
 
 export const ProductionCostsSchema = SchemaFactory.createForClass(Cost);

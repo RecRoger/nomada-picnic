@@ -14,23 +14,30 @@ import { AlertTypes } from '@shared/enums';
 import { CommonModule } from '@angular/common';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 const MAT_MODULES = [
-  MatTableModule, MatButtonModule, MatIconModule
+  MatTableModule, MatButtonModule, MatIconModule, MatChipsModule,
 ]
 @Component({
   selector: 'app-costs',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ...MAT_MODULES, CostsFormComponent, ApiImageUrlPipe, SafeHtmlPipe],
+  imports: [CommonModule,
+    TranslateModule,
+    ...MAT_MODULES,
+    CostsFormComponent,
+    ApiImageUrlPipe,
+    SafeHtmlPipe],
   templateUrl: './admin-costs.component.html',
   styleUrl: './admin-costs.component.scss',
   animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
+    trigger('detailExpand',
+      [
+        state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+        state('expanded', style({ height: '*' })),
+        transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      ]),
   ],
 })
 export class AdminCostsComponent implements OnInit {
@@ -143,6 +150,7 @@ export class AdminCostsComponent implements OnInit {
     formData.append('type', costForm.type)
     formData.append('description', costForm.description + '')
     formData.append('detail', costForm.detail + '')
+    formData.append('tags', costForm.tags?.join(',') as string)
     formData.append('guestsCoverage', costForm.guestsCoverage + '')
     formData.append('providerCost', costForm.providerCost + '')
     formData.append('productionCost', costForm.productionCost + '')

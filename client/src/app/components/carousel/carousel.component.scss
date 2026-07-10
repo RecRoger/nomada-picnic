@@ -1,22 +1,27 @@
+@use "utils" as u;
+
 .nomad-carousel {
   position: relative;
   width: 100%;
-  padding-bottom: 3.5rem; // Espacio inferior para que los dots no pisen las cards
+  padding-bottom: 0; // Espacio inferior para que los dots no pisen las cards
 
+  .glide__slide {
+    padding: 3.5rem 3.5rem 2rem;
+  }
   /* ==========================================================================
      ESTILOS DE LAS FLECHAS
      ========================================================================== */
   .nomad-arrows {
     position: absolute;
-    top: 50%;
+    top: 35%;
     left: 0;
     right: 0;
     transform: translateY(-50%);
     display: flex;
     justify-content: space-between;
     pointer-events: none; // Evita que el contenedor transparente tape los clicks a las cards
-    z-index: 10;
-    padding: 0 1rem;
+    z-index: 5;
+    padding: 0;
 
     // Si estás en la sección del banner rosa y querés que sobresalgan a los lados
     @media (min-width: 992px) {
@@ -25,52 +30,28 @@
   }
 
   .nomad-arrow {
-    pointer-events: auto; // Reactiva los clicks en los botones reales
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: #fdfaf6; // Fondo crema limpio
-    border: 1.5px solid #1a1a1a; // Borde fino estético
-    color: #1a1a1a;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background-color: transparent;
+    color: var(--color-black);
+    border: 1px solid transparent;
+    border-radius: var(--radius-button, 6px);
+    padding: 0.3rem 0.7rem;
+    font-size: var(--font-sm, 14px);
+    font-weight: 400;
+    font-size: var(--font-small, 14px);
+    aspect-ratio: 1/1;
+    pointer-events: auto; // Reactiva los clicks en los botones reales
 
-    svg {
-      width: 20px;
-      height: 20px;
-      transition: transform 0.2s ease;
-    }
+    cursor: pointer;
+    text-decoration: none; // Por si lo aplicás a etiquetas <a>
+    transition: all 0.1s ease-in-out;
 
     &:hover {
-      background-color: #1a1a1a;
-      color: #fdfaf6;
-      transform: scale(1.05);
-
-      &.prev svg {
-        transform: translateX(-2px);
-      }
-      &.next svg {
-        transform: translateX(2px);
-      }
-    }
-
-    &:active {
-      transform: scale(0.95);
-    }
-
-    // Estilo opcional por si el slider llega al tope y no es infinito (disabled)
-    &:disabled,
-    &.glide__arrow--disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      background-color: #e5e5e5;
-      color: #999;
-      border-color: #ccc;
-      transform: none !important;
+      filter: brightness(1.1);
+      color: var(--color-text-muted);
+      transform: scale(1.2);
     }
   }
 
@@ -85,14 +66,14 @@
     display: flex;
     gap: 0.6rem;
     align-items: center;
-    z-index: 10;
+    z-index: 5;
   }
 
   .nomad-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #fca5a5; // Rosa de la marca
+    background-color: var(--color-brand-pink);
     border: none;
     padding: 0;
     cursor: pointer;
@@ -107,7 +88,9 @@
     &.glide__bullet--active {
       opacity: 1;
       transform: scale(1.25); // Efecto sutil de crecimiento
-      background-color: #ef4444; // Podés acentuarlo con un color más intenso al activarse
+      background-color: var(
+        --color-brand-coral
+      ); // Podés acentuarlo con un color más intenso al activarse
     }
   }
 }

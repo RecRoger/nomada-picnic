@@ -7,6 +7,7 @@ export interface ICost {
   description?: string;
   detail?: string;
   images?: string[];
+  tags?: string[];
   providerCost?: number;
   productionCost?: number;
   earnPercentage?: number;

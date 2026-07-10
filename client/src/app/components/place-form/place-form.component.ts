@@ -73,26 +73,18 @@ export class PlaceFormComponent implements OnInit {
   onTagInputEvent(event: MatChipInputEvent | FocusEvent | Event): void {
     let value = '';
     let inputElement: HTMLInputElement | null = null;
-
-    // Si el evento viene del Enter de Material
     if ('chipInput' in event) {
       value = event.value;
       inputElement = event.chipInput.inputElement;
     }
-    // Si viene del desenfoque (Blur) clásico
     else if (event.target) {
       inputElement = event.target as HTMLInputElement;
       value = inputElement.value;
     }
-
     const trimmedValue = (value || '').trim();
-
-    // Validamos duplicados y vacío
     if (trimmedValue && !this.tagsFormArray.value.includes(trimmedValue)) {
       this.tagsFormArray.push(this.fb.control(trimmedValue));
     }
-
-    // Limpiamos el input
     if (inputElement) {
       inputElement.value = '';
     }

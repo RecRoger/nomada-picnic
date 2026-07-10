@@ -1,18 +1,28 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
 import { ICost } from '@shared/interfaces';
 import { CostsTypes } from '@shared/enums';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-costs-form',
   standalone: true,
-  imports: [TranslateModule, ReactiveFormsModule, FormsModule, ...MAT_FORMS_MODULES, MatSlideToggleModule, FormControlComponent],
+  imports: [TranslateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ...MAT_FORMS_MODULES,
+    MatSlideToggleModule,
+    MatChipsModule,
+    MatIconModule,
+    FormControlComponent,
+  ],
   templateUrl: './costs-form.component.html',
   styleUrl: './costs-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,6 +59,7 @@ export class CostsFormComponent implements OnInit {
       detail: [this.cost?.detail || ''],
       type: [this.cost?.type || CostsTypes.PRODUCTION, Validators.required],
       images: [null],
+      tags: this.fb.array(this.cost?.tags || []),
       guestsCoverage: [this.cost?.guestsCoverage || 0, [Validators.min(0)]],
       providerCost: [this.cost?.providerCost || 0, [Validators.required, Validators.min(0)]],
       productionCost: [this.cost?.productionCost || 0, [Validators.required, Validators.min(0)]],
@@ -63,9 +74,36 @@ export class CostsFormComponent implements OnInit {
   public getControl(controlName: string): FormControl {
     return this.costForm.get(controlName) as FormControl
   }
+  public get tagsFormArray(): FormArray {
+    return this.costForm.get('tags') as FormArray;
+  }
 
   onCancel() {
     this.cancel.emit()
+  }
+
+  onTagInputEvent(event: MatChipInputEvent | FocusEvent | Event): void {
+    let value = '';
+    let inputElement: HTMLInputElement | null = null;
+    if ('chipInput' in event) {
+      value = event.value;
+      inputElement = event.chipInput.inputElement;
+    }
+    else if (event.target) {
+      inputElement = event.target as HTMLInputElement;
+      value = inputElement.value;
+    }
+    const trimmedValue = (value || '').trim();
+    if (trimmedValue && !this.tagsFormArray.value.includes(trimmedValue)) {
+      this.tagsFormArray.push(this.fb.control(trimmedValue));
+    }
+    if (inputElement) {
+      inputElement.value = '';
+    }
+  }
+
+  public removeTag(index: number): void {
+    this.tagsFormArray.removeAt(index);
   }
 
   onSubmit() {

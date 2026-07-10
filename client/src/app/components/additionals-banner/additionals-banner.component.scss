@@ -73,13 +73,19 @@
     &-card {
       background-color: var(--color-bg-cream);
       border: 1.5px solid var(--color-black);
-      border-radius: var(--radius-card-xl); // Curvaturas idénticas
-      padding: 3.5rem;
+      border-radius: var(--radius-card-xl);
+
+      padding: 0rem 1rem 2rem;
       position: relative;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       aspect-ratio: 3 / 4;
       margin-bottom: -125%;
-      max-width: 250px;
+      max-width: 300px;
+
+      @include u.style-starting-from(mobile) {
+        max-width: 350px;
+        // margin: -8rem 0;
+      }
 
       @include u.style-starting-from(desktop) {
         min-width: 200px;

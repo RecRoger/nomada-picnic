@@ -30,6 +30,12 @@ export class CostDto implements ICost {
   @ApiProperty({ required: false, isArray: true, description: 'links y urls de archivos de imagenes del costo', example: [] })
   images?: string[] = []
 
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  @ApiProperty({ required: false, isArray: true, description: 'tags de caracteristica para filtros', example: [] })
+  tags?: string[] = []
+
   @IsNumber()
   @ApiProperty({ description: 'Costo del producto o servicio', example: 15 })
   providerCost?: number;

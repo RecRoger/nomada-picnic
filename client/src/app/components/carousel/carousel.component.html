@@ -1,4 +1,4 @@
-<div #glideRef class="glide nomad-carousel">
+<div #glideRef class="glide c-carousel">
   <div class="glide__track" data-glide-el="track">
     <ul class="glide__slides">
       @for (item of items; track $index; let index = $index) {
@@ -10,21 +10,21 @@
   </div>
 
   @if(options.arrows) {
-  <div class="glide__arrows nomad-arrows" data-glide-el="controls">
-    <button class="nomad-arrow glide__arrow glide__arrow--left" data-glide-dir="<">
+  <div class="glide__arrows c-carousel--arrows" data-glide-el="controls">
+    <button class="c-carousel--arrows-control glide__arrow glide__arrow--left" data-glide-dir="<">
       <mat-icon fontIcon="chevron_left"></mat-icon>
     </button>
-    <button class="nomad-arrow glide__arrow glide__arrow--right" data-glide-dir=">">
+    <button class="c-carousel--arrows-control glide__arrow glide__arrow--right" data-glide-dir=">">
       <mat-icon fontIcon="chevron_right"></mat-icon>
     </button>
   </div>
   }
 
   @if(options.dots) {
-    <div class="glide__bullets nomad-dots" data-glide-el="controls[nav]">
+    <div class="glide__bullets c-carousel--dots" data-glide-el="controls[nav]">
       @for (item of items; track $index; let i = $index) {
         <button 
-          class="nomad-dot" 
+          class="c-carousel--dots-control" 
           [attr.data-glide-dir]="'=' + i"
           [attr.aria-label]="'Ir a la diapositiva ' + (i + 1)">
         </button>

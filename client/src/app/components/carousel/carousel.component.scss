@@ -1,6 +1,6 @@
 @use "utils" as u;
 
-.nomad-carousel {
+.c-carousel {
   position: relative;
   width: 100%;
   padding-bottom: 0; // Espacio inferior para que los dots no pisen las cards
@@ -8,10 +8,11 @@
   .glide__slide {
     padding: 3.5rem 3.5rem 2rem;
   }
+  
   /* ==========================================================================
      ESTILOS DE LAS FLECHAS
      ========================================================================== */
-  .nomad-arrows {
+  &--arrows {
     position: absolute;
     top: 35%;
     left: 0;
@@ -23,42 +24,42 @@
     z-index: 5;
     padding: 0;
 
-    // Si estás en la sección del banner rosa y querés que sobresalgan a los lados
+    
     @media (min-width: 992px) {
       padding: 0 -2rem;
     }
-  }
 
-  .nomad-arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    color: var(--color-black);
-    border: 1px solid transparent;
-    border-radius: var(--radius-button, 6px);
-    padding: 0.3rem 0.7rem;
-    font-size: var(--font-sm, 14px);
-    font-weight: 400;
-    font-size: var(--font-small, 14px);
-    aspect-ratio: 1/1;
-    pointer-events: auto; // Reactiva los clicks en los botones reales
+    &-control {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      color: var(--color-black);
+      border: 1px solid transparent;
+      border-radius: var(--radius-button, 6px);
+      padding: 0.3rem 0.7rem;
+      font-size: var(--font-sm, 14px);
+      font-weight: 400;
+      font-size: var(--font-small, 14px);
+      aspect-ratio: 1/1;
+      pointer-events: auto; // Reactiva los clicks en los botones reales
 
-    cursor: pointer;
-    text-decoration: none; // Por si lo aplicás a etiquetas <a>
-    transition: all 0.1s ease-in-out;
+      cursor: pointer;
+      text-decoration: none; // Por si lo aplicás a etiquetas <a>
+      transition: all 0.1s ease-in-out;
 
-    &:hover {
-      filter: brightness(1.1);
-      color: var(--color-text-muted);
-      transform: scale(1.2);
+      &:hover {
+        filter: brightness(1.1);
+        color: var(--color-text-muted);
+        transform: scale(1.2);
+      }
     }
   }
 
   /* ==========================================================================
      ESTILOS DE LOS DOTS (INDICADORES INFERIORES)
      ========================================================================== */
-  .nomad-dots {
+  &--dots {
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -67,30 +68,29 @@
     gap: 0.6rem;
     align-items: center;
     z-index: 5;
-  }
+    &-control {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--color-brand-pink);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      opacity: 0.35;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  .nomad-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: var(--color-brand-pink);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    opacity: 0.35;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      &:hover {
+        opacity: 0.7;
+      }
 
-    &:hover {
-      opacity: 0.7;
-    }
-
-    /* 💡 Esta clase la agrega Glide.js automáticamente al dot activo */
-    &.glide__bullet--active {
-      opacity: 1;
-      transform: scale(1.25); // Efecto sutil de crecimiento
-      background-color: var(
-        --color-brand-coral
-      ); // Podés acentuarlo con un color más intenso al activarse
+      /* 💡 Esta clase la agrega Glide.js automáticamente al dot activo */
+      &.glide__bullet--active {
+        opacity: 1;
+        transform: scale(1.25); // Efecto sutil de crecimiento
+        background-color: var(
+          --color-brand-coral
+        ); // Podés acentuarlo con un color más intenso al activarse
+      }
     }
   }
 }

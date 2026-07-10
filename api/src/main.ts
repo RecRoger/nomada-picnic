@@ -13,6 +13,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       process.env.CORS_ORIGIN || '*',
+      'https://nomada-client-389141432152.us-east1.run.app/',
       'http://localhost:4200', // Desarrollo Angular
       'https://nomadapicnic.com',
     ],

@@ -1,14 +1,22 @@
 @use "utils" as u;
 
+:host {
+  display: block;
+  width: 100%;
+}
+
 .c-carousel {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   width: 100%;
   padding-bottom: 0; // Espacio inferior para que los dots no pisen las cards
 
   .glide__slide {
     padding: 3.5rem 3.5rem 2rem;
   }
-  
+
   /* ==========================================================================
      ESTILOS DE LAS FLECHAS
      ========================================================================== */
@@ -24,7 +32,6 @@
     z-index: 5;
     padding: 0;
 
-    
     @media (min-width: 992px) {
       padding: 0 -2rem;
     }

@@ -51,7 +51,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       autoplay: this.options.autoplay ?? undefined,
       hoverpause: true,
       focusAt: 0,
-      animationDuration: this.options.animationDuration ?? undefined,
+      animationDuration: this.options.animationDuration ?? 1000,
       breakpoints: this.options.breakpoints ?? {},
     });
 

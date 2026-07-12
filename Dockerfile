@@ -1,31 +1,37 @@
-# ETAPA 1: Construcción (Build)
+# ETAPA 1: Construcción
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copiamos los package.json de la raíz y del cliente
+# Copiamos archivos de dependencias de la raíz
 COPY package*.json ./
-COPY client/package*.json ./client/
+# Copiamos package de la API
+COPY api/package*.json ./api/
 
-# Instalamos las dependencias
+# Instalamos todo
 RUN npm install
 
-# --- EL CAMBIO CLAVE: Copiamos shared y client ---
+# Copiamos el código fuente
 COPY shared/ ./shared/
-COPY client/ ./client/
+COPY api/ ./api/
 
-# Compilamos Angular
-WORKDIR /app/client
-RUN npm run build -- --configuration production
+# Compilamos la API
+WORKDIR /app/api
+RUN npm run build
 
-# ETAPA 2: Servidor de Producción (Nginx)
-FROM nginx:alpine
+# ETAPA 2: Ejecución
+FROM node:20-alpine
+WORKDIR /app
 
-# Copiamos la configuración de Nginx que creamos en el Paso 1
-COPY client/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copiamos el resultado de la compilación de Angular
-# NOTA: Verifica que tu angular.json genere la carpeta en 'dist/client/browser'
-COPY --from=builder /app/client/dist/client/browser /usr/share/nginx/html
+# Traemos el build desde la etapa anterior
+COPY --from=builder /app/api/dist ./dist
+# Traemos los node_modules desde la raíz del builder
+COPY --from=builder /app/node_modules ./node_modules
+# Traemos el package.json de la API
+COPY --from=builder /app/api/package*.json ./
 
 EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+
+
+
+# Comando de inicio
+CMD ["node", "dist/api/src/main"]

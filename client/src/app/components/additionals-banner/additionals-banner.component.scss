@@ -74,6 +74,8 @@
       background-color: var(--color-bg-cream);
       border: 1.5px solid var(--color-black);
       border-radius: var(--radius-card-xl);
+      display: flex;
+      align-items: stretch;
 
       padding: 0rem 1rem 2rem;
       position: relative;
@@ -81,6 +83,11 @@
       aspect-ratio: 3 / 4;
       margin-bottom: -125%;
       max-width: 300px;
+
+      app-carousel {
+        flex-shrink: 0; // 👈 Evita de raíz que Safari intente encoger vertical u horizontalmente el carrusel
+        width: 100%; // Asegura el ancho completo asignado
+      }
 
       @include u.style-starting-from(mobile) {
         max-width: 350px;
@@ -135,6 +142,7 @@
         }
 
         &--price {
+          margin-top: auto;
           font-family: var(--font-main);
           font-weight: 500;
           font-size: 1.5rem;

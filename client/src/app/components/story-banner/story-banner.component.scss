@@ -8,7 +8,6 @@
   /* ENCABEZADO */
   &--header {
     text-align: center;
-    margin-bottom: 3rem;
     padding: 0 1.5rem;
 
     &-title {
@@ -37,7 +36,7 @@
   /* CONTENEDOR DEL CARRUSEL */
   &--carousel {
     width: 100%;
-    margin-bottom: 1rem;
+    margin: 2rem 0;
   }
 
   /* LAS FOTOS (NG-TEMPLATE) */
@@ -71,40 +70,60 @@
 
 .s-story-banner--carousel {
   width: 100%;
-  overflow: hidden;
 
   ::ng-deep {
     .glide__track {
-      overflow: visible; // 💡 Clave: permite que las tarjetas de los extremos no se corten al agrandarse
-      padding: 1rem 0 5rem; // Margen superior/inferior para darles aire cuando se desplacen hacia arriba
+      overflow: visible;
+      padding: 40px 0;
+      perspective: 1200px; // Mantiene el entorno 3D activo
     }
 
     .glide__slides {
-      overflow: visible; // 💡 Clave: permite que las tarjetas de los extremos no se corten al agrandarse
       display: flex;
       align-items: center;
-      perspective: 1200px; // Mantiene la profundidad tridimensional de las rotaciones
+      transform-style: preserve-3d;
+      overflow: visible;
     }
 
-    .story-photo-card {
-      overflow: visible; // 💡 Clave: permite que las tarjetas de los extremos no se corten al agrandarse
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      border-radius: 28px;
-      overflow: hidden;
-
-      // Transición ultra fluida para que acompañe el movimiento del arrastre
+    /* ==========================================================================
+       ⬅️ 1. ESTILO PARA LAS CARDS A LA IZQUIERDA (Estado por defecto)
+       ========================================================================== */
+    // Como están antes de la activa, asumimos este diseño para todo el carrusel base
+    .glide__slide {
       transition:
-        transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
-        filter 0.15s ease;
-      will-change:
-        transform, filter; // Optimización de hardware para animaciones pesadas
-      transform-origin: center center;
+        transform 0.5s ease,
+        filter 0.5s ease;
+      transform-style: preserve-3d;
+      .story-photo-card {
+        transition: transform 0.5s ease;
+        transform: scale(0.9) rotateY(20deg);
+        transform-origin: right center;
+        filter: brightness(0.8);
+      }
+    }
 
-      .story-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    /* ==========================================================================
+       🎯 2. ESTILO PARA LA CARD DEL CENTRO (Activa)
+       ========================================================================== */
+    .glide__slide--active {
+      .story-photo-card {
+        // Se queda plana mirando al frente, con brillo completo y resaltada
+        transform: scale(1.05) rotateY(0deg) translateZ(50px);
+        transform-origin: center center;
+        filter: brightness(1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    /* ==========================================================================
+       ➡️ 3. ESTILO PARA LAS CARDS A LA DERECHA
+       ========================================================================== */
+    .glide__slide--active ~ .glide__slide {
+      .story-photo-card {
+        // Estilo ejemplo: rotación inversa abriéndose hacia la derecha
+        transform: scale(0.9) rotateY(-20deg);
+        transform-origin: left center;
+        filter: brightness(0.8);
       }
     }
   }

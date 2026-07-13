@@ -23,16 +23,27 @@ export class StoryBannerComponent {
   carouselOptions: CarouselOptions = {
     type: 'carousel',
     autoplay: 100,
-    focusAt: 'center',
     animationDuration: 2000,
-    perView: 6.5,
-    gap: 0,
-    perspective: true,
     animationTimingFunc: 'linear',
+    perView: 6.5,
+    focusAt: 3,
+    gap: 16,
     breakpoints: {
-      1024: { perView: 6.5 },
-      768: { perView: 5.5 },
-      576: { perView: 4.5 } // Ideal para mobile
+      1024: {
+        perView: 6,
+        focusAt: 4,
+        gap: 16,
+      },
+      768: {
+        perView: 4.5,
+        focusAt: 2,
+        gap: 16,
+      },
+      576: {
+        perView: 2,
+        focusAt: 1,
+        gap: 20,
+      }
     }
   };
 }

@@ -6,13 +6,21 @@
   margin: 2rem 0;
 
   @include u.style-starting-from(desktop) {
-    margin: 8rem 0 15rem;
+    margin: 8rem 0 6rem;
   }
 
   &--container {
     @include u.flex(column-reverse, center, center, var(--space-lg));
     padding: 1rem;
-    margin: 0 0 34rem;
+    margin: 0 0 22rem;
+
+    @include u.style-starting-from(mobile) {
+      margin: 0 0 26rem;
+    }
+
+    @include u.style-starting-from(tablet) {
+      margin: 0 0 28rem;
+    }
 
     @include u.style-starting-from(desktop) {
       @include u.flex(row, center, center, var(--space-xl));

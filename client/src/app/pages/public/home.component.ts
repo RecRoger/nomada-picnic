@@ -9,6 +9,7 @@ import { PicnicsBannerComponent } from '@components/picnics-banner/picnics-banne
 import { InfoStepsComponent } from '@components/info-steps/info-steps.component';
 import { PlacesBannerComponent } from '@components/places-banner/places-banner.component';
 import { AdditionalsBannerComponent } from '@components/additionals-banner/additionals-banner.component';
+import { StoryBannerComponent } from '@components/story-banner/story-banner.component';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ import { AdditionalsBannerComponent } from '@components/additionals-banner/addit
     InfoStepsComponent,
     PlacesBannerComponent,
     AdditionalsBannerComponent,
+    StoryBannerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

@@ -29,7 +29,11 @@ export class AdditionalsBannerComponent implements AfterViewInit {
   public popularTag = 'Mas vendido'
 
   public readonly carouselOptions: CarouselOptions = {
-    perView: 1, gap: 24, dots: true, arrows: true, autoplay: 8000, animationDuration: 1500
+    perView: 1,
+    gap: 24,
+    dots: true,
+    arrows: true,
+    autoplay: 7000,
   }
 
   private costService = inject(CostsService)

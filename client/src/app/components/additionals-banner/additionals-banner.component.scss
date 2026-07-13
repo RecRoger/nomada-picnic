@@ -69,6 +69,7 @@
 
   &--carousel {
     position: relative;
+    display: block;
 
     &-card {
       background-color: var(--color-bg-cream);
@@ -80,7 +81,6 @@
       padding: 0rem 1rem 2rem;
       position: relative;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      aspect-ratio: 3 / 4;
       margin-bottom: -125%;
       max-width: 300px;
 

@@ -2,15 +2,11 @@
   @if(additionals$ | async; as additionals) {
     <div class="s-additionals-banner--container">
       
-  
-      
       <div class="s-additionals-banner--carousel">
-        <div class="s-additionals-banner--carousel-card">
-          
+        <div class="s-additionals-banner--carousel-card">          
           <app-carousel 
             [items]="additionals" 
             [options]="carouselOptions">
-  
             <ng-template let-product>
               <div class="product-image-wrapper">
                 @if (product?.tags?.includes(popularTag)) {
@@ -23,9 +19,7 @@
                 <p class="card-content--desc">{{product.description}}</p>
                 <span class="card-content--price">{{product.finalPrice | currency:'US$ '}}</span>
               </div>
-  
             </ng-template>
-          
           </app-carousel>
       
   

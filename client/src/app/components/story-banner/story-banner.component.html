@@ -1,0 +1,29 @@
+<section class="s-story-banner">
+  
+  <!-- Encabezado con título y estrellitas mágicas -->
+  <div class="s-story-banner--header">
+    <h2 class="s-story-banner--header-title">
+      {{'PUBLIC.BANNERS.STORY.TITLE' | translate}}
+    </h2>
+    <p class="s-story-banner--header-subtitle">
+      {{'PUBLIC.BANNERS.STORY.SUBTITLE' | translate}}
+    </p>
+  </div>
+
+  <!-- El carrusel con las fotos de las historias -->
+  <div class="s-story-banner--carousel">
+    <app-carousel [items]="historiasPics" [options]="carouselOptions">
+      <ng-template let-foto>
+        <div class="story-photo-card">
+          <img [src]="foto.url" [alt]="foto.alt" class="story-img">
+        </div>
+      </ng-template>
+    </app-carousel>
+  </div>
+
+  <!-- Botón de acción inferior -->
+  <a class="s-story-banner--action" routerLink="/story">
+    {{'PUBLIC.BANNERS.STORY.BUTTON' | translate}}
+  </a>
+
+</section>

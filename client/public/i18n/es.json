@@ -206,6 +206,11 @@
         "TITLE": "MÁS ESPECIAL",
         "TEXT": "Descubrí nuestra selección de comida, bebidas, decoración y servicios adicionales para <b>personalizar tu picnic a tu manera</b>.",
         "BUTTON": "Ver adicionales"
+      },
+      "STORY": {
+        "TITLE": "Detrás de cada picnic, hay una historia",
+        "SUBTITLE": "Nómada Picnic nació del amor por los encuentros al aire libre, los pequeños detalles y los momentos que merecen ser recordados.",
+        "BUTTON": "Conocé nuestra historia"
       }
     },
     "FEATURES": {

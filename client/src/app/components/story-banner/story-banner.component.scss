@@ -1,0 +1,111 @@
+@use "utils" as u;
+
+.s-story-banner {
+  padding: 4rem 0;
+  @include u.flex(column, center, center);
+  overflow: hidden; // Evita barras de scroll horizontal por el sangrado del carrusel
+
+  /* ENCABEZADO */
+  &--header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0 1.5rem;
+
+    &-title {
+      font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+      align-items: center;
+
+      &::before,
+      &::after {
+        content: "";
+        width: 40px;
+        height: 40px;
+        background-image: url("/images/graphics/emoji_home_why_sparkles_03.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+      }
+    }
+
+    &-subtitle {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  }
+
+  /* CONTENEDOR DEL CARRUSEL */
+  &--carousel {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  /* LAS FOTOS (NG-TEMPLATE) */
+  .story-photo-card {
+    width: 100%;
+    aspect-ratio: 3 / 4; // Asegura la proporción vertical de las imágenes
+    border-radius: var(--radius-card-sm);
+    overflow: hidden;
+    background-color: var(--color-bg-cream);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+
+    .story-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; // Hace que la foto llene el contenedor sin deformarse
+      transition: transform 0.5s ease;
+    }
+
+    &:hover .story-img {
+      transform: scale(1.04); // Lindo efecto interactivo al pasar el mouse
+    }
+  }
+
+  /* BOTÓN INFERIOR */
+  &--action {
+    @include u.custom-button(var(--color-white), var(--color-brand-coral));
+  }
+}
+
+// story-banner.component.scss
+
+.s-story-banner--carousel {
+  width: 100%;
+  overflow: hidden;
+
+  ::ng-deep {
+    .glide__track {
+      overflow: visible; // 💡 Clave: permite que las tarjetas de los extremos no se corten al agrandarse
+      padding: 1rem 0 5rem; // Margen superior/inferior para darles aire cuando se desplacen hacia arriba
+    }
+
+    .glide__slides {
+      overflow: visible; // 💡 Clave: permite que las tarjetas de los extremos no se corten al agrandarse
+      display: flex;
+      align-items: center;
+      perspective: 1200px; // Mantiene la profundidad tridimensional de las rotaciones
+    }
+
+    .story-photo-card {
+      overflow: visible; // 💡 Clave: permite que las tarjetas de los extremos no se corten al agrandarse
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 28px;
+      overflow: hidden;
+
+      // Transición ultra fluida para que acompañe el movimiento del arrastre
+      transition:
+        transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
+        filter 0.15s ease;
+      will-change:
+        transform, filter; // Optimización de hardware para animaciones pesadas
+      transform-origin: center center;
+
+      .story-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}

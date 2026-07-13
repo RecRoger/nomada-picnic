@@ -13,7 +13,7 @@
   width: 100%;
   padding-bottom: 0; // Espacio inferior para que los dots no pisen las cards
 
-  .glide__slide {
+  .glide__slide.unique {
     padding: 3.5rem 3.5rem 2rem;
   }
 
@@ -100,4 +100,5 @@
       }
     }
   }
+  
 }

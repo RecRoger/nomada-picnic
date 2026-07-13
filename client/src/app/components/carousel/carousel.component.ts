@@ -44,16 +44,19 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   private initGlide(): void {
     this.glideInstance = new Glide(this.glideRef.nativeElement, {
-      type: this.options.type ?? 'carousel', // 'slider' o 'carousel' (infinito)
+      type: this.options.type ?? 'carousel',
       startAt: 0,
-      perView: this.options.perView ?? 3, // Cuántas cards se ven en desktop
-      gap: this.options.gap ?? 24, // Espacio entre cards en px
+      perView: this.options.perView ?? 3,
+      gap: this.options.gap ?? 24,
       autoplay: this.options.autoplay ?? undefined,
       hoverpause: true,
       focusAt: 0,
-      animationDuration: this.options.animationDuration ?? 1000,
       breakpoints: this.options.breakpoints ?? {},
     });
+
+    if(this.options.animationDuration) {
+      this.glideInstance.animationDuration = this.options.animationDuration
+    }
 
     this.glideInstance.mount();
   }
@@ -65,7 +68,6 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    // Limpieza de memoria al destruir el componente de Angular
     if (this.glideInstance) {
       this.glideInstance.destroy();
     }

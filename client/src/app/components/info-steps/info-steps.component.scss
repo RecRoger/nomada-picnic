@@ -2,19 +2,23 @@
 @use "utils" as u;
 
 .s-info-steps {
-  padding: 0 0 2rem;
+  padding: 0 2em 2rem;
   text-align: center;
+
+  @include u.style-starting-from(mobile) {
+    padding: 0 6rem 2rem;
+  }
 
   &--title {
     font-size: clamp(2rem, 4vw, 3rem);
     // color: var(--color-black);
-    margin-bottom: 4rem;
+    // margin-bottom: 4rem;
   }
 
   &--grid {
     @include u.grid-columns(1, 4rem 2rem);
-    // max-width: 1200px;
     align-items: start;
+    padding-top: 4rem;
     margin: 0 auto;
     position: relative;
     overflow: hidden;
@@ -36,29 +40,19 @@
       content: "";
       position: absolute;
       background-color: var(--color-black);
-      top: 22px;
-      left: -50%;
-      width: 200%;
-      height: 2px;
+      top: -3rem;
+      width: 2px;
+      height: 3rem;
       z-index: 1;
     }
 
-    @include u.style-up-to(mobile) {
-      &::before {
-        left: 0;
-        width: 100%;
-      }
-      &:first-child::before {
-        left: 50%;
-        width: 50%;
-      }
-      &:last-child::before {
-        left: 0;
-        width: 50%;
-      }
-    }
-
     @include u.style-starting-from(mobile) {
+      &::before {
+        top: 22px;
+        left: -50%;
+        width: 200%;
+        height: 2px;
+      }
       &:first-child::before {
         left: 50%;
         width: 100%;
@@ -74,8 +68,6 @@
         left: 50%; // Empieza justo en el centro del número 1
         width: 100%; // Se extiende solo hacia la derecha cubriendo su celda
       }
-
-      // 2. EL ÚLTIMO PASO DE TODOS (Paso 5): Solo viene desde la izquierda
       &:last-child::before {
         left: -50%; // Viene del paso anterior
         width: 100%; // Muere justo en el centro del número 5
@@ -94,10 +86,13 @@
     ); // Súper importante: oculta la línea que cruza por detrás
     border-radius: 50%;
     @include u.flex(row, center, center);
-    font-family: var(--font-heading);
+    font-family: var(--font-title);
     font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    @include u.style-starting-from(mobile) {
+      margin-bottom: 1.5rem;
+    }
   }
 
   .step-title {
@@ -109,7 +104,6 @@
 
   .step-desc {
     font-size: 1rem;
-    // color: #555555;
     line-height: 1.5;
     max-width: 320px;
     margin: 0;

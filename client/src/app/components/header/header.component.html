@@ -11,6 +11,9 @@
         (click)="openMenu = false" 
       >{{link.label | translate}}</a>
       }
+      <a aria-label="book" href="https://wa.me/5491126908781" class="c-header--menu-book-btn">
+        {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}
+      </a>
     </div>
   </div>
   <div class="c-header--menu-button hide-desktop" [class.is-big]="isHome && !openMenu && !isScrolled">

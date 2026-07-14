@@ -179,10 +179,10 @@
       "BOOKING_BTN": "Reserva ahora",
       "TABS": {
         "HOME": "Home",
-        "STORY": "Nuestra historia",
-        "PLACES": "Parques y Lugares",
-        "ADDITIONALS": "Comida y adicionales",
-        "PICNICS": "Nuestros Picnics",
+        "STORY": "¿Quienes somos?",
+        "PLACES": "Lugares",
+        "ADDITIONALS": "Adicionales",
+        "PICNICS": "Picnics",
         "CALCULATOR": "Cotizador",
         "CONTACT": "FAQ y Contacto"
       }

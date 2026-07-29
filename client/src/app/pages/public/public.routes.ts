@@ -26,4 +26,8 @@ export const PublicRoutes: Routes = [
     path: 'contact',
     loadComponent: () => import('./components/faq-contact/faq-contact.component').then(m => m.FAQContactComponent),
   },
+  {
+    path: 'terms',
+    loadComponent: () => import('./components/tyc/tyc.component').then(m => m.TycComponent),
+  },
 ];

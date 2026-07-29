@@ -1,0 +1,33 @@
+<div class="c-tyc page-container">
+  <div class="c-tyc-hero">
+    <div class="c-tyc-hero--content">
+      <h1 class="c-tyc-hero--content-title" [innerHTML]="'PUBLIC.TYC.TITLE' | translate"></h1>
+      <p class="c-tyc-hero--content-date">{{'PUBLIC.TYC.LAST_UPDATE' | translate}} <b>{{'07/26/2026' | date: 'dd MMMM yyyy'}}</b></p>
+    </div>
+  </div>
+  <div class="c-tyc-terms">
+    <p class="c-tyc-terms--subtitle" [innerHTML]="'PUBLIC.TYC.SUBTITLE' | translate"></p>
+    <div class="c-tyc-terms--list">
+      @for (term of tycInfo; track $index; let last = $last; let index = $index) {
+        <div class="c-tyc-terms--list-item" [ngClass]="{'contact-card': last}">
+          <h2 class="term-title">{{index + 1}}. {{term.title | translate}}</h2>
+          <div class="term-data" [innerHTML]="term.data1 | translate"></div>
+          @if(term.highligthed) {
+            <div class="term-highlighted" [innerHTML]="term.highligthed | translate"></div>
+          }
+          @if(term.data2) {
+            <div class="term-data" [innerHTML]="term.data2 | translate"></div>
+          }
+
+          @if (last) {
+            <div class="contact-card--actions">
+              <a class="button-phone" href="tel:+5491126908781">{{'COMMON.WA_BUTTON' | translate}} {{'COMMON.BUSINESS_PHONE'|translate}}</a>
+              <a class="button-mail" href="mailto:contacto@nomadapicnic.com">{{'COMMON.BUSINESS_MAIL'|translate}}</a>
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+  </div>
+</div>

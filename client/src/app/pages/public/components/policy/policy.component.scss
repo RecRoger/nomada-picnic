@@ -14,9 +14,9 @@
 
       &-legal {
         margin-top: 0;
-        font-weight: 300;
-        font-size: 0.8rem;
         letter-spacing: 3px;
+        @include u.pill(var(--color-white), var(--color-white50));
+        font-weight: 300;
       }
 
       &-title {
@@ -27,7 +27,7 @@
     }
   }
 
-  &-terms {
+  &-policies {
     max-width: 680px;
     margin: auto;
     padding: var(--space-lg) var(--space-md);
@@ -36,57 +36,49 @@
       text-align: justify;
       margin-bottom: var(--space-xl);
     }
-    &--list {
-      &-item {
-        margin: var(--space-lg) 0 var(--space-xl);
+    &--item {
+      margin: var(--space-lg) 0 var(--space-xl);
+      .term-title {
+        color: var(--color-brand-blue);
+        text-transform: uppercase;
+      }
+
+      .term-data {
+        line-height: 1.5;
+        text-align: justify;
+      }
+
+      &.contact-card {
+        padding: var(--space-xl);
+        background-color: var(--color-brand-blue);
+        color: var(--color-white);
+        border-radius: var(--radius-card-md);
         .term-title {
-          color: var(--color-brand-blue);
-          text-transform: uppercase;
-        }
-
-        .term-data {
-          line-height: 1.5;
-          text-align: justify;
-        }
-
-        .term-highlighted {
-          padding: var(--space-sm) var(--space-lg);
-          background-color: var(--color-bg-cream);
-          border-radius: var(--radius-card-md);
-          line-height: 1.5;
-        }
-        &.contact-card {
-          padding: var(--space-xl);
-          background-color: var(--color-brand-blue);
+          margin-top: 0;
           color: var(--color-white);
-          border-radius: var(--radius-card-md);
-          .term-title {
-            margin-top: 0;
-            color: var(--color-white);
-          }
-          .contact-card--actions {
-            margin-top: var(--space-lg);
-            @include u.flex(column, center, flex-start, 1rem);
+        }
+        .contact-card--actions {
+          margin-top: var(--space-lg);
+          @include u.flex(column, center, flex-start, 1rem);
 
-            .button-phone {
-              @include u.custom-button(
-                var(--color-brand-blue),
-                var(--color-white)
-              );
-              font-weight: 600;
-              .phone-number {
-                margin-left: var(--space-md);
-                display: inline-block;
-                white-space: nowrap;
-              }
+          .button-phone {
+            @include u.custom-button(
+              var(--color-brand-blue),
+              var(--color-white)
+            );
+            font-weight: 600;
+            .phone-number {
+              margin-left: var(--space-md);
+              display: inline-block;
+              white-space: nowrap;
             }
-            .button-mail {
-              @include u.custom-button(
-                var(--color-white),
-                transparent,
-                1px solid var(--color-white)
-              );
-            }
+          }
+          .button-mail {
+            @include u.custom-button(
+              var(--color-white),
+              transparent,
+              1px solid var(--color-white)
+            );
           }
         }
       }

@@ -1,0 +1,90 @@
+@use "utils" as u;
+
+.c-faq-contact {
+  background-color: var(--color-bg-softcream);
+  padding-bottom: 150px;
+  margin-bottom: -100px;
+  &-hero {
+    background-color: var(--color-brand-blue);
+    @include u.flex(row);
+    padding: 120px var(--space-md) var(--space-lg);
+
+    &--content {
+      max-width: 750px;
+      margin: auto;
+      text-align: center;
+      color: var(--color-white);
+
+      &-legal {
+        margin-top: 0;
+        letter-spacing: 3px;
+        @include u.pill(var(--color-white), var(--color-white50));
+        font-weight: 300;
+      }
+
+      &-title {
+        margin: 1rem 0;
+        font-size: clamp(2.5rem, 3.2vw, 4rem);
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  &-content {
+    max-width: 680px;
+    margin: auto;
+    padding: var(--space-lg) var(--space-md);
+
+    &--section {
+      margin: var(--space-lg) 0 var(--space-xxl);
+      .faq-title {
+        color: var(--color-brand-blue);
+        text-transform: uppercase;
+      }
+
+      .faq-panel {
+        margin: var(--space-lg) 0;
+        background-color: white;
+      }
+
+      .faq-question {
+        font-size: 1.2rem;
+      }
+
+      .faq-answer {
+        margin-top: 0;
+        color: var(--color-text-muted);
+      }
+    }
+  }
+
+  &-box {
+    background-color: var(--color-bg-cream);
+    margin-top: var(--space-xxl);
+    padding: var(--space-xl);
+    border-radius: var(--radius-card-md);
+    text-align: center;
+    &--title {
+      margin: 0 0 1rem;
+      font-size: var(--font-h3);
+      text-transform: uppercase;
+    }
+    &--subtitle {
+      color: var(--color-text-muted);
+    }
+    &--button {
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      font-weight: 600;
+    }
+  }
+}
+
+::ng-deep {
+  .mat-expansion-panel-header {
+    padding: 24px !important;
+    height: auto !important;
+  }
+  .mat-expansion-indicator svg {
+    fill: var(--color-brand-coral) !important;
+  }
+}

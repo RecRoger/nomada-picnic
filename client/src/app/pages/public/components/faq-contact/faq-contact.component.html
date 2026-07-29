@@ -1,10 +1,32 @@
-<div class="page-container">
-  <!-- TODO -  Diseñar componente -->
-  <div class="construction">
-    <mat-icon class="construction--icon">construction</mat-icon>
-    <h1>
-      EN CONSTRUCCION
-    </h1>
-    <p>Seguimos trabajando por completar esta web</p>
+<div class="c-faq-contact page-container">
+  <div class="c-faq-contact-hero">
+    <div class="c-faq-contact-hero--content">
+      <div class="c-faq-contact-hero--content-legal">{{'PUBLIC.FAQ.PILL' | translate}}</div>
+      <h1 class="c-faq-contact-hero--content-title" [innerHTML]="'PUBLIC.FAQ.TITLE' | translate "></h1>
+      <p class="c-faq-contact-hero--content-date">{{'PUBLIC.FAQ.SUBTITLE' | translate}}</p>
+    </div>
+  </div>
+  <div class="c-faq-contact-content">
+
+    @for (section of faqContent; track $index) {
+      <div class="c-faq-contact-content--section">
+        <h2 class="faq-title">{{section.title | translate}}</h2>
+        @for (faq of section.list; track $index) {
+
+            <mat-expansion-panel class="faq-panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title> <div class="faq-question">{{faq.title | translate}}</div> </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p class="faq-answer" [innerHTML]="faq.data1 | translate"></p>
+            </mat-expansion-panel>
+        }
+      </div>
+    }
+
+    <div class="c-faq-contact-box">
+      <h3 class="c-faq-contact-box--title">{{'PUBLIC.FAQ.CONTACT.TITLE' | translate}}</h3>
+      <p class="c-faq-contact-box--subtitle">{{'PUBLIC.FAQ.CONTACT.SUBTITLE' | translate}}</p>
+      <a class="c-faq-contact-box--button" href="tel:+5491126908781">{{'PUBLIC.FAQ.CONTACT.BUTTON' | translate}}</a>
+    </div>
   </div>
 </div>

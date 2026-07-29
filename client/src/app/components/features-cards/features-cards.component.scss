@@ -48,7 +48,7 @@
 
     &-card {
       @include u.flex(column, center, center, 0.8rem);
-      background-color: var(--color-bg-cream);
+      background-color: var(--color-bg-softcream);
       border: 2px solid var(--color-text-dark);
       border-radius: var(--radius-card-xl);
       padding: 3rem 3.5rem;

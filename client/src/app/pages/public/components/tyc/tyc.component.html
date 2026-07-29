@@ -1,8 +1,8 @@
 <div class="c-tyc page-container">
   <div class="c-tyc-hero">
     <div class="c-tyc-hero--content">
-      <h1 class="c-tyc-hero--content-title" [innerHTML]="'PUBLIC.TYC.TITLE' | translate"></h1>
-      <p class="c-tyc-hero--content-date">{{'PUBLIC.TYC.LAST_UPDATE' | translate}} <b>{{'07/26/2026' | date: 'dd MMMM yyyy'}}</b></p>
+      <h1 class="c-tyc-hero--content-title" [innerHTML]="'PUBLIC.TYC.TITLE' | translate  | uppercase"></h1>
+      <p class="c-tyc-hero--content-date">{{'COMMON.LAST_UPDATE' | translate}} <b>{{'07/26/2026' | date:'longDate':'':'es'}}</b></p>
     </div>
   </div>
   <div class="c-tyc-terms">
@@ -21,7 +21,7 @@
 
           @if (last) {
             <div class="contact-card--actions">
-              <a class="button-phone" href="tel:+5491126908781">{{'COMMON.WA_BUTTON' | translate}} {{'COMMON.BUSINESS_PHONE'|translate}}</a>
+              <a class="button-phone" href="tel:+5491126908781">{{'COMMON.WA_BUTTON' | translate}} <span class="phone-number">{{'COMMON.BUSINESS_PHONE'|translate}}</span></a>
               <a class="button-mail" href="mailto:contacto@nomadapicnic.com">{{'COMMON.BUSINESS_MAIL'|translate}}</a>
             </div>
           }

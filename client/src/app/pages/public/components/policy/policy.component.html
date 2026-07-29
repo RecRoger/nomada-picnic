@@ -1,0 +1,28 @@
+<div class="c-policy page-container">
+  <div class="c-policy-hero">
+    <div class="c-policy-hero--content">
+      <div class="c-policy-hero--content-legal">{{'PUBLIC.POLICY.LEGAL' | translate}}</div>
+      <h1 class="c-policy-hero--content-title" [innerHTML]="'PUBLIC.POLICY.TITLE' | translate  | uppercase"></h1>
+      <p class="c-policy-hero--content-date">{{'COMMON.LAST_UPDATE' | translate}} <b>{{'07/26/2026' | date:'longDate':'':'es'}}</b></p>
+    </div>
+  </div>
+  <div class="c-policy-terms">
+    <div class="c-policy-terms--subtitle" [innerHTML]="'PUBLIC.POLICY.SUBTITLE' | translate"></div>
+    <div class="c-policy-terms--list">
+      @for (term of policyInfo; track $index; let last = $last; let index = $index) {
+        <div class="c-policy-terms--list-item" [ngClass]="{'contact-card': last}">
+          <h2 class="term-title">{{index + 1}}. {{term.title | translate}}</h2>
+          <div class="term-data" [innerHTML]="term.data1 | translate"></div>
+
+          @if (last) {
+            <div class="contact-card--actions">
+              <a class="button-phone" href="tel:+5491126908781">{{'COMMON.WA_BUTTON' | translate}} <span class="phone-number">{{'COMMON.BUSINESS_PHONE'|translate}}</span></a>
+              <a class="button-mail" href="mailto:contacto@nomadapicnic.com">{{'COMMON.BUSINESS_MAIL'|translate}}</a>
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+  </div>
+</div>

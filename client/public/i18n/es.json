@@ -40,6 +40,7 @@
     "PREVIOUS": "Anterior",
     "FINALIZE": "Finalizar",
     "GENERIC_ERROR": "Ha ocurrido un error",
+    "LAST_UPDATE": "Última actualización:",
     "WA_BUTTON": "WhatsApp Business"
   },
   "LOGIN": {
@@ -236,7 +237,6 @@
     },
     "TYC": {
       "TITLE": "Términos y Condiciones",
-      "LAST_UPDATE": "Última actualización:",
       "SUBTITLE": "Al confirmar una reserva con <b>Nómada Picnic</b>, el cliente acepta los presentes Términos y Condiciones, los cuales regulan la prestación del servicio contratado.",
       "TERMS": {
         "TITLE_1": "Confirmación de la reserva",
@@ -270,9 +270,40 @@
         "TITLE_14": "Fuerza mayor",
         "DATA_14": "<p>Nómada Picnic no será responsable por la imposibilidad de prestar el servicio debido a situaciones extraordinarias ajenas a su control, incluyendo —pero no limitándose a— <b>restricciones gubernamentales, cierre de parques, fenómenos climáticos extremos, manifestaciones, emergencias sanitarias</b> u otros eventos de fuerza mayor.</p><p>En estos casos, ambas partes coordinarán una <b>nueva fecha</b> para la realización del servicio.</p>",
         "TITLE_15": "Aceptación de los términos",
-        "DATA_16": "<p>La confirmación de la reserva, el pago del servicio y/o la aceptación de la invitación enviada mediante Google Calendar implican la <b>aceptación íntegra</b> de los presentes Términos y Condiciones.</p>",
+        "DATA_15": "<p>La confirmación de la reserva, el pago del servicio y/o la aceptación de la invitación enviada mediante Google Calendar implican la <b>aceptación íntegra</b> de los presentes Términos y Condiciones.</p>",
         "TITLE_16": "Contacto",
-        "DATA_15": "<p>Si tenés alguna consulta sobre estos Términos y Condiciones, podés comunicarte con nosotros a través de:</p>"
+        "DATA_16": "<p>Si tenés alguna consulta sobre estos Términos y Condiciones, podés comunicarte con nosotros a través de:</p>"
+      }
+    },
+    "POLICY": {
+      "LEGAL": "LEGAL",
+      "TITLE": "Política de Privacidad",
+      "SUBTITLE": "<p>En Nómada Picnic valoramos la confianza de quienes eligen vivir nuestras experiencias. Por eso, nos comprometemos a proteger la privacidad de nuestros clientes y a tratar su información personal de forma responsable, transparente y segura.</p><p>La presente Política de Privacidad explica cómo recopilamos, utilizamos y protegemos los datos personales que compartís con nosotros al utilizar nuestro sitio web o contratar nuestros servicios.</p>",
+      "POLICIES": {
+        "TITLE_1": "¿Qué información recopilamos?",
+        "DATA_1": "<p>Podemos recopilar la siguiente información cuando realizás una consulta o una reserva:</p><ul><li>Nombre y apellido.</li><li>Número de teléfono.</li><li>Dirección de correo electrónico.</li><li>Fecha y horario de la reserva.</li><li>Cantidad de asistentes.</li><li>Lugar elegido para la experiencia.</li><li>Información necesaria para personalizar el picnic (cumpleaños, aniversarios, propuestas, preferencias, etc.).</li><li>Cualquier otro dato que el cliente decida compartir voluntariamente.</li></ul><p>No solicitamos ni almacenamos información sensible que no resulte necesaria para la prestación del servicio.</p>",
+        "TITLE_2": "¿Cómo utilizamos tu información?",
+        "DATA_2": "<p>La información recopilada será utilizada únicamente para:</p><ul><li>Gestionar consultas y reservas.</li><li>Coordinar la organización del picnic.</li><li>Enviar confirmaciones y recordatorios.</li><li>Compartir la ubicación mediante Google Calendar o WhatsApp.</li><li>Contactar al cliente en caso de cambios relacionados con la reserva.</li><li>Mejorar nuestros servicios y la experiencia del cliente.</li><li>Cumplir obligaciones legales cuando corresponda.</li></ul>",
+        "TITLE_3": "Comunicaciones",
+        "DATA_3": "<p>Al realizar una consulta o reserva, el cliente acepta que Nómada Picnic pueda comunicarse mediante:</p><ul><li>WhatsApp.</li><li>Correo electrónico.</li><li>Llamadas telefónicas (cuando sea necesario).</li></ul><p>Estas comunicaciones estarán relacionadas exclusivamente con la reserva, consultas realizadas o información relevante sobre nuestros servicios.</p>",
+        "TITLE_4": "Protección de la información",
+        "DATA_4": "<p>Adoptamos medidas razonables para proteger la información personal contra accesos no autorizados, pérdidas, alteraciones o usos indebidos.</p><p>Si bien implementamos buenas prácticas de seguridad, ningún sistema de almacenamiento o transmisión de datos por Internet puede garantizar una seguridad absoluta.</p>",
+        "TITLE_5": "Compartir información con terceros",
+        "DATA_5": "<p>Nómada Picnic no vende, alquila ni comercializa la información personal de sus clientes.</p><p>Solo podremos compartir determinados datos cuando resulte estrictamente necesario para la correcta prestación del servicio o cuando exista una obligación legal.</p><p>Esto puede incluir plataformas utilizadas para la organización de reservas, tales como:</p><ul><li>WhatsApp Business.</li><li>Google Calendar.</li><li>Google Maps.</li><li>Servicios de procesamiento de pagos.</li><li>Plataformas de alojamiento del sitio web.</li></ul><p>Cada una de estas plataformas posee sus propias políticas de privacidad.</p>",
+        "TITLE_6": "Fotografías y contenido audiovisual",
+        "DATA_6": "<p>Durante algunas experiencias podremos realizar fotografías o videos con fines promocionales.</p><p>El tratamiento de estas imágenes se encuentra regulado por los Términos y Condiciones del Servicio, los cuales son aceptados al confirmar la reserva.</p><p>Si alguna persona no desea aparecer en fotografías o videos, podrá comunicarlo antes del inicio del picnic y respetaremos su decisión.</p>",
+        "TITLE_7": "Cookies",
+        "DATA_7": "<p>Nuestro sitio web podrá utilizar cookies y tecnologías similares para mejorar la experiencia de navegación, recordar preferencias y obtener estadísticas de uso.</p><p>Las cookies no permiten identificar personalmente al usuario.</p><p>El usuario puede configurar su navegador para aceptar, bloquear o eliminar las cookies en cualquier momento.</p>",
+        "TITLE_8": "Enlaces a sitios externos",
+        "DATA_8": "<p>Nuestro sitio web puede contener enlaces hacia plataformas de terceros, como Instagram, WhatsApp, Google Maps u otros servicios.</p><p>Nómada Picnic no es responsable por las políticas de privacidad ni por el contenido de dichos sitios.</p><p>Recomendamos revisar las políticas correspondientes antes de compartir información personal.</p>",
+        "TITLE_9": "Conservación de la información",
+        "DATA_9": "<p>Conservaremos los datos personales únicamente durante el tiempo necesario para gestionar la reserva, brindar soporte al cliente, cumplir obligaciones legales o resolver posibles consultas posteriores.</p><p>Una vez cumplida esa finalidad, la información será eliminada o anonimizada cuando corresponda.</p>",
+        "TITLE_10": "Derechos del usuario",
+        "DATA_10": "<p>El cliente podrá solicitar en cualquier momento:</p><ul><li>Acceder a sus datos personales.</li><li>Corregir información inexacta.</li><li>Actualizar sus datos.</li><li>Solicitar la eliminación de su información cuando corresponda.</li><li>Revocar el consentimiento otorgado para determinadas comunicaciones, siempre que ello no afecte la correcta prestación del servicio.</li></ul><p>Las solicitudes podrán realizarse utilizando los medios de contacto indicados al final de esta política.</p>",
+        "TITLE_11": "Modificaciones de esta Política",
+        "DATA_11": "<p>Nómada Picnic podrá actualizar la presente Política de Privacidad cuando resulte necesario para adaptarla a cambios legales, operativos o tecnológicos.</p><p>La versión vigente será siempre la publicada en este sitio web.</p>",
+        "TITLE_12": "Contacto",
+        "DATA_12": "<p>Si tenés consultas relacionadas con esta Política de Privacidad o con el tratamiento de tus datos personales, podés comunicarte con nosotros a través de:</p>"
       }
     },
     "PLACES": {

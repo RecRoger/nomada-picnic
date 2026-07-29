@@ -19,12 +19,13 @@
         margin-top: 0;
         letter-spacing: 3px;
         @include u.pill(var(--color-white), var(--color-white50));
+        font-size: 0.7rem;
         font-weight: 300;
       }
 
       &-title {
         margin: 1rem 0;
-        font-size: clamp(2.5rem, 3.2vw, 4rem);
+        font-size: clamp(2.3rem, 3vw, 4rem);
         text-transform: uppercase;
       }
     }
@@ -75,6 +76,7 @@
     &--button {
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
       font-weight: 600;
+      margin-top: var(--space-md);
     }
   }
 }
@@ -83,6 +85,14 @@
   .mat-expansion-panel-header {
     padding: 24px !important;
     height: auto !important;
+  }
+  .mat-expansion-panel-header-title {
+    font-family: inherit !important; // Hereda la fuente de tu app
+  }
+  .mat-expansion-panel-body {
+    font-family: inherit !important;
+    line-height: 1.6; // Mejora la legibilidad del texto
+    // font-size: 1rem; // Podés ajustar el tamaño de fuente si querés
   }
   .mat-expansion-indicator svg {
     fill: var(--color-brand-coral) !important;

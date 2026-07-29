@@ -1,20 +1,27 @@
 @use "utils" as u;
 
-.c-tyc {
+.c-policy {
   &-hero {
     background-color: var(--color-brand-blue);
     @include u.flex(row);
-    padding: 80px var(--space-md) var(--space-lg);
+    padding: 120px var(--space-md) var(--space-lg);
 
     &--content {
-      max-width: 500px;
+      max-width: 600px;
       margin: auto;
       text-align: center;
       color: var(--color-white);
 
+      &-legal {
+        margin-top: 0;
+        font-weight: 300;
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+      }
+
       &-title {
+        margin: 1rem 0;
         font-size: clamp(2.5rem, 3.2vw, 4rem);
-        margin-bottom: 1rem;
         text-transform: uppercase;
       }
     }

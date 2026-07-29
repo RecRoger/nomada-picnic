@@ -30,4 +30,8 @@ export const PublicRoutes: Routes = [
     path: 'terms',
     loadComponent: () => import('./components/tyc/tyc.component').then(m => m.TycComponent),
   },
+  {
+    path: 'policy',
+    loadComponent: () => import('./components/policy/policy.component').then(m => m.PolicyComponent),
+  },
 ];

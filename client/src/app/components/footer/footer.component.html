@@ -11,46 +11,49 @@
   <div class="c-footer--container">
     @let admin = isAdmin$ | async;
     @if (!admin) {
-      <div class="c-footer--cta">
-        <h2 class="c-footer--cta-title">{{'PUBLIC.FOOTER.CTA.TITLE' | translate}}</h2>
-        <p class="c-footer--cta-text" [innerHTML]="'PUBLIC.FOOTER.CTA.MESSAGE' | translate">
-        </p>
-        <a routerLink="/contact" class="c-footer--cta-button">
-          {{'PUBLIC.FOOTER.CTA.BUTTON' | translate}}
-        </a>
+      @if (isHome$ | async) {
+        <div class="c-footer--cta">
+          <h2 class="c-footer--cta-title">{{'PUBLIC.FOOTER.CTA.TITLE' | translate}}</h2>
+          <p class="c-footer--cta-text" [innerHTML]="'PUBLIC.FOOTER.CTA.MESSAGE' | translate">
+          </p>
+          <a routerLink="/contact" class="c-footer--cta-button">
+            {{'PUBLIC.FOOTER.CTA.BUTTON' | translate}}
+          </a>
+        </div>
+      }
+
+      <div class="c-footer--grid">
+        <!-- Columna Marca -->
+        <div class="footer-col brand-col">
+          <h3>{{'PUBLIC.FOOTER.BRAND.TITLE' | translate}}</h3>
+          <p>{{'PUBLIC.FOOTER.BRAND.TEXT' | translate}}</p>
+          <a class="location" href="https://maps.app.goo.gl/np7kdYqNpAYPuegv6" target="_blank">{{'PUBLIC.FOOTER.BRAND.ADDRESS' | translate}} </a>
+        </div>
+  
+        @for (column of ['EXPLORE', 'CONTACT', 'LEGAL']; track $index) {
+          <div class="footer-col">
+            <h4>{{'PUBLIC.FOOTER.'+column+'.TITLE' | translate}}</h4>
+            <ul>
+              @for (link of linkFarm[column]; track $index) {
+              <li>
+                @if (link.href) {
+              <a [href]="link.href" [target]="link.target || '_self'">
+                {{ link.label | translate }}
+              </a>
+            }
+            
+            @else {
+              <a [routerLink]="link.link">
+                {{ link.label | translate }}
+              </a>
+            }
+              </li>
+            }</ul>
+          </div>
+        }
       </div>
     }
 
-    <div class="c-footer--grid">
-      <!-- Columna Marca -->
-      <div class="footer-col brand-col">
-        <h3>{{'PUBLIC.FOOTER.BRAND.TITLE' | translate}}</h3>
-        <p>{{'PUBLIC.FOOTER.BRAND.TEXT' | translate}}</p>
-        <a class="location" href="https://maps.app.goo.gl/np7kdYqNpAYPuegv6" target="_blank">{{'PUBLIC.FOOTER.BRAND.ADDRESS' | translate}} </a>
-      </div>
-
-      @for (column of ['EXPLORE', 'CONTACT', 'LEGAL']; track $index) {
-        <div class="footer-col">
-          <h4>{{'PUBLIC.FOOTER.'+column+'.TITLE' | translate}}</h4>
-          <ul>
-            @for (link of linkFarm[column]; track $index) {
-            <li>
-              @if (link.href) {
-            <a [href]="link.href" [target]="link.target || '_self'">
-              {{ link.label | translate }}
-            </a>
-          }
-          
-          @else {
-            <a [routerLink]="link.link">
-              {{ link.label | translate }}
-            </a>
-          }
-            </li>
-          }</ul>
-        </div>
-      }
-    </div>
 
     <!-- 4. BARRA DE COPYRIGHT -->
     <div class="c-footer--bottom">

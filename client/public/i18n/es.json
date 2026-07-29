@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "BUSINESS_PHONE": "+54 9 11 2690 8781",
+    "BUSINESS_MAIL": "contacto@nomadapicnic.com",
     "CANCEL": "Cancelar",
     "NO": "No",
     "NAME": "Nombre",
@@ -37,7 +39,8 @@
     "NEXT": "Siguiente",
     "PREVIOUS": "Anterior",
     "FINALIZE": "Finalizar",
-    "GENERIC_ERROR": "Ha ocurrido un error"
+    "GENERIC_ERROR": "Ha ocurrido un error",
+    "WA_BUTTON": "WhatsApp Business"
   },
   "LOGIN": {
     "TITLE": "Iniciar Sesión",
@@ -152,8 +155,6 @@
       },
       "CONTACT": {
         "TITLE": "Contacto",
-        "PHONE": "+54 9 11 2690 8781",
-        "MAIL": "contacto@nomadapicnic.com",
         "INSTAGRAM": "@nomadapicnic"
       },
       "LEGAL": {
@@ -231,6 +232,47 @@
       "MEMORIES": {
         "TITLE": "Espacios únicos en Buenos ",
         "TEXT": "Creamos momentos especiales en los lugares más lindos de la ciudad."
+      }
+    },
+    "TYC": {
+      "TITLE": "Términos y Condiciones",
+      "LAST_UPDATE": "Última actualización:",
+      "SUBTITLE": "Al confirmar una reserva con <b>Nómada Picnic</b>, el cliente acepta los presentes Términos y Condiciones, los cuales regulan la prestación del servicio contratado.",
+      "TERMS": {
+        "TITLE_1": "Confirmación de la reserva",
+        "DATA_1": "<p>La reserva quedará <b>confirmada</b> una vez recibido el pago correspondiente y validada por nuestro equipo.</p>",
+        "TITLE_2": "Cambios y cancelaciones",
+        "DATA_2": "<p>Las modificaciones o cancelaciones deberán solicitarse con un mínimo de <b>72 horas</b> de anticipación.</p><p>En caso contrario, la seña abonada (equivalente al <b>50% del valor del servicio</b>) no será reembolsable.</p>",
+        "TITLE_3": "Reprogramaciones por condiciones climáticas",
+        "DATA_3": "<p>Si las condiciones climáticas impiden realizar el picnic de forma segura, el cliente podrá <b>reprogramar la experiencia sin costo adicional</b>.</p><p>La nueva fecha deberá realizarse dentro de los <b>30 días corridos</b> posteriores a la fecha originalmente reservada.</p><p>Transcurrido ese plazo, el valor del servicio podrá actualizarse según la lista de precios vigente al momento de realizar la nueva reserva.</p>",
+        "TITLE_4": "Puntualidad",
+        "DATA_4": "<p>Para disfrutar la experiencia completa, solicitamos que todos los asistentes lleguen al punto de encuentro y horario acordados.</p><p>La ubicación exacta será enviada previamente por <b>WhatsApp</b> o mediante la invitación de <b>Google Calendar</b>.</p><p>Los retrasos por parte del cliente podrán reducir el tiempo efectivo de la experiencia, ya que el horario reservado no podrá extenderse.</p>",
+        "DATA_4_TIP": "<p>En caso de que el cliente o los asistentes demoren hasta <b>90 minutos</b> respecto del horario acordado, Nómada Picnic mantendrá el montaje y la disponibilidad de su equipo. En dicho caso, se aplicará un <b>cargo adicional equivalente al 20% del valor total de la reserva</b>, destinado a cubrir el tiempo de espera de nuestro equipo de producción.</p><p>Si el retraso <b>supera los 90 minutos</b>, Nómada Picnic se reserva el derecho de dar por cancelado el servicio, <b>sin obligación de reembolso</b> de los importes abonados.</p>",
+        "DATA_4_END": "<p>El tiempo de espera no extenderá la duración originalmente contratada del picnic, la cual finalizará en el horario previsto al momento de la reserva.</p>",
+        "TITLE_5": "Cambios de horario",
+        "DATA_5": "<p>Las modificaciones de horario deberán solicitarse con un mínimo de <b>24 horas</b> de anticipación.</p><p><b>No podremos garantizar</b> cambios solicitados el mismo día del evento.</p>",
+        "TITLE_6": "Duración de la experiencia",
+        "DATA_6": "<p>Salvo que se indique lo contrario al momento de la contratación, nuestros picnics tienen una duración de <b>3 horas</b>.</p><p>Si el cliente desea finalizar la experiencia antes del horario previsto, deberá informarlo con al menos <b>30 minutos</b> de anticipación para que nuestro equipo pueda coordinar el retiro del mobiliario.</p>",
+        "TITLE_7": "Extensión de la experiencia",
+        "DATA_7": "<p>Los clientes podrán solicitar una o más horas adicionales para extender la duración de su picnic, sujetas a la <b>disponibilidad de agenda</b> y de nuestro equipo de producción.</p><p>El costo de este servicio será equivalente al <b>5% del valor total de la reserva</b> por cada hora adicional o fracción de hora iniciada.</p><p>Para garantizar la disponibilidad, recomendamos solicitar la extensión con un mínimo de <b>24 horas</b> de anticipación. No obstante, si la agenda lo permite, también podrá solicitarse durante el desarrollo del picnic o poco antes de su inicio.</p><p>La confirmación de la extensión quedará siempre sujeta a la <b>disponibilidad operativa</b> de Nómada Picnic.</p><p>Este beneficio <b>no aplica en casos de retraso por parte del cliente</b>. Si la experiencia comenzó más tarde debido a una demora de los asistentes, la contratación de horas adicionales no reemplaza ni modifica las condiciones establecidas en la cláusula de Puntualidad, ni implica una extensión automática del tiempo originalmente contratado.</p>",
+        "TITLE_8": "Mobiliario y elementos del picnic",
+        "DATA_8": "<p>Todo el mobiliario, vajilla, decoración y demás elementos entregados permanecerán bajo <b>responsabilidad del cliente</b> durante la duración del servicio.</p><p>En caso de <b>pérdida, rotura o daño</b> ocasionado por un uso indebido, Nómada Picnic podrá solicitar el pago correspondiente a la reparación o reposición del elemento afectado.</p>",
+        "TITLE_9": "Objetos personales",
+        "DATA_9": "<p>Nómada Picnic <b>no se responsabiliza</b> por pérdidas, olvidos o daños de objetos personales durante la experiencia.</p><p>Recomendamos mantener siempre bajo cuidado pertenencias como celulares, cámaras, billeteras, llaves y otros objetos de valor.</p>",
+        "TITLE_10": "Alcance del servicio",
+        "DATA_10": "<p>El servicio contratado incluye <b>exclusivamente</b> el montaje, decoración, mobiliario, desmontaje y los adicionales contratados al momento de la reserva.</p><p>Nuestros picnics se realizan en espacios públicos y abiertos, por lo que Nómada Picnic <b>no provee servicios sanitarios</b>.</p><p>Las ubicaciones son seleccionadas considerando comodidad, seguridad, privacidad y cercanía a servicios cuando es posible. Sin embargo, <b>no podemos garantizar</b> la disponibilidad o proximidad de baños públicos durante la experiencia.</p><p>Recomendamos a todos los asistentes tomar las previsiones necesarias antes de llegar al punto de encuentro.</p>",
+        "TITLE_11": "Demoras atribuibles a Nómada Picnic",
+        "DATA_11": "<p>Si por causas atribuibles exclusivamente a nuestro equipo el montaje comenzara con demora respecto al horario acordado, el cliente recibirá <b>una hora adicional sin cargo</b> para disfrutar de la experiencia.</p>",
+        "TITLE_12": "Uso de fotografías e imagen",
+        "DATA_12": "<p>Durante la experiencia, nuestro equipo podrá realizar <b>fotografías y/o videos con fines promocionales</b>.</p><p>Al confirmar la reserva, el cliente declara conocer esta modalidad y contar con el consentimiento de los asistentes para informarles sobre la posibilidad de registrar imágenes durante el evento. Asimismo, <b>autoriza a Nómada Picnic a utilizar dicho material</b> en:<ul><li>Sitio web.</li><li>Redes sociales.</li><li>Campañas publicitarias.</li><li>Material gráfico y audiovisual.</li><li>Presentaciones comerciales.</li><li>Cualquier otro medio de comunicación relacionado con la marca.</li></ul>Si alguno de los asistentes <b>no desea aparecer</b> en fotografías o videos, deberá comunicarlo a nuestro equipo antes del inicio del picnic, para que podamos respetar su decisión y evitar registrar su imagen.</p>",
+        "TITLE_13": "Menores de edad y mascotas",
+        "DATA_13": "<p>Los <b>menores de edad</b> deberán permanecer bajo la supervisión y responsabilidad de un adulto durante toda la experiencia.</p><p>En caso de asistir con <b>mascotas</b>, el cliente será responsable de su cuidado, comportamiento y de cualquier daño que puedan ocasionar al mobiliario, la decoración, los elementos del picnic o a terceros.</p>",
+        "TITLE_14": "Fuerza mayor",
+        "DATA_14": "<p>Nómada Picnic no será responsable por la imposibilidad de prestar el servicio debido a situaciones extraordinarias ajenas a su control, incluyendo —pero no limitándose a— <b>restricciones gubernamentales, cierre de parques, fenómenos climáticos extremos, manifestaciones, emergencias sanitarias</b> u otros eventos de fuerza mayor.</p><p>En estos casos, ambas partes coordinarán una <b>nueva fecha</b> para la realización del servicio.</p>",
+        "TITLE_15": "Aceptación de los términos",
+        "DATA_16": "<p>La confirmación de la reserva, el pago del servicio y/o la aceptación de la invitación enviada mediante Google Calendar implican la <b>aceptación íntegra</b> de los presentes Términos y Condiciones.</p>",
+        "TITLE_16": "Contacto",
+        "DATA_15": "<p>Si tenés alguna consulta sobre estos Términos y Condiciones, podés comunicarte con nosotros a través de:</p>"
       }
     },
     "PLACES": {

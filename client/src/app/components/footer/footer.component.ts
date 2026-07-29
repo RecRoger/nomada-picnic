@@ -15,13 +15,21 @@ export class FooterComponent {
 
   protected readonly router = inject(Router)
 
-  public isAdmin$: Observable<boolean> =
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map((event: NavigationEnd) => {
-        return event.urlAfterRedirects.includes('/admin') || event.url.includes('/admin');
-      })
-    );
+  protected readonly routeChange$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+
+  public isAdmin$: Observable<boolean> = this.routeChange$.pipe(
+    map((event: NavigationEnd) => {
+      return event.urlAfterRedirects.includes('/admin') || event.url.includes('/admin');
+    })
+  );
+
+  public isHome$: Observable<boolean> = this.routeChange$.pipe(
+    filter(event => event instanceof NavigationEnd),
+    map((event: NavigationEnd) => {
+      // Evaluamos si la URL actual es exactamente '/' o vacía
+      return event.urlAfterRedirects === '/' || event.url === '/';
+    })
+  );
 
   public linkFarm: { [key: string]: NavLink[] } = {
     EXPLORE: [
@@ -50,11 +58,11 @@ export class FooterComponent {
     CONTACT: [
       {
         href: 'tel:+5491126908781',
-        label: 'PUBLIC.FOOTER.CONTACT.PHONE'
+        label: 'COMMON.BUSINESS_PHONE'
       },
       {
         href: 'mailto:contacto@nomadapicnic.com',
-        label: 'PUBLIC.FOOTER.CONTACT.MAIL'
+        label: 'COMMON.BUSINESS_MAIL'
       },
       {
         href: 'https://instagram.com/nomadapicnic',
@@ -63,7 +71,7 @@ export class FooterComponent {
     ],
     LEGAL: [
       {
-        link: 'terms-and condition',
+        link: 'terms',
         label: 'PUBLIC.FOOTER.LEGAL.TYC'
       },
       {

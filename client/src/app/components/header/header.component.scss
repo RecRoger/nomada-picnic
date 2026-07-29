@@ -91,7 +91,8 @@
     top: 0;
     background-color: var(--color-bg-softcream);
     width: 100%;
-    height: 100%;
+    height: 100dvh;
+    overflow-y: auto;
     padding: 0;
     z-index: 10;
     display: flex;
@@ -116,7 +117,20 @@
 
       padding: var(--space-xxl) var(--space-lg);
       margin: auto;
-      // margin-top: var(--space-xl);
+
+      @media (orientation: landscape) and (max-height: 500px) {
+        display: grid;
+        /* Divide los enlaces en 2 columnas de igual tamaño */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem 2rem; // (espacio-vertical espacio-horizontal)
+        align-items: center;
+        justify-items: center;
+        padding: 1rem 2rem;
+        > *:last-child:nth-child(odd) {
+          grid-column: span 2; // Hace que ocupe las 2 columnas
+          // justify-self: center; // Opcional: asegura que el contenido quede centrado
+        }
+      }
 
       &_item {
         // @include u.custom-button(var(--color-black), var(--color-bg-softcream));
@@ -154,7 +168,7 @@
     }
 
     &-book-btn {
-      margin-top: 1rem;
+      margin: 1rem auto;
       @include u.custom-button(var(--color-white), var(--color-brand-blue));
       text-align: center;
     }

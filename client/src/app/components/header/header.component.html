@@ -8,8 +8,9 @@
         [routerLink]="link.link"
         routerLinkActive="active-link" 
         [routerLinkActiveOptions]="link.options || {}"
-        (click)="openMenu = false" 
-      >{{link.label | translate}}</a>
+        (click)="openMenu = false" >
+        {{link.label | translate}}
+      </a>
       }
       <a aria-label="book" href="https://wa.me/5491126908781" class="c-header--menu-book-btn">
         {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}

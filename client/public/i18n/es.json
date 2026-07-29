@@ -235,6 +235,39 @@
         "TEXT": "Creamos momentos especiales en los lugares más lindos de la ciudad."
       }
     },
+    "FAQ": {
+      "PILL": "Preguntas Frecuentes",
+      "TITLE": "Resolviendo tus dudas sobre Nómada Picnic",
+      "SUBTITLE": "Todo lo que necesitás saber antes de reservar tu experiencia.",
+      "CONTENT": {
+        "TITLE_1": "Sobre el Servicio de Picnic de Nómada",
+        "QUESTION_1": "¿Qué es Nómada Picnic y qué ofrecen?",
+        "ANSWER_1": "Nómada Picnic es un emprendimiento familiar que diseña y monta experiencias de picnic únicas y personalizadas en diversos espacios al aire libre de Buenos Aires. Nos encargamos de todo: desde la decoración y el mobiliario hasta el menaje y extras, para que tú solo disfrutes sin preocupaciones. Ofrecemos packs para parejas, amigos, familias y eventos grupales.",
+        "QUESTION_2": "¿En qué zonas de Buenos Aires operan?",
+        "ANSWER_2": "Operamos principalmente en la Ciudad Autónoma de Buenos Aires (CABA) y sus alrededores. Podemos montar tu picnic en los parques más emblemáticos como Floralis, Lago de Regatas, Bosques de Palermo, Costanera Vicente López, Parque General Paz, Parque Saavedra, Monumento a los Caídos, Plaza Arenales, o incluso en la comodidad de tu domicilio o espacio privado.",
+        "QUESTION_3": "¿Los picnics incluyen comida y bebida?",
+        "ANSWER_3": "Nuestros packs base se centran en el mobiliario, la decoración y el menaje para crear la experiencia. Sin embargo, todos incluyen una cortesía especial (bebida a elección, pan, dip y medialunas). Podemos ofrecer opciones de catering o recomendar proveedores asociados si buscas un servicio de comida completo. Por favor, consultanos al solicitar tu cotización.",
+        "TITLE_2": "Reservas y Personalización",
+        "QUESTION_4": "¿Cómo puedo reservar un picnic con Nómada Picnic?",
+        "ANSWER_4": "¡Es muy fácil! Podés iniciar tu consulta enviándonos un mensaje por WhatsApp o un mensaje directo por Instagram. Te haremos algunas preguntas clave sobre tu evento (fecha, cantidad de personas, tipo de celebración, ubicación preferida) para poder armar una cotización personalizada.",
+        "QUESTION_5": "¿Con cuánto tiempo de anticipación debo reservar?",
+        "ANSWER_5": "Recomendamos reservar con la mayor antelación posible, especialmente para fechas especiales o fines de semana, para asegurar la disponibilidad de nuestros packs y mobiliario. Para eventos grandes (Pack Grupal FULL), sugerimos al menos 2-3 semanas.",
+        "QUESTION_6": "¿Puedo personalizar la decoración o añadir extras a mi pack?",
+        "ANSWER_6": "¡Sí, por supuesto! Nos encanta crear experiencias únicas. Contanos tus ideas o la temática de tu evento y haremos lo posible por adaptarnos. Podemos sugerirte adicionales como flores, juegos, opciones de iluminación, etc., para que tu picnic personalizado sea perfecto.",
+        "QUESTION_7": "¿Qué pasa si llueve o hay mal tiempo el día de mi reserva?",
+        "ANSWER_7": "Entendemos que el clima es impredecible. Ofrecemos la posibilidad de reprogramar tu picnic sin costo adicional para otra fecha disponible, siempre y cuando nos avises con un mínimo de 24 horas de anticipación.<br><br>En el caso que el picnic tenga adicionales de comidas o tortas, te pedimos que cualquier cancelación sea notificada con un mínimo de 48 horas de anticipación a la fecha del picnic. Si la notificación de cancelación se realiza con menos antelación, se deberá abonar el total de dichos adicionales, ya que su preparación o adquisición ya estará en curso. En ese caso, ¡no te preocupes! Podemos coordinar la entrega de los productos en la dirección que nos indiques.",
+        "TITLE_3": "Detalles del Servicio",
+        "QUESTION_8": "¿Qué incluye el servicio de montaje y desmontaje?",
+        "ANSWER_8": "Nuestro servicio integral incluye el traslado de todo el mobiliario y la decoración al lugar acordado, el armado completo de tu espacio de picnic con el diseño elegido, y al finalizar, el desmontaje y la retirada de todos los elementos. Tú no tenés que preocuparte por nada.",
+        "QUESTION_9": "¿Cuál es la duración promedio de un picnic?",
+        "ANSWER_9": "Generalmente, nuestras experiencias de picnic están pensadas para un disfrute de 3 a 4 horas, pero podemos ajustar los horarios según tus necesidades y la disponibilidad. Por favor, consúltanos al momento de la reserva."
+      },
+      "CONTACT": {
+        "TITLE": "¿Todavía tenés dudas?",
+        "SUBTITLE": "Escribinos y te ayudamos a armar tu experiencia ideal.",
+        "BUTTON": "Escribínos por WhatsApp"
+      }
+    },
     "TYC": {
       "TITLE": "Términos y Condiciones",
       "SUBTITLE": "Al confirmar una reserva con <b>Nómada Picnic</b>, el cliente acepta los presentes Términos y Condiciones, los cuales regulan la prestación del servicio contratado.",

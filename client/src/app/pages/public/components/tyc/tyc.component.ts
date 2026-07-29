@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, UpperCasePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { StaticData } from '@models/static-data';
@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tyc',
-  imports: [TranslateModule, DatePipe, NgClass, UpperCasePipe],
+  imports: [TranslateModule, DatePipe, NgClass],
   templateUrl: './tyc.component.html',
   styleUrl: './tyc.component.scss'
 })

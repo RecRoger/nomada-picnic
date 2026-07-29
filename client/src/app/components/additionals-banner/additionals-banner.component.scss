@@ -99,7 +99,6 @@
 
       @include u.style-starting-from(mobile) {
         max-width: 350px;
-        // margin: -8rem 0;
       }
 
       @include u.style-starting-from(desktop) {

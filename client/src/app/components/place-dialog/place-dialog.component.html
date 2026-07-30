@@ -2,22 +2,33 @@
   <button mat-icon-button mat-dialog-close class="close-btn" type="button">
     <mat-icon>close</mat-icon>
   </button>
-  <mat-dialog-content>
-    @if (place.images?.length) {
-      <div class="c-place-dialog--images">
-        @for (image of place.images; track $index) {
-          <img src="{{image | apiImageUrl}}" [alt]="place.name+$index" class="c-place-dialog--images-item">
-        }
-      </div>
-    }
-    <h3 class="c-place-dialog--title">{{place.name}}</h3>
-    <p class="c-place-dialog--description">{{place.description}}</p>
-    @if (place.detail) {
-      <div class="c-place-dialog--detail" [innerHTML]="place.detail | safeHtml"></div>
-    }
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <a mat-button [href]="place.mapsLink" target="_blank">{{'PUBLIC.PLACES.CHECK_MAPS' | translate}}</a>
-    <button mat-raised-button [mat-dialog-close]="true">{{'PUBLIC.PLACES.ADD' | translate}}</button>
-  </mat-dialog-actions>
+
+  @if (place.images?.length) {
+    <div class="c-place-dialog--media">
+      @for (image of place.images; track $index) {
+        <img class="media-img" src="{{image | apiImageUrl}}" [alt]="place.name+$index">
+      }
+    </div>
+  }
+  <div class="c-place-dialog--content">
+    <h1 class="c-place-dialog--title">{{place.name}}</h1>
+    <div class="c-place-dialog--data">
+      @if (place.tags?.length) {
+       <div class="c-place-dialog--data-tags">
+          @for (tag of place.tags; track $index) {
+            <div class="place-tag">{{tag}}</div>
+          }
+        </div>
+      }
+
+      <p class="c-place-dialog--data-description">{{place.description}}</p>
+      @if (place.detail) {
+        <div class="c-place-dialog--data-detail" [innerHTML]="place.detail | safeHtml"></div>
+      }
+    </div>
+    <div class="c-place-dialog--actions">
+      <a class="c-place-dialog--actions-map" [href]="place.mapsLink" target="_blank">{{'PUBLIC.PLACES.CHECK_MAPS' | translate}}</a>
+      <button class="c-place-dialog--actions-add" [mat-dialog-close]="true">{{'PUBLIC.PLACES.ADD' | translate}}</button>
+    </div>
+  </div>
 </div>

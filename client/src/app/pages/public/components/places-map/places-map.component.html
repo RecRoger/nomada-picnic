@@ -4,6 +4,11 @@
         <h1 class="c-places-map--info-title">
           {{'PUBLIC.PLACES.MAP.TITLE' | translate}}
         </h1>
+        <button 
+          mat-icon-button 
+          class="info-close-btn">
+          <mat-icon>close</mat-icon>
+        </button>
         <p class="c-places-map--info-text" [innerHTML]="'PUBLIC.PLACES.MAP.MESSAGE' | translate"></p>
       </div>
 
@@ -12,31 +17,50 @@
         height="100%"
         [options]="mapOptions">
         @for (marker of markers; track $index) {
-          <map-advanced-marker [position]="marker.position" [title]="marker.label"
-          (mapClick)="checkPlace(marker.id)"
-          >
+
+          <div #customPin class="nomada-marker">
+            <div class="marker-pin">
+              <img src="/images/logos/NOMADA_LOGO_2025_F_NARANJA.svg" [alt]="marker.label" width="40" height="40" />
+            </div>
+          </div>
+
+          <map-advanced-marker [position]="marker.position" [title]="marker.label" [content]="customPin"
+          (mapClick)="checkPlace(marker.id)">
           </map-advanced-marker>
         }
       </google-map>
     }
     
-    @if (options?.length) {
-      <form class="c-places-map--search">
-        <mat-form-field class="c-places-map--search-input">
-          <mat-label>{{'PUBLIC.PLACES.FILTER.LABEL' | translate}}</mat-label>
-          <input type="text"
-            aria-label="Places"
-            matInput
-            [formControl]="searchControl"
-            [matAutocomplete]="auto"
-            (keypress.enter)="null">
-          <mat-autocomplete  #auto="matAutocomplete" (optionSelected)="selectSearch($event.option.value)">
-            @for (option of filteredOptions | async; track option) {
-              <mat-option [value]="option">{{option}}</mat-option>
-            }
-          </mat-autocomplete>
-        </mat-form-field>
-      </form>
+    @if (options.length) {
+      <div class="c-places-map--search" [class.open]="searchOpen">
+        <div class="search-card">
+          <mat-form-field class="search-input">
+            <mat-label>{{'PUBLIC.PLACES.FILTER.LABEL' | translate}}</mat-label>
+            <input type="text"
+              aria-label="Places"
+              matInput
+              [formControl]="searchControl"
+              [matAutocomplete]="auto"
+              (keypress.enter)="null">
+            <mat-autocomplete  #auto="matAutocomplete" (optionSelected)="selectSearch($event.option.value)">
+              @for (option of filteredOptions | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+          <!-- <button mat-icon-button class="clear-btn">
+            <mat-icon>clear</mat-icon>
+          </button> -->
+        </div>
+
+        <button 
+          mat-icon-button 
+          class="trigger-btn" 
+          (click)="toggleSearch()" 
+          [title]="searchOpen ? 'Cerrar buscador' : 'Buscar'">
+          <mat-icon>{{ searchOpen ? 'close' : 'search' }}</mat-icon>
+        </button>
+      </div>
     }
 
 </div>

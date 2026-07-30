@@ -1,0 +1,33 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "colors" as c;
+@use "typography" as t;
+
+@include mat.core();
+
+$primary-hex: map.get(c.$colors, "brand-coral");
+$accent-hex: map.get(c.$colors, "brand-purple");
+
+// Tema base
+$my-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+    ),
+    typography: (
+      brand-family: t.$font-main,
+    ),
+  )
+);
+
+@mixin apply-theme {
+  @include mat.all-component-themes($my-theme);
+
+  // Sobrescribimos las variables de color del tema con tus marcas exactas
+  :root {
+    --mat-sys-primary: #{$primary-hex};
+    --mat-sys-on-primary: #{map.get(c.$colors, "white")};
+    --mat-sys-tertiary: #{$accent-hex};
+  }
+}

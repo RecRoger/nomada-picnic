@@ -52,7 +52,9 @@ export class PlacesMapComponent implements OnInit {
 
   public filteredOptions: Observable<string[]> = of([])
 
-  public hide = false;
+  public hide = false
+
+  public searchOpen = false
 
   private readonly placesService = inject(PlacesService)
 
@@ -62,6 +64,10 @@ export class PlacesMapComponent implements OnInit {
 
   private highlightedId: string | null = null
 
+  public toggleSearch(): void {
+    this.searchOpen = !this.searchOpen
+  }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -69,6 +75,7 @@ export class PlacesMapComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    setTimeout(() => { this.hide = true }, 10000)
     this.getPlaces()
     this.setSearchFilter()
   }
@@ -83,15 +90,23 @@ export class PlacesMapComponent implements OnInit {
   }
 
   public checkPlace(id: string): void {
+    this.searchOpen = false;
     const place = this.places.find(place => place._id === id)
     const dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
+      width: '900px',       // 👈 Define el ancho deseado
+      maxWidth: '90vw',     // 👈 Evita que en pantallas chicas rompa
+      height: 'auto',
+      panelClass: 'custom-place-dialog-panel'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result) {
         // TODO - logica de selccion de lugar
-        console.log("Añadir al carrito", id)
+        const message = `¡Hola! Me interesaria tener informacion sobre un picnic en ${place!.name}`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       }
     });
   }

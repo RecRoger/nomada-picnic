@@ -1,9 +1,14 @@
+@use "utils" as u;
+
 .c-places-map {
   position: relative;
   display: block;
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   z-index: 0;
+  background-color: var(--color-bg-cream);
+  // padding-bottom: 10px;
+  margin-bottom: -60px;
 
   &--info {
     position: absolute;
@@ -16,20 +21,24 @@
     justify-content: center;
     padding: 0px 1.5rem 1rem;
     margin: 6rem 15%;
-    background-color: #ffd9e1;
+    background-color: var(--color-brand-pink);
+    color: var(--color-white);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1019607843);
-    border-radius: 15px;
-    color: #8e0045;
+    border-radius: var(--radius-card-md);
     text-decoration: none;
-
-    // opacity: 0;
-    // visibility: hidden;
 
     &.hidden {
       opacity: 0;
       visibility: hidden;
       pointer-events: none; // Evita que el usuario haga clic en algo que no ve
       display: none; // Ojo: display no se anima, pero al final del keyframe ayuda
+    }
+
+    .info-close-btn {
+      position: absolute;
+      color: var(--color-white);
+      right: 18px;
+      top: 18px;
     }
 
     &-title {
@@ -41,15 +50,108 @@
 
   &--search {
     position: absolute;
-    display: flex;
-    z-index: 2;
-    bottom: 0;
-    width: 100%;
-    padding: 1rem 0;
+    top: 110px;
+    padding: 1rem;
+    display: inline-flex;
+    align-items: flex-start;
+    background: transparent;
 
-    &-input {
-      margin: auto;
-      width: 85%;
+    .trigger-btn {
+      background-color: var(--color-brand-blue);
+      color: var(--color-white);
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        // transform: scale(1.1);
+      }
+    }
+
+    .search-card {
+      @include u.flex(row, center, center);
+      background: var(--color-brand-blue);
+      border-radius: var(--radius-card-sm);
+      border-top-right-radius: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+
+      /* Estado Colapsado (Oculto a la izquierda) */
+      max-width: 0;
+      opacity: 0;
+      padding: 0;
+      transform: translateX(-20px);
+      pointer-events: none;
+
+      /* Transición fluida deslizante hacia la derecha */
+      transition:
+        max-width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        padding 0.3s ease;
+
+      .search-input {
+        min-width: 300px;
+      }
+    }
+
+    &.open {
+      .trigger-btn {
+        // background: var(--color-brand-purple);
+        // color: #333;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      .search-card {
+        max-width: 500px; /* Suficiente para acomodar el input */
+        opacity: 1;
+        transform: translateX(0);
+        padding: 20px 16px 8px;
+        margin-right: -1px;
+        pointer-events: auto;
+      }
+    }
+  }
+}
+
+.nomada-marker {
+  position: relative;
+  @include u.flex(row, center, center);
+  padding-bottom: 8px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    bottom: -6px;
+    left: calc(50% - 4px);
+    filter: blur(2px);
+  }
+  .marker-pin {
+    width: 44px;
+    height: 44px;
+    border-radius: 50% 50% 50% 0;
+    background: var(--color-bg-cream);
+    position: relative;
+    transform: rotate(-45deg); /* Rotamos la esquina recta hacia abajo */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    @include u.flex(row, center, center);
+    border: 2px solid var(--color-brand-purple); /* Borde con color de marca */
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    cursor: pointer;
+
+    img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      transform: rotate(45deg);
+    }
+    &:hover {
+      transform: rotate(-45deg) scale(1.15);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
     }
   }
 }

@@ -94,7 +94,6 @@ export class PlacesMapComponent implements OnInit {
     const place = this.places.find(place => place._id === id)
     const dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
-      width: '900px',       // 👈 Define el ancho deseado
       maxWidth: '90vw',     // 👈 Evita que en pantallas chicas rompa
       height: 'auto',
       panelClass: 'custom-place-dialog-panel'

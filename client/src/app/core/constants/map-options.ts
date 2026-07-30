@@ -4,4 +4,5 @@ export const MAP_OPTIONS = {
   zoom: 12,
   disableDefaultUI: false,
   clickableIcons: false,
+  streetViewControl: false,
 }

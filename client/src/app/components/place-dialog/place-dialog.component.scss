@@ -75,14 +75,24 @@
 
     &-tags {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 0.2rem;
       margin-bottom: 1rem;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      &::-webkit-scrollbar {
+        display: none; // Chrome, Safari y Opera
+      }
+      scrollbar-width: none; // Firefox
 
       .place-tag {
         @include u.pill(var(--color-black), var(--color-bg-cream));
         font-size: var(--font-small);
         padding: 0.3rem 1rem;
+        flex-shrink: 0;
+        white-space: nowrap;
+        scroll-snap-align: start;
       }
     }
   }

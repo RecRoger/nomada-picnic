@@ -7,17 +7,18 @@ import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavLink } from '@models/nav-link';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatTabsModule, RouterModule],
+  imports: [CommonModule, TranslateModule, MatTabsModule, RouterModule, MatIconModule, MatButtonModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
 export class AdminComponent implements OnInit {
   protected readonly authService: AuthService = inject(AuthService)
-
 
   public readonly user = this.authService.user
 
@@ -47,7 +48,6 @@ export class AdminComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit(): void {
-
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntilDestroyed(this.destroyRef)
@@ -56,5 +56,10 @@ export class AdminComponent implements OnInit {
         this.tabs.find(tab => this.router.url.includes(tab.link!))!
       );
     });
+  }
+
+  logout(): void {
+    this.authService.logout()
+    this.router.navigate(['/'])
   }
 }

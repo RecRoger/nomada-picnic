@@ -1,6 +1,10 @@
 <div class="c-admin page-container">
-  <h2 class="c-admin--title">{{ "ADMIN.TITLE" | translate: user }}</h2>
-  <h4 class="c-admin--subtitle">{{ "ADMIN.WELCOME" | translate: user }}</h4>
+  <h4 class="c-admin--subtitle">
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>first_page</mat-icon>
+    </button>
+    {{ "ADMIN.WELCOME" | translate: user }}
+  </h4>
 
   <nav mat-tab-nav-bar [tabPanel]="tabPanel">
     @for (tab of tabs; track $index) {

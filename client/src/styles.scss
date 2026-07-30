@@ -1,4 +1,6 @@
 // src/styles.scss
+// @use "styles/theme-colors" as theme;
+@use "styles/theme" as theme;
 @use "styles/variables" as *;
 @use "styles/mixins" as *;
 @use "styles/breakpoints" as b;
@@ -10,6 +12,9 @@ body {
   height: 100%;
   margin: 0;
   font-family: $font-main;
+}
+html {
+  @include theme.apply-theme();
 }
 
 h1,

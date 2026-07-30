@@ -4,12 +4,16 @@
   /* Permite que los elementos se ajusten en pantallas pequeñas */
   gap: 16px;
   /* Espacio entre lista y mapa */
-
 }
-
-.place-basic {
-  mat-expansion-panel-header {
-    background: #ffd9e1;
+::ng-deep {
+  .place-basic {
+    mat-expansion-panel-header {
+      background: var(--color-brand-purple);
+    }
+    .mat-expansion-panel-header-title,
+    .mat-expansion-panel-header-description {
+      color: white !important; // Hereda la fuente de tu app
+    }
   }
 }
 
@@ -35,7 +39,7 @@
 .place-image {
   width: 10rem;
   height: auto;
-  margin: 1rem .5rem;
+  margin: 1rem 0.5rem;
 }
 
 .place-actions {

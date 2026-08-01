@@ -120,7 +120,7 @@
           {{ 'COSTS.FORM.DELIVERY' | translate }}
         </mat-slide-toggle>
       }
-      @if (getControl('type').value === CostsTypes.ADDITIONAL) {
+      @if (![CostsTypes.PRODUCTION, CostsTypes.GIFTS, CostsTypes.DELIVERY].includes(getControl('type').value)) {
         <mat-slide-toggle
           formControlName="multipleAllowed"
           labelPosition="before"

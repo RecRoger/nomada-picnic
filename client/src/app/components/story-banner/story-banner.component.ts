@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { afterNextRender, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CarouselComponent, CarouselOptions } from '@components/carousel/carousel.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,27 +22,31 @@ export class StoryBannerComponent {
 
   carouselOptions: CarouselOptions = {
     type: 'carousel',
-    autoplay: 100,
-    animationDuration: 2000,
+    autoplay: 3000,
+    // animationDuration: 2000,
     animationTimingFunc: 'linear',
-    perView: 6.5,
-    focusAt: 3,
-    gap: 16,
+    perView: 3,
+    focusAt: 1,
+    peek: 200,
+    gap: 46,
     breakpoints: {
       1024: {
-        perView: 6,
-        focusAt: 4,
-        gap: 16,
+        perView: 3,
+        focusAt: 1,
+        peek: 100,
+        gap: 32,
       },
       768: {
-        perView: 4.5,
-        focusAt: 2,
-        gap: 16,
+        perView: 3,
+        focusAt: 1,
+        peek: 60,
+        gap: 24,
       },
       576: {
-        perView: 2,
-        focusAt: 1,
-        gap: 20,
+        perView: 1,
+        focusAt: 0,
+        peek: 140,
+        gap: 24,
       }
     }
   };

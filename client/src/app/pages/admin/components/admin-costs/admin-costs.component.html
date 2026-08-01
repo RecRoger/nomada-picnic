@@ -1,13 +1,40 @@
 <div class="costs-header">
   <h3>{{"COSTS.TITLE" | translate }}</h3>
   @if(!showForm) {
+    <form class="costs-header--filters" [formGroup]="filters">
+      <mat-form-field>
+        <mat-label>{{'COMMON.SEARCH' | translate}}</mat-label>
+        <input matInput formControlName="keyword">
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="resetTypeFilter('keyword'); $event.stopPropagation()">
+              <mat-icon>close</mat-icon>
+            </button>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{'COMMON.TYPE' | translate}}</mat-label>
+        <mat-select formControlName="costType" multiple>
+          @for (costType of costsTypes; track costType) {
+            <mat-option [value]="costType">{{('COSTS.TYPES_DESCRIPTION.'+(costType | uppercase)) | translate}}</mat-option>
+          }
+        </mat-select>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="resetTypeFilter('costType'); $event.stopPropagation()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
   <button mat-raised-button (click)="showForm = true">{{'COSTS.NEW' | translate}}</button>
   }
 </div>
 <div class="costs-container">
 
   @if (!showForm) {
-  <table mat-table [dataSource]="costList" multiTemplateDataRows>
+  <table mat-table [dataSource]="filteredCostList" multiTemplateDataRows>
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{'COMMON.NAME' | translate}}</th>

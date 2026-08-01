@@ -13,6 +13,8 @@ export interface CarouselOptions {
   focusAt?: number | string,
   arrows?: boolean,
   autoplay?: number,
+  peek?: number | string | Record<"before" | "after", number>,
+  bound?: boolean,
   animationDuration?: number
   animationTimingFunc?: string
 }
@@ -50,6 +52,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       perView: this.options.perView ?? 3,
       gap: this.options.gap ?? 24,
       autoplay: this.options.autoplay ?? undefined,
+      peek: this.options.peek || 0,
+      // bound: true,
       hoverpause: true,
       // throttle: 5,
       focusAt: this.options.focusAt ?? 0,

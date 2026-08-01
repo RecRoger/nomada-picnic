@@ -1,3 +1,5 @@
+@use "utils" as u;
+
 table {
   width: 100%;
 }
@@ -28,22 +30,18 @@ tr.element-row:not(.expanded-row):active {
 }
 
 .cost-detail {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 2rem;
+  @include u.flex(row, flex-start, flex-start, 2rem);
 }
 
 .costs-header {
-  display: flex;
-  justify-content: space-between;
+  @include u.flex(row, space-between, start, 2rem);
+  &--filters {
+    @include u.flex(row, center, center, 2rem);
+  }
 }
 
 .costs-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1rem;
+  @include u.flex(row, flex-start, center, 1rem);
 }
 
 .cost-image {

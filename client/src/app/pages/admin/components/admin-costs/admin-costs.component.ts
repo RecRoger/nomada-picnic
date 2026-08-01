@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,25 +10,35 @@ import { NotificationService } from '@services/notification.service';
 import { CostsFormComponent } from '@components/costs-form/costs-form.component';
 import { CostsService } from '@services/costs.service';
 import { ICost } from '@shared/interfaces';
-import { AlertTypes } from '@shared/enums';
+import { AlertTypes, CostsTypes } from '@shared/enums';
 import { CommonModule } from '@angular/common';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
 import { MatChipsModule } from '@angular/material/chips';
+import { FormBuilder } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatInputModule } from '@angular/material/input';
 
 
 const MAT_MODULES = [
-  MatTableModule, MatButtonModule, MatIconModule, MatChipsModule,
+  MatTableModule, MatButtonModule, MatIconModule, MatChipsModule, MatSelectModule, MatInputModule, MatFormFieldModule,
 ]
 @Component({
   selector: 'app-costs',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     TranslateModule,
     ...MAT_MODULES,
     CostsFormComponent,
     ApiImageUrlPipe,
-    SafeHtmlPipe],
+    SafeHtmlPipe,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './admin-costs.component.html',
   styleUrl: './admin-costs.component.scss',
   animations: [
@@ -47,9 +57,13 @@ export class AdminCostsComponent implements OnInit {
 
   public readonly dialog = inject(MatDialog);
 
+  public readonly fb = inject(FormBuilder);
+
   private readonly notificationService: NotificationService = inject(NotificationService)
 
   public costList: ICost[] = [];
+
+  public filteredCostList: ICost[] = [];
 
   public columnsToDisplayWithExpand = [
     "name",
@@ -66,14 +80,25 @@ export class AdminCostsComponent implements OnInit {
 
   public costToEdit?: ICost
 
+  public filters = this.fb.group({
+    costType: [null],
+    keyword: []
+  })
+
+  public readonly costsTypes = Object.values(CostsTypes)
+
+  private readonly destroyRef = inject(DestroyRef)
+
   ngOnInit(): void {
-    this.getCosts()
+    this.getCosts();
+    this.setFilters();
   }
 
   public getCosts(): void {
     this.costsService.getCosts()
       .subscribe(costs => {
         this.costList = costs
+        this.filterCosts()
       })
   }
 
@@ -132,6 +157,10 @@ export class AdminCostsComponent implements OnInit {
     });
   }
 
+  public resetTypeFilter(controlName: string): void {
+    this.filters.get(controlName)?.reset()
+  }
+
   private deleteCost(id: string): void {
     this.costsService.deleteCost(id).subscribe(resp => {
       if (resp) {
@@ -166,4 +195,39 @@ export class AdminCostsComponent implements OnInit {
     return formData
   }
 
+  private setFilters(): void {
+    this.filters.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(_ => {
+        this.filterCosts()
+      })
+  }
+
+  private filterCosts(): void {
+    const typeValue: string[] = this.filters.get('costType')?.value || []
+    const keyValue: string = this.filters.get('keyword')?.value || ''
+
+    if (!typeValue.length && !keyValue) {
+      this.filteredCostList = this.costList
+    } else {
+      if ((typeValue as string[]).length) {
+        this.filteredCostList = this.costList.filter(cost => (typeValue as string[]).includes(cost.type))
+      }
+      if (keyValue.trim() != '') {
+        const normalizedKey = this.normalizeString(keyValue)
+        this.filteredCostList = this.filteredCostList.filter(cost => {
+          const normalizedItem = this.normalizeString(cost.name);
+          return normalizedItem.includes(normalizedKey);
+        })
+      }
+    }
+  }
+
+  public normalizeString(str: string): string {
+    if (!str) return '';
+    return str
+      .toLowerCase()
+      .normalize('NFD') // Descompone caracteres combinados (ej: 'ó' -> 'o' + '´')
+      .replace(/[\u0300-\u036f]/g, '') // Elimina los signos de acentuación descompuestos
+      .replace(/[^a-z0-9]/g, ''); // Elimina espacios, guiones y cualquier carácter no alfanumérico
+  }
 }

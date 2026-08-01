@@ -9,6 +9,10 @@
     </p>
   </div>
 
+  <a class="s-story-banner--action" [routerLink]="'/story'">
+    {{'PUBLIC.BANNERS.STORY.BUTTON' | translate}}
+  </a>
+  
   <div class="s-story-banner--carousel">
     <app-carousel [items]="historiasPics" [options]="carouselOptions">
       <ng-template let-foto>
@@ -19,8 +23,5 @@
     </app-carousel>
   </div>
 
-  <a class="s-story-banner--action" [routerLink]="'/story'">
-    {{'PUBLIC.BANNERS.STORY.BUTTON' | translate}}
-  </a>
 
 </section>

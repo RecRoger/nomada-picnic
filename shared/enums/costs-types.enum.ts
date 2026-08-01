@@ -4,6 +4,6 @@ export enum CostsTypes {
   ADDITIONAL = 'additional',
   FURNITURE = 'furniture',
   FOOD = 'food',
-  DRINKS = 'drink',
+  DRINKS = 'drinks',
   DELIVERY = 'delivery',
 }

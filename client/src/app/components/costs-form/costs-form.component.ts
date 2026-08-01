@@ -63,7 +63,7 @@ export class CostsFormComponent implements OnInit {
       guestsCoverage: [this.cost?.guestsCoverage || 0, [Validators.min(0)]],
       providerCost: [this.cost?.providerCost || 0, [Validators.required, Validators.min(0)]],
       productionCost: [this.cost?.productionCost || 0, [Validators.required, Validators.min(0)]],
-      earnPercentage: [this.cost?.earnPercentage || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      earnPercentage: [this.cost?.earnPercentage || 0, [Validators.required, Validators.min(0)]],
       multipleAllowed: [this.cost?.multipleAllowed || false, []],
       deliveryRequired: [this.cost?.deliveryRequired || false, []],
     });

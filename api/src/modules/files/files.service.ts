@@ -75,29 +75,29 @@ export class FilesService {
 
     this.logger.log(`[saveFiles]: de ${prefix}`);
     const bucket = this.storage.bucket(this.bucketName);
+    const uploadedFiles: string[] = [];
 
     try {
-      const savePromises = files.map(async (file) => {
-        // 1. Procesamos la imagen (convertimos si es HEIC)
+      // 💡 Cambiamos Promise.all por un for...of para procesar una por una secuencialmente
+      for (const file of files) {
+        // 1. Decodifica y convierte 1 sola imagen a la vez (mantiene bajo el consumo de RAM)
         const processedImage = await this.processAndConvertImage(file);
 
         const timestamp = Date.now();
         const randomString = Math.random().toString(36).substring(2, 8);
-
-        // 2. Armamos la ruta asegurando que la extensión sea la procesada (.jpg si era HEIC)
         const fileName = `${folder}/${prefix}-${timestamp}-${randomString}${processedImage.extension}`;
+
         const blob = bucket.file(fileName);
 
-        // 3. Guardamos el buffer procesado en Google Cloud Storage
         await blob.save(processedImage.buffer, {
           contentType: processedImage.mimetype,
           resumable: false,
         });
 
-        return fileName;
-      });
+        uploadedFiles.push(fileName);
+      }
 
-      return await Promise.all(savePromises);
+      return uploadedFiles;
     } catch (error) {
       this.logger.error(`Error al subir a GCS: ${error.message}`);
       throw new InternalServerErrorException('No se pudieron guardar las imágenes en la nube');

@@ -1,30 +1,68 @@
 <div class="c-additionals page-container">
-  <h1 class="c-additionals--title">
-    {{'PUBLIC.ADDITIONALS.LIST.TITLE' | translate}}
-  </h1>
+  <div class="c-additionals--hero">
+    <div class="c-additionals--hero-content">
+      <h1 class="c-additionals--hero-title">
+        <span class="title-line">
+          {{'PUBLIC.ADDITIONALS.HERO.TITLE.LINE_1' | translate}}
+          <span class="highlight">{{'PUBLIC.ADDITIONALS.HERO.TITLE.LINE_2' | translate}}</span>
+          {{'PUBLIC.ADDITIONALS.HERO.TITLE.LINE_3' | translate}}</span>
+      </h1>
+      <p class="c-additionals--hero-subtitle" [innerHTML]="'PUBLIC.ADDITIONALS.HERO.DESCRIPTION' | translate"></p>
+      <div class="c-additionals--hero-input" [formGroup]="filterForm">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Buscar por nombre o palabra clave..." 
+          formControlName="keyword"
+        />
+      </div>
+    </div>
+  </div>
+
 
   <div class="c-additionals--filters">
     <!-- // TODO - aca irian los filtros -->
   </div>
 
-  @if (additionalsList?.length) {
+  @if (filteredList.length) {
     <div class="c-additionals--list">
-      @for (card of additionalsList; track $index) {
-        <div class="c-additionals--list-card" (click)="checkAdditional(card)">
-          @if (card.images?.length) {
-            <div class="c-additionals--list-card__image">
-              <img  [src]="card.images[0] | apiImageUrl" alt="">
-            </div>
-          }
-          <h4 class="c-additionals--list-card__title">{{card.name}}</h4>
-          <p class="c-additionals--list-card__description">{{card.description}}</p>
-          <div class="c-additionals--list-card__footer">
-            <div class="c-additionals--list-card__price">
-              {{card.finalPrice  | number:'1.2-2'}} US$
-            </div>
-            <mat-icon class="c-additionals--list-card__icon">chevron_right</mat-icon>
+      @for (item of filteredList; track $index) {
+        <article class="product-card" (click)="checkAdditional(item)">
+          <div class="product-card__header">
+            @if (item.images?.length) {
+              <img [src]="item.images[0] | apiImageUrl" [alt]="item.name" class="product-card__image" />
+              <span class="badge badge--counter">1/{{item.images.length}}</span>
+            }
+            <span class="badge badge--category">{{('COSTS.TYPES_DESCRIPTION.'+(item.type | uppercase)) | translate}}</span>
           </div>
-        </div>
+
+          <div class="product-card__body">
+            <h3 class="product-card__title">{{ item.name }}</h3>
+
+            <div class="product-card__tags">
+              @for (tag of item.tags?.slice(0,3); track $index) {
+                <span class="tag">{{ tag }}</span>
+              }
+              @if(item.tags && item.tags.length > 3) {
+                <span class="tag-more" >+{{ item.tags.length - 3 }}</span>
+              }
+            </div>
+            <p class="product-card__description">
+              {{ item.description }}
+            </p>
+            <div class="product-card__footer">
+              <div class="product-card__price">
+                <span class="amount">{{ item.finalPrice | number:'1.2-2' | currency: 'US$ ' }}</span>
+              </div>
+
+              <!-- // TODO - añadir al carrito -->
+              <button type="button" class="btn-add">
+                Ver
+              </button>
+            </div>
+          </div>
+        </article>
       }
 
     </div>
@@ -32,5 +70,4 @@
     <p class="c-additionals--no-list">{{'PUBLIC.ADDITIONALS.NO_LIST' | translate}}</p>
   }
 
-  
 </div>

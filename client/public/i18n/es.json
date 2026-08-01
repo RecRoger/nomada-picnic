@@ -376,10 +376,13 @@
       }
     },
     "ADDITIONALS": {
-      "TITLE": "Comida y adicionales",
-      "SUBTITLE": "Ir a ver todos los adicionales",
-      "LIST": {
-        "TITLE": "Adicionales"
+      "HERO": {
+        "TITLE": {
+          "LINE_1": "Sumale",
+          "LINE_2": "magia",
+          "LINE_3": "a tu picnic"
+        },
+        "DESCRIPTION": "Adicionales para decorar, comer y celebrar. Súmalos a tu experiencia y solo llega a disfrutar."
       },
       "NO_LIST": "No se han encontrado adicionales",
       "COVERAGE": "Alcance para {{coverage}} personas.",

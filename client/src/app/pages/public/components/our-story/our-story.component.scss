@@ -1,0 +1,35 @@
+.wavy-marquee {
+  width: 100%;
+  overflow: hidden;
+
+  svg {
+    width: 100%;
+    height: 200px;
+    display: block;
+  }
+
+  // 💡 Estilo de la cinta o franja de fondo
+  &__background-ribbon {
+    fill: none;
+    stroke: var(--color-brand-coral, #ff6b6b); // Color de la franja/cinta
+    stroke-width: 60px; // Ancho/Alto de la franja
+    stroke-linecap: round; // Bordes redondeados en los extremos
+    stroke-linejoin: round;
+  }
+
+  // Estilo del texto que va por encima
+  &__text {
+    fill: var(
+      --color-white,
+      #ffffff
+    ); // Color del texto (resalta sobre la cinta)
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    // Alineación vertical para centrar el texto sobre la franja
+    alignment-baseline: central;
+    dominant-baseline: central;
+  }
+}

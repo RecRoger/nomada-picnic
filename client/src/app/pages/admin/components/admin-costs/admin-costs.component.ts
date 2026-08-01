@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
+import { normalizeString } from 'src/app/core/functions/search';
 
 
 const MAT_MODULES = [
@@ -213,21 +214,12 @@ export class AdminCostsComponent implements OnInit {
         this.filteredCostList = this.costList.filter(cost => (typeValue as string[]).includes(cost.type))
       }
       if (keyValue.trim() != '') {
-        const normalizedKey = this.normalizeString(keyValue)
+        const normalizedKey = normalizeString(keyValue)
         this.filteredCostList = this.filteredCostList.filter(cost => {
-          const normalizedItem = this.normalizeString(cost.name);
+          const normalizedItem = normalizeString(cost.name);
           return normalizedItem.includes(normalizedKey);
         })
       }
     }
-  }
-
-  public normalizeString(str: string): string {
-    if (!str) return '';
-    return str
-      .toLowerCase()
-      .normalize('NFD') // Descompone caracteres combinados (ej: 'ó' -> 'o' + '´')
-      .replace(/[\u0300-\u036f]/g, '') // Elimina los signos de acentuación descompuestos
-      .replace(/[^a-z0-9]/g, ''); // Elimina espacios, guiones y cualquier carácter no alfanumérico
   }
 }

@@ -94,9 +94,9 @@ export class PlacesMapComponent implements OnInit {
     const place = this.places.find(place => place._id === id)
     const dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
-      maxWidth: '90vw',     // 👈 Evita que en pantallas chicas rompa
+      maxWidth: '90vw',
       height: 'auto',
-      panelClass: 'custom-place-dialog-panel'
+      panelClass: 'nomada-place-dialog-panel'
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -1,39 +1,183 @@
+@use "utils" as u;
+
 .c-additional-dialog {
+  height: auto;
+  max-height: 80vh;
+  @include u.flex(column, center, center, 1rem);
+  padding: 1.5rem;
+  width: 100%;
+  border-radius: var(--radius-card-md);
   position: relative;
-  padding: 1rem 0;
+  box-sizing: border-box;
+  background-color: var(--color-white);
+  overflow: hidden;
+
+  &:has(.c-additional-dialog--media) {
+    @include u.style-starting-from(tablet) {
+      height: 80vh;
+      max-height: 500px;
+      @include u.grid-columns(2, 2.5rem);
+      padding: 1.5rem;
+    }
+  }
 
   .close-btn {
     position: absolute;
+    top: 1rem;
     right: 1rem;
+    z-index: 10;
   }
 
-  &--images {
-    // height: 180px;
-    width: 100%;
+  &--media {
+    height: 200px;
+    border-radius: var(--radius-card-sm);
+    overflow-x: auto; // Habilita scroll horizontal si hay varias fotos
     display: flex;
-    justify-content: space-around;
-    gap: 2rem;
-    overflow-x: scroll;
-    &-item {
-      height: 200px;
+    scroll-snap-type: x mandatory;
+    flex-shrink: 0; // Impide que la imagen se deforme o aplaste
+
+    @include u.style-starting-from(tablet) {
+      height: 100%;
+    }
+
+    .media-img {
+      width: 100%;
+      height: 100%;
+      flex: 0 0 100%; // Cada foto toma el 100% del contenedor
+      object-fit: cover;
+      scroll-snap-align: start;
     }
   }
 
-  &--footer {
-    &-counter {
-      display: flex;
-      align-items: center;
-      margin-right: 2rem;
+  &--content {
+    @include u.flex(column, start, stretch, 1rem);
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &--pill {
+    @include u.pill(var(--color-brand-blue), var(--color-brand-blue50));
+    padding: 0.5rem 1rem;
+    font-size: var(--font-small);
+    text-transform: uppercase;
+    align-self: flex-start;
+    font-weight: 500;
+    letter-spacing: 2px;
+  }
+
+  &--title {
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: var(--color-brand-blue);
+    margin: 1rem 0;
+    padding-right: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  &--data {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    word-break: break-word;
+
+    &-tags {
+      @include u.flex(row);
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      &::-webkit-scrollbar {
+        display: none; // Chrome, Safari y Opera
+      }
+      scrollbar-width: none; // Firefox
+
+      .additional-tag {
+        @include u.pill(var(--color-black), var(--color-bg-cream));
+        font-size: var(--font-small);
+        color: var(--color-text-muted);
+        padding: 0.2rem 1rem;
+        flex-shrink: 0;
+        white-space: nowrap;
+        scroll-snap-align: start;
+      }
     }
     &-price {
-      margin: 0 1rem 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-
-      & .main-price {
+      @include u.flex(row, flex-start, baseline, 6px);
+      color: var(--color-brand-blue);
+      font-weight: 800;
+      .amount {
         font-size: 1.5rem;
       }
+    }
+  }
+
+  &--actions {
+    @include u.flex(row, space-between, center, 1rem);
+    flex-wrap: wrap;
+    text-align: center;
+    width: 100%;
+    padding-top: 0.5rem;
+
+    &-counter {
+      @include u.flex(row, space-between, center, 0.5rem);
+      .counter-label {
+        font-size: var(--font-small);
+        color: var(--color-text-muted);
+        font-weight: 600;
+      }
+
+      .counter-pill {
+        @include u.pill(var(--color-text-muted), var(--color-bg-softcream));
+        @include u.flex(row, space-between, center, 0);
+        padding: 4px 12px;
+        min-width: 90px;
+        user-select: none;
+
+        &__btn {
+          background: none;
+          border: none;
+          outline: none;
+          font-size: var(--font-body);
+          font-weight: 800;
+          color: var(--color-black);
+          cursor: pointer;
+          padding: 2px 8px;
+          @include u.flex(row, center, center, 0);
+          transition:
+            transform 0.1s ease,
+            opacity 0.2s ease;
+
+          &:hover:not(:disabled) {
+            transform: scale(1.15);
+          }
+
+          &:active:not(:disabled) {
+            transform: scale(0.95);
+          }
+
+          &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+          }
+        }
+
+        &__value {
+          font-size: var(--font-small);
+          font-weight: 800;
+          color: var(--color-black);
+          min-width: 24px;
+          text-align: center;
+        }
+      }
+    }
+
+    &-add {
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      margin-left: auto;
     }
   }
 }

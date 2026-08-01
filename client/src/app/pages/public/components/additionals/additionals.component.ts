@@ -56,6 +56,10 @@ export class AdditionalsComponent implements OnInit {
   public checkAdditional(additional: ICost): void {
     const dialogRef = this.dialog.open(AdditionalDialogComponent, {
       data: additional,
+      width: '1000px',
+      maxWidth: '90vw',
+      height: 'auto',
+      panelClass: 'nomada-additional-dialog-panel'
     });
 
     dialogRef.afterClosed().subscribe(result => {

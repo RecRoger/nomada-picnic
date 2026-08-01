@@ -29,6 +29,7 @@
       "MAX_CHARACTERS_FIELD": "El campo puede tener hasta {{max}} caracteres"
     },
     "DATE": "Fecha",
+    "AMOUNT": "Cantidad",
     "PLACE": "Lugar",
     "GUESTS_NUMBER": "Número de invitados",
     "PEOPLE": "personas",
@@ -387,7 +388,7 @@
       "NO_LIST": "No se han encontrado adicionales",
       "COVERAGE": "Alcance para {{coverage}} personas.",
       "DELIVERY": "Requiere delivery.",
-      "ADD": "Quiero este adicional."
+      "ADD": "Añadir."
     }
   },
   "CALCULATOR": {

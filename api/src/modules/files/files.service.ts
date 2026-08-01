@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import * as path from 'node:path';
+import sharp from 'sharp';
+import decodeHeic = require('heic-decode'); // Importación robusta compatible con CJS/ESM
 
 @Injectable()
 export class FilesService {
@@ -15,12 +17,55 @@ export class FilesService {
   });
   private bucketName = process.env.GCP_STORAGE_BUCKET;
 
-  /**
-   * Guarda múltiples archivos en el disco
-   * @param files Archivos provenientes de Multer
-   * @param prefix Prefijo para el nombre (ej: 'place')
-   * @param folder Subcarpeta (ej: 'places')
-  */
+  private async processAndConvertImage(
+    file: Express.Multer.File,
+  ): Promise<{ buffer: Buffer; extension: string; mimetype: string }> {
+    const extension = path.extname(file.originalname).toLowerCase();
+    const isHeic =
+      extension === '.heic' ||
+      file.mimetype === 'image/heic' ||
+      file.mimetype === 'image/heif';
+
+    if (isHeic) {
+      this.logger.log(
+        `[processAndConvertImage]: Convirtiendo ${file.originalname} de HEIC a JPEG mediante decodificador raw...`,
+      );
+
+      try {
+        // 1. Decodificamos la estructura HEIC a datos de píxeles RGBA descompresionados (WASM/JS)
+        const { width, height, data } = await decodeHeic({ buffer: file.buffer });
+
+        // 2. Pasamos la matriz de píxeles raw directamente a Sharp
+        const convertedBuffer = await sharp(Buffer.from(data), {
+          raw: {
+            width,
+            height,
+            channels: 4, // RGBA
+          },
+        })
+          .jpeg({ quality: 80 })
+          .toBuffer();
+
+        return {
+          buffer: convertedBuffer,
+          extension: '.jpg',
+          mimetype: 'image/jpeg',
+        };
+      } catch (error) {
+        this.logger.error(`Error al procesar archivo HEIC: ${error.message}`);
+        throw new InternalServerErrorException(
+          `No se pudo decodificar el archivo HEIC: ${file.originalname}`,
+        );
+      }
+    }
+
+    return {
+      buffer: file.buffer,
+      extension: extension,
+      mimetype: file.mimetype,
+    };
+  }
+
   async saveFiles(
     files: Express.Multer.File[],
     prefix: string = 'image',
@@ -33,16 +78,19 @@ export class FilesService {
 
     try {
       const savePromises = files.map(async (file) => {
+        // 1. Procesamos la imagen (convertimos si es HEIC)
+        const processedImage = await this.processAndConvertImage(file);
+
         const timestamp = Date.now();
         const randomString = Math.random().toString(36).substring(2, 8);
-        const extension = path.extname(file.originalname);
 
-        // El nombre del archivo sigue la misma lógica que ya tenías
-        const fileName = `${folder}/${prefix}-${timestamp}-${randomString}${extension}`;
+        // 2. Armamos la ruta asegurando que la extensión sea la procesada (.jpg si era HEIC)
+        const fileName = `${folder}/${prefix}-${timestamp}-${randomString}${processedImage.extension}`;
         const blob = bucket.file(fileName);
 
-        await blob.save(file.buffer, {
-          contentType: file.mimetype,
+        // 3. Guardamos el buffer procesado en Google Cloud Storage
+        await blob.save(processedImage.buffer, {
+          contentType: processedImage.mimetype,
           resumable: false,
         });
 

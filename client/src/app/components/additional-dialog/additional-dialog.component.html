@@ -1,47 +1,77 @@
 <div class="c-additional-dialog">
-  <button mat-icon-button mat-dialog-close class="close-btn" type="button" cdkFocusInitial>
+  <button mat-icon-button mat-dialog-close class="close-btn" type="button">
     <mat-icon>close</mat-icon>
   </button>
-  <mat-dialog-content>
-    @if (additional.images?.length) {
-      <div class="c-additional-dialog--images">
-        @for (image of additional.images; track $index) {
-          <img src="{{image | apiImageUrl}}" [alt]="additional.name+$index" class="c-additional-dialog--images-item">
-        }
-      </div>
-    }
-    <h3 class="c-additional-dialog--title">{{additional.name}}</h3>
-    <p class="c-additional-dialog--description">{{additional.description}}</p>
-    <div class="c-additional-dialog--detail" [innerHTML]="additional.detail | safeHtml"></div>
-    @if(additional.guestsCoverage) {
-      <p class="c-additional-dialog--description">{{'PUBLIC.ADDITIONALS.COVERAGE' | translate: {coverage: additional.guestsCoverage} }}</p>
-    }
-    @if(additional.deliveryRequired) {
-      <p class="c-additional-dialog--description">{{'PUBLIC.ADDITIONALS.DELIVERY' | translate }}</p>
-    }
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    @if (additional.multipleAllowed) {
-      <div class="c-additional-dialog--footer-counter">
-        <button mat-icon-button class="c-additional-dialog--footer-left" type="button" [disabled]="count==1" (click)="moveCounter(false)">
-          <mat-icon>remove</mat-icon>
-        </button>
-        <span>{{count}}</span>
-        <button mat-icon-button class="c-additional-dialog--footer-right" type="button" (click)="moveCounter()">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-    }
-    <div class="c-additional-dialog--footer-price">
-      <div class="c-additional-dialog--footer-price__unit" [class.main-price]="count === 1">
-        {{additional.finalPrice | number:'1.2-2'}} US$
-      </div>
-      @if (additional.multipleAllowed && count > 1) { 
-        <div class="c-additional-dialog--footer-price__multi">
-          x{{count}} <span class="main-price"> {{(additional?.finalPrice * count) | number:'1.2-2'}} US$</span>
+
+  @if (additional.images?.length) {
+    <div class="c-additional-dialog--media">
+      @for (image of additional.images; track $index) {
+        <img class="media-img" src="{{image | apiImageUrl}}" [alt]="additional.name+$index">
+      }
+
+          <!-- <app-carousel 
+            [items]="additional.images" 
+            [options]="carouselOptions">
+            <ng-template let-product>
+              <div class="product-card">
+              </div>
+            </ng-template>
+          </app-carousel> -->
+
+    </div>
+  }
+  <div class="c-additional-dialog--content">
+    <div class="c-additional-dialog--data">
+      <div class="c-additional-dialog--pill">{{('COSTS.TYPES_DESCRIPTION.'+(additional.type | uppercase)) | translate}}</div>
+      <h2 class="c-additional-dialog--title">{{additional.name}}</h2>
+      @if (additional.tags?.length) {
+        <div class="c-additional-dialog--data-tags">
+          @for (tag of additional.tags; track $index) {
+            <div class="additional-tag">{{tag}}</div>
+          }
         </div>
       }
+      <div class="c-additional-dialog--data-price">
+        <span class="amount">{{ additional.finalPrice | number:'1.2-2' | currency: 'US$ ' }}</span>
+      </div>
+
+      <p class="c-additional-dialog--data-description">{{additional.description}}</p>
+      @if (additional.detail) {
+        <div class="c-additional-dialog--data-detail" [innerHTML]="additional.detail | safeHtml"></div>
+      }
+      @if(additional.guestsCoverage) {
+        <p class="c-additional-dialog--description">{{'PUBLIC.ADDITIONALS.COVERAGE' | translate: {coverage: additional.guestsCoverage} }}</p>
+      }
+      @if(additional.deliveryRequired) {
+        <p class="c-additional-dialog--description">{{'PUBLIC.ADDITIONALS.DELIVERY' | translate }}</p>
+      }
     </div>
-    <button mat-raised-button [mat-dialog-close]="count">{{'PUBLIC.ADDITIONALS.ADD' | translate}}</button>
-  </mat-dialog-actions>
+    <div class="c-additional-dialog--actions">
+      @if (additional.multipleAllowed) {
+        <div class="c-additional-dialog--actions-counter">
+          <span class="counter-label">{{'COMMON.AMOUNT' | translate}}</span>
+          <div class="counter-pill">
+            <button 
+              type="button" 
+              class="counter-pill__btn" 
+              [disabled]="count <= min" 
+              (click)="decrees()">
+              −
+            </button>
+            <span class="counter-pill__value">{{ count }}</span>
+            <button 
+              type="button" 
+              class="counter-pill__btn" 
+              [disabled]="count >= max" 
+              (click)="increes()">
+              +
+            </button>
+          </div>
+        </div>      
+      }
+
+      <button class="c-additional-dialog--actions-add" [mat-dialog-close]="count">{{'PUBLIC.ADDITIONALS.ADD' | translate}}</button>
+    </div>
+  </div>
 </div>
+

@@ -32,7 +32,6 @@
           <div class="product-card__header">
             @if (item.images?.length) {
               <img [src]="item.images[0] | apiImageUrl" [alt]="item.name" class="product-card__image" />
-              <span class="badge badge--counter">1/{{item.images.length}}</span>
             }
             <span class="badge badge--category">{{('COSTS.TYPES_DESCRIPTION.'+(item.type | uppercase)) | translate}}</span>
           </div>
@@ -41,11 +40,11 @@
             <h3 class="product-card__title">{{ item.name }}</h3>
 
             <div class="product-card__tags">
-              @for (tag of item.tags?.slice(0,3); track $index) {
+              @for (tag of item.tags?.slice(0,2); track $index) {
                 <span class="tag">{{ tag }}</span>
               }
               @if(item.tags && item.tags.length > 3) {
-                <span class="tag-more" >+{{ item.tags.length - 3 }}</span>
+                <span class="tag-more" >+{{ item.tags.length - 2 }}</span>
               }
             </div>
             <p class="product-card__description">

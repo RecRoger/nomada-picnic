@@ -16,7 +16,7 @@
     @include u.style-starting-from(tablet) {
       height: 80vh;
       max-height: 600px;
-      @include u.grid-auto(300px, 2.5rem);
+      @include u.grid-columns(2, 2.5rem);
       padding: 1.5rem;
     }
   }

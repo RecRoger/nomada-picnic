@@ -156,14 +156,6 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
           }
-
-          &--counter {
-            bottom: 12px;
-            right: 12px;
-            @include u.pill(var(--color-white), rgba(60, 80, 0, 0.75));
-            font-size: var(--font-small);
-            padding: 4px 10px;
-          }
         }
       }
 

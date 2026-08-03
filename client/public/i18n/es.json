@@ -342,7 +342,57 @@
       }
     },
     "OUR_STORY": {
-      "MARQUEES": "Detrás de cada picnic, hay una historia ★"
+      "MARQUEES": "Detrás de cada picnic, hay una historia ★",
+      "ORIGIN": {
+        "TITLE": "Todo comenzó lejos de casa",
+        "SUBTITLE": "Nuestro comienzo",
+        "TEXT": "<p>Somos venezolanos y llegamos a Buenos Aires buscando nuevas oportunidades. Muy pronto descubrimos algo que nos enamoró de esta ciudad: sus parques.</p><p>Espacios llenos de vida donde la gente se reúne a compartir, descansar y celebrar.</p><p>Fue entonces cuando nació una idea sencilla:</p><p><b>¿Y si esos lugares pudieran convertirse en escenarios para momentos inolvidables?</b></p>"
+      },
+      "VALUES": {
+        "TITLE": "Lo que nos representa",
+        "SUBTITLE": "Nuestros principios",
+        "CARDS": {
+          "TITLE_1": "Hecho con dedicación",
+          "SUBTITLE_1": "Cada picnic se prepara de forma personalizada.",
+          "TITLE_2": "Atención cercana",
+          "SUBTITLE_2": "Somos un emprendimiento familiar y eso se refleja en cada experiencia.",
+          "TITLE_3": "Cada detalle importa",
+          "SUBTITLE_3": "Desde el montaje hasta la última copa.",
+          "TITLE_4": "Buenos Aires como escenario",
+          "SUBTITLE_4": "Elegimos los parques más lindos para que cada picnic tenga un entorno único."
+        }
+      },
+      "PHILOSOPHY": {
+        "TITLE": "Mucho más que un picnic",
+        "SUBTITLE": "Nuestra filosofía",
+        "TEXT_1": "Nómada Picnic nació del deseo de crear experiencias al aire libre donde las personas puedan celebrar, sorprender y compartir sin preocuparse por nada.",
+        "TEXT_2": "<p>Desde el primer día supimos que no queríamos ofrecer solamente un picnic. Queríamos crear una experiencia donde cada detalle tuviera un propósito.</p><p>La decoración, la comodidad, la comida, el lugar y la atención forman parte de un mismo objetivo: que vos solo llegues y disfrutes del momento.</p><p>Porque creemos que los mejores recuerdos nacen cuando podemos dedicarle tiempo a quienes más queremos.</p>"
+      },
+      "MISION": {
+        "TITLE": "Que cuando llegues a tu picnic, todo esté listo.",
+        "SUBTITLE": "Nuestra misión",
+        "TEXT_1": "Que no tengas que pensar en la decoración. Ni en la comida. Ni en montar nada. Solo en disfrutar.<br><br><b>Nosotros nos encargamos del resto.</b>"
+      },
+      "FAMILY": {
+        "TITLE": "Hoy somos una familia",
+        "SUBTITLE": "Quiénes somos hoy",
+        "TEXT_1": "<p>Con el tiempo Nómada creció y también nuestro equipo.<br><br>Hoy somos un emprendimiento familiar que trabaja con la misma ilusión con la que comenzó este proyecto.<br><br>Nos encanta pensar que detrás de cada reserva hay una historia distinta.<p>",
+        "LIST": {
+          "ITEM_1": "Un aniversario",
+          "ITEM_2": "Un cumpleaños",
+          "ITEM_3": "Una propuesta",
+          "ITEM_4": "Un reencuentro"
+        },
+        "TEXT_2": "<p>Y para nosotros es un privilegio formar parte de esos recuerdos.</p>"
+      },
+      "VIDEO_BANNER": "Cada celebración merece un escenario especial",
+      "ACTION": {
+        "TITLE_1": "¿Creamos",
+        "TITLE_2": "tu próxima",
+        "TITLE_3": "experiencia?",
+        "TEXT": "Ya sea una cita, un cumpleaños o simplemente una tarde diferente,<br/>estaremos felices de preparar cada detalle para vos.",
+        "BUTTON": "Descubre nuestros picnics"
+      }
     },
     "PLACES": {
       "TITLE": "Parques y lugares destacados",

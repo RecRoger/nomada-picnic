@@ -1,7 +1,7 @@
 <div class="c-our-story">
   <div class="c-our-story--hero">
     <!-- // TODO - cambiar imagen -->
-    <img class="c-our-story--hero-image" src="images/picnics/photo_carrousel_home_17.jpg" alt="Nuestra historia">
+    <img class="c-our-story--hero-image" src="images/picnics/our-story-banner1.jpg" alt="Nuestra historia">
     <div class="c-our-story--hero-overlay"></div>
   </div>
   <div class="c-our-story--marquees">
@@ -47,6 +47,154 @@
       </g>
     </svg>
   </div>
+
+  <section class="c-our-story--origin">
+    <div class="c-our-story--origin-container">
+      <div class="c-our-story--origin-content">
+        <span class="c-our-story--origin-subtitle">{{'PUBLIC.OUR_STORY.ORIGIN.SUBTITLE' | translate}}</span>
+        <h2 class="c-our-story--origin-title">{{'PUBLIC.OUR_STORY.ORIGIN.TITLE' | translate}}</h2>
+        <div class="c-our-story--origin-description" [innerHTML]="'PUBLIC.OUR_STORY.ORIGIN.TEXT' | translate">
+        </div>
+      </div>
+      <div class="c-our-story--origin-media">
+        <img 
+          src="images/graphics/COLLAGE_NUESTRAHISTORIA.png" 
+          alt="Foto de picnic con collage decorativo" 
+          class="c-our-story--origin-img" 
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="c-our-story--values">
+    <div class="c-our-story--values-container">
+      <p class="c-our-story--values-subtitle">{{'PUBLIC.OUR_STORY.ORIGIN.SUBTITLE' | translate}}</p>
+      <h2 class="c-our-story--values-title">{{'PUBLIC.OUR_STORY.ORIGIN.TITLE' | translate}}</h2>
+      <app-overlap-cards [cards]="valuesCards"></app-overlap-cards>
+    </div>
+  </section>
+
+  <section class="c-our-story--philosophy">
+    <div class="c-our-story--philosophy-container">
+      <p class="c-our-story--philosophy-subtitle">{{'PUBLIC.OUR_STORY.PHILOSOPHY.SUBTITLE' | translate}}</p>
+      <h2 class="c-our-story--philosophy-title">{{'PUBLIC.OUR_STORY.PHILOSOPHY.TITLE' | translate}}</h2>
+      <p class="c-our-story--philosophy-highlighted">{{'PUBLIC.OUR_STORY.PHILOSOPHY.TEXT_1' | translate}}</p>
+      <div class="c-our-story--philosophy-text" [innerHTML]="'PUBLIC.OUR_STORY.PHILOSOPHY.TEXT_2' | translate"></div>
+    </div>
+  </section>
+
+
+  <section class="c-our-story--mission">
+    <div class="c-our-story--mission-wave c-our-story--mission-wave--top">
+      <svg class="hide-mobile" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,40 C360,100 1080,0 1440,60 L1440,120 L0,120 Z"></path>
+      </svg>
+      <svg class="hide-tablet hide-desktop" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,50 C480,80 960,30 1440,60 L1440,120 L0,120 Z"></path>
+      </svg>
+    </div>
+
+    <div class="c-our-story--mission-container">
+      <span class="c-our-story--mission-subtitle">NUESTRA MISIÓN</span>
+      <h2 class="c-our-story--mission-title">
+        QUE CUANDO LLEGUES A TU PICNIC, TODO ESTÉ LISTO.
+      </h2>
+      <p class="c-our-story--mission-text">
+        Que no tengas que pensar en la decoración. Ni en la comida. Ni en montar nada. Solo en disfrutar.
+      </p>
+      <p class="c-our-story--mission-highlight">
+        Nosotros nos encargamos del resto.
+      </p>
+    </div>
+
+    <div class="c-our-story--mission-wave c-our-story--mission-wave--bottom">
+      <svg class="hide-mobile" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,0 L1440,0 L1440,60 C1080,120 360,20 0,80 Z"></path>
+      </svg>
+      <svg class="hide-tablet hide-desktop" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,0 L1440,0 L1440,40 C960,80 480,20 0,50 Z"></path>
+      </svg>
+    </div>
+  </section>
+
+  <section class="c-our-story--family">
+    <div class="c-our-story--family-container">
+      <div class="c-our-story--family-content">
+        <span class="c-our-story--family-subtitle">{{'PUBLIC.OUR_STORY.FAMILY.SUBTITLE' | translate}}</span>
+        <h2 class="c-our-story--family-title">{{'PUBLIC.OUR_STORY.FAMILY.TITLE' | translate}}</h2>
+        <div class="c-our-story--family-description" [innerHTML]="'PUBLIC.OUR_STORY.FAMILY.TEXT_1' | translate"></div>
+        <ul class="c-our-story--family-list">
+          <li class="list-item">
+            <img class="list-item--icon" src="images/graphics/emoji_story_party.png" [alt]="'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_1' | translate" />
+            <span class="list-item--text">{{'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_1' | translate}}</span>
+          </li>
+          <li class="list-item">
+            <img class="list-item--icon" src="images/graphics/emoji_story_cake.png" [alt]="'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_2' | translate" />
+            <span class="list-item--text">{{'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_2' | translate}}</span>
+          </li>
+          <li class="list-item">
+            <img class="list-item--icon" src="images/graphics/emoji_story_ring.png" [alt]="'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_3' | translate" />
+            <span class="list-item--text">{{'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_3' | translate}}</span>
+          </li>
+          <li class="list-item">
+            <img class="list-item--icon" src="images/graphics/emoji_story_smileyhappy.png" [alt]="'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_4' | translate" />
+            <span class="list-item--text">{{'PUBLIC.OUR_STORY.FAMILY.LIST.ITEM_4' | translate}}</span>
+          </li>
+        </ul>
+        <div class="c-our-story--family-description" [innerHTML]="'PUBLIC.OUR_STORY.FAMILY.TEXT_2' | translate">
+        </div>
+      </div>
+      <div class="c-our-story--family-media">
+        <img 
+          src="images/picnics/our-story-picnic1.jpg" 
+          alt="picnics" 
+          class="c-our-story--family-img" 
+        />
+      </div>
+    </div>
+  </section>
+  
+  <section class="c-our-story--video-banner"> 
+    <video 
+      class="c-our-story--video-banner-media" 
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      poster="images/picnics/foto_lugares_drone_edit.jpg">
+      <!-- // TODO - cambiar video -->
+      <source src="videos/video_lugares_drone_edit.mp4" type="video/mp4" />
+      <source src="videos/video_lugares_drone_edit.webm" type="video/webm" />
+    </video>
+    <div class="c-our-story--video-banner-overlay"></div>
+    <div class="c-our-story--video-banner-content">
+      <h2 class="c-our-story--video-banner-title">
+        {{'PUBLIC.OUR_STORY.VIDEO_BANNER' | translate}}
+      </h2>
+    </div>
+  </section>
+
+  <section class="c-our-story--action">
+    <div class="c-our-story--action__container">
+      <h2 class="c-our-story--action__title">
+        <span class="c-our-story--action__title-step c-our-story--action__title-step--left">
+          {{'PUBLIC.OUR_STORY.ACTION.TITLE_1' | translate}}
+        </span>
+        <span class="c-our-story--action__title-step c-our-story--action__title-step--center">
+          {{'PUBLIC.OUR_STORY.ACTION.TITLE_2' | translate}}
+        </span>
+        <span class="c-our-story--action__title-step c-our-story--action__title-step--right">
+          {{'PUBLIC.OUR_STORY.ACTION.TITLE_3' | translate}}
+        </span>
+      </h2>
+      <p class="c-our-story--action__description" [innerHTML]="'PUBLIC.OUR_STORY.ACTION.TEXT' | translate"></p>
+      <div class="c-our-story--action__cta">
+        <a routerLink="/picnics" class="c-our-story--action__btn">
+          {{'PUBLIC.OUR_STORY.ACTION.BUTTON' | translate}}
+        </a>
+      </div>
+    </div>
+  </section>
   
 
 </div>

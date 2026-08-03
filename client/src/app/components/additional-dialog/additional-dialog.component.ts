@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ICost } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
-import { CarouselOptions } from '@components/carousel/carousel.component';
+import { CarouselComponent, CarouselOptions } from '@components/carousel/carousel.component';
 
 @Component({
   selector: 'app-additional-dialog',
@@ -20,7 +20,7 @@ import { CarouselOptions } from '@components/carousel/carousel.component';
     DecimalPipe,
     ApiImageUrlPipe,
     SafeHtmlPipe,
-    // CarouselComponent,
+    CarouselComponent,
   ],
   templateUrl: './additional-dialog.component.html',
   styleUrl: './additional-dialog.component.scss'
@@ -35,9 +35,10 @@ export class AdditionalDialogComponent {
   public count = 1
 
   public readonly carouselOptions: CarouselOptions = {
+    type: 'slider',
     perView: 1,
-    gap: 16,
-    dots: true,
+    gap: 0,
+    counter: true,
     arrows: true,
   }
 

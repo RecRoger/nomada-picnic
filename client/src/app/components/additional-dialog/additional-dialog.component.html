@@ -5,19 +5,15 @@
 
   @if (additional.images?.length) {
     <div class="c-additional-dialog--media">
-      @for (image of additional.images; track $index) {
-        <img class="media-img" src="{{image | apiImageUrl}}" [alt]="additional.name+$index">
-      }
-
-          <!-- <app-carousel 
-            [items]="additional.images" 
-            [options]="carouselOptions">
-            <ng-template let-product>
-              <div class="product-card">
-              </div>
-            </ng-template>
-          </app-carousel> -->
-
+      <app-carousel 
+        [items]="additional.images" 
+        [options]="carouselOptions">
+        <ng-template let-product let-index>
+          <div class="additional-image">
+            <img class="media-img" src="{{product | apiImageUrl}}" [alt]="additional.name+index">
+          </div>
+        </ng-template>
+      </app-carousel>
     </div>
   }
   <div class="c-additional-dialog--content">

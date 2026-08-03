@@ -3,6 +3,24 @@
 :host {
   display: block;
   width: 100%;
+  height: 100%;
+}
+
+.glide,
+.glide__track,
+.glide__slides {
+  width: 100%;
+  height: 100%;
+}
+
+.glide__slide {
+  height: 100%;
+
+  // Asegura que el contenido proyectado por ng-content/ng-template también ocupe el 100%
+  > * {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .c-carousel {
@@ -11,18 +29,14 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
-  padding-bottom: 0; // Espacio inferior para que los dots no pisen las cards
-
-  .glide__slide.unique {
-    padding: 3.5rem 3.5rem 2rem;
-  }
+  padding-bottom: 0;
 
   /* ==========================================================================
      ESTILOS DE LAS FLECHAS
      ========================================================================== */
   &--arrows {
     position: absolute;
-    top: 35%;
+    top: 50%;
     left: 0;
     right: 0;
     transform: translateY(-50%);
@@ -68,7 +82,7 @@
      ========================================================================== */
   &--dots {
     position: absolute;
-    bottom: 0;
+    bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -99,5 +113,17 @@
         ); // Podés acentuarlo con un color más intenso al activarse
       }
     }
+  }
+
+  &--counter {
+    position: absolute;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    bottom: 12px;
+    right: 12px;
+    @include u.pill(var(--color-white), rgba(60, 80, 0, 0.75));
+    font-size: var(--font-small);
+    padding: 4px 10px;
   }
 }

@@ -9,7 +9,7 @@
     </ul>
   </div>
 
-  @if(options.arrows) {
+  @if(items.length > 1 && options.arrows) {
   <div class="glide__arrows c-carousel--arrows" data-glide-el="controls">
     <button class="c-carousel--arrows-control glide__arrow glide__arrow--left" data-glide-dir="<">
       <mat-icon fontIcon="chevron_left"></mat-icon>
@@ -20,7 +20,7 @@
   </div>
   }
 
-  @if(options.dots) {
+  @if(items.length > 1 &&options.dots) {
     <div class="glide__bullets c-carousel--dots" data-glide-el="controls[nav]">
       @for (item of items; track $index; let i = $index) {
         <button 
@@ -30,5 +30,9 @@
         </button>
       }
     </div>
+  }
+
+  @if(options.counter) {
+    <span class="c-carousel--counter">{{this.currentSlide}}/{{items.length}}</span>
   }
 </div>

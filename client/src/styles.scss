@@ -48,13 +48,14 @@ h3 {
 
 // Por defecto en mobile todo es visible, pero creamos las reglas de ocultado
 .hide-mobile {
-  @media (max-width: 575px) {
+  @include b.style-up-to(mobile) {
     display: none !important;
   }
 }
 
 .hide-tablet {
-  @media (min-width: 576px) and (max-width: 1023px) {
+  // @media (min-width: 576px) and (max-width: 1023px) {
+  @include b.style-only-for(tablet) {
     display: none !important;
   }
 }

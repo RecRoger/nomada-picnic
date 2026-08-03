@@ -3,13 +3,5 @@
     <h3 class="s-features-cards--header-title">{{ 'PUBLIC.FEATURES.TITLE' | translate }}</h3>
     <p class="s-features-cards--header-message">{{ 'PUBLIC.FEATURES.DESCRIPTION' | translate }}</p>
   </div>
-  <div class="s-features-cards--grid">
-    @for (card of infoCards; track $index) {
-      <div class="s-features-cards--grid-card">
-        <img src="/images/graphics/{{card.imgSrc}}" class="s-features-cards--grid-card__icon" />
-        <h3 class="s-features-cards--grid-card__title">{{card.title | translate}}</h3>
-        <p class="s-features-cards--grid-card__text">{{card.label | translate}}</p>
-      </div>
-    }
-  </div>
+  <app-overlap-cards [cards]="infoCards"></app-overlap-cards>
 </section>

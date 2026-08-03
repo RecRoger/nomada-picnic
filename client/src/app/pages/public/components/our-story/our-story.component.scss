@@ -1,35 +1,96 @@
-.wavy-marquee {
-  width: 100%;
-  overflow: hidden;
+@use "utils" as u;
+@use "variables" as *;
 
-  svg {
+.c-our-story {
+  position: relative;
+  &--hero {
+    position: relative;
     width: 100%;
-    height: 200px;
-    display: block;
+    height: 70vh;
+    min-height: 400px;
+    max-height: 650px;
+    overflow: hidden;
+    z-index: -1;
+
+    @include u.style-up-to(tablet) {
+      height: 60vh;
+    }
+
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      // TODO - enfocar image
+      object-position: bottom 30%; // Enfoca ligeramente arriba del centro
+      display: block;
+    }
+
+    &-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.25); // Oscurece un 25% la imagen
+      pointer-events: none; // Evita interferir con interacciones si agregas contenido encima
+    }
   }
+  &--marquees {
+    z-index: 2;
+    margin-top: -100px;
+    width: 100%;
+    overflow: hidden;
+    @include u.style-up-to(desktop) {
+      margin-top: -65px;
+    }
 
-  // 💡 Estilo de la cinta o franja de fondo
-  &__background-ribbon {
-    fill: none;
-    stroke: var(--color-brand-coral, #ff6b6b); // Color de la franja/cinta
-    stroke-width: 60px; // Ancho/Alto de la franja
-    stroke-linecap: round; // Bordes redondeados en los extremos
-    stroke-linejoin: round;
-  }
+    @include u.style-up-to(mobile) {
+      margin-top: -30px;
+    }
 
-  // Estilo del texto que va por encima
-  &__text {
-    fill: var(
-      --color-white,
-      #ffffff
-    ); // Color del texto (resalta sobre la cinta)
-    font-size: 2rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    svg {
+      width: 100%;
+      height: auto; // 💡 Permite que la altura escale libremente con el viewBox
+      display: block;
+    }
 
-    // Alineación vertical para centrar el texto sobre la franja
-    alignment-baseline: central;
-    dominant-baseline: central;
+    // 💡 Estilo de la cinta adaptativo
+    &__background-ribbon {
+      fill: none;
+      stroke: var(--color-brand-pink);
+      stroke-width: 90px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+
+      @include u.style-up-to(desktop) {
+        stroke-width: 120px;
+      }
+
+      @include u.style-up-to(mobile) {
+        stroke-width: 180px;
+      }
+    }
+
+    // 💡 Estilo del texto adaptativo
+    &__text {
+      fill: var(--color-white);
+      font-family: $font-title;
+      font-size: 36px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      alignment-baseline: central;
+      dominant-baseline: central;
+
+      @include u.style-up-to(desktop) {
+        font-size: 50px;
+        // letter-spacing: 1.2rem;
+      }
+
+      @include u.style-up-to(mobile) {
+        font-size: 80px;
+        letter-spacing: 8px;
+      }
+    }
   }
 }

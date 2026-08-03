@@ -1,43 +1,52 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-our-story',
-  imports: [MatIconModule],
+  imports: [TranslateModule],
   templateUrl: './our-story.component.html',
   styleUrl: './our-story.component.scss'
 })
-export class OurStoryComponent {
-  @ViewChild('textPathRef') textPathRef!: ElementRef<SVGTextPathElement>;
-  @ViewChild('patternRef') patternRef!: ElementRef<SVGTSpanElement>;
+export class OurStoryComponent implements AfterViewInit, OnDestroy {
+  @ViewChildren('textPathRef') textPathRefs!: QueryList<ElementRef<SVGTextPathElement>>;
+  @ViewChildren('patternRef') patternRefs!: QueryList<ElementRef<SVGTSpanElement>>;
 
   private animationId!: number;
   private offset = 0;
-  private patternLength = 0;
-  public speed = .7; // 💡 Ajustá la velocidad (en px por frame)
+  private patternLengths: number[] = [];
+  public speed = 0.7;
 
   ngAfterViewInit(): void {
-    // Calculamos el largo exacto del bloque repetido en px
-    if (this.patternRef?.nativeElement) {
-      this.patternLength = this.patternRef.nativeElement.getComputedTextLength();
-    }
-
+    this.calculateLengths();
     this.animate();
+  }
+
+  private calculateLengths(): void {
+    if (this.patternRefs) {
+      this.patternLengths = this.patternRefs.map(ref => {
+        try {
+          return ref.nativeElement.getComputedTextLength() || 0;
+        } catch {
+          return 0;
+        }
+      });
+    }
   }
 
   private animate = (): void => {
     this.offset -= this.speed;
-
-    // 💡 SI LLEGA AL LARGO EXACTO DEL PATRÓN, REINICIA A 0
-    // Como el siguiente patrón es idéntico, el ojo no nota el salto
-    if (Math.abs(this.offset) >= this.patternLength) {
-      this.offset = 0;
+    if (this.textPathRefs) {
+      this.textPathRefs.forEach((textPathRef, index) => {
+        const patternLength = this.patternLengths[index] || 0;
+        let currentOffset = this.offset;
+        if (patternLength > 0) {
+          currentOffset = this.offset % patternLength;
+        }
+        if (textPathRef?.nativeElement) {
+          textPathRef.nativeElement.setAttribute('startOffset', `${currentOffset}px`);
+        }
+      });
     }
-
-    if (this.textPathRef?.nativeElement) {
-      this.textPathRef.nativeElement.setAttribute('startOffset', `${this.offset}px`);
-    }
-
     this.animationId = requestAnimationFrame(this.animate);
   };
 

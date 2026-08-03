@@ -5,6 +5,7 @@ import { TRANSLATE_HTTP_LOADER_CONFIG, TranslateHttpLoader } from '@ngx-translat
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +26,6 @@ export const appConfig: ApplicationConfig = {
         provide: TranslateLoader,
         useClass: TranslateHttpLoader,
       }
-    }),
+    }), provideClientHydration(withEventReplay()),
   ]
 };

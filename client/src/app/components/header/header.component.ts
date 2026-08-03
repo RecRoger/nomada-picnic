@@ -45,21 +45,17 @@ export class HeaderComponent implements AfterViewInit {
       label: 'PUBLIC.MENU.TABS.STORY'
     },
     {
-      link: 'places',
-      label: 'PUBLIC.MENU.TABS.PLACES'
+      link: 'picnics',
+      label: 'PUBLIC.MENU.TABS.PICNICS'
     },
     {
       link: 'additionals',
       label: 'PUBLIC.MENU.TABS.ADDITIONALS'
     },
     {
-      link: 'picnics',
-      label: 'PUBLIC.MENU.TABS.PICNICS'
+      link: 'places',
+      label: 'PUBLIC.MENU.TABS.PLACES'
     },
-    // {
-    //   link: 'calculator',
-    //   label: 'PUBLIC.MENU.TABS.CALCULATOR'
-    // },
     {
       link: 'contact',
       label: 'PUBLIC.MENU.TABS.CONTACT'

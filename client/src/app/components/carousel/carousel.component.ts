@@ -9,9 +9,10 @@ export interface CarouselOptions {
   perView?: number,
   gap?: number,
   breakpoints?: any,
-  dots?: boolean,
   focusAt?: number | string,
   arrows?: boolean,
+  dots?: boolean,
+  counter?: boolean,
   autoplay?: number,
   peek?: number | string | Record<"before" | "after", number>,
   bound?: boolean,
@@ -34,6 +35,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   @ContentChild(TemplateRef) cardTemplate!: TemplateRef<any>;
 
+  public currentSlide = 0
+
   private glideInstance: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
@@ -53,9 +56,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       gap: this.options.gap ?? 24,
       autoplay: this.options.autoplay ?? undefined,
       peek: this.options.peek || 0,
-      // bound: true,
       hoverpause: true,
-      // throttle: 5,
       focusAt: this.options.focusAt ?? 0,
       breakpoints: this.options.breakpoints ?? {},
     }
@@ -67,6 +68,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
     }
 
     this.glideInstance = new Glide(this.glideRef.nativeElement, options);
+
+    if (this.options.counter) {
+      this.glideInstance.on(['mount.after', 'run.after'], () => {
+        this.currentSlide = this.glideInstance.index + 1;
+      });
+    }
 
     this.glideInstance.mount();
   }

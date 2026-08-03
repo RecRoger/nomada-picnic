@@ -86,7 +86,7 @@
       display: flex;
       align-items: stretch;
 
-      padding: 0rem 1rem 2rem;
+      padding: 0rem;
       position: relative;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       margin-bottom: -125%;
@@ -111,6 +111,7 @@
 
       .product-card {
         @include u.flex(column, center, space-between);
+        padding: 3rem 3rem 5rem;
 
         &--image {
           position: relative;
@@ -161,6 +162,16 @@
         }
       }
     }
+  }
+}
+
+:host ::ng-deep {
+  // 💡 Apuntamos a los controles del carrusel desde el padre
+  .c-carousel--arrows {
+    top: 30%;
+  }
+  .c-carousel--dots {
+    bottom: 3rem;
   }
 }
 

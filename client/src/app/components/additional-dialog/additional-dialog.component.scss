@@ -29,23 +29,33 @@
   }
 
   &--media {
+    position: relative;
     height: 200px;
+    width: 100%;
     border-radius: var(--radius-card-sm);
-    overflow-x: auto; // Habilita scroll horizontal si hay varias fotos
-    display: flex;
-    scroll-snap-type: x mandatory;
-    flex-shrink: 0; // Impide que la imagen se deforme o aplaste
+    overflow: hidden;
 
     @include u.style-starting-from(tablet) {
+      height: 100%;
+    }
+
+    app-carousel {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .additional-image {
+      @include u.flex(row, center, center);
+      width: 100%;
       height: 100%;
     }
 
     .media-img {
       width: 100%;
       height: 100%;
-      flex: 0 0 100%; // Cada foto toma el 100% del contenedor
+      display: block;
       object-fit: cover;
-      scroll-snap-align: start;
     }
   }
 
@@ -179,5 +189,17 @@
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
       margin-left: auto;
     }
+  }
+}
+
+:host ::ng-deep {
+  .c-carousel--arrows {
+    padding: 1rem !important;
+  }
+  .c-carousel--arrows-control {
+    background-color: var(--color-bg-cream) !important;
+    color: var(--color-black) !important;
+    padding: 0.3rem 0.3rem !important;
+    font-size: var(--font-sm, 14px) !important;
   }
 }

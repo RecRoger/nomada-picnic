@@ -1,0 +1,9 @@
+<div class="c-overlap-cards">
+  @for (card of cards; track $index) {
+    <div class="c-overlap-cards--card">
+      <img src="/images/graphics/{{card.imgSrc}}" class="c-overlap-cards--card__icon" />
+      <h3 class="c-overlap-cards--card__title">{{card.title | translate}}</h3>
+      <p class="c-overlap-cards--card__text">{{card.label | translate}}</p>
+    </div>
+  }
+</div>

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { OverlapCardsComponent } from '@components/overlap-cards/overlap-cards.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-features-cards',
-  imports: [TranslateModule, MatIconModule],
+  imports: [TranslateModule, MatIconModule, OverlapCardsComponent],
   templateUrl: './features-cards.component.html',
   styleUrl: './features-cards.component.scss'
 })

@@ -3,14 +3,17 @@
 
 .c-our-story {
   position: relative;
+  background-color: var(--color-bg-softcream);
+  padding-bottom: 5rem;
+  margin-bottom: -4rem;
   &--hero {
     position: relative;
+    z-index: 1;
     width: 100%;
     height: 70vh;
     min-height: 400px;
     max-height: 650px;
     overflow: hidden;
-    z-index: -1;
 
     @include u.style-up-to(tablet) {
       height: 60vh;
@@ -21,7 +24,7 @@
       height: 100%;
       object-fit: cover;
       // TODO - enfocar image
-      object-position: bottom 30%; // Enfoca ligeramente arriba del centro
+      object-position: center 35%;
       display: block;
     }
 
@@ -31,13 +34,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.25); // Oscurece un 25% la imagen
-      pointer-events: none; // Evita interferir con interacciones si agregas contenido encima
+      background-color: rgba(0, 0, 0, 0.25);
+      pointer-events: none;
     }
   }
   &--marquees {
+    position: relative;
     z-index: 2;
-    margin-top: -100px;
+    margin-top: -110px;
     width: 100%;
     overflow: hidden;
     @include u.style-up-to(desktop) {
@@ -91,6 +95,465 @@
         font-size: 80px;
         letter-spacing: 8px;
       }
+    }
+  }
+
+  &--origin {
+    padding: 2rem 1.5rem;
+
+    @include u.style-starting-from(desktop) {
+      padding: 3rem 2rem;
+    }
+
+    &-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      @include u.grid-columns(1, 1rem);
+      align-items: center;
+
+      // En Desktop pasamos a 2 columnas equilibradas
+      @include u.style-starting-from(tablet) {
+        @include u.flex(row-reverse, center, center);
+        gap: 4rem;
+      }
+    }
+
+    &-media {
+      width: 100%;
+      @include u.flex(row, center, center);
+
+      .c-our-story--origin-img {
+        width: 100%;
+        max-width: 520px; // Evita que se agrande demasiado en pantallas enormes
+        height: auto;
+        display: block;
+        // Drop-shadow sutil por si el PNG requiere despegarse un poco del fondo
+        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.05));
+      }
+    }
+
+    &-content {
+      @include u.flex(column, center, flex-start);
+    }
+
+    &-subtitle {
+      font-family: $font-main;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-brand-coral);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    &-title {
+      font-family: $font-title;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-text-dark);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0 0 1.5rem 0;
+
+      @include u.style-starting-from(tablet) {
+        font-size: 2.5rem;
+      }
+    }
+
+    &-description {
+      @include u.flex(column, flex-start, flex-start, 0);
+      font-family: $font-main;
+      font-size: 1.125rem;
+      line-height: 1.5;
+    }
+  }
+
+  &--values {
+    padding: 2rem 1.5rem;
+    @include u.style-starting-from(desktop) {
+      padding: 3rem 2rem;
+    }
+    &-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    &-subtitle {
+      font-family: $font-main;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-brand-coral);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    &-title {
+      font-family: $font-title;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-text-dark);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0 0 3.5rem 0;
+      @include u.style-starting-from(tablet) {
+        font-size: 2.5rem;
+      }
+    }
+  }
+
+  &--philosophy {
+    padding: 2rem 1.5rem 4rem;
+    &-container {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    &-subtitle {
+      font-family: $font-main;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-brand-coral);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    &-title {
+      font-family: $font-title;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-text-dark);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0 0 1.5rem 0;
+      @include u.style-starting-from(tablet) {
+        font-size: 2.5rem;
+      }
+    }
+    &-highlighted {
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+    &-text {
+      font-size: 1.125rem;
+    }
+  }
+
+  &--mission {
+    position: relative;
+    background-color: var(--color-brand-blue);
+    padding: 2rem 1.5rem;
+    margin: 3rem 0 4rem;
+    text-align: center;
+    color: var(--color-white);
+
+    @include u.style-starting-from(tablet) {
+      padding: 1.5rem;
+      margin: 5rem 0 8rem;
+    }
+
+    &-container {
+      max-width: 650px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2; // Para quedar sobre las ondas
+      @include u.flex(column, center, center);
+    }
+
+    &-subtitle {
+      font-family: $font-main;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-brand-coral);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    &-title {
+      font-family: $font-title;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-white);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0 0 1.5rem 0;
+      @include u.style-starting-from(tablet) {
+        font-size: 2.5rem;
+      }
+    }
+
+    &-text {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      margin: 0 0 1.5rem 0;
+      letter-spacing: 1.5px;
+      max-width: 600px;
+    }
+
+    &-highlight {
+      font-size: 1.15rem;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      margin: 0;
+
+      @include u.style-starting-from(tablet) {
+        font-size: 1.25rem;
+      }
+    }
+
+    &-wave {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      z-index: 1;
+
+      svg {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 60px; // Altura de la curva en mobile
+        fill: var(--color-brand-blue);
+
+        @include u.style-starting-from(tablet) {
+          height: 100px; // Altura de la curva en desktop
+        }
+      }
+
+      &--top {
+        top: -59px; // Se posiciona justo arriba del bloque
+        @include u.style-starting-from(tablet) {
+          top: -99px;
+        }
+      }
+
+      &--bottom {
+        bottom: -59px; // Se posiciona justo abajo del bloque
+        @include u.style-starting-from(tablet) {
+          bottom: -99px;
+        }
+      }
+    }
+  }
+
+  &--family {
+    padding: 2rem 1.5rem;
+    @include u.style-starting-from(desktop) {
+      padding: 3rem 2rem;
+    }
+    &-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      @include u.grid-columns(1, 2rem);
+      align-items: center;
+      @include u.style-starting-from(tablet) {
+        @include u.flex(row-reverse, center, center);
+        gap: 4rem;
+      }
+    }
+
+    &-media {
+      @include u.flex(row, center, center);
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius-card-md);
+      overflow: hidden;
+
+      .c-our-story--family-img {
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
+    }
+
+    &-content {
+      @include u.flex(column, center, flex-start);
+    }
+
+    &-subtitle {
+      font-family: $font-main;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-brand-coral);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    &-title {
+      font-family: $font-title;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-text-dark);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0 0 1.5rem 0;
+
+      @include u.style-starting-from(tablet) {
+        font-size: 2.5rem;
+      }
+    }
+
+    &-description {
+      font-family: $font-main;
+      font-size: 1.125rem;
+      line-height: 1.5;
+    }
+
+    &-list {
+      list-style: none; // Quita los puntos negros por defecto
+      padding: 0;
+      margin: 0;
+      @include u.flex(column, flex-start, center, 1.25rem);
+
+      .list-item {
+        display: flex;
+        align-items: center; // Alinea verticalmente el icono y el texto
+        gap: 1rem; // Espacio horizontal entre el icono y la palabra
+        &--icon {
+          width: 24px; // Ajusta según el tamaño exacto de tus PNGs/SVGs
+          height: 24px;
+          object-fit: contain;
+          flex-shrink: 0; // Evita que el icono se comprima si el texto es largo
+        }
+        &--text {
+          font-family: $font-main;
+          font-size: 1.125rem;
+          color: var(--color-black);
+        }
+      }
+    }
+  }
+
+  &--video-banner {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    max-height: 650px;
+    @include u.flex(row, center, center);
+    overflow: hidden;
+    margin: 3rem 0 4rem;
+    @include u.style-up-to(tablet) {
+      height: 45vh;
+      min-height: 320px;
+      margin: 3rem 0 2rem;
+    }
+    &-media {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; // Asegura que el video llene el área sin deformarse
+      z-index: 1;
+    }
+    &-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4); // Oscurece un 40%
+      z-index: 2;
+    }
+    &-content {
+      position: relative;
+      z-index: 3; // Queda por encima del overlay
+      max-width: 900px;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    &-title {
+      font-family: $font-title;
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: var(--color-white);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0;
+      letter-spacing: 1px;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      @include u.style-starting-from(tablet) {
+        font-size: 3.5rem;
+      }
+      @include u.style-starting-from(desktop) {
+        font-size: 4rem;
+      }
+    }
+  }
+
+  &--action {
+    padding: 5rem 1.5rem;
+    text-align: center;
+
+    @include u.style-starting-from(tablet) {
+      padding: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    &__container {
+      max-width: 800px;
+      margin: 0 auto;
+      @include u.flex(column, center, center);
+    }
+
+    &__title {
+      font-family: $font-title;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      margin: 0 0 2.5rem 0;
+      @include u.flex(column);
+      width: 100%;
+      max-width: 650px;
+      &-step {
+        display: block;
+        letter-spacing: 0.5px;
+        &--left {
+          font-size: 2rem;
+          color: var(--color-black);
+          text-align: left;
+          padding-left: 5%;
+          @include u.style-starting-from(tablet) {
+            font-size: 2.5rem;
+          }
+        }
+        &--center {
+          font-size: 2.7rem;
+          color: var(--color-brand-coral);
+          text-align: center;
+          margin: 0.1em 0;
+          @include u.style-starting-from(tablet) {
+            font-size: 3.5rem;
+          }
+        }
+        &--right {
+          font-size: 2rem;
+          color: var(--color-black);
+          text-align: right;
+          padding-right: 5%;
+          @include u.style-starting-from(tablet) {
+            font-size: 2.5rem;
+          }
+        }
+      }
+    }
+
+    &__description {
+      line-height: 1.6;
+      color: var(--color-text-dark);
+      margin: 0 0 2.5rem 0;
+      max-width: 580px;
+    }
+    &__btn {
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      display: inline-block;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 1rem 2.25rem;
     }
   }
 }

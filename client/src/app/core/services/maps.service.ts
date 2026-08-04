@@ -19,36 +19,43 @@ export class MapsService {
 
   private platformId: any = inject(PLATFORM_ID)
 
-  public load(): Promise<void> | null {
-    if (isPlatformBrowser(this.platformId)) {
-      return new Promise((resolve, reject) => {
-        if (!isPlatformBrowser(this.platformId)) {
-          // Si está en el servidor, no hace nada
-          resolve();
-          return;
-        }
+  private loadingPromise?: Promise<void>
 
-        if (this.scriptLoaded) {
-          resolve();
-          return;
-        }
+  public load(): Promise<void> {
 
-        const script = document.createElement('script');
-        (window as any).initMap = () => { };
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${this.MAPS_KEY}&v=weekly&libraries=places,marker`;
-        script.async = true;
-        script.defer = true;
-        script.onload = () => {
-          this.scriptLoaded = true;
-          resolve();
-        };
-        script.onerror = (error) => reject(error);
-
-        document.head.appendChild(script);
-      });
-    } else {
-      return null
+    if (!isPlatformBrowser(this.platformId)) {
+      return Promise.resolve();
     }
+
+    if (this.scriptLoaded) {
+      return Promise.resolve();
+    }
+
+    if (this.loadingPromise) {
+      return this.loadingPromise;
+    }
+
+    this.loadingPromise = new Promise((resolve, reject) => {
+
+      const script = document.createElement('script');
+
+      script.src =
+        `https://maps.googleapis.com/maps/api/js?key=${this.MAPS_KEY}&v=weekly&libraries=places,marker&loading=async`;
+
+      script.async = true;
+      script.defer = true;
+
+      script.onload = () => {
+        this.scriptLoaded = true;
+        resolve();
+      };
+
+      script.onerror = reject;
+
+      document.head.appendChild(script);
+    });
+
+    return this.loadingPromise;
   }
 
 }

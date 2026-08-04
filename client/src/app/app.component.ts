@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { afterNextRender, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from "@components/header/header.component";
@@ -13,11 +13,20 @@ import { FooterComponent } from '@components/footer/footer.component';
 })
 export class AppComponent implements OnInit {
 
-  private mapsService = inject(MapsService)
   private translate = inject(TranslateService)
 
+  constructor(private mapsService: MapsService) {
+    afterNextRender(() => {
+      this.mapsService
+        .load()
+        ?.catch(err =>
+          console.error('Error al cargar Google Maps', err)
+        );
+    });
+  }
+
   ngOnInit(): void {
-    this.mapsService.load()?.catch(err => console.error('Error al cargar Google Maps', err))
     this.translate.use('es');
   }
+
 }

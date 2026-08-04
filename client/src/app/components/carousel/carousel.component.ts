@@ -1,7 +1,8 @@
 import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
-import { AfterViewInit, Component, ContentChild, ElementRef, inject, Inject, Input, OnChanges, OnDestroy, PLATFORM_ID, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ElementRef, inject, Inject, Input, NgZone, OnChanges, OnDestroy, PLATFORM_ID, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import Glide, { Options } from '@glidejs/glide';
+import { afterNextRender } from '@angular/core';
 
 
 export interface CarouselOptions {
@@ -25,7 +26,7 @@ export interface CarouselOptions {
   styleUrl: './carousel.component.scss',
   imports: [NgTemplateOutlet, MatIconModule],
 })
-export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class CarouselComponent implements OnDestroy, OnChanges {
   protected platformId = inject(PLATFORM_ID);
 
   @ViewChild('glideRef', { static: false }) glideRef!: ElementRef;
@@ -37,22 +38,23 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   @ContentChild(TemplateRef) cardTemplate!: TemplateRef<any>;
 
-  public currentSlide = 0
+  public currentSlide = 1
 
   public isBrowser = isPlatformBrowser(this.platformId);
 
   private glideInstance: any;
 
-  ngAfterViewInit(): void {
+  private zone = inject(NgZone);
+
+  constructor() {
     if (this.isBrowser) {
-      this.initGlide();
+      afterNextRender(() => {
+        this.initGlide();
+      });
     }
   }
 
   private initGlide(): void {
-    // if (!isPlatformBrowser(this.platformId)) {
-    //   return;
-    // }
     const options: Partial<Options> = {
       type: this.options.type ?? 'carousel',
       startAt: 0,
@@ -71,15 +73,19 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       options.animationTimingFunc = this.options.animationTimingFunc
     }
 
-    this.glideInstance = new Glide(this.glideRef.nativeElement, options);
+    this.zone.runOutsideAngular(() => {
+      this.glideInstance = new Glide(this.glideRef.nativeElement, options);
 
-    if (this.options.counter) {
-      this.glideInstance.on(['mount.after', 'run.after'], () => {
-        this.currentSlide = this.glideInstance.index + 1;
-      });
-    }
+      if (this.options.counter) {
+        this.glideInstance.on(['mount.after', 'run.after'], () => {
+          this.zone.run(() => {
+            this.currentSlide = this.glideInstance.index + 1;
+          });
+        });
+      }
 
-    this.glideInstance.mount();
+      this.glideInstance.mount();
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {

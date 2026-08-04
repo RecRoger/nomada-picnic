@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
@@ -64,6 +64,8 @@ export class PlacesMapComponent implements OnInit {
 
   private highlightedId: string | null = null
 
+  private readonly platformId = inject(PLATFORM_ID);
+
   public toggleSearch(): void {
     this.searchOpen = !this.searchOpen
   }
@@ -74,10 +76,13 @@ export class PlacesMapComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
+
   ngOnInit(): void {
-    setTimeout(() => { this.hide = true }, 10000)
-    this.getPlaces()
-    this.setSearchFilter()
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => { this.hide = true }, 10000)
+      this.getPlaces()
+      this.setSearchFilter()
+    }
   }
 
   public selectSearch(value: string): void {

@@ -4,29 +4,29 @@
       
       <div class="s-additionals-banner--carousel">
         <div class="s-additionals-banner--carousel-card">          
-          <app-carousel 
-            [items]="additionals" 
-            [options]="carouselOptions">
-            <ng-template let-product>
-              <div class="product-card">
-                <div class="product-card--image">
-                  @if (product?.tags?.includes(popularTag)) {
-                    <span class="badge-tag">Más vendido</span>
-                  }
-                  @if(product.images.length) {
-                    <img class="product-img" [src]="product.images[0] | apiImageUrl" [alt]="product.name">
-                  }
+          @if (additionals.length) {
+            <app-carousel 
+              [items]="additionals" 
+              [options]="carouselOptions">
+              <ng-template let-product>
+                <div class="product-card">
+                  <div class="product-card--image">
+                    @if (product?.tags?.includes(popularTag)) {
+                      <span class="badge-tag">Más vendido</span>
+                    }
+                    @if(product.images.length) {
+                      <img class="product-img" [src]="product.images[0] | apiImageUrl" [alt]="product.name">
+                    }
+                  </div>
+                  <div class="product-card-content">
+                    <h3 class="product-card-content--title">{{product.name}}</h3>
+                    <p class="product-card-content--desc">{{product.description}}</p>
+                    <span class="product-card-content--price">{{product.finalPrice | currency:'US$ '}}</span>
+                  </div>
                 </div>
-                <div class="product-card-content">
-                  <h3 class="product-card-content--title">{{product.name}}</h3>
-                  <p class="product-card-content--desc">{{product.description}}</p>
-                  <span class="product-card-content--price">{{product.finalPrice | currency:'US$ '}}</span>
-                </div>
-              </div>
-            </ng-template>
-          </app-carousel>
-      
-  
+              </ng-template>
+            </app-carousel>
+          }
         </div>  
       </div>
   

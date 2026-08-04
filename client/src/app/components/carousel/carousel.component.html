@@ -1,12 +1,13 @@
+@if (isBrowser) {
 <div #glideRef class="glide c-carousel">
   <div class="glide__track" data-glide-el="track">
-    <ul class="glide__slides">
-      @for (item of items; track $index; let index = $index) {
-        <li class="glide__slide" [class.unique]="options.perView == 1">
-          <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: item }"></ng-container>
-        </li>
-      }
-    </ul>
+      <ul class="glide__slides">
+        @for (item of items; track $index; let index = $index) {
+          <li class="glide__slide" [class.unique]="options.perView == 1">
+            <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: item }"></ng-container>
+          </li>
+        }
+      </ul>
   </div>
 
   @if(items.length > 1 && options.arrows) {
@@ -36,3 +37,4 @@
     <span class="c-carousel--counter">{{this.currentSlide}}/{{items.length}}</span>
   }
 </div>
+}

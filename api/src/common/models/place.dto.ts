@@ -23,6 +23,11 @@ export class PlaceDto implements IPlace {
 
   @IsString()
   @IsOptional()
+  @ApiProperty({ description: 'Direccion mas cercana al lugar del picnic', example: 'Av. Sarmiento y Av. Adolfo Berro' })
+  address?: string;
+
+  @IsString()
+  @IsOptional()
   @ApiProperty({ description: 'Descripcion corta del parque', example: 'Un Hermoso parque' })
   description?: string;
 

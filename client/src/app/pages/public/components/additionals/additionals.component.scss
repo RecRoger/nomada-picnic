@@ -17,11 +17,9 @@
       }
     }
     &-title {
-      font-weight: 900;
       line-height: 1.2;
-      letter-spacing: -0.5px;
-      margin: 0;
       text-transform: uppercase;
+      margin: 0;
 
       .title-line {
         display: block;
@@ -170,7 +168,7 @@
         margin: 0;
         font-size: 1.2rem;
         font-weight: 800;
-        color: #111827;
+        color: var(--color-black);
       }
 
       // --- TAGS ---
@@ -215,7 +213,7 @@
       &__price {
         @include u.flex(row, center, baseline, 6px);
         color: var(--color-brand-blue);
-        font-weight: 800;
+        font-family: var(--font-money);
         .amount {
           font-size: 1.3rem;
         }

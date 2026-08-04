@@ -9,6 +9,7 @@ export interface IPlace {
   _id?: string;
   name: string;
   type: PlacesTypes;
+  address?: string;
   description?: string;
   detail?: string;
   tags?: string[];

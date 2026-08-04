@@ -1,4 +1,3 @@
-@use "variables" as *;
 @use "utils" as u;
 
 .s-info-steps {
@@ -11,8 +10,7 @@
 
   &--title {
     font-size: clamp(2rem, 4vw, 3rem);
-    // color: var(--color-black);
-    // margin-bottom: 4rem;
+    text-transform: uppercase;
   }
 
   &--grid {
@@ -84,7 +82,7 @@
     background-color: var(--color-white);
     border-radius: 50%;
     @include u.flex(row, center, center);
-    font-family: var(--font-title);
+    font-family: var(--font-main);
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1rem;

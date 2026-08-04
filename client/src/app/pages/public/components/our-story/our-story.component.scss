@@ -1,5 +1,4 @@
 @use "utils" as u;
-@use "typography" as *;
 
 .c-our-story {
   position: relative;
@@ -78,9 +77,9 @@
     // 💡 Estilo del texto adaptativo
     &__text {
       fill: var(--color-white);
-      font-family: $font-title;
+      font-family: var(--font-title);
       font-size: 36px;
-      font-weight: 800;
+      font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 2px;
       alignment-baseline: central;
@@ -137,9 +136,9 @@
     }
 
     &-subtitle {
-      font-family: $font-main;
+      font-family: var(--font-main);
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--color-brand-coral);
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -147,9 +146,7 @@
     }
 
     &-title {
-      font-family: $font-title;
       font-size: 2rem;
-      font-weight: 900;
       color: var(--color-text-dark);
       line-height: 1.15;
       text-transform: uppercase;
@@ -162,7 +159,7 @@
 
     &-description {
       @include u.flex(column, flex-start, flex-start, 0);
-      font-family: $font-main;
+      font-family: var(--font-main);
       font-size: 1.125rem;
       line-height: 1.5;
     }
@@ -179,7 +176,7 @@
       text-align: center;
     }
     &-subtitle {
-      font-family: $font-main;
+      font-family: var(--font-main);
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--color-brand-coral);
@@ -188,9 +185,7 @@
       margin-bottom: 0.75rem;
     }
     &-title {
-      font-family: $font-title;
       font-size: 2rem;
-      font-weight: 900;
       color: var(--color-text-dark);
       line-height: 1.15;
       text-transform: uppercase;
@@ -209,7 +204,7 @@
       text-align: center;
     }
     &-subtitle {
-      font-family: $font-main;
+      font-family: var(--font-main);
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--color-brand-coral);
@@ -218,9 +213,7 @@
       margin-bottom: 0.75rem;
     }
     &-title {
-      font-family: $font-title;
       font-size: 2rem;
-      font-weight: 900;
       color: var(--color-text-dark);
       line-height: 1.15;
       text-transform: uppercase;
@@ -260,7 +253,7 @@
     }
 
     &-subtitle {
-      font-family: $font-main;
+      font-family: var(--font-main);
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--color-brand-coral);
@@ -270,9 +263,7 @@
     }
 
     &-title {
-      font-family: $font-title;
       font-size: 2rem;
-      font-weight: 900;
       color: var(--color-white);
       line-height: 1.15;
       text-transform: uppercase;
@@ -372,7 +363,7 @@
     }
 
     &-subtitle {
-      font-family: $font-main;
+      font-family: var(--font-main);
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--color-brand-coral);
@@ -382,9 +373,7 @@
     }
 
     &-title {
-      font-family: $font-title;
       font-size: 2rem;
-      font-weight: 900;
       color: var(--color-text-dark);
       line-height: 1.15;
       text-transform: uppercase;
@@ -396,15 +385,15 @@
     }
 
     &-description {
-      font-family: $font-main;
+      font-family: var(--font-main);
       font-size: 1.125rem;
       line-height: 1.5;
     }
 
     &-list {
-      list-style: none; // Quita los puntos negros por defecto
+      list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 1rem 0;
       @include u.flex(column, flex-start, center, 1.25rem);
 
       .list-item {
@@ -418,7 +407,7 @@
           flex-shrink: 0; // Evita que el icono se comprima si el texto es largo
         }
         &--text {
-          font-family: $font-main;
+          font-family: var(--font-main);
           font-size: 1.125rem;
           color: var(--color-black);
         }
@@ -467,9 +456,7 @@
     }
 
     &-title {
-      font-family: $font-title;
       font-size: 2.25rem;
-      font-weight: 900;
       color: var(--color-white);
       line-height: 1.15;
       text-transform: uppercase;
@@ -501,8 +488,6 @@
     }
 
     &__title {
-      font-family: $font-title;
-      font-weight: 900;
       text-transform: uppercase;
       line-height: 1;
       margin: 0 0 2.5rem 0;

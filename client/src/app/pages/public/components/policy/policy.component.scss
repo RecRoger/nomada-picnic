@@ -22,7 +22,8 @@
 
       &-title {
         margin: 1rem 0;
-        font-size: clamp(2.3rem, 3vw, 4rem);
+        font-size: clamp(2.3rem, 3.5vw, 4rem);
+        line-height: 1.2;
         text-transform: uppercase;
       }
     }
@@ -41,6 +42,8 @@
       margin: var(--space-lg) 0 var(--space-xl);
       .term-title {
         color: var(--color-brand-blue);
+        font-family: var(--font-title);
+        font-weight: 900;
         text-transform: uppercase;
       }
 

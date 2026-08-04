@@ -1,5 +1,5 @@
 import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
-import { AfterViewInit, Component, ContentChild, ElementRef, Inject, Input, OnChanges, OnDestroy, PLATFORM_ID, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ElementRef, inject, Inject, Input, OnChanges, OnDestroy, PLATFORM_ID, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import Glide, { Options } from '@glidejs/glide';
 
@@ -26,6 +26,8 @@ export interface CarouselOptions {
   imports: [NgTemplateOutlet, MatIconModule],
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
+  protected platformId = inject(PLATFORM_ID);
+
   @ViewChild('glideRef', { static: false }) glideRef!: ElementRef;
 
   @Input() items: any[] = [];
@@ -37,18 +39,20 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   public currentSlide = 0
 
+  public isBrowser = isPlatformBrowser(this.platformId);
+
   private glideInstance: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
-
-
   ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.isBrowser) {
       this.initGlide();
     }
   }
 
   private initGlide(): void {
+    // if (!isPlatformBrowser(this.platformId)) {
+    //   return;
+    // }
     const options: Partial<Options> = {
       type: this.options.type ?? 'carousel',
       startAt: 0,

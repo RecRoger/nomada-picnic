@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, PLATFORM_ID, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OverlapCardsComponent } from '@components/overlap-cards/overlap-cards.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -42,10 +43,14 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   private patternLengths: number[] = [];
   public speed = 0.7;
 
+  private readonly platformId = inject(PLATFORM_ID);
+
   ngAfterViewInit(): void {
-    this.updateSpeedByScreenSize();
-    this.calculateLengths();
-    this.animate();
+    if (isPlatformBrowser(this.platformId)) {
+      this.updateSpeedByScreenSize();
+      this.calculateLengths();
+      this.animate();
+    }
   }
 
   @HostListener('window:resize')

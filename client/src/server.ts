@@ -28,7 +28,7 @@ app.use(
 /**
  * Manejar todas las demás rutas con Angular SSR
  */
-app.use('/**', (req, res, next) => {
+app.use((req, res, next) => {
   angularApp
     .handle(req)
     .then((response) =>

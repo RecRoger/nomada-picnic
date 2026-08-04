@@ -1,5 +1,5 @@
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { AsyncPipe, CurrencyPipe, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CarouselComponent, CarouselOptions } from '@components/carousel/carousel.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,7 +22,10 @@ import { forkJoin, map, Observable } from 'rxjs';
   templateUrl: './additionals-banner.component.html',
   styleUrl: './additionals-banner.component.scss'
 })
-export class AdditionalsBannerComponent implements AfterViewInit {
+export class AdditionalsBannerComponent implements OnInit {
+
+  protected platformId = inject(PLATFORM_ID);
+
 
   public additionals$?: Observable<ICost[]>
 
@@ -36,9 +39,12 @@ export class AdditionalsBannerComponent implements AfterViewInit {
     autoplay: 7000,
   }
 
+  public isBrowser = isPlatformBrowser(this.platformId);
+
   private costService = inject(CostsService)
 
-  ngAfterViewInit(): void {
+
+  ngOnInit(): void {
     this.getAdditionals()
   }
 

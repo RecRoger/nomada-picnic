@@ -19,32 +19,36 @@ export class MapsService {
 
   private platformId: any = inject(PLATFORM_ID)
 
-  public load(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (!isPlatformBrowser(this.platformId)) {
-        // Si está en el servidor, no hace nada
-        resolve();
-        return;
-      }
+  public load(): Promise<void> | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return new Promise((resolve, reject) => {
+        if (!isPlatformBrowser(this.platformId)) {
+          // Si está en el servidor, no hace nada
+          resolve();
+          return;
+        }
 
-      if (this.scriptLoaded) {
-        resolve();
-        return;
-      }
+        if (this.scriptLoaded) {
+          resolve();
+          return;
+        }
 
-      const script = document.createElement('script');
-      (window as any).initMap = () => { };
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.MAPS_KEY}&v=weekly&libraries=places,marker`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => {
-        this.scriptLoaded = true;
-        resolve();
-      };
-      script.onerror = (error) => reject(error);
+        const script = document.createElement('script');
+        (window as any).initMap = () => { };
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${this.MAPS_KEY}&v=weekly&libraries=places,marker`;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+          this.scriptLoaded = true;
+          resolve();
+        };
+        script.onerror = (error) => reject(error);
 
-      document.head.appendChild(script);
-    });
+        document.head.appendChild(script);
+      });
+    } else {
+      return null
+    }
   }
 
 }

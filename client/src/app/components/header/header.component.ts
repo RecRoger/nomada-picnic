@@ -1,5 +1,5 @@
-import { AsyncPipe, NgClass } from '@angular/common';
-import { AfterViewInit, Component, inject, NgZone } from '@angular/core';
+import { AsyncPipe, isPlatformBrowser, NgClass } from '@angular/common';
+import { AfterViewInit, Component, inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
@@ -66,8 +66,12 @@ export class HeaderComponent implements AfterViewInit {
 
   private ngZone = inject(NgZone)
 
+  private readonly platformId = inject(PLATFORM_ID);
+
   ngAfterViewInit() {
-    this.initScrollHeader();
+    if (isPlatformBrowser(this.platformId)) {
+      this.initScrollHeader();
+    }
   }
 
   initScrollHeader() {

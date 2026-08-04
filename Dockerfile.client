@@ -2,18 +2,18 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copiamos manifiestos de la raíz y subcarpetas
+# Copiamos manifiestos
 COPY package*.json ./
 COPY client/package*.json ./client/
 
-# Instalamos dependencias unificadas
+# Instalamos dependencias
 RUN npm install
 
-# Copiamos el código fuente (incluyendo shared si aplica)
+# Copiamos código fuente
 COPY shared/ ./shared/
 COPY client/ ./client/
 
-# Compilamos Angular SSR en modo producción
+# Compilamos Angular SSR
 WORKDIR /app/client
 RUN npm run build -- --configuration production
 
@@ -21,18 +21,13 @@ RUN npm run build -- --configuration production
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-# Variable de entorno para Cloud Run (escucha en el puerto configurado)
-ENV PORT=8080
 ENV NODE_ENV=production
 
-# Copiamos la compilación generada por Angular SSR
-# Angular 19 genera las carpetas 'browser' y 'server' dentro de dist/client
+# Copiamos la carpeta dist de la app cliente
 COPY --from=builder /app/client/dist/client ./dist/client
 
-# Opcional: Copiamos package.json por si tu server.mjs requiere dependencias externas
-COPY --from=builder /app/package*.json ./
-
+# Exponemos el puerto
 EXPOSE 8080
 
-# Iniciamos el servidor Node.js que renderiza el SSR
+# Ejecutamos con la ruta exacta desde la raíz de trabajo
 CMD ["node", "dist/client/server/server.mjs"]

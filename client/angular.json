@@ -18,8 +18,10 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/client",
-            "index": "src/index.html",
             "browser": "src/main.ts",
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "index": "src/index.html",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -46,15 +48,12 @@
               },
               "fonts": false
             },
-            "server": "src/main.server.ts",
             "ssr": {
               "entry": "src/server.ts"
             }
           },
           "configurations": {
             "production": {
-              "ssr": false,
-              "prerender": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

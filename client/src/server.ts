@@ -40,8 +40,8 @@ app.use((req, res, next) => {
 /**
  * Iniciar el servidor si se ejecuta directamente
  */
+const port = process.env['PORT'] || 4200;
 if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4200;
   app.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });

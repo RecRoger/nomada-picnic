@@ -15,10 +15,12 @@ export class Place {
   @Prop({ required: true, index: true, enum: PlacesTypes }) // Indexado para filtros rápidos
   type: string;
 
+  @Prop()
+  address: string;
+
   // TODO - volver varios idiomas
   @Prop()
   description: string;
-
 
   @Prop({ type: [String], default: [] })
   tags: string[];

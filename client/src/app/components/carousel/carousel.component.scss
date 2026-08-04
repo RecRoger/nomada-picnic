@@ -90,8 +90,8 @@
     align-items: center;
     z-index: 5;
     &-control {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background-color: var(--color-brand-pink);
       border: none;
@@ -109,7 +109,7 @@
         opacity: 1;
         transform: scale(1.25); // Efecto sutil de crecimiento
         background-color: var(
-          --color-brand-coral
+          --color-brand-pink
         ); // Podés acentuarlo con un color más intenso al activarse
       }
     }

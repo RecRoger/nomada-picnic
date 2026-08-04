@@ -118,7 +118,7 @@
     &-price {
       @include u.flex(row, flex-start, baseline, 6px);
       color: var(--color-brand-blue);
-      font-weight: 800;
+      font-family: var(--font-money);
       .amount {
         font-size: 1.5rem;
       }

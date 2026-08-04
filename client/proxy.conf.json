@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://nomada-backend-389141432152.us-east1.run.app",
+    "target": "htpp://localhost:3000",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

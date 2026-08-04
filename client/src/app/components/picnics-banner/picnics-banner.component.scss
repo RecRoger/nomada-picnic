@@ -1,15 +1,12 @@
-@use "variables" as *;
 @use "utils" as u;
 
 .s-picnics-banner {
   position: relative;
   padding: 2rem 1rem 0;
-  // margin-bottom: 18rem;
   background: url("/images/graphics/trazo_home_picnics_01.png") no-repeat
     var(--color-white);
   background-size: auto;
   background-position: bottom;
-  // background-color: var(--color-white); // Fondo general de la página
   @include u.flex(column);
 
   @include u.style-starting-from(mobile) {
@@ -46,18 +43,16 @@
     color: var(--color-brand-purple);
 
     .banner-subtitle {
-      font-family: $font-title;
       font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-      font-weight: 800;
+      font-family: var(--font-title);
+      font-weight: 900;
       display: block;
-      letter-spacing: -0.5px;
       line-height: 1.1;
     }
 
     .banner-title {
-      // font-family: "TuFuenteHeavy", sans-serif;
       font-size: clamp(2.7rem, 5vw, 3.5rem); // Escalado fluido tipográfico
-      font-weight: 900;
+      font-family: var(--font-title);
       margin: 0 0 1.5rem 0;
       line-height: 0.95;
     }

@@ -2,7 +2,7 @@
 
 .s-features-cards {
   // @include u.flex(column, center);
-  padding: var(--space-xl);
+  padding: var(--space-xxl) var(--space-xl);
   text-align: center;
 
   @include u.style-up-to(tablet) {
@@ -20,7 +20,7 @@
     &-title {
       font-size: clamp(2rem, 4vw, 3rem);
       color: var(--color-text-dark);
-      font-weight: 800;
+      text-transform: uppercase;
       margin: 0;
     }
     &-message {

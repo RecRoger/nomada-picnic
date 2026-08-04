@@ -40,6 +40,7 @@ export class PlaceFormComponent implements OnInit {
   ngOnInit(): void {
     this.placeForm = this.fb.group({
       name: [this.place?.name || '', Validators.required],
+      address: [this.place?.address || '', Validators.required],
       description: [this.place?.description || '', Validators.required],
       detail: [this.place?.detail || ''],
       images: [null],

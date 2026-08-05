@@ -1,34 +1,54 @@
 <div class="c-place-dialog">
-  <button mat-icon-button mat-dialog-close class="close-btn" type="button">
+  <button mat-icon-button mat-dialog-close class="close-btn" type="button" aria-label="Cerrar">
     <mat-icon>close</mat-icon>
   </button>
 
-  @if (place.images?.length) {
-    <div class="c-place-dialog--media">
+  <div class="c-place-dialog--media">
+    @if (place.tags && place.tags.length && place.tags.includes(recomendedTag)) {
+      <span class="badge-recommended">
+        <mat-icon class="icon">star</mat-icon>
+        Recomendado
+      </span>
+    }
+    @if (place.images?.length) {
       @for (image of place.images; track $index) {
-        <img class="media-img" src="{{image | apiImageUrl}}" [alt]="place.name+$index">
+        <img class="media-img" [src]="image | apiImageUrl" [alt]="place.name + ' ' + $index">
       }
-    </div>
-  }
+    }
+  </div>
+
   <div class="c-place-dialog--content">
-    <h2 class="c-place-dialog--title">{{place.name}}</h2>
-    <div class="c-place-dialog--data">
+    <header class="c-place-dialog--header">
+      <h2 class="c-place-dialog--title">{{ place.name }}</h2>    
+      @if (place.address) {
+        <p class="c-place-dialog--address">
+          <mat-icon class="icon-loc">location_on</mat-icon>
+          <span>{{ place.address }}</span>
+        </p>
+      }
       @if (place.tags?.length) {
-       <div class="c-place-dialog--data-tags">
+        <div class="c-place-dialog--tags">
           @for (tag of place.tags; track $index) {
-            <div class="place-tag">{{tag}}</div>
+            <span class="place-tag">{{ tag }}</span>
           }
         </div>
       }
-
-      <p class="c-place-dialog--data-description">{{place.description}}</p>
+    </header>
+    <div class="c-place-dialog--data">
+      <p class="c-place-dialog--data-description">{{ place.description }}</p>
       @if (place.detail) {
         <div class="c-place-dialog--data-detail" [innerHTML]="place.detail | safeHtml"></div>
       }
     </div>
-    <div class="c-place-dialog--actions">
-      <a class="c-place-dialog--actions-map" [href]="place.mapsLink" target="_blank">{{'PUBLIC.PLACES.CHECK_MAPS' | translate}}</a>
-      <button class="c-place-dialog--actions-add" [mat-dialog-close]="true">{{'PUBLIC.PLACES.ADD' | translate}}</button>
-    </div>
+  </div>
+
+  <div class="c-place-dialog--actions">
+    <a class="c-place-dialog--actions-map" [href]="place.mapsLink" target="_blank" rel="noopener">
+      {{ 'PUBLIC.PLACES.CHECK_MAPS' | translate }}
+      <mat-icon class="icon-arrow">north_east</mat-icon>
+    </a>
+    <button class="c-place-dialog--actions-add" [mat-dialog-close]="true">
+      {{ 'PUBLIC.PLACES.ADD' | translate }}
+    </button>
   </div>
 </div>

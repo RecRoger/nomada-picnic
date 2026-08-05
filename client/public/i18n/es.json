@@ -94,6 +94,7 @@
     "EDITED": "Costo actualizado correctamente",
     "DELETED": "Costo eliminado correctamente",
     "TYPES_DESCRIPTION": {
+      "ALL": "Todos",
       "PRODUCTION": "Costos de produccion",
       "GIFTS": "Regalos de Cortesia",
       "ADDITIONAL": "Adicionales",
@@ -402,9 +403,13 @@
         "LABEL": "¿Qué lugar te interesa conocer?",
         "PLACEHOLDER": "Buscar por nombre o característica"
       },
+      "EMPTY": {
+        "TITLE": "Todavía no tenemos un lugar así",
+        "TEXT": "Prueba con otro nombre o quita algún filtro. Si tienes un parque en mente, lo estudiamos para vos."
+      },
       "AVAILABLE_PLACES": "lugares disponibles",
-      "ADD": "Quiero este lugar",
-      "CHECK_MAPS": "Ver en maps"
+      "ADD": "Reservar aquí",
+      "CHECK_MAPS": "Cómo llegar"
     },
     "STEPS": {
       "TITLE": "Tu picnic en 5 pasos simples",
@@ -441,7 +446,7 @@
       "NO_LIST": "No se han encontrado adicionales",
       "COVERAGE": "Alcance para {{coverage}} personas.",
       "DELIVERY": "Requiere delivery.",
-      "ADD": "Añadir."
+      "ADD": "Añadir al carrito."
     }
   },
   "CALCULATOR": {

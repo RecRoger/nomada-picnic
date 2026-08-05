@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IPlace } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
+import { RECOMENDED_TAG } from '@constants/important-tags';
 
 @Component({
   selector: 'app-place-dialog',
@@ -16,6 +17,8 @@ import { SafeHtmlPipe } from '@pipes/safe-html.pipe';
 })
 export class PlaceDialogComponent {
   readonly dialogRef = inject(MatDialogRef<PlaceDialogComponent>);
+
+  public readonly recomendedTag = RECOMENDED_TAG
 
   readonly place = inject<IPlace>(MAT_DIALOG_DATA);
 }

@@ -22,7 +22,33 @@
 
 
   <div class="c-additionals--filters">
-    <!-- // TODO - aca irian los filtros -->
+    <nav class="c-additionals--filters-tabs" aria-label="Filtro por categoría">
+      @for (type of typesList; track $index) {
+        <button 
+          class="tab-btn" 
+          [class.active]="filterForm.get('costType')?.value === type"
+          (click)="selectCategory(type)">
+          {{('COSTS.TYPES_DESCRIPTION.'+(type | uppercase)) | translate}}
+        </button>
+      }
+    </nav>
+
+    <!-- Fila de TAGS con Scroll Horizontal -->
+     @if(tagList.length) {
+       <div class="c-additionals--filters-tags">
+         <span class="c-additionals--filters-tags_label">TAGS:</span>
+         <div class="c-additionals--filters-tags_list">
+           @for (tag of tagList; track tag) {
+             <button 
+               class="tag-chip"
+               [class.selected]="filterForm.get('tags')?.value?.includes(tag)"
+               (click)="toggleTag(tag)">
+               {{ tag }}
+             </button>
+           }
+         </div>
+       </div>
+     }
   </div>
 
   @if (filteredList.length) {

@@ -76,6 +76,8 @@ export class PlacesService {
           place.name.replaceAll(' ', '-'),
           'places',
         );
+      } else {
+        place.images = undefined
       }
       if (place.detail) {
         place.detail = sanitizeContent(place.detail)

@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MatCardModule } from '@angular/material/card';
@@ -18,6 +18,7 @@ import { PlaceDialogComponent } from '@components/place-dialog/place-dialog.comp
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { RECOMENDED_TAG } from '@constants/important-tags';
+import { normalizeString } from 'src/app/core/functions/search';
 
 
 @Component({
@@ -34,6 +35,7 @@ import { RECOMENDED_TAG } from '@constants/important-tags';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatCardModule,
+    NgTemplateOutlet,
   ],
   templateUrl: './places-map.component.html',
   styleUrl: './places-map.component.scss',
@@ -51,7 +53,9 @@ export class PlacesMapComponent implements OnInit {
 
   public markers: any = [];
 
-  public places: IPlace[] = [];
+  public placesList: IPlace[] = [];
+
+  public filteredList: IPlace[] = [];
 
   public options: string[] = [];
 
@@ -60,10 +64,13 @@ export class PlacesMapComponent implements OnInit {
   public filteredOptions: Observable<string[]> = of([])
 
   public filterForm = this.fb.group({
-    keyword: []
+    keyword: '',
+    tags: [['']],
   })
 
   public readonly recomendedTag = RECOMENDED_TAG
+
+  public highlightedIds: string[] = []
 
   private readonly placesService = inject(PlacesService)
 
@@ -71,33 +78,33 @@ export class PlacesMapComponent implements OnInit {
 
   readonly dialog = inject(MatDialog);
 
-  private highlightedId: string | null = null
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  }
+  private platformId = inject(PLATFORM_ID);
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.getPlaces()
-    this.setSearchFilter()
+    this.setFilters()
+    if (isPlatformBrowser(this.platformId)) {
+      if (typeof google !== 'undefined' && google.maps) {
+        await google.maps.importLibrary('marker');
+      }
+    }
   }
 
-  public selectSearch(value: string): void {
-    this.highlightedId = this.places.find(place => place.name === value)?._id || null;
-    this.setMarkers();
-    const selectedMarker = this.markers.find((m: any) => m.id === this.highlightedId);
-    if (selectedMarker) {
-      this.mapOptions = { ...this.mapOptions, center: selectedMarker.position, zoom: 15 };
+  public toggleTag(tag: string): void {
+    const current: string[] = this.filterForm.get('tags')?.value || [];
+    if (current.includes(tag)) {
+      this.filterForm.get('tags')?.setValue(current.filter(t => t !== tag));
+    } else {
+      this.filterForm.get('tags')?.setValue([...current, tag]);
     }
   }
 
   public checkPlace(id: string): void {
-    const place = this.places.find(place => place._id === id)
+    const place = this.placesList.find(place => place._id === id)
     const dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
+      width: '750px',
       maxWidth: '90vw',
       height: 'auto',
       panelClass: 'nomada-place-dialog-panel'
@@ -114,39 +121,58 @@ export class PlacesMapComponent implements OnInit {
     });
   }
 
-  private setSearchFilter(): void {
-    // this.filteredOptions = this.searchControl.valueChanges.pipe(
-    //   takeUntilDestroyed(this.destroyRef),
-    //   startWith(''),
-    //   tap(value => {
-    //     if (!value) {
-    //       this.mapOptions = MAP_OPTIONS
-    //     }
-    //   }),
-    //   map(value => this._filter(value || '')),
-    // );
-  }
-
 
   private getPlaces(): void {
     this.placesService.getPlacesCached(PlacesTypes.PUBLIC)
       .subscribe(resp => {
-        this.places = resp
+        this.placesList = resp
+        this.filteredList = this.placesList
         if (resp.length) {
-          this.options = this.places.map(place => place.name)
-          const rawTags = this.places.flatMap(place => place.tags);
+          this.options = this.placesList.map(place => place.name)
+          const rawTags = this.placesList.flatMap(place => place.tags);
           this.tagList = Array.from(new Set(rawTags)) as string[];
           this.setMarkers()
+          this.filterCosts()
         }
       })
   }
 
   private setMarkers(): void {
-    this.markers = this.places.filter(place => place.location?.lat && place.location?.lng).map(place => ({
+    this.markers = this.placesList.filter(place => place.location?.lat && place.location?.lng).map(place => ({
       position: { lat: Number(place.location?.lat) || 0, lng: Number(place.location?.lng) || 0 },
       label: place.name,
       id: place._id,
-      isHighlighted: place._id === this.highlightedId
     }));
+  }
+
+  private setFilters(): void {
+    this.filterForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(_ => {
+        this.filterCosts()
+      })
+  }
+
+  private filterCosts(): void {
+    const keyValue: string = this.filterForm.get('keyword')?.value || ''
+    const tagsValues: string[] = this.filterForm.get('tags')?.value || []
+
+    if (!keyValue) {
+      this.filteredList = this.placesList
+    } else {
+      if (keyValue.trim() != '') {
+        const normalizedKey = normalizeString(keyValue)
+        this.filteredList = this.filteredList.filter(cost => {
+          const normalizedItem = normalizeString(cost.name);
+          return normalizedItem.includes(normalizedKey);
+        })
+      }
+    }
+    if (tagsValues.length > 1) {
+      const selectedTagsSet = new Set(tagsValues);
+      this.filteredList = this.filteredList.filter(item =>
+        item.tags && item.tags.some(tag => selectedTagsSet.has(tag))
+      );
+    }
+    this.highlightedIds = this.filteredList.map(place => place._id || '')
   }
 }

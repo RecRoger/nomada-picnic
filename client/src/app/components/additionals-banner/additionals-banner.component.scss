@@ -83,11 +83,10 @@
 
     &-card {
       background-color: var(--color-bg-cream);
-      border: 2px solid var(--color-black);
+      border: 2px solid var(--color-text-muted);
       border-radius: var(--radius-card-xl);
-      display: flex;
-      align-items: stretch;
-
+      @include u.flex(column, center, center);
+      overflow: hidden;
       padding: 0rem;
       position: relative;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -109,11 +108,10 @@
         margin: -8rem 0;
       }
 
-      @include u.flex(column, center, center);
-
       .product-card {
-        @include u.flex(column, center, space-between);
+        @include u.flex(column, space-between, stretch);
         padding: 3rem 3rem 5rem;
+        // height: 100%;
 
         &--image {
           position: relative;
@@ -141,7 +139,7 @@
         }
 
         &-content {
-          // margin-top: auto;
+          height: 100%;
           &--title {
             font-family: var(--font-main);
             font-size: 1.5rem;

@@ -4,9 +4,9 @@
   padding-bottom: 3rem;
   &--hero {
     background-color: var(--color-brand-pink);
-    padding: 9rem 1rem 2rem;
+    padding: 9rem 1rem 1rem;
     @include u.style-starting-from(tablet) {
-      padding: 9rem 3rem 3rem;
+      padding: 9rem 3rem 2rem;
     }
 
     &-content {
@@ -87,6 +87,94 @@
     }
   }
 
+  &--filters {
+    @include u.flex(column, flex-start, stretch, 1rem);
+    padding: 1rem 1rem 0.5rem;
+    @include u.style-starting-from(tablet) {
+      padding: 1rem 3rem 0.5rem;
+    }
+
+    &-tabs {
+      @include u.flex(row, flex-start, center, 2rem);
+      border-bottom: 1px solid var(--color-outline);
+      padding-bottom: 0;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+
+      .tab-btn {
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid transparent;
+        padding: 10px 4px 12px 4px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        position: relative;
+        transition: color 0.2s ease;
+        &:hover {
+          color: var(--color-text-dark);
+        }
+        &.active {
+          color: var(--color-brand-blue);
+          font-weight: 700;
+          border-bottom: 3px solid var(--color-brand-blue);
+        }
+      }
+    }
+
+    &-tags {
+      @include u.flex(row, flex-start, center, 0.75rem);
+      width: 100%;
+
+      &_label {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--color-soft-gray);
+        letter-spacing: 0.8px;
+        flex-shrink: 0;
+      }
+
+      &_list {
+        @include u.flex(row, flex-start, center, 0.5rem);
+        overflow-x: auto;
+        padding: 4px 0 10px 0;
+        scroll-behavior: smooth;
+
+        /* Estilo de Scrollbar sutil */
+        &::-webkit-scrollbar {
+          height: 6px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #d1d1d6;
+          border-radius: 10px;
+        }
+
+        .tag-chip {
+          @include u.custom-button(
+            var(--color-text-dark),
+            var(--color-white),
+            1px solid var(--color-outline)
+          );
+          padding: 6px 16px;
+          font-size: 0.825rem;
+          font-weight: 600;
+          white-space: nowrap;
+
+          &.selected {
+            background-color: var(--color-brand-blue50);
+            border-color: var(--color-brand-blue);
+            color: var(--color-brand-blue);
+          }
+        }
+      }
+    }
+  }
+
   &--title {
     text-align: center;
   }
@@ -96,7 +184,7 @@
   }
 
   &--list {
-    margin: 3rem 1rem;
+    margin: 2rem 1rem 3rem;
 
     @include u.grid-columns(1, 2rem);
     grid-template-columns: repeat(1, 1fr);
@@ -104,7 +192,7 @@
 
     @include u.style-starting-from(tablet) {
       grid-template-columns: repeat(2, 1fr);
-      margin: 3rem 3rem;
+      margin: 2rem 3rem 3rem;
     }
     @include u.style-starting-from(desktop) {
       grid-template-columns: repeat(4, 1fr);
@@ -119,7 +207,6 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       @include u.flex(column);
 
-      // --- HEADER DE LA CARD ---
       &__header {
         position: relative;
         width: 100%;
@@ -214,6 +301,7 @@
         @include u.flex(row, center, baseline, 6px);
         color: var(--color-brand-blue);
         font-family: var(--font-money);
+        font-weight: 700;
         .amount {
           font-size: 1.3rem;
         }

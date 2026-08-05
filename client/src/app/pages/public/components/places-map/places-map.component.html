@@ -1,12 +1,12 @@
 <section class="c-places-map">
   <!-- Tabs solo visibles en Mobile -->
   <div class="c-places-map--tabs">
-    <button 
+    <button class="tab-btn"
       [class.active]="activeTab() === 'list'" 
       (click)="activeTab.set('list')">
       📋 Lista
     </button>
-    <button 
+    <button class="tab-btn"
       [class.active]="activeTab() === 'map'" 
       (click)="activeTab.set('map')">
       🗺️ Mapa
@@ -27,73 +27,62 @@
         </p>
       </div>
       
-      <div class="c-places-map--input" [formGroup]="filterForm">
-        <mat-icon class="search-icon">search</mat-icon>
-        <input 
-          type="text" 
-          class="search-input" 
-          placeholder="Buscar por nombre o palabra clave..." 
-          formControlName="keyword"
-        />
-      </div>
-
-      <!-- Chips de Filtros (Scroll horizontal en mobile) -->
-      <div class="c-places-map--tags">
-        <div class="c-places-map--tags-list">
-          @for (tag of tagList; track $index) {
-            <button class="place-tag">{{tag}}</button>
-          }
-        </div>
-      </div>
-
-      <span class="c-places-map--count-label">11 lugares disponibles</span>
+      <ng-container [ngTemplateOutlet]="placesFilters"></ng-container>
 
       <div class="c-places-map--list">
-        @for (place of places; track $index) {
-          <article class="place-card">
-            
-            <div class="place-card--image-wrapper">
-              @if (place.images?.length) {
-                <img class="card-img" [src]="place.images[0] | apiImageUrl" [alt]="place.name" />
-              }
-              <!-- Badges flotantes -->
-              @if (place?.tags?.includes(recomendedTag)) {
-                <div class="badge-recommended">
-                  <mat-icon class="icon">star</mat-icon>
-                  Recomendado
+        @if(filteredList.length) {
+          @for (place of filteredList; track $index) {
+            <article class="place-card" (click)="checkPlace(place._id || '')">
+              
+              <div class="place-card--image-wrapper">
+                @if (place.images?.length) {
+                  <img class="card-img" [src]="place.images[0] | apiImageUrl" [alt]="place.name" />
+                }
+                <!-- Badges flotantes -->
+                @if (place?.tags?.includes(recomendedTag)) {
+                  <div class="badge-recommended">
+                    <mat-icon class="icon">star</mat-icon>
+                    Recomendado
+                  </div>
+                }
+              </div>
+  
+              <div class="place-card--content">
+                <div class="place-card--header">
+                  <h3 class="place-card--header-title">{{ place.name }}</h3>
+                  <button class="place-card--header-action">
+                    {{'COMMON.SEE_MORE' | translate}}
+                    <mat-icon class="action-icon">chevron_right</mat-icon>
+                  </button>
                 </div>
-              }
-            </div>
-
-            <div class="place-card--content">
-              <div class="place-card--header">
-                <h3 class="place-card--header-title">{{ place.name }}</h3>
-                <button class="place-card--header-action" (click)="checkPlace(place._id || '')">
-                  {{'COMMON.SEE_MORE' | translate}}
-                  <mat-icon class="action-icon">chevron_right</mat-icon>
-                </button>
+  
+                <!-- Dirección -->
+                <p class="place-card--address">
+                  <mat-icon class="address-icon">location_on</mat-icon>
+                  <span>{{ place.address }}</span>
+                </p>
+  
+                <!-- Descripción -->
+                <p class="place-card--description">{{ place.description }}</p>
+  
+                <!-- Tags -->
+                <div class="place-card--tags">
+                  @for (tag of place.tags?.slice(0,3); track $index) {
+                    <span class="tag">{{ tag }}</span>
+                  }
+                  @if(place.tags && place.tags.length > 3) {
+                    <span class="tag-more" >+{{ place.tags.length - 3 }}</span>
+                  }
+                </div>
               </div>
-
-              <!-- Dirección -->
-              <p class="place-card--address">
-                <mat-icon class="address-icon">location_on</mat-icon>
-                <span>{{ place.address }}</span>
-              </p>
-
-              <!-- Descripción -->
-              <p class="place-card--description">{{ place.description }}</p>
-
-              <!-- Tags -->
-              <div class="place-card--tags">
-                @for (tag of place.tags?.slice(0,3); track tag) {
-                  <span class="tag">{{ tag }}</span>
-                }
-                @if(place.tags && place.tags.length > 3) {
-                  <span class="tag-more" >+{{ place.tags.length - 3 }}</span>
-                }
-              </div>
-            </div>
-          </article>
+            </article>
+          }
+        } @else {
+          <div class="empty-card">
+            <span class="empty-card--icon">🧺</span>
+            <h3 class="empty-card--title">{{'PUBLIC.PLACES.EMPTY.TITLE' | translate}}</h3>
+            <p class="empty-card--text">{{'PUBLIC.PLACES.EMPTY.TEXT' | translate}}</p>
+          </div>
         }
       </div>
     </aside>
@@ -102,30 +91,65 @@
     <div 
       class="c-places-map--map" 
       [class.show-mobile]="activeTab() === 'map'">
-      @if (mapService.mapReady) {
-        <google-map
-          width="100%"
-          height="100%"
-          [options]="mapOptions">
-          @for (marker of markers; track $index) {
-
-            <div #customPin class="nomada-marker">
-              <mat-icon class="pin">location_on</mat-icon>
-              <div class="label">
-                {{ marker.label }}
+      <div class="c-places-map--map-filters">
+        <ng-container [ngTemplateOutlet]="placesFilters"></ng-container>
+      </div>
+      <div class="c-places-map--map-container">
+        @if (mapService.mapReady) {
+          <google-map
+            width="100%"
+            height="100%"
+            [options]="mapOptions">
+            @for (marker of markers; track $index) {
+  
+              <div #customPin
+                class="nomada-marker"
+                [class.full]="highlightedIds.length === placesList.length"
+                [class.highlighted]="highlightedIds.length !== placesList.length && highlightedIds.includes(marker.id)"
+                >
+                <mat-icon class="pin">location_on</mat-icon>
+                <div class="label">
+                  {{ marker.label }}
+                </div>
               </div>
-            </div>
-
-            <map-advanced-marker 
-              [position]="marker.position" 
-              [title]="marker.label" 
-              [content]="customPin"
-              (mapClick)="checkPlace(marker.id)">
-            </map-advanced-marker>
-          }
-        </google-map>
-      }
+  
+              <map-advanced-marker 
+                [position]="marker.position" 
+                [title]="marker.label" 
+                [content]="customPin"
+                (mapClick)="checkPlace(marker.id)">
+              </map-advanced-marker>
+            }
+          </google-map>
+        }
+      </div>
     </div>
 
   </div>
+
+  <ng-template #placesFilters>
+    <div class="c-places-map--input" [formGroup]="filterForm">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Buscar por nombre o palabra clave..." 
+        formControlName="keyword"
+      />
+    </div>
+
+    @if (tagList.length){
+      <div class="c-places-map--tags">
+        <div class="c-places-map--tags-list">
+          @for (tag of tagList; track $index) {
+            <button class="place-tag"
+              [class.selected]="filterForm.get('tags')?.value?.includes(tag)"
+              (click)="toggleTag(tag)"
+              >{{tag}}</button>
+          }
+        </div>
+      </div>
+    }
+    <span class="c-places-map--count-label">{{filteredList.length}} lugares disponibles</span>
+  </ng-template>
 </section>

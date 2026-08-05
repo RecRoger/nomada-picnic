@@ -1,66 +1,131 @@
-<div class="c-places-map page-container">
-    @if (mapService.mapReady) {
-      <div class="c-places-map--info" [class.hidden]="hide" (click)="hide=true">
-        <h1 class="c-places-map--info-title">
-          {{'PUBLIC.PLACES.MAP.TITLE' | translate}}
-        </h1>
-        <button 
-          mat-icon-button 
-          class="info-close-btn">
-          <mat-icon>close</mat-icon>
-        </button>
-        <p class="c-places-map--info-text" [innerHTML]="'PUBLIC.PLACES.MAP.MESSAGE' | translate"></p>
+<section class="c-places-map">
+  <!-- Tabs solo visibles en Mobile -->
+  <div class="c-places-map--tabs">
+    <button 
+      [class.active]="activeTab() === 'list'" 
+      (click)="activeTab.set('list')">
+      📋 Lista
+    </button>
+    <button 
+      [class.active]="activeTab() === 'map'" 
+      (click)="activeTab.set('map')">
+      🗺️ Mapa
+    </button>
+  </div>
+
+  <div class="c-places-map--layout">
+
+    <!-- COLUMNA IZQUIERDA: Filtros + Lista de Tarjetas -->
+    <aside 
+      class="c-places-map--sidebar" 
+      [class.show-mobile]="activeTab() === 'list'">
+
+      <div class="c-places-map--header">
+        <h2 class="c-places-map--header-title">{{'PUBLIC.PLACES.TITLE' | translate}}</h2>
+        <p class="c-places-map--header-subtitle">
+          {{'PUBLIC.PLACES.TEXT' | translate}}
+        </p>
+      </div>
+      
+      <div class="c-places-map--input" [formGroup]="filterForm">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Buscar por nombre o palabra clave..." 
+          formControlName="keyword"
+        />
       </div>
 
-      <google-map
-        width="100%"
-        height="100%"
-        [options]="mapOptions">
-        @for (marker of markers; track $index) {
-
-          <div #customPin class="nomada-marker">
-            <div class="marker-pin">
-              <img src="/images/logos/NOMADA_LOGO_2025_F_NARANJA.svg" [alt]="marker.label" width="40" height="40" />
-            </div>
-          </div>
-
-          <map-advanced-marker [position]="marker.position" [title]="marker.label" [content]="customPin"
-            (mapClick)="checkPlace(marker.id)">
-          </map-advanced-marker>
-        }
-      </google-map>
-    }
-    
-    @if (options.length) {
-      <div class="c-places-map--search" [class.open]="searchOpen">
-        <div class="search-card">
-          <mat-form-field class="search-input">
-            <mat-label>{{'PUBLIC.PLACES.FILTER.LABEL' | translate}}</mat-label>
-            <input type="text"
-              aria-label="Places"
-              matInput
-              [formControl]="searchControl"
-              [matAutocomplete]="auto"
-              (keypress.enter)="null">
-            <mat-autocomplete  #auto="matAutocomplete" (optionSelected)="selectSearch($event.option.value)">
-              @for (option of filteredOptions | async; track option) {
-                <mat-option [value]="option">{{option}}</mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-          <!-- <button mat-icon-button class="clear-btn">
-            <mat-icon>clear</mat-icon>
-          </button> -->
+      <!-- Chips de Filtros (Scroll horizontal en mobile) -->
+      <div class="c-places-map--tags">
+        <div class="c-places-map--tags-list">
+          @for (tag of tagList; track $index) {
+            <button class="place-tag">{{tag}}</button>
+          }
         </div>
-
-        <button 
-          mat-icon-button 
-          class="trigger-btn" 
-          (click)="toggleSearch()" 
-          [title]="searchOpen ? 'Cerrar buscador' : 'Buscar'">
-          <mat-icon>{{ searchOpen ? 'close' : 'search' }}</mat-icon>
-        </button>
       </div>
-    }
 
-</div>
+      <span class="c-places-map--count-label">11 lugares disponibles</span>
+
+      <div class="c-places-map--list">
+        @for (place of places; track $index) {
+          <article class="place-card">
+            
+            <div class="place-card--image-wrapper">
+              @if (place.images?.length) {
+                <img class="card-img" [src]="place.images[0] | apiImageUrl" [alt]="place.name" />
+              }
+              <!-- Badges flotantes -->
+              @if (place?.tags?.includes(recomendedTag)) {
+                <div class="badge-recommended">
+                  <mat-icon class="icon">star</mat-icon>
+                  Recomendado
+                </div>
+              }
+            </div>
+
+            <div class="place-card--content">
+              <div class="place-card--header">
+                <h3 class="place-card--header-title">{{ place.name }}</h3>
+                <button class="place-card--header-action" (click)="checkPlace(place._id || '')">
+                  {{'COMMON.SEE_MORE' | translate}}
+                  <mat-icon class="action-icon">chevron_right</mat-icon>
+                </button>
+              </div>
+
+              <!-- Dirección -->
+              <p class="place-card--address">
+                <mat-icon class="address-icon">location_on</mat-icon>
+                <span>{{ place.address }}</span>
+              </p>
+
+              <!-- Descripción -->
+              <p class="place-card--description">{{ place.description }}</p>
+
+              <!-- Tags -->
+              <div class="place-card--tags">
+                @for (tag of place.tags?.slice(0,3); track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+                @if(place.tags && place.tags.length > 3) {
+                  <span class="tag-more" >+{{ place.tags.length - 3 }}</span>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    </aside>
+
+    <!-- COLUMNA DERECHA: Mapa -->
+    <div 
+      class="c-places-map--map" 
+      [class.show-mobile]="activeTab() === 'map'">
+      @if (mapService.mapReady) {
+        <google-map
+          width="100%"
+          height="100%"
+          [options]="mapOptions">
+          @for (marker of markers; track $index) {
+
+            <div #customPin class="nomada-marker">
+              <mat-icon class="pin">location_on</mat-icon>
+              <div class="label">
+                {{ marker.label }}
+              </div>
+            </div>
+
+            <map-advanced-marker 
+              [position]="marker.position" 
+              [title]="marker.label" 
+              [content]="customPin"
+              (mapClick)="checkPlace(marker.id)">
+            </map-advanced-marker>
+          }
+        </google-map>
+      }
+    </div>
+
+  </div>
+</section>

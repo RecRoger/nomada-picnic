@@ -67,6 +67,8 @@ export class ProductionCostsService {
           cost.name.replaceAll(' ', '-'),
           'costs',
         );
+      } else {
+        cost.images = undefined
       }
       if (cost.detail) {
         cost.detail = sanitizeContent(cost.detail)

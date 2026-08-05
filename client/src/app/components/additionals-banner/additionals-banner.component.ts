@@ -2,6 +2,7 @@ import { AsyncPipe, CurrencyPipe, isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CarouselComponent, CarouselOptions } from '@components/carousel/carousel.component';
+import { MOST_SELL_TAG } from '@constants/important-tags';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { CostsService } from '@services/costs.service';
@@ -29,7 +30,7 @@ export class AdditionalsBannerComponent implements OnInit {
 
   public additionals$?: Observable<ICost[]>
 
-  public popularTag = 'Mas vendido'
+  public popularTag = MOST_SELL_TAG
 
   public readonly carouselOptions: CarouselOptions = {
     perView: 1,

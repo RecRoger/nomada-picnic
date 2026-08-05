@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
@@ -9,13 +9,15 @@ import { PlacesService } from '@services/places.service';
 import { PlacesTypes } from '@shared/enums';
 import { IPlace } from '@shared/interfaces';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, Observable, of, startWith, tap } from 'rxjs';
 import { MAP_OPTIONS } from '@constants/map-options';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { PlaceDialogComponent } from '@components/place-dialog/place-dialog.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
+import { RECOMENDED_TAG } from '@constants/important-tags';
 
 
 @Component({
@@ -28,6 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MapAdvancedMarker,
     MatIconModule,
     ...MAT_FORMS_MODULES,
+    ApiImageUrlPipe,
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -40,21 +43,27 @@ export class PlacesMapComponent implements OnInit {
 
   protected readonly mapService = inject(MapsService)
 
+  protected readonly fb = inject(FormBuilder)
+
+  public activeTab = signal<'list' | 'map'>('list');
+
   public mapOptions: google.maps.MapOptions = MAP_OPTIONS;
 
   public markers: any = [];
 
   public places: IPlace[] = [];
 
-  public readonly searchControl = new FormControl('');
-
   public options: string[] = [];
+
+  public tagList: string[] = []
 
   public filteredOptions: Observable<string[]> = of([])
 
-  public hide = false
+  public filterForm = this.fb.group({
+    keyword: []
+  })
 
-  public searchOpen = false
+  public readonly recomendedTag = RECOMENDED_TAG
 
   private readonly placesService = inject(PlacesService)
 
@@ -64,12 +73,6 @@ export class PlacesMapComponent implements OnInit {
 
   private highlightedId: string | null = null
 
-  private readonly platformId = inject(PLATFORM_ID);
-
-  public toggleSearch(): void {
-    this.searchOpen = !this.searchOpen
-  }
-
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -78,11 +81,8 @@ export class PlacesMapComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => { this.hide = true }, 10000)
-      this.getPlaces()
-      this.setSearchFilter()
-    }
+    this.getPlaces()
+    this.setSearchFilter()
   }
 
   public selectSearch(value: string): void {
@@ -95,7 +95,6 @@ export class PlacesMapComponent implements OnInit {
   }
 
   public checkPlace(id: string): void {
-    this.searchOpen = false;
     const place = this.places.find(place => place._id === id)
     const dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
@@ -116,16 +115,16 @@ export class PlacesMapComponent implements OnInit {
   }
 
   private setSearchFilter(): void {
-    this.filteredOptions = this.searchControl.valueChanges.pipe(
-      takeUntilDestroyed(this.destroyRef),
-      startWith(''),
-      tap(value => {
-        if (!value) {
-          this.mapOptions = MAP_OPTIONS
-        }
-      }),
-      map(value => this._filter(value || '')),
-    );
+    // this.filteredOptions = this.searchControl.valueChanges.pipe(
+    //   takeUntilDestroyed(this.destroyRef),
+    //   startWith(''),
+    //   tap(value => {
+    //     if (!value) {
+    //       this.mapOptions = MAP_OPTIONS
+    //     }
+    //   }),
+    //   map(value => this._filter(value || '')),
+    // );
   }
 
 
@@ -133,8 +132,12 @@ export class PlacesMapComponent implements OnInit {
     this.placesService.getPlacesCached(PlacesTypes.PUBLIC)
       .subscribe(resp => {
         this.places = resp
-        this.options = this.places.map(place => place.name)
-        this.setMarkers()
+        if (resp.length) {
+          this.options = this.places.map(place => place.name)
+          const rawTags = this.places.flatMap(place => place.tags);
+          this.tagList = Array.from(new Set(rawTags)) as string[];
+          this.setMarkers()
+        }
       })
   }
 

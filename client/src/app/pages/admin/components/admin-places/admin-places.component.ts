@@ -128,7 +128,7 @@ export class AdminPlacesComponent implements OnInit {
     formData.append('description', formPlace.description as string)
     formData.append('address', formPlace.address as string)
     formData.append('detail', formPlace.detail as string)
-    formData.append('tags', formPlace.tags?.join(',') as string)
+    formData.append('tags', formPlace.tags?.join('|') as string)
     formData.append('mapsLink', formPlace.mapsLink as string)
     formData.append('zone', formPlace.zone + '')
     formData.append('transportationCost', formPlace.transportationCost + '')

@@ -66,6 +66,21 @@
         <input
           type="file"
           (change)="onFileChange($event)"
+          (cancel)="$event.stopPropagation()"
+        />
+      }
+      @if (type == "files") {
+        <input
+          matInput
+          type="text"
+          readonly=""
+          [formControl]="control"
+          class="fake-control"
+          style="display: none"
+        />
+        <input
+          type="file"
+          (change)="onFilesChange($event)"
           multiple
           (cancel)="$event.stopPropagation()"
         />

@@ -17,6 +17,10 @@ export const AdminRoutes: Routes = [
         loadComponent: () => import('./components/admin-costs/admin-costs.component').then(c => c.AdminCostsComponent)
       },
       {
+        path: 'packages',
+        loadComponent: () => import('./components/admin-packages/admin-packages.component').then(c => c.AdminPackagesComponent)
+      },
+      {
         path: 'expenses',
         loadComponent: () => import('./components/admin-expenses/admin-expenses.component').then(c => c.AdminExpensesComponent)
       },

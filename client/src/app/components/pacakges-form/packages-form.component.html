@@ -1,0 +1,134 @@
+<form [formGroup]="packageForm">
+
+  <div class="form-row">
+    <app-form-control
+      class="form-control"
+      [control]="getControl('name')"
+      label="{{ 'COMMON.NAME' | translate }}"
+      type="text">
+    </app-form-control>
+
+    <app-form-control
+      class="form-control"
+      [control]="getControl('image')"
+      label="{{ 'COMMON.ADD_IMAGES' | translate }}"
+      type="file">
+    </app-form-control>
+  </div>
+
+  <div class="form-row">
+    <app-form-control
+      class="form-control"
+      [control]="getControl('description')"
+      label="{{ 'COMMON.DESCRIPTION' | translate }}"
+      type="textarea">
+    </app-form-control>
+      
+    <app-form-control
+      class="form-control"
+      [control]="getControl('detail')"
+      label="{{ 'COMMON.DETAIL' | translate }}"
+      type="textarea">
+    </app-form-control>
+  </div>
+
+  <div class="form-row">
+    <div class="items-form-list">
+      <mat-form-field  class="form-control">
+        <mat-label>Agregar ítem (ej: Mantelería, Cesta de Picnic)</mat-label>
+        <input 
+          matInput 
+          #newItemInput 
+          type="text" 
+          placeholder="Escribe un ítem y presiona Enter"
+          (keydown.enter)="$event.preventDefault(); addIncludedItem(newItemInput.value); newItemInput.value = ''">
+        <button mat-icon-button matSuffix type="button"
+          [disabled]="!newItemInput.value.trim()"
+          (click)="addIncludedItem(newItemInput.value); newItemInput.value = ''">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </mat-form-field>
+  
+      <!-- 2. Lista de items ya agregados (FormArray) -->
+      <div formArrayName="includedItems" class="items-list">
+        @for (control of includedItems.controls; track $index) {
+          <mat-form-field class="form-control item-input">
+            <input matInput [formControlName]="$index" placeholder="Descripción del ítem">
+            <button mat-icon-button matSuffix type="button" (click)="removeIncludedItem($index)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-form-field>
+        } @empty {
+          <p class="empty-msg">No has agregado elementos incluidos a este paquete aún.</p>
+        }
+      </div>
+    </div>
+    <div class="guest-list">
+      <app-form-control
+        class="form-control"
+        [control]="getControl('tag')"
+        label="{{ 'COMMON.TAGS' | translate }}"
+        type="text">
+      </app-form-control>
+
+      <app-form-control
+        class="form-control"
+        [control]="getControl('minGuests')"
+        label="{{ 'PACKAGES.FORM.MIN_GUESTS' | translate }}"
+        type="number"
+        suffix="personas">
+      </app-form-control>
+      
+      <app-form-control
+        class="form-control"
+        [control]="getControl('maxGuests')"
+        label="{{ 'PACKAGES.FORM.MAX_GUESTS' | translate }}"
+        type="number"
+        suffix="personas">
+      </app-form-control>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field class="form-control">
+      <mat-label>{{'PACKAGES.FORM.PRODUCTION_COSTS' | translate}}</mat-label>
+      <mat-select formControlName="productionCostIds" multiple>
+        @for (cost of productionCosts; track cost._id) {
+          <mat-option [value]="cost._id">{{cost.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+      <app-form-control
+        class="form-control"
+        [control]="getControl('expensesPercent')"
+        label="{{ 'PACKAGES.EXPENSES_PERCENTAGE' | translate }}"
+        suffix="%"
+        type="number">
+      </app-form-control>
+      
+    <app-form-control
+      class="form-control"
+      [control]="getControl('profitPercent')"
+      label="{{ 'PACKAGES.EARN_PERCENTAGE' | translate }}"
+      suffix="%"
+      type="number">
+    </app-form-control>
+  
+  </div>
+
+
+  <div class="form-actions">
+    <button mat-raised-button color="accent" type="button" (click)="onCancel()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="onSubmit()"
+      [disabled]="packageForm.invalid">
+      {{ 'PACKAGES.FORM.BUTTON' | translate }}
+    </button>
+  </div>
+</form>

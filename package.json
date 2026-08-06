@@ -14,6 +14,7 @@
     "start:api": "npm run start:dev --workspace=api",
     "start:debug": "npm run start:debug --workspace=api",
     "build:api": "npm run build --workspace=api",
+    "api:auth": "npm run cloud:auth --workspace=api",
     "deploy:api": "bash deploy.sh api",
     "deploy:client": "bash deploy.sh client",
     "deploy:all": "npm run deploy:api && npm run deploy:client",

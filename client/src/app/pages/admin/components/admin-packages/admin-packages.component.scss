@@ -1,0 +1,48 @@
+@use "utils" as u;
+
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: var(--color-bg-cream);
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: var(--color-bg-softcream);
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.element-detail-wrapper.expanded {
+  padding-bottom: 1.5rem;
+}
+
+.package-content {
+  @include u.flex(row, flex-start, flex-start, 4rem);
+}
+
+.packages-header {
+  @include u.flex(row, space-between, start, 2rem);
+}
+
+.packages-actions {
+  @include u.flex(row, flex-end, center, 1rem);
+}
+
+.package-image {
+  width: 10rem;
+  height: auto;
+  margin: 1rem 0.5rem;
+}

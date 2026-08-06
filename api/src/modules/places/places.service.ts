@@ -26,11 +26,9 @@ export class PlacesService {
     this.logger.log(`[places found : ${places.length}]`);
 
     return places.sort((a, b) => {
-      // Comparar zonas
       if (a.zone !== b.zone) {
         return a.zone - b.zone;
       }
-      // Comparar nombres (prioridad a "Basic")
       const aHasBasic = a.name.includes('Basic') ? 0 : 1;
       const bHasBasic = b.name.includes('Basic') ? 0 : 1;
       return aHasBasic - bHasBasic || a.name.localeCompare(b.name);

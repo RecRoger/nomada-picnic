@@ -55,6 +55,7 @@
     "WELCOME": "Bienvenido {{name}}",
     "TABS": {
       "PICNICS": "Presupuestos y Picnics",
+      "PACKAGES": "Paquetes",
       "PLACES": "Lugares y parques",
       "COSTS": "Costos de produccion y adicionales",
       "EXPENSES": "Gastos mensuales e inversiones"
@@ -76,6 +77,27 @@
       "ZONE": "Número de Zona",
       "COST": "Costo de Transporte",
       "BUTTON": "Guardar Lugar"
+    }
+  },
+  "PACKAGES": {
+    "TITLE": "Paquetes de picnics",
+    "NEW_PACKAGE": "Crear nuevo paquete",
+    "DIALOG_TITLE": "Eliminar Packete",
+    "DIALOG_TEXT": "¿Seguro que deseas eliminar el paquete <b>{{name}}</b>?",
+    "ADDED": "Paquete añadido correctamente",
+    "EDITED": "Paquete actualizado correctamente",
+    "DELETED": "Paquete eliminado correctamente",
+    "ERROR": "No se ha podido cargar la lista de paquetes",
+    "GUESTS_GAP": "entre {{minGuests}} y {{maxGuests}} invitados",
+    "EXPENSES_PERCENTAGE": "Porcentaje de pago de Gastos",
+    "EARN_PERCENTAGE": "Margen de ganancia",
+    "MIN_COST": "Costo minimo",
+    "MIN_PRICE": "Precio minimo",
+    "FORM": {
+      "MIN_GUESTS": "Minimo de invitados",
+      "MAX_GUESTS": "Maximo de invitados",
+      "PRODUCTION_COSTS": "Costos de produccion",
+      "BUTTON": "Guardar Paquete"
     }
   },
   "COSTS": {

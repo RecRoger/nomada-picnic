@@ -49,10 +49,15 @@ export class FormControlComponent {
 
   public readonly INPUT_TYPE = ['text', 'number', 'email', 'password']
 
-  public onFileChange(event: any) {
+  public onFilesChange(event: any) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       this.control?.patchValue(fileList)
     }
+  }
+
+  public onFileChange(event: any) {
+    const file: File = event.target.files[0];
+    this.control?.patchValue(file)
   }
 }

@@ -1,0 +1,109 @@
+<div class="packages-header">
+  <h3>{{"PACKAGES.TITLE" | translate }}</h3>
+  @if(!showForm) {
+    <button mat-raised-button (click)="showForm = true">{{'PACKAGES.NEW_PACKAGE' | translate}}</button>
+  }
+</div>
+<div class="packages-container">
+
+  @if (!showForm) {
+  <table mat-table [dataSource]="packageList" multiTemplateDataRows>
+    
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{'COMMON.NAME' | translate}}</th>
+      <td mat-cell *matCellDef="let pkg">{{pkg['name']}}</td>
+    </ng-container>
+    <ng-container matColumnDef="guests">
+      <th mat-header-cell *matHeaderCellDef>{{'COMMON.GUESTS_NUMBER' | translate}}</th>
+      <td mat-cell *matCellDef="let pkg">
+        {{ 'PACKAGES.GUESTS_GAP' | translate:{minGuests: pkg.minGuests, maxGuests: pkg.maxGuests } }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="baseCost">
+      <th mat-header-cell *matHeaderCellDef>{{'PACKAGES.MIN_COST' | translate}}</th>
+      <td mat-cell *matCellDef="let pkg">{{pkg['baseCost'] | currency:'US$ '}}</td>
+    </ng-container>
+    <ng-container matColumnDef="expensesPercent">
+      <th mat-header-cell *matHeaderCellDef>{{'PACKAGES.EXPENSES_PERCENTAGE' | translate}}</th>
+      <td mat-cell *matCellDef="let pkg">{{pkg['expensesPercent']}}%</td>
+    </ng-container>
+    <ng-container matColumnDef="profitPercent">
+      <th mat-header-cell *matHeaderCellDef>{{'PACKAGES.EARN_PERCENTAGE' | translate}}</th>
+      <td mat-cell *matCellDef="let pkg">{{pkg['profitPercent']}}%</td>
+    </ng-container>
+    <ng-container matColumnDef="minPrice">
+      <th mat-header-cell *matHeaderCellDef>{{'PACKAGES.MIN_PRICE' | translate}}</th>
+      <td mat-cell *matCellDef="let pkg">{{pkg['minPrice'] | currency:'US$ '}}</td>
+    </ng-container>
+
+    <!-- icono de flecha para expandir -->
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let pkg">
+        <button mat-icon-button aria-label="expand row" (click)="toggle(pkg); $event.stopPropagation()"
+          class="toggle-button" [class.toggle-button-expanded]="expandedElements.includes(pkg._id || '')">
+          @if (expandedElements.includes(pkg._id || '')) {
+          <mat-icon>keyboard_arrow_up</mat-icon>
+          } @else {
+          <mat-icon>keyboard_arrow_down</mat-icon>
+          }
+        </button>
+      </td>
+    </ng-container>
+
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let pkg" [attr.colspan]="columnsToDisplayWithExpand.length">
+        <div class="element-detail-wrapper" [class.expanded]="expandedElements.includes(pkg._id || '')"
+          [@detailExpand]="expandedElements.includes(pkg._id || '') ? 'expanded' : 'collapsed'">
+          <p class="package-description">{{pkg.description}}</p>
+          <p class="package-detail">
+            {{pkg.detail}}
+          </p>
+          <div class="package-content">
+            @if (pkg.includedItems.length) {
+              <ul>
+                @for (tag of pkg.includedItems; track $index) {
+                  <li>{{tag}}</li>
+                }
+              </ul>
+            }
+            <div>
+              {{'PACKAGES.FORM.PRODUCTION_COSTS' | translate}}
+              <ul>
+                @for (costs of pkg.productionCostIds; track $index) {
+                  <li>{{costs}}</li>
+                }
+              </ul>
+            </div>
+          </div>
+          @if (pkg?.image; as image) {
+            <div class="packages-images">
+              <img [src]="image | apiImageUrl" alt="{{ pkg.name}}" class="package-image">
+            </div>
+          }
+
+          <div class="packages-actions">
+            <button mat-raised-button color="accent" (click)="openDeleteDialog(pkg)">{{'COMMON.DELETE' |
+              translate}}</button>
+            <button mat-raised-button (click)="toggleEditForm(pkg)">{{'COMMON.EDIT' | translate}}</button>
+          </div>
+
+        </div>
+      </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr mat-row *matRowDef="let pkg; columns: columnsToDisplayWithExpand;" class="element-row"
+      [class.expanded-row]="expandedElements.includes(pkg._id || '')" (click)="toggle(pkg)">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  </table>
+
+  } @else {
+    <app-packages-form [package]="packageToEdit" (submit)="savePackage($event)" (cancel)="toggleEditForm()"></app-packages-form>
+  }
+</div>

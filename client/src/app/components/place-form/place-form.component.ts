@@ -100,13 +100,4 @@ export class PlaceFormComponent implements OnInit {
       this.submit.emit(this.placeForm.value)
     }
   }
-
-  public onFileChange(event: any) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      this.placeForm.patchValue({
-        images: fileList
-      })
-    }
-  }
 }

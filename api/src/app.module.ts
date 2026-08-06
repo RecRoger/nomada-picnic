@@ -7,6 +7,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { ProductionCostsModule } from 'src/modules/production-costs/production-costs.module';
 import { ExpensesModule } from 'src/modules/expenses/expenses.module';
 import { PicnicsModule } from 'src/modules/picnics/picnics.module';
+import { PicnicPackagesModule } from 'src/modules/picnic-packages/picnic-packages.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PicnicsModule } from 'src/modules/picnics/picnics.module';
     PlacesModule,
     ProductionCostsModule,
     ExpensesModule,
+    PicnicPackagesModule,
     PicnicsModule,
   ],
 })

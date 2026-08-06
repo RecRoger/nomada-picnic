@@ -28,6 +28,10 @@ export class AdminComponent implements OnInit {
       label: 'ADMIN.TABS.PICNICS'
     },
     {
+      link: 'packages',
+      label: 'ADMIN.TABS.PACKAGES'
+    },
+    {
       link: 'places',
       label: 'ADMIN.TABS.PLACES'
     },

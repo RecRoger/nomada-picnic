@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CostsTypes } from '@shared/enums';
-import { ICost } from '@shared/interfaces';
+import { IPicnicPackage } from '@shared/interfaces';
 import { IsArray, IsBoolean, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CostDto implements ICost {
+export class CostDto implements IPicnicPackage {
   @IsString({ message: 'El nombre debe ser un texto' })
   @ApiProperty({ required: true, description: 'Nombre del costo', example: 'Armado de picnic' })
   name: string;

@@ -98,7 +98,7 @@ export class AdminCostsComponent implements OnInit {
   public getCosts(): void {
     this.costsService.getCosts()
       .subscribe(costs => {
-        this.costList = costs
+        this.costList = costs.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
         this.filterCosts()
       })
   }
@@ -180,7 +180,7 @@ export class AdminCostsComponent implements OnInit {
     formData.append('type', costForm.type)
     formData.append('description', costForm.description + '')
     formData.append('detail', costForm.detail + '')
-    formData.append('tags', costForm.tags?.join(',') as string)
+    formData.append('tags', costForm.tags?.join('|') as string)
     formData.append('guestsCoverage', costForm.guestsCoverage + '')
     formData.append('providerCost', costForm.providerCost + '')
     formData.append('productionCost', costForm.productionCost + '')

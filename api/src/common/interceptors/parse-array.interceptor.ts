@@ -13,7 +13,7 @@ export class ParseArrayInterceptor implements NestInterceptor {
 
     this.fields.forEach((field) => {
       if (body[field]) {
-        body[field] = body[field].split(',')
+        body[field] = body[field].split('|')
       }
     })
 

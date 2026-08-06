@@ -1,6 +1,7 @@
 export * from './user.interface'
 export * from './language-text.interface'
 export * from './notification.interface'
+export * from './picnic-package.interface'
 export * from './place.interface'
 export * from './cost.interface'
 export * from './expense.interface'

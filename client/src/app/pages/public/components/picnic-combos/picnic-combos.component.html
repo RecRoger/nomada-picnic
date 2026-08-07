@@ -1,10 +1,51 @@
-<div class="page-container">
-  <!-- TODO -  Diseñar componente -->
-  <div class="construction">
-    <mat-icon class="construction--icon">construction</mat-icon>
-    <h1>
-      EN CONSTRUCCION
-    </h1>
-    <p>Seguimos trabajando por completar esta web</p>
+<section class="c-picnic-combos">
+  <div class="c-picnic-combos--hero">
+    <div class="c-picnic-combos--hero-content">
+      <h1 class="c-picnic-combos--hero-title">
+        <span class="title-line">
+          ELEGÍ LA EXPERIENCIA NÓMADA <span class="highlight">PERFECTA</span> PARA VOS
+        </span>
+      </h1>
+      <p class="c-picnic-combos--hero-subtitle">
+        Cada celebración es diferente, por eso creamos experiencias pensadas para distintos estilos y ocasiones.
+        Descubrí nuestras opciones y personalizá cada detalle para vivir un picnic único en Buenos Aires.
+      </p>
+    </div>
   </div>
-</div>
+
+  <!-- CARDS CONTAINER -->
+  <main class="c-picnic-combos--container">
+    @if (packagesList$ | async; as packages) {
+      <div class="c-picnic-combos--container-grid">
+        @for (pkg of packages; track pkg._id) {
+          <article class="package-card">
+            
+            <!-- Lado Izquierdo: Información -->
+            <div class="package-card--info">
+              <h2 class="package-card--info-title">{{ pkg.name }}</h2>
+              <p class="package-card--info-description">{{ pkg.description }}</p>
+              
+              <div class="package-card--info-price">
+                <span class="price-label">Desde</span>
+                <span class="amount">{{ pkg.minPrice  | number:'1.2-2' | currency: 'US$ '  }}</span>
+              </div>
+
+              <button class="package-card--info-button">
+                Ver más
+              </button>
+            </div>
+
+            <div class="package-card--image">
+              @if (pkg.image) {
+                <img class="package-image" [src]="pkg.image | apiImageUrl" [alt]="pkg.name"/>
+              }
+            </div>
+
+          </article>
+        } @empty {
+          <p class="empty-state">No hay paquetes disponibles en este momento.</p>
+        }
+      </div>
+    }
+  </main>
+</section>

@@ -20,7 +20,7 @@ export const PublicRoutes: Routes = [
   },
   {
     path: 'picnics',
-    loadComponent: () => import('./components/picnic-combos/picnic-combos.component').then(m => m.PicnicCombosComponent),
+    loadComponent: () => import('./components/picnic-packages/picnic-packages.component').then(m => m.PicnicPackagesComponent),
   },
   {
     path: 'contact',

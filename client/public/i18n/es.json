@@ -469,40 +469,24 @@
       "COVERAGE": "Alcance para {{coverage}} personas.",
       "DELIVERY": "Requiere delivery.",
       "ADD": "Añadir al carrito."
-    }
-  },
-  "CALCULATOR": {
-    "TITLE": "Cotiza tu evento",
-    "SUBTITLE": "Aca puedes armar tu evento o seleccionar y editar alguno de nuestras sugerencias",
-    "BASICS": {
-      "EVENT": "Cuentanos un poco sobre tu evento",
-      "EVENT_PLACEHOLDER": "¿qué celebras?"
     },
-    "PRODUCTION": {
-      "TABLE": "Numero de mesas",
-      "ARCH": "Incluir arco decorativo",
-      "BIG_TABLE": "Incluir meson alto",
-      "BOARD_TEXT": "¿Que deseas escribir en la pizarra?",
-      "BOARD_PLACEHOLDER": "\"Feliz dia del picnic\"",
-      "PROM_TEXT": "Contamos con una organizacion para grupos grandes que incluye solo un par de mesas como modulo central y varias mantas al rededor. Esta organizacion <b>No cuenta con platos</b> para los invitados, solamente copas y vasos para todos."
-    },
-    "ADDITIONALS": {
-      "TEXT": "Algunos adicionales para agregar.",
-      "PETALS": "Decoracion con pétalos de rosas",
-      "FLOWERS": "Arreglos de Flores Naturales",
-      "PHOTOS_AMOUNT": "Numero fotos tipo Polaroid",
-      "LIGTHS": "Decoracion con guirnaldas de luces",
-      "PHOTOGRAPHER": "Contratar Fotógrafo"
-    },
-    "FOOD": {
-      "GIFT_TEXT": "En todos nuestos picnics nos gusta regalar una cesta de panes junto con hielo y alguna bebida de cortesia, que podria ser gaseosa, jugo, vino o espumante según el numero de invitados. \n Cuentanos que preferencia tenés entre estas opciones.",
-      "GIFT_PLACEHOLDER": "¿Qué bebida de cortesia te gustaria recibir?",
-      "ADDITIONAL_FOOD": "Comida adicional",
-      "FOOD_COVERAGE": "Tiene un alcance aproximado para {{guestsCoverage}} personas",
-      "QUIANTITY": "Cantidad"
-    },
-    "CONTACT": {
-      "MESSAGE": "Para finalizar la cotizacion es necesario que nos compartas algunos datos para poder mantener el contacto con vos."
+    "PACKAGES": {
+      "HERO": {
+        "LINE_1": "ELEGÍ LA EXPERIENCIA NÓMADA ",
+        "LINE_2": " PERFECTA ",
+        "LINE_3": " PARA VOS",
+        "SUBTITLE": "Cada celebración es diferente, por eso creamos experiencias pensadas para distintos estilos y ocasiones. Descubrí nuestras opciones y personalizá cada detalle para vivir un picnic único en Buenos Aires."
+      },
+      "CORPORATIVE": {
+        "TITLE": "¿Representás a una empresa o agencia de turismo?",
+        "TEXT": "Creamos experiencias personalizadas para eventos corporativos, actividades de team building, incentivos empresariales y grupos turísticos. Contanos lo que necesitás y prepararemos una propuesta adaptada a tu organización.",
+        "BUTTON": "Solicitar una propuesta"
+      },
+      "DETAIL": {
+        "INCLUDES": "Que incluye:",
+        "BUTTON": "Añadir mi picnic al carrito"
+      },
+      "NO_PACKAGES": "No hay paquetes disponibles en este momento."
     }
   }
 }

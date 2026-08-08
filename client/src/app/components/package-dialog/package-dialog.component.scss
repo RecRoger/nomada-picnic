@@ -1,0 +1,150 @@
+@use "utils" as u;
+
+.c-package-dialog {
+  @include u.flex(column, center, stretch, 0);
+  width: 100%;
+  background-color: var(--color-bg-softcream);
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  @include u.style-starting-from(tablet) {
+    @include u.grid-columns(2, 0);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+  }
+
+  &--media {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+
+    @include u.style-starting-from(tablet) {
+      height: 100%;
+    }
+
+    &-pill {
+      @include u.pill(var(--color-white), var(--color-brand-coral));
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      padding: 0.5rem 1rem;
+      font-size: var(--font-small);
+      text-transform: uppercase;
+      align-self: flex-start;
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+
+    .package-image {
+      @include u.flex(row, center, center);
+      width: 100%;
+      height: 100%;
+    }
+
+    .media-img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  }
+
+  &--content {
+    @include u.flex(column, flex-start, stretch, 1rem);
+    position: relative;
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+  }
+
+  &--data {
+    flex: 1;
+    padding-right: 0.5rem;
+    word-break: break-word;
+  }
+
+  &--title {
+    font-family: var(--font-main);
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-black);
+    margin: 1rem 0;
+    flex-shrink: 0;
+  }
+
+  &--detail {
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  &--includes {
+    padding: 1.5rem 0 2rem;
+    border-bottom: 1px solid var(--color-outline);
+
+    &-title {
+      color: var(--color-soft-gray);
+      font-size: var(--font-small);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    &-list {
+      font-size: var(--font-small);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      // Distribución en 2 columnas equilibradas
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+
+      // En pantallas pequeñas pasa automáticamente a 1 columna
+      @include u.style-up-to(tablet) {
+        grid-template-columns: 1fr;
+      }
+
+      &-item {
+        @include u.flex(row, flex-start, start, 0.5rem);
+        font-size: 0.9rem;
+        color: var(--color-text-dark); // Texto principal
+        line-height: 1.2;
+
+        .check-icon {
+          color: var(--color-brand-blue); // Azul brillante de los checks
+          font-size: 1rem;
+          width: 1rem;
+          height: 1rem;
+          flex-shrink: 0; // Evita que el check se deforme si el texto tiene varias líneas
+          margin-top: 2px;
+        }
+        span {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  &--actions {
+    @include u.flex(row, space-between, center, 1rem);
+    flex-wrap: wrap;
+    text-align: center;
+    width: 100%;
+    padding-top: 0.5rem;
+
+    &-add {
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      font-weight: 700;
+      margin-left: auto;
+    }
+  }
+}

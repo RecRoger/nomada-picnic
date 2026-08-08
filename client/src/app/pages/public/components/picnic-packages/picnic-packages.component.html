@@ -1,0 +1,65 @@
+<section class="c-picnic-packages">
+  <div class="c-picnic-packages--hero">
+    <div class="c-picnic-packages--hero-content">
+      <h1 class="c-picnic-packages--hero-title">
+        <span class="title-line">
+          {{'PUBLIC.PACKAGES.HERO.LINE_1' | translate}}<span class="highlight">{{'PUBLIC.PACKAGES.HERO.LINE_2' | translate}}</span>{{'PUBLIC.PACKAGES.HERO.LINE_3' | translate}}
+        </span>
+      </h1>
+      <p class="c-picnic-packages--hero-subtitle">
+        {{'PUBLIC.PACKAGES.HERO.SUBTITLE' | translate}}
+      </p>
+    </div>
+  </div>
+
+  <!-- CARDS CONTAINER -->
+  <main class="c-picnic-packages--container">
+    @if (packagesList$ | async; as packages) {
+      <div class="c-picnic-packages--container-grid">
+        @for (pkg of packages; track pkg._id) {
+          <article class="package-card" (click)="checkPackage(pkg._id || '')">
+            
+            <!-- Lado Izquierdo: Información -->
+            <div class="package-card--info">
+              <h2 class="package-card--info-title">{{ pkg.name }}</h2>
+              <p class="package-card--info-description">{{ pkg.description }}</p>
+              
+              <div class="package-card--info-price">
+                <span class="price-label">Desde</span>
+                <span class="amount">{{ pkg.minPrice  | number:'1.2-2' | currency: 'US$ '  }}</span>
+              </div>
+
+              <button class="package-card--info-button">
+                {{'COMMON.SEE_MORE' | translate}}
+              </button>
+            </div>
+
+            <div class="package-card--image">
+              @if (pkg.tag) {
+                <div class="package-tag">
+                  {{pkg.tag}}
+                </div>
+              }
+              @if (pkg.image) {
+                <img class="package-image" [src]="pkg.image | apiImageUrl" [alt]="pkg.name"/>
+              }
+            </div>
+
+          </article>
+        } @empty {
+          <p class="empty-state">{{'PUBLIC.PACKAGES.NO_PACKAGES' | translate}}</p>
+        }
+      </div>
+    }
+  </main>
+
+  <div class="c-picnic-packages--corporative">
+    <div class="c-picnic-packages--corporative-info">
+      <h2 class="corporative-title">{{'PUBLIC.PACKAGES.CORPORATIVE.TITLE' | translate}}</h2>
+      <p class="corporative-text">{{'PUBLIC.PACKAGES.CORPORATIVE.TEXT' | translate}}</p>
+      <button class="corporative-button" (click)="corpoContact()">
+        {{'PUBLIC.PACKAGES.CORPORATIVE.BUTTON' | translate}}
+      </button>
+    </div>
+  </div>
+</section>

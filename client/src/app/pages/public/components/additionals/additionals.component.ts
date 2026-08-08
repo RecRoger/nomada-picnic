@@ -86,9 +86,12 @@ export class AdditionalsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        // TODO - logica de añadir adicional
-        console.log("Añadir al carrito", result, additional._id)
+      if (result) {
+        // TODO - logica de selccion de paquete
+        const message = `¡Hola! Me interesaria tener informacion sobre ${additional!.name} para mi picnic`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       }
     });
 

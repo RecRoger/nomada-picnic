@@ -1,0 +1,42 @@
+<div class="c-package-dialog">
+  <button mat-icon-button mat-dialog-close class="close-btn" type="button">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  @if (package.image) {
+    <div class="c-package-dialog--media">
+      @if(package.tag) {
+        <div class="c-package-dialog--media-pill">{{package.tag}}</div>
+      }
+      <div class="package-image">
+        <img class="media-img" src="{{package.image | apiImageUrl}}" [alt]="package.name">
+      </div>
+    </div>
+  }
+  <div class="c-package-dialog--content">
+    <div class="c-package-dialog--data">
+      <h2 class="c-package-dialog--title">{{package.name}}</h2>
+      @if (package.detail) {
+        <div class="c-package-dialog--detail">{{package.detail}}</div>
+      }
+      <div class="c-package-dialog--includes">
+        <div class="c-package-dialog--includes-title">
+          {{'PUBLIC.PACKAGES.DETAIL.INCLUDES' | translate}}
+        </div>
+        <ul class="c-package-dialog--includes-list">
+          @for (item of package.includedItems; track $index) {
+            <li class="c-package-dialog--includes-list-item">
+              <mat-icon class="check-icon">check</mat-icon>
+              <span>{{item}}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="c-package-dialog--actions">
+      <button class="c-package-dialog--actions-add" [mat-dialog-close]="package._id">{{'PUBLIC.PACKAGES.DETAIL.BUTTON' | translate}}</button>
+    </div>
+  </div>
+</div>
+

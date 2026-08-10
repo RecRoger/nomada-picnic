@@ -2,6 +2,7 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CostsTypes, PlacesTypes } from '@shared/enums';
 import { ICost } from '@shared/interfaces';
+import { IPackagePrice } from '@shared/interfaces/package-prices.interface';
 import { Model, Types } from 'mongoose';
 import { PicnicPackage, PicnicPackageDocument } from 'src/common/database/schemas/picnic-packages.schema';
 import { Place, PlacesDocument } from 'src/common/database/schemas/places.schema';
@@ -71,30 +72,56 @@ export class PicnicPackageService {
     }
   }
 
-  async findOnePackage(id: string): Promise<PicnicPackageDto> {
-    this.logger.log('[findOnePackage]', `id: ${id}`);
+  /**
+   * Agrupa los precios por rangos de invitados que comparten el mismo costo final
+  */
+  // async calculatePricesRange(packageId: string): Promise<PackagePriceGroup[]> {
+  async findPackagePrices(id: string, isPrivate: boolean): Promise<IPackagePrice[]> {
+    this.logger.log('[findPackages]', `public: ${!isPrivate}`);
+
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        throw new NotFoundException(`El ID '${id}' no es un ObjectId válido`);
+      const picnicPackage = await this.packageModel.findById(id).populate('productionCostIds').lean().exec();
+      const courtesyCosts = await this.costModel.find({ type: CostsTypes.GIFTS }).lean().exec();
+      const basePlace = await this.placeModel.findOne({ type: PlacesTypes.BASIC, zone: 0 }).lean().exec();
+      const baseTransportCost = basePlace?.transportationCost || 0;
+      const minGuests = picnicPackage.minGuests || 2;
+      const maxGuests = picnicPackage.maxGuests || 10;
+      const groupedPrices: IPackagePrice[] = [];
+      let currentGroup: IPackagePrice | null = null;
+
+      for (let guests = minGuests; guests <= maxGuests; guests++) {
+        const baseCost = this.calculatePackageBaseCost(
+          picnicPackage,
+          courtesyCosts as unknown as Cost[],
+          baseTransportCost,
+          guests,
+        );
+        const price = this.calculatePriceFromBaseCost(
+          baseCost,
+          picnicPackage.expensesPercent,
+          picnicPackage.profitPercent,
+        );
+        if (!currentGroup || currentGroup.price !== price) {
+          if (currentGroup) {
+            groupedPrices.push(currentGroup);
+          }
+          currentGroup = {
+            minGuests: guests,
+            maxGuests: guests,
+            price,
+            ...(isPrivate ? { baseCost } : {}),
+          };
+        } else {
+          currentGroup.maxGuests = guests;
+        }
       }
-      const picnicPackage = await this.packageModel
-        .findById(id)
-        .lean()
-        .exec();
-      if (!picnicPackage) {
-        throw new NotFoundException(`Paquete de picnic con ID '${id}' no encontrado`);
+      if (currentGroup) {
+        groupedPrices.push(currentGroup);
       }
-      // TODO - aádir logica de precios!
-      const {
-        profitPercent,
-        expensesPercent,
-        productionCostIds,
-        ...publicPackageData
-      } = picnicPackage;
-      return publicPackageData;
+      return groupedPrices;
     } catch (err) {
-      this.logger.error(` - Error finding Package: ${err.message}`, err.stack);
-      throw new Error('Error al consultar el paquete');
+      this.logger.error(` - Error finding Packages: ${err.message}`, err.stack);
+      throw new Error('Error al consultar paquetes');
     }
   }
 
@@ -186,19 +213,27 @@ export class PicnicPackageService {
       return acc + provider + production;
     }, 0);
 
-    // B. Sumar costos de cortesía aplicables según guestsCoverage
-    const applicableCourtesyCosts = courtesyCosts.filter(
-      (cost: Cost) => !cost.guestsCoverage || guestsCount >= cost.guestsCoverage,
-    );
-
-    const sumCourtesyCosts = applicableCourtesyCosts.reduce((acc, cost) => {
+    // B. Sumar costos de cortesía aplicando el multiplicador según el guestsCoverage
+    const sumCourtesyCosts = courtesyCosts.reduce((acc, cost) => {
       const provider = cost.providerCost || 0;
       const production = cost.productionCost || 0;
-      return acc + provider + production;
+      const unitCost = provider + production;
+
+      // Si no tiene definido guestsCoverage o es <= 0, se aplica 1 sola vez
+      if (!cost.guestsCoverage || cost.guestsCoverage <= 0) {
+        return acc + unitCost;
+      }
+
+      // Calculamos cuántas unidades/lotes se necesitan para cubrir a los invitados
+      const multiplier = Math.ceil(guestsCount / cost.guestsCoverage);
+
+      return acc + unitCost * multiplier;
     }, 0);
 
+    const transportTotalCost = transportCost * (pkg.extraTransport && guestsCount > pkg.extraTransport ? 1.8 : 1)
+
     // C. Retornar Subtotal Directo (sin porcentajes)
-    return sumProductionCosts + sumCourtesyCosts + transportCost;
+    return sumProductionCosts + sumCourtesyCosts + transportTotalCost;
   }
 
   /**

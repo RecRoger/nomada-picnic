@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
-import { IApiResponse, IPicnicPackage } from '@shared/interfaces';
+import { IApiResponse, IPackagePrice, IPicnicPackage } from '@shared/interfaces';
 import { AlertTypes } from '@shared/enums';
 import { API_URL } from '@constants/api-url';
 
@@ -14,7 +14,16 @@ export class PackagesService {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  private picnicPackages$: { [id: string]: Observable<IPicnicPackage> } = {}
+  private picnicPackages$?: Observable<IPicnicPackage[]>
+
+  private packagesPrice$: { [id: string]: Observable<IPackagePrice[]> } = {}
+
+  public getPackagesCached(): Observable<IPicnicPackage[]> {
+    if (!this.picnicPackages$) {
+      this.picnicPackages$ = this.getPackages().pipe(shareReplay(1))
+    }
+    return this.picnicPackages$
+  }
 
   public getPackages(isPublic: boolean = true): Observable<IPicnicPackage[]> {
     return this.http.get<IApiResponse<IPicnicPackage[]>>(`${API_URL}/api/packages`, {
@@ -34,13 +43,30 @@ export class PackagesService {
     );
   }
 
-  // TODO - consultar y chachear un solo paquete
-  // public getPackageCached(id: string, isPublic: boolean): Observable<IPicnicPackage> {
-  //   if (!this.picnicPackages$[id]) {
-  //     this.picnicPackages$[id] = this.getPackages(isPublic).pipe(shareReplay(1))
-  //   }
-  //   return this.picnicPackages$[id]
-  // }
+  public getPackagePricesCached(id: string): Observable<IPackagePrice[]> {
+    if (!this.packagesPrice$[id]) {
+      this.packagesPrice$[id] = this.getPackagePrices(id).pipe(shareReplay(1))
+    }
+    return this.packagesPrice$[id]
+  }
+
+  public getPackagePrices(id: string, isPublic: boolean = true): Observable<IPackagePrice[]> {
+    return this.http.get<IApiResponse<IPackagePrice[]>>(`${API_URL}/api/packages/${id}/prices`, {
+      params: { ...(isPublic ? {} : { query: 'full' }) }
+    }).pipe(
+      map((response) => {
+        if (response) {
+          return response.data as IPackagePrice[]
+        }
+        return []
+      }),
+      catchError((error) => {
+        console.error('No se cargaron los paquetes:', error);
+        this.notificationService.openNotification({ message: 'PACKAGES.ERROR' }, AlertTypes.ERROR)
+        return of([]);
+      })
+    );
+  }
 
 
   public createPackage(pkg: FormData): Observable<IPicnicPackage | null> {

@@ -20,7 +20,7 @@ export class PicnicPackagesComponent {
 
   public packagesList: IPicnicPackage[] = []
 
-  public packagesList$: Observable<IPicnicPackage[]> = this.packageService.getPackages()
+  public packagesList$: Observable<IPicnicPackage[]> = this.packageService.getPackagesCached()
     .pipe(map(list => {
       this.packagesList = list
       return list.sort((a, b) => (a.minPrice || 0) - (b.minPrice || 0))

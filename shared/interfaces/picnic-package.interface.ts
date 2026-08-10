@@ -7,6 +7,7 @@ export interface IPicnicPackage {
   image?: string;
   minGuests?: number;
   maxGuests?: number;
+  extraTransport?: number;
   includedItems?: string[];
   profitPercent?: number;       // % de Ganancia (ej: 35%)
   expensesPercent?: number; // % para cubrir Gastos Generales (ej: 15%)

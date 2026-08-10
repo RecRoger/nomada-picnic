@@ -35,6 +35,12 @@ export class PicnicPackage {
   tag: string;
 
   @Prop({
+    type: Number,
+    default: 0
+  })
+  extraTransport: number;
+
+  @Prop({
     type: String,
     default: null,
   })

@@ -52,6 +52,7 @@ export class PackagesFormComponent implements OnInit {
       minGuests: [this.package?.minGuests || 2],
       maxGuests: [this.package?.maxGuests || 30, Validators.required],
       image: [null],
+      extraTransport: [this.package?.extraTransport || 30],
       includedItems: this.fb.array(this.package?.includedItems || []),
       expensesPercent: [this.package?.expensesPercent || 40, [Validators.required, Validators.min(0)]],
       profitPercent: [this.package?.profitPercent || 15, [Validators.min(0)]],

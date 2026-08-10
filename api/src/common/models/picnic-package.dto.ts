@@ -6,7 +6,8 @@ import {
   IsOptional,
   IsString,
   Min,
-  Max
+  Max,
+  IsBoolean
 } from 'class-validator';
 
 export class PicnicPackageDto implements IPicnicPackage {
@@ -129,4 +130,13 @@ export class PicnicPackageDto implements IPicnicPackage {
     example: 70
   })
   minPrice?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  @ApiProperty({
+    required: false,
+    description: 'Aumenta el costo del transporte para picnics grandes',
+    example: 70
+  })
+  extraTransport?: number;
 }

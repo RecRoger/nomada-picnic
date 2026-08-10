@@ -7,7 +7,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@components/confirmation-dialog/confirmation-dialog.component';
 import { NotificationService } from '@services/notification.service';
-import { IPicnicPackage } from '@shared/interfaces';
+import { IPackagePrice, IPicnicPackage } from '@shared/interfaces';
 import { AlertTypes, CostsTypes } from '@shared/enums';
 import { CommonModule } from '@angular/common';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PackagesService } from '@services/packages.service';
 import { PackagesFormComponent } from '@components/pacakges-form/packages-form.component';
+import { Observable, take } from 'rxjs';
 
 
 const MAT_MODULES = [
@@ -53,6 +54,8 @@ export class AdminPackagesComponent implements OnInit {
   private readonly notificationService: NotificationService = inject(NotificationService)
 
   public packageList: IPicnicPackage[] = [];
+
+  public packagePrice$?: Observable<IPackagePrice[]>;
 
   public columnsToDisplayWithExpand = [
     "name",
@@ -91,6 +94,7 @@ export class AdminPackagesComponent implements OnInit {
       this.expandedElements = this.expandedElements.filter(exp => exp !== element._id)
       return
     }
+    this.packagePrice$ = this.packagesService.getPackagePrices(element._id || '', false).pipe(take(1))
     this.expandedElements.push(element._id || '')
   }
 
@@ -158,6 +162,7 @@ export class AdminPackagesComponent implements OnInit {
     formData.append('description', packageForm.description + '')
     formData.append('detail', packageForm.detail + '')
     formData.append('tag', packageForm.tag + '')
+    formData.append('extraTransport', packageForm.extraTransport + '')
     formData.append('includedItems', packageForm.includedItems?.join('|') as string)
     formData.append('minGuests', packageForm.minGuests + '')
     formData.append('maxGuests', packageForm.maxGuests + '')

@@ -60,12 +60,14 @@
           <p class="package-description">{{pkg.description}}</p>
           <p class="package-detail">
             {{pkg.detail}}
+            <br><br>
+            <b>{{pkg.extraTransport ? 'Requiere extra de trasporte para mas de ' + pkg.extraTransport + ' personas' : ''}}</b>
           </p>
           <div class="package-content">
             @if (pkg.includedItems.length) {
               <ul>
-                @for (tag of pkg.includedItems; track $index) {
-                  <li>{{tag}}</li>
+                @for (items of pkg.includedItems; track $index) {
+                  <li>{{items}}</li>
                 }
               </ul>
             }
@@ -78,11 +80,35 @@
               </ul>
             </div>
           </div>
-          @if (pkg?.image; as image) {
-            <div class="packages-images">
-              <img [src]="image | apiImageUrl" alt="{{ pkg.name}}" class="package-image">
+          <div class="package-content">
+            @if (pkg?.image; as image) {
+              <div class="packages-images">
+                <img [src]="image | apiImageUrl" alt="{{ pkg.name}}" class="package-image">
+              </div>
+            }
+            @if(expandedElements.includes(pkg._id || '') && (packagePrice$ | async); as prices) {
+            <div class="package-prices">
+              <h4>{{'PACKAGES.COSTS_PRICES' | translate}}</h4>
+              <div class="package-prices--grid">
+                @for (group of prices; track $index) {
+                  <div class="price-combo">
+                    <div class="combo-lable">
+                      @if(group.minGuests === group.maxGuests) {
+                        Para {{group.minGuests}} invitados
+                      } @else {
+                        {{ 'PACKAGES.GUESTS_GAP' | translate:{minGuests: group.minGuests, maxGuests: group.maxGuests } }}
+                      }
+                    </div>
+                    <div class="combo-prices">
+                      <span class="cost">{{group['baseCost'] | currency:'US$ '}}</span> --
+                      <span class="price">{{group['price'] | currency:'US$ '}}</span>
+                    </div>
+                  </div>
+                }
+              </div>
             </div>
-          }
+            }
+          </div>
 
           <div class="packages-actions">
             <button mat-raised-button color="accent" (click)="openDeleteDialog(pkg)">{{'COMMON.DELETE' |

@@ -86,6 +86,15 @@
         type="number"
         suffix="personas">
       </app-form-control>
+
+      <app-form-control
+        class="form-control"
+        [control]="getControl('extraTransport')"
+        label="{{ 'PACKAGES.FORM.EXTRA_TRANSPORT' | translate }}"
+        type="number"
+        suffix="personas"
+        [hints]="['con 0 nunca se aplicara extra de transporte']">
+      </app-form-control>
     </div>
   </div>
 

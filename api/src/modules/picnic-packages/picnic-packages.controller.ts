@@ -17,6 +17,7 @@ import { PicnicPackageDto } from 'src/common/models/picnic-package.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ParseNumberInterceptor } from 'src/common/interceptors/parse-number.interceptor';
 import { ParseArrayInterceptor } from 'src/common/interceptors/parse-array.interceptor';
+import { IPackagePrice } from '@shared/interfaces/package-prices.interface';
 
 
 @Controller({ path: 'packages', version: '1' })
@@ -65,7 +66,7 @@ export class PicnicPackagesController {
   @UseInterceptors(
     FileInterceptor('image'),
     new ParseArrayInterceptor(['includedItems', 'productionCostIds']),
-    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent']),
+    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent', 'extraTransport']),
   )
   async create(
     @Body() packageDto: PicnicPackageDto,
@@ -74,12 +75,12 @@ export class PicnicPackagesController {
     return this.picnicPackageService.create(packageDto, file);
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Obtener un paquete de picnic por su ID' })
+  @Get(':id/prices')
+  @ApiOperation({ summary: 'Obtener los precios de un paquete de picnic por su ID' })
   @ApiParam({ name: 'id', required: true })
   @ApiResponse({
     status: 200,
-    description: 'Consulta la info de un paquete de picnic',
+    description: 'Consulta los precios de un paquete de picnic',
     schema: {
       properties: {
         status: { type: 'string', example: 'SUCCESS' },
@@ -90,8 +91,11 @@ export class PicnicPackagesController {
       },
     },
   })
-  async findOne(@Param('id') id: string): Promise<PicnicPackageDto> {
-    return this.picnicPackageService.findOnePackage(id);
+  async findPrices(
+    @Param('id') id: string,
+    @Query('query') query: string
+  ): Promise<IPackagePrice[]> {
+    return this.picnicPackageService.findPackagePrices(id, query === 'full');
   }
 
 
@@ -115,7 +119,7 @@ export class PicnicPackagesController {
   @UseInterceptors(
     FileInterceptor('image'),
     new ParseArrayInterceptor(['includedItems', 'productionCostIds']),
-    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent']),
+    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent', 'extraTransport']),
   )
   async update(
     @Param('id') id: string,

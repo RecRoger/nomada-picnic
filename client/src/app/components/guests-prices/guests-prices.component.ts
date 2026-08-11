@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { AfterViewInit, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-guests-prices',
-  imports: [AsyncPipe, TranslateModule, MatIconModule],
+  imports: [AsyncPipe, TranslateModule, MatIconModule, DecimalPipe, CurrencyPipe],
   templateUrl: './guests-prices.component.html',
   styleUrl: './guests-prices.component.scss'
 })
@@ -28,7 +28,11 @@ export class GuestsPricesComponent implements AfterViewInit {
   }
 
   selectGroup(group: IPackagePrice) {
-    this.selectedGroup = group
-    this.selectPrice.emit(group)
+    if (!this.selectedGroup || this.selectedGroup !== group) {
+      this.selectedGroup = group
+    } else {
+      this.selectedGroup = undefined
+    }
+    this.selectPrice.emit(this.selectedGroup)
   }
 }

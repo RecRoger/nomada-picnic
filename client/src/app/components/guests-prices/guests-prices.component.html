@@ -9,13 +9,13 @@
       >
         <div class="card-label">
           @if (group.minGuests === group.maxGuests) {
-            {{ group.minGuests }} personas
+            {{ group.minGuests }} {{'COMMON.PEOPLE' | translate}}
           } @else {
-            {{ group.minGuests }}–{{ group.maxGuests }} personas
+            {{ group.minGuests }} – {{ group.maxGuests }} {{'COMMON.PEOPLE' | translate}}
           }
         </div>
         <div class="card-price">
-          US$ {{ group.price }}
+          {{ group.price | number:'1.2-2' | currency: 'US$ '  }}
         </div>
       </button>
     }

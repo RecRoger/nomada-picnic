@@ -66,7 +66,7 @@ export class PicnicPackagesController {
   @UseInterceptors(
     FileInterceptor('image'),
     new ParseArrayInterceptor(['includedItems', 'productionCostIds']),
-    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent', 'extraTransport']),
+    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent', 'bigExpensesPercent', 'extraTransport']),
   )
   async create(
     @Body() packageDto: PicnicPackageDto,
@@ -119,7 +119,7 @@ export class PicnicPackagesController {
   @UseInterceptors(
     FileInterceptor('image'),
     new ParseArrayInterceptor(['includedItems', 'productionCostIds']),
-    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent', 'extraTransport']),
+    new ParseNumberInterceptor(['minGuests', 'maxGuests', 'profitPercent', 'expensesPercent', 'bigExpensesPercent', 'extraTransport']),
   )
   async update(
     @Param('id') id: string,

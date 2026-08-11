@@ -1,0 +1,38 @@
+@use "utils" as u;
+
+.c-guests-prices {
+  @include u.grid-columns(3, 1rem);
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .guest-card {
+    background: #ffffff;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 1.25rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    .card-label {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #111827;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-price {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #4f46e5;
+    }
+
+    &:hover,
+    &.selected {
+      border-color: #4f46e5;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+    }
+  }
+}

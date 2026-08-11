@@ -103,6 +103,16 @@ export class PicnicPackageDto implements IPicnicPackage {
   })
   expensesPercent?: number;
 
+  @IsNumber({}, { message: 'El porcentaje de gastos grande generales debe ser un número' })
+  @Min(0, { message: 'El porcentaje de gastos grandes no puede ser negativo' })
+  @Max(100, { message: 'El porcentaje no puede ser mayor a 100' })
+  @ApiProperty({
+    required: false,
+    description: 'Porcentaje destinado a cubrir gastos generales (OPEX) a partir de picnics grandes',
+    example: 15
+  })
+  bigExpensesPercent?: number;
+
   @IsArray()
   @IsString({ each: true, message: 'Cada ID de costo de producción debe ser un texto' })
   @ApiProperty({

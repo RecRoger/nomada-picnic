@@ -43,8 +43,8 @@ export class PicnicPackageService {
         );
         const minPrice = this.calculatePriceFromBaseCost(
           baseCost,
-          pkg.expensesPercent,
           pkg.profitPercent,
+          pkg.expensesPercent,
         );
         const {
           profitPercent,
@@ -88,6 +88,7 @@ export class PicnicPackageService {
       const maxGuests = picnicPackage.maxGuests || 10;
       const groupedPrices: IPackagePrice[] = [];
       let currentGroup: IPackagePrice | null = null;
+      const halfGuests = (minGuests + maxGuests) / 2
 
       for (let guests = minGuests; guests <= maxGuests; guests++) {
         const baseCost = this.calculatePackageBaseCost(
@@ -98,8 +99,10 @@ export class PicnicPackageService {
         );
         const price = this.calculatePriceFromBaseCost(
           baseCost,
-          picnicPackage.expensesPercent,
           picnicPackage.profitPercent,
+          picnicPackage.expensesPercent,
+          picnicPackage.bigExpensesPercent,
+          guests >= halfGuests,
         );
         if (!currentGroup || currentGroup.price !== price) {
           if (currentGroup) {
@@ -244,10 +247,12 @@ export class PicnicPackageService {
     baseCost: number,
     expensesPercent: number = 0,
     profitPercent: number = 0,
+    bigExpensesPercent: number = 0,
+    bigPicnic = false,
   ): number {
     // D. Aporte a Gastos Generales (OPEX)
     // OJO - Este porcentaje se lo sumamos al picnic para pagar los gastos
-    const overheadAmount = baseCost * (expensesPercent / 100);
+    const overheadAmount = baseCost * ((expensesPercent + (bigPicnic ? bigExpensesPercent : 0)) / 100);
 
     // E. Costo Total Real
     // OJO - Este porcentaje se lo sumamos de ganancia

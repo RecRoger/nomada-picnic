@@ -108,13 +108,22 @@
       </mat-select>
     </mat-form-field>
 
-      <app-form-control
-        class="form-control"
-        [control]="getControl('expensesPercent')"
-        label="{{ 'PACKAGES.EXPENSES_PERCENTAGE' | translate }}"
-        suffix="%"
-        type="number">
-      </app-form-control>
+    <app-form-control
+      class="form-control"
+      [control]="getControl('expensesPercent')"
+      label="{{ 'PACKAGES.EXPENSES_PERCENTAGE' | translate }}"
+      suffix="%"
+      type="number">
+    </app-form-control>
+
+    <app-form-control
+      class="form-control"
+      [control]="getControl('bigExpensesPercent')"
+      label="{{ 'PACKAGES.BIG_EXPENSES_PERCENTAGE' | translate }}"
+      suffix="%"
+      type="number"
+      [hints]="['Este porcentaje se aplica para picnics mas grandes']">
+    </app-form-control>
       
     <app-form-control
       class="form-control"

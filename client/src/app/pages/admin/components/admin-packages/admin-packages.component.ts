@@ -168,6 +168,7 @@ export class AdminPackagesComponent implements OnInit {
     formData.append('maxGuests', packageForm.maxGuests + '')
     formData.append('profitPercent', packageForm.profitPercent + '')
     formData.append('expensesPercent', packageForm.expensesPercent + '')
+    formData.append('bigExpensesPercent', packageForm.bigExpensesPercent + '')
     formData.append('productionCostIds', (packageForm.productionCostIds as string[]).join('|') + '')
 
     if (packageForm.image) {

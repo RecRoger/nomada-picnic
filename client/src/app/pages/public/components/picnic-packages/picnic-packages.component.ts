@@ -6,7 +6,7 @@ import { PackageDialogComponent } from '@components/package-dialog/package-dialo
 import { TranslateModule } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { PackagesService } from '@services/packages.service';
-import { IPicnicPackage } from '@shared/interfaces';
+import { IPackagePrice, IPicnicPackage } from '@shared/interfaces';
 import { map, Observable } from 'rxjs';
 
 @Component({
@@ -39,9 +39,10 @@ export class PicnicPackagesComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result && result.group) {
         // TODO - logica de selccion de paquete
-        const message = `¡Hola! Me interesaria tener informacion sobre un ${pkg!.name}`;
+        const group = result.group as IPackagePrice
+        const message = `¡Hola! Me interesaria tener informacion sobre un ${pkg!.name} para ${group.minGuests} - ${group.maxGuests} personas (${group.price} US$)`;
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank', 'noopener,noreferrer');

@@ -487,6 +487,11 @@
         "INCLUDES": "Que incluye:",
         "BUTTON": "Añadir mi picnic al carrito"
       },
+      "PRICES": {
+        "LABEL": "Invitados",
+        "TITLE": "¿Cuántas personas asistirán?",
+        "TEXT": "Seleccioná la cantidad de invitados. El precio se actualizará automáticamente según el tamaño de tu experiencia."
+      },
       "NO_PACKAGES": "No hay paquetes disponibles en este momento."
     }
   }

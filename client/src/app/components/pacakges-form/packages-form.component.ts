@@ -55,6 +55,7 @@ export class PackagesFormComponent implements OnInit {
       extraTransport: [this.package?.extraTransport || 30],
       includedItems: this.fb.array(this.package?.includedItems || []),
       expensesPercent: [this.package?.expensesPercent || 40, [Validators.required, Validators.min(0)]],
+      bigExpensesPercent: [this.package?.bigExpensesPercent || 0, [Validators.required, Validators.min(0)]],
       profitPercent: [this.package?.profitPercent || 15, [Validators.min(0)]],
       productionCostIds: [[], [Validators.required]],
     });

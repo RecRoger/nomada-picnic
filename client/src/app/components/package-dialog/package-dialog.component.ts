@@ -7,10 +7,18 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IPicnicPackage } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { RECOMENDED_TAG } from '@constants/important-tags';
+import { GuestsPricesComponent } from '@components/guests-prices/guests-prices.component';
 
 @Component({
   selector: 'app-package-dialog',
-  imports: [CommonModule, TranslateModule, MatDialogModule, MatButtonModule, MatIcon, ApiImageUrlPipe],
+  imports: [
+    TranslateModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatIcon,
+    ApiImageUrlPipe,
+    GuestsPricesComponent
+  ],
   templateUrl: './package-dialog.component.html',
   styleUrl: './package-dialog.component.scss'
 })

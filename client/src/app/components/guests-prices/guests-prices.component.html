@@ -1,0 +1,23 @@
+@if(pricesGroups$ | async; as priceGroups) {
+  <div class="c-guests-prices">
+    @for (group of priceGroups; track $index) {
+      <button 
+        type="button"
+        class="guest-card"
+        [class.selected]="selectedGroup === group"
+        (click)="selectGroup(group)"
+      >
+        <div class="card-label">
+          @if (group.minGuests === group.maxGuests) {
+            {{ group.minGuests }} personas
+          } @else {
+            {{ group.minGuests }}–{{ group.maxGuests }} personas
+          }
+        </div>
+        <div class="card-price">
+          US$ {{ group.price }}
+        </div>
+      </button>
+    }
+  </div>
+}

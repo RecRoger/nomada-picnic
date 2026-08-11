@@ -32,6 +32,13 @@
           }
         </ul>
       </div>
+      <div class="c-package-dialog--prices">
+        <div class="c-package-dialog--prices-label">{{'PUBLIC.PACKAGES.PRICES.LABEL' | translate}}</div>
+        <h3 class="c-package-dialog--prices-title">{{'PUBLIC.PACKAGES.PRICES.TITLE' | translate}}</h3>
+        <p class="c-package-dialog--prices-text">{{'PUBLIC.PACKAGES.PRICES.TEXT' | translate}}</p>
+        <app-guests-prices [packageId]="package._id"></app-guests-prices>
+      </div>
+
     </div>
 
     <div class="c-package-dialog--actions">

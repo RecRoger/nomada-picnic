@@ -81,6 +81,13 @@ export class PicnicPackage {
   expensesPercent: number;
 
   @Prop({
+    type: Number,
+    min: [0, 'El porcentaje no puede ser menor a 0'],
+    max: [100, 'El porcentaje no puede ser mayor a 100'],
+  })
+  bigExpensesPercent: number;
+
+  @Prop({
     type: [{ type: Types.ObjectId, ref: 'Cost' }],
     required: true,
     default: [],

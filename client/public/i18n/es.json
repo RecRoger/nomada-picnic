@@ -499,9 +499,14 @@
         "BUTTON": "Añadir mi picnic al carrito"
       },
       "PRICES": {
-        "LABEL": "Invitados",
+        "LABEL": "InviLa ocasióntados",
         "TITLE": "¿Cuántas personas asistirán?",
         "TEXT": "Seleccioná la cantidad de invitados. El precio se actualizará automáticamente según el tamaño de tu experiencia."
+      },
+      "EVENTS": {
+        "LABEL": "La ocasión",
+        "TITLE": "¿Qué tipo de picnic están celebrando?",
+        "TEXT": "Contanos cuál es la ocasión y te sugerimos los adicionales que mejor combinan."
       },
       "NO_PACKAGES": "No hay paquetes disponibles en este momento."
     }

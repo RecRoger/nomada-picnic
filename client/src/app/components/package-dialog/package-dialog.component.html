@@ -38,11 +38,17 @@
         <p class="c-package-dialog--prices-text">{{'PUBLIC.PACKAGES.PRICES.TEXT' | translate}}</p>
         <app-guests-prices [packageId]="package._id" (selectPrice)="selectPrice($event)"></app-guests-prices>
       </div>
+      <div class="c-package-dialog--events">
+        <div class="c-package-dialog--events-label">{{'PUBLIC.PACKAGES.EVENTS.LABEL' | translate}}</div>
+        <h3 class="c-package-dialog--events-title">{{'PUBLIC.PACKAGES.EVENTS.TITLE' | translate}}</h3>
+        <p class="c-package-dialog--events-text">{{'PUBLIC.PACKAGES.EVENTS.TEXT' | translate}}</p>
+        <app-event-selector (selectEvent)="selectEvent($event)"></app-event-selector>
+      </div>
 
     </div>
 
     <div class="c-package-dialog--actions">
-      <button class="c-package-dialog--actions-add" [disabled]="!selectedPrice" [mat-dialog-close]="{group: selectedPrice}">{{'PUBLIC.PACKAGES.DETAIL.BUTTON' | translate}}</button>
+      <button class="c-package-dialog--actions-add" [disabled]="!selectedPrice || !selectedEvent" [mat-dialog-close]="{group: selectedPrice, event: selectedEvent}">{{'PUBLIC.PACKAGES.DETAIL.BUTTON' | translate}}</button>
     </div>
   </div>
 </div>

@@ -8,6 +8,7 @@ import { ProductionCostsModule } from 'src/modules/production-costs/production-c
 import { ExpensesModule } from 'src/modules/expenses/expenses.module';
 import { PicnicsModule } from 'src/modules/picnics/picnics.module';
 import { PicnicPackagesModule } from 'src/modules/picnic-packages/picnic-packages.module';
+import { PicnicEventsModule } from 'src/modules/picnic-events/picnic-events.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { PicnicPackagesModule } from 'src/modules/picnic-packages/picnic-package
     ProductionCostsModule,
     ExpensesModule,
     PicnicPackagesModule,
+    PicnicEventsModule,
     PicnicsModule,
   ],
 })

@@ -21,6 +21,10 @@ export const AdminRoutes: Routes = [
         loadComponent: () => import('./components/admin-packages/admin-packages.component').then(c => c.AdminPackagesComponent)
       },
       {
+        path: 'events',
+        loadComponent: () => import('./components/admin-events/admin-events.component').then(c => c.AdminEventsComponent)
+      },
+      {
         path: 'expenses',
         loadComponent: () => import('./components/admin-expenses/admin-expenses.component').then(c => c.AdminExpensesComponent)
       },

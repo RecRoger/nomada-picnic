@@ -1,0 +1,103 @@
+<h3>{{"EVENTS.TITLE" | translate }}</h3>
+<div class="events-grid">
+
+  @for (event of eventsList; track $index) {
+    <div class="event-card">
+
+      @if(!showForm || eventToEdit!==event) {
+        <div class="card-icon" [innerHTML]="event.icon | appleEmoji"></div>
+        <div class="card-name">{{event.name}}</div>
+        <div>{{'EVENTS.RECOMENDED_ADITIONALS' | translate}}:</div>
+        <ul class="card-list">
+          @for (additional of event.recomendedAditionals; track $index) {
+            <li>{{additional}}</li>
+          }
+        </ul>
+        @if(!showForm) {
+          <div class="actions-btn">
+            <button
+              mat-button
+              matSuffix
+              (click)="openDeleteDialog(event)">
+              {{'COMMON.DELETE' | translate}}
+              <mat-icon>delete</mat-icon>
+            </button>
+    
+            <button
+              mat-button
+              matSuffix
+              (click)="toggleEditForm(event)">
+              {{'COMMON.EDIT' |translate}}
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        }
+      } @else {
+        <ng-container [ngTemplateOutlet]="eventFormTemplate"></ng-container>
+      }
+    </div>
+  }
+
+
+  @if(!showForm || !eventToEdit) {
+    <div class="event-card">
+      @if(!showForm) {
+        <button
+          class="add-btn"
+          mat-button
+          matSuffix
+          (click)="toggleEditForm()">
+          <mat-icon>add-circle</mat-icon>
+          {{'EVENTS.NEW_EVENT' | translate}}
+        </button>
+      } @else {
+        <ng-container [ngTemplateOutlet]="eventFormTemplate"></ng-container>
+      }
+    </div>
+  }
+  <ng-template #eventFormTemplate>
+      <app-form-control
+        class="form-control"
+        [control]="getControl('icon')"
+        label="{{ 'COMMON.ICON' | translate }}"
+        type="text">
+      </app-form-control>
+
+      <app-form-control
+        class="form-control"
+        [control]="getControl('name')"
+        label="{{ 'COMMON.NAME' | translate }}"
+        type="text">
+      </app-form-control>
+
+      <mat-form-field class="form-control">
+        <mat-label>{{'EVENTS.RECOMENDED_ADITIONALS' | translate}}</mat-label>
+        <mat-select [formControl]="getControl('recomendedAditionals')" multiple>
+          @for (cost of additionalsCosts; track cost._id) {
+            <mat-option [value]="cost._id">{{cost.name}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="actions-btn">
+        <button
+          mat-button
+          matSuffix
+          (click)="toggleEditForm()">
+          {{'COMMON.CANCEL' | translate}}
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <button
+          mat-button
+          matSuffix
+          [disabled]="eventForm.invalid"
+          (click)="saveEvent()">
+          {{'COMMON.SAVE' |translate}}
+          <mat-icon>check</mat-icon>
+        </button>
+      </div>
+  </ng-template>
+</div>
+
+

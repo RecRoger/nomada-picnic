@@ -5,6 +5,7 @@
     "CANCEL": "Cancelar",
     "NO": "No",
     "NAME": "Nombre",
+    "ICON": "Icono",
     "EMAIL": "Correo Electronico",
     "PHONE": "Teléfono",
     "SEARCH": "Buscar",
@@ -56,6 +57,7 @@
     "TABS": {
       "PICNICS": "Presupuestos y Picnics",
       "PACKAGES": "Paquetes",
+      "EVENTS": "Tipos de eventos",
       "PLACES": "Lugares y parques",
       "COSTS": "Costos de produccion y adicionales",
       "EXPENSES": "Gastos mensuales e inversiones"
@@ -160,6 +162,15 @@
       "MONTHLY": "Gasto Mensual",
       "AMORTIZATION": "Meses de amortizacion"
     }
+  },
+  "EVENTS": {
+    "TITLE": "Tipos de eventos y recomendados.",
+    "ERROR": "No se ha podido cargar la lista de tipos de eventos",
+    "NEW_EVENT": "Crear nuevo tipo de evento",
+    "DIALOG_TITLE": "Eliminar tipo de evento",
+    "DIALOG_TEXT": "¿Seguro que deseas eliminar <b>{{name}}</b> de la lista eventos?",
+    "RECOMENDED_ADITIONALS": "Adicionales recomendados",
+    "FORM": {}
   },
   "PUBLIC": {
     "FOOTER": {

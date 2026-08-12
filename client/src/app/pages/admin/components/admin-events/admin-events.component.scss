@@ -1,0 +1,32 @@
+@use "utils" as u;
+
+.events-grid {
+  @include u.grid-auto(250px, 1rem);
+}
+
+.event-card {
+  background-color: var(--color-bg-cream);
+  border-radius: var(--radius-card-sm);
+  padding: 1rem;
+  @include u.flex(column, flex-start, stretch, 0.5rem);
+
+  .card-icon {
+    text-align: center;
+    width: 60px;
+    margin: 0 auto;
+    // font-size: 2rem;
+  }
+  .card-name {
+    margin: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  .card-list {
+    margin: 0;
+  }
+
+  .actions-btn {
+    @include u.flex(row, flex-end, stretch, 1rem);
+    margin-top: auto;
+  }
+}

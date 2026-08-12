@@ -39,8 +39,6 @@ export class PackagesFormComponent implements OnInit {
 
   public productionCosts: ICost[] = []
 
-  private readonly destroyRef = inject(DestroyRef)
-
   private readonly costService = inject(CostsService)
 
   ngOnInit(): void {

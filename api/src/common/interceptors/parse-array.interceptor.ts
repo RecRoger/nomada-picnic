@@ -8,6 +8,7 @@ export class ParseArrayInterceptor implements NestInterceptor {
   constructor(private readonly fields: string[]) { }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    this.logger.log('intercept: ', this.fields.join(', '))
     const request = context.switchToHttp().getRequest();
     const body = request.body;
 

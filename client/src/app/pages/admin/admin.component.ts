@@ -32,12 +32,16 @@ export class AdminComponent implements OnInit {
       label: 'ADMIN.TABS.PACKAGES'
     },
     {
-      link: 'places',
-      label: 'ADMIN.TABS.PLACES'
+      link: 'events',
+      label: 'ADMIN.TABS.EVENTS'
     },
     {
       link: 'costs',
       label: 'ADMIN.TABS.COSTS'
+    },
+    {
+      link: 'places',
+      label: 'ADMIN.TABS.PLACES'
     },
     {
       link: 'expenses',

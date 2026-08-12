@@ -1,0 +1,18 @@
+@if(pricesGroups$ | async; as priceGroups) {
+  <div class="c-event-selector">
+    @for (event of priceGroups; track $index) {
+      <button 
+        type="button"
+        class="event-card"
+        [class.selected]="selectedEvent === event"
+        (click)="selectGroup(event)"
+      >
+        <div class="card-icon" [innerHtml]="event.icon | appleEmoji">
+        </div>
+        <div class="card-name">
+          {{ event.name }}
+        </div>
+      </button>
+    }
+  </div>
+}

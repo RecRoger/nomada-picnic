@@ -12,13 +12,12 @@ export class AppleEmojiPipe implements PipeTransform {
   transform(value: string): SafeHtml {
     if (!value) return '';
 
-    // 1. Generamos el HTML string con twemoji
     const parsedHtml = twemoji.parse(value, {
-      folder: 'svg',
-      ext: '.svg'
+      base: 'images/graphics/',
+      folder: 'emojis',
+      ext: '.png',
     });
 
-    // 2. Le indicamos a Angular que confiamos en este HTML
     return this.sanitizer.bypassSecurityTrustHtml(parsedHtml);
   }
 }

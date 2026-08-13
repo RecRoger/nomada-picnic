@@ -7,7 +7,7 @@
         [class.selected]="selectedEvent === event"
         (click)="selectGroup(event)"
       >
-        <div class="card-icon" [innerHtml]="event.icon | appleEmoji">
+        <div class="card-icon" [innerHtml]="event.icon! | appleEmoji">
         </div>
         <div class="card-name">
           {{ event.name }}

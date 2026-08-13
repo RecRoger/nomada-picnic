@@ -1,0 +1,55 @@
+<div class="c-cart-detail">
+
+  <div class="c-cart-detail--header">
+    <h3 class="c-cart-detail--header-title">{{'PUBLIC.CART.DETAILS.MAIN_TITLE' | translate}}</h3>
+    <button mat-icon-button (click)="cartService.toggleDetails()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="c-cart-detail--body">
+    <span class="c-cart-detail--body-label">{{'PUBLIC.CART.DETAILS.LABEL' | translate}}</span>
+    <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.TITLE' | translate}}</h2>
+    <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.SUBTITLE' | translate}}</p>
+
+    <!-- TARJETAS DE DATOS DE LA RESERVA -->
+    <div class="details-cards">
+      <div class="detail-card">
+        <div class="detail-info">
+          <span class="detail-label">FECHA</span>
+          <strong class="detail-value">Vie 7 de agosto 2026</strong>
+        </div>
+        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-info">
+          <span class="detail-label">HORARIO</span>
+          <strong class="detail-value">15:00</strong>
+        </div>
+        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-info">
+          <span class="detail-label">LUGAR</span>
+          <strong class="detail-value">Lago de Regatas</strong>
+        </div>
+        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-info">
+          <span class="detail-label">CELEBRACIÓN</span>
+          <strong class="detail-value">Romántico</strong>
+        </div>
+        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-cart-detail--footer">
+    <span class="c-cart-detail--footer-text">Vie 7 de agosto 2026 · 15:00 · Lago de Regatas · Romántico</span>
+    <button class="c-cart-detail--footer-button">Confirmar disponibilidad</button>
+  </div>
+</div>

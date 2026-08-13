@@ -39,6 +39,7 @@
     "TYPE": "Tipo",
     "IMAGES": "Imagenes",
     "EARN_PERCENTAGE": "Ganancia",
+    "TOTAL": "Total",
     "FINAL_PRICE": "Precio Final",
     "TOTAL_COST": "Costo Total",
     "NEXT": "Siguiente",
@@ -216,6 +217,22 @@
       "DESCRIPTION": "Creamos picnics únicos en Buenos Aires, <br> diseñados para celebrar, sorprender y conectar."
     },
     "ACTION": "Cotizar mi picnic",
+    "CART": {
+      "TITLE": "Tu carrito",
+      "CLOSE": "Cerrar carrito",
+      "CART_EMPTY": "Tu carrito esta vacio",
+      "ADD_TO_CONTINUE": "Agregá un picnic para continuar.",
+      "DETAILS": {
+        "MAIN_TITLE": "Detalles de tu reserva",
+        "LABEL": "Disponibilidad",
+        "TITLE": "Revisá y editá los detalles",
+        "SUBTITLE": "Tocá el lápiz de cada dato para editarlo por separado."
+      },
+      "BUTTONS": {
+        "CHECK_AVAILABILITY": "Confirmar disponibilidad",
+        "CHECKIN": "Ir al checkout"
+      }
+    },
     "MENU": {
       "BOOKING_BTN": "Reserva ahora",
       "TABS": {

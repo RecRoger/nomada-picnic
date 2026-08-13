@@ -1,7 +1,6 @@
 import { CommonModule, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
-import { MatCardModule } from '@angular/material/card';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
 import { TranslateModule } from '@ngx-translate/core';
 import { MapsService } from '@services/maps.service';
@@ -19,6 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { RECOMENDED_TAG } from '@constants/important-tags';
 import { normalizeString } from 'src/app/core/functions/search';
+import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 
 
 @Component({
@@ -34,7 +34,7 @@ import { normalizeString } from 'src/app/core/functions/search';
     ApiImageUrlPipe,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatCardModule,
+    AppleEmojiPipe,
     NgTemplateOutlet,
   ],
   templateUrl: './places-map.component.html',

@@ -1,3 +1,17 @@
-<app-header></app-header>
-<router-outlet />
-<app-footer></app-footer>
+<mat-drawer-container class="global-drawer-container" hasBackdrop="true">
+  <mat-drawer #drawer
+    position="end"
+    mode="over"
+    [opened]="cartService.isOpen()"
+    (closed)="cartService.closeCart()"
+    class="cart-drawer">
+    <app-shopping-cart></app-shopping-cart>
+  </mat-drawer>
+
+  <mat-drawer-content class="page-content">
+    <app-header></app-header>
+    <router-outlet />
+    <app-footer></app-footer>
+  </mat-drawer-content>
+</mat-drawer-container>
+

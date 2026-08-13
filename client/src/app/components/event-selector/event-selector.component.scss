@@ -25,6 +25,12 @@
     .card-icon {
       width: 30px;
       margin: 0 auto 0.5rem;
+      ::ng-deep img.emoji {
+        height: 30px;
+        width: 30px;
+        vertical-align: -0.2em;
+        object-fit: contain;
+      }
     }
 
     .card-name {

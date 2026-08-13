@@ -1,4 +1,4 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,8 +20,8 @@ import { normalizeString } from 'src/app/core/functions/search';
     CommonModule,
     TranslateModule,
     MatButtonModule,
-    DecimalPipe,
     MatIconModule,
+    CurrencyPipe,
     ApiImageUrlPipe,
     FormsModule,
     ReactiveFormsModule

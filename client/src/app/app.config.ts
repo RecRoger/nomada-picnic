@@ -3,9 +3,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { TRANSLATE_HTTP_LOADER_CONFIG, TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +19,7 @@ export const appConfig: ApplicationConfig = {
       provide: TRANSLATE_HTTP_LOADER_CONFIG,
       useValue: {
         prefix: './i18n/',
-        suffix: '.json',
+        suffix: `.json?v=${environment.appVersion}`,
       },
     },
     provideTranslateService({
@@ -26,6 +28,7 @@ export const appConfig: ApplicationConfig = {
         provide: TranslateLoader,
         useClass: TranslateHttpLoader,
       }
-    }), provideClientHydration(withEventReplay()),
+    }),
+    provideClientHydration(withEventReplay()),
   ]
 };

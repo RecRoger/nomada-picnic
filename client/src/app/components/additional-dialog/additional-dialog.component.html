@@ -28,7 +28,7 @@
         </div>
       }
       <div class="c-additional-dialog--data-price">
-        <span class="amount">{{ additional.finalPrice | number:'1.2-2' | currency: 'US$ ' }}</span>
+        <span class="amount">{{ additional.finalPrice | currency: 'US$ ':'code':'1.0-2' }}</span>
       </div>
 
       <p class="c-additional-dialog--data-description">{{additional.description}}</p>

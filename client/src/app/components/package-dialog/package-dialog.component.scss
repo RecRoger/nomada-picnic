@@ -17,6 +17,11 @@
     top: 1rem;
     right: 1rem;
     z-index: 10;
+
+    @include u.style-up-to(tablet) {
+      background-color: var(--color-bg-cream);
+      color: var(--color-text-muted);
+    }
   }
 
   &--media {
@@ -180,15 +185,38 @@
 
   &--actions {
     @include u.flex(row, space-between, center, 1rem);
-    flex-wrap: wrap;
-    text-align: center;
     width: 100%;
     padding-top: 0.5rem;
 
+    &-price {
+      @include u.flex(column, space-between, flex-start, 0.5rem);
+      .price-label {
+        color: var(--color-text-muted);
+        font-size: var(--font-small);
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .price-amount {
+        font-family: var(--font-money);
+        color: var(--color-brand-blue);
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      @include u.style-up-to(tablet) {
+        width: 100%;
+      }
+    }
+
     &-add {
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      text-align: center;
       font-weight: 700;
       margin-left: auto;
+      white-space: wrap;
+
+      @include u.style-up-to(tablet) {
+        width: 100%;
+      }
     }
   }
 }

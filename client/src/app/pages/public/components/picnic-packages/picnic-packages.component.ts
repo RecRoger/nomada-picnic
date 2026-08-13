@@ -1,5 +1,5 @@
-import { AsyncPipe, CurrencyPipe, DecimalPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { PackageDialogComponent } from '@components/package-dialog/package-dialog.component';
@@ -11,7 +11,7 @@ import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-picnic-packages',
-  imports: [AsyncPipe, TranslateModule, MatIconModule, DecimalPipe, CurrencyPipe, ApiImageUrlPipe],
+  imports: [AsyncPipe, TranslateModule, MatIconModule, CurrencyPipe, ApiImageUrlPipe],
   templateUrl: './picnic-packages.component.html',
   styleUrl: './picnic-packages.component.scss'
 })

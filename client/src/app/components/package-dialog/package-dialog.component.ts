@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -20,6 +20,7 @@ import { EventSelectorComponent } from '@components/event-selector/event-selecto
     ApiImageUrlPipe,
     GuestsPricesComponent,
     EventSelectorComponent,
+    CurrencyPipe,
   ],
   templateUrl: './package-dialog.component.html',
   styleUrl: './package-dialog.component.scss'

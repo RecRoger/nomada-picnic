@@ -3,7 +3,7 @@
 .c-guests-prices {
   @include u.grid-columns(3, 1rem);
 
-  @media (max-width: 768px) {
+  @include u.style-up-to(desktop) {
     grid-template-columns: repeat(2, 1fr);
   }
 

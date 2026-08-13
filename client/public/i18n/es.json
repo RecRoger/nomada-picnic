@@ -30,6 +30,7 @@
       "MAX_CHARACTERS_FIELD": "El campo puede tener hasta {{max}} caracteres"
     },
     "DATE": "Fecha",
+    "PRICE_FROM": "Desde",
     "AMOUNT": "Cantidad",
     "PLACE": "Lugar",
     "ADDRESS": "Direccion",

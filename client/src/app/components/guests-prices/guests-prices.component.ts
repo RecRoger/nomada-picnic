@@ -1,5 +1,5 @@
-import { AsyncPipe, CurrencyPipe, DecimalPipe } from '@angular/common';
-import { AfterViewInit, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { PackagesService } from '@services/packages.service';
@@ -8,12 +8,14 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-guests-prices',
-  imports: [AsyncPipe, TranslateModule, MatIconModule, DecimalPipe, CurrencyPipe],
+  imports: [AsyncPipe, TranslateModule, MatIconModule, CurrencyPipe],
   templateUrl: './guests-prices.component.html',
   styleUrl: './guests-prices.component.scss'
 })
-export class GuestsPricesComponent implements AfterViewInit {
-  @Input() packageId?: string
+export class GuestsPricesComponent {
+  @Input() set packageId(id: string) {
+    this.pricesGroups$ = this.packagesService.getPackagePricesCached(id || '')
+  }
 
   @Output() selectPrice: EventEmitter<IPackagePrice> = new EventEmitter()
 
@@ -22,10 +24,6 @@ export class GuestsPricesComponent implements AfterViewInit {
   public pricesGroups$?: Observable<IPackagePrice[]>
 
   public selectedGroup?: IPackagePrice
-
-  ngAfterViewInit(): void {
-    this.pricesGroups$ = this.packagesService.getPackagePricesCached(this.packageId || '')
-  }
 
   selectGroup(group: IPackagePrice) {
     if (!this.selectedGroup || this.selectedGroup !== group) {

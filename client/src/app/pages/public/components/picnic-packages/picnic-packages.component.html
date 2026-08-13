@@ -25,8 +25,8 @@
               <p class="package-card--info-description">{{ pkg.description }}</p>
               
               <div class="package-card--info-price">
-                <span class="price-label">Desde</span>
-                <span class="amount">{{ pkg.minPrice  | number:'1.2-2' | currency: 'US$ '  }}</span>
+                <span class="price-label">{{'COMMON.PRICE_FROM' | translate}}</span>
+                <span class="amount">{{ pkg.minPrice  | currency: 'US$ ':'code':'1.0-2'  }}</span>
               </div>
 
               <button class="package-card--info-button">

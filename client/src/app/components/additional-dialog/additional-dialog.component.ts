@@ -1,4 +1,4 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -17,7 +17,6 @@ import { CarouselComponent, CarouselOptions } from '@components/carousel/carouse
     MatDialogModule,
     MatButtonModule,
     MatIcon,
-    DecimalPipe,
     ApiImageUrlPipe,
     SafeHtmlPipe,
     CarouselComponent,

@@ -36,7 +36,7 @@
         <div class="c-package-dialog--prices-label">{{'PUBLIC.PACKAGES.PRICES.LABEL' | translate}}</div>
         <h3 class="c-package-dialog--prices-title">{{'PUBLIC.PACKAGES.PRICES.TITLE' | translate}}</h3>
         <p class="c-package-dialog--prices-text">{{'PUBLIC.PACKAGES.PRICES.TEXT' | translate}}</p>
-        <app-guests-prices [packageId]="package._id" (selectPrice)="selectPrice($event)"></app-guests-prices>
+        <app-guests-prices [packageId]="package._id || ''" (selectPrice)="selectPrice($event)"></app-guests-prices>
       </div>
       <div class="c-package-dialog--events">
         <div class="c-package-dialog--events-label">{{'PUBLIC.PACKAGES.EVENTS.LABEL' | translate}}</div>
@@ -48,6 +48,14 @@
     </div>
 
     <div class="c-package-dialog--actions">
+      <div class="c-package-dialog--actions-price">
+        <div class="price-label">
+          {{selectedPrice ? (`${selectedPrice.minGuests} – ${selectedPrice.maxGuests} ${'COMMON.PEOPLE' | translate}`) : ('COMMON.PRICE_FROM' | translate)}}
+        </div>
+        <div class="price-amount">
+          {{(selectedPrice ? selectedPrice.price : package.minPrice) | currency: 'US$ ':'code':'1.0-2'}}
+        </div>
+      </div>
       <button class="c-package-dialog--actions-add" [disabled]="!selectedPrice || !selectedEvent" [mat-dialog-close]="{group: selectedPrice, event: selectedEvent}">{{'PUBLIC.PACKAGES.DETAIL.BUTTON' | translate}}</button>
     </div>
   </div>

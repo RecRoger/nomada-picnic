@@ -1,0 +1,78 @@
+<mat-drawer-container class="c-shopping-cart" hasBackdrop="true">
+  <mat-drawer
+    #drawer
+    position="end"
+    mode="over"
+    [opened]="cartService.isOpen()"
+    [class.is-expanded]="cartService.showDetails()"
+    (closed)="cartService.closeCart()"
+    class="c-shopping-cart--drawer">
+
+
+    <!-- 1. PANEL IZQUIERDO: DETALLES DE LA RESERVA (Condicional) -->
+    @if (cartService.showDetails()) {
+      <app-cart-detail class="c-shopping-cart--details"></app-cart-detail>
+    }
+
+    <div class="c-shopping-cart--main">
+      <div class="c-shopping-cart--header">
+        <h3 class="c-shopping-cart--header-title">{{'PUBLIC.CART.TITLE' | translate}}</h3>
+        <button mat-icon-button (click)="cartService.closeCart()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+  
+      <div class="c-shopping-cart--body">
+        @if (cartService.items().length === 0) {
+          <div class="empty-cart">
+            <div class="empty-icon" [innerHTML]="'🧺' | appleEmoji"></div>
+            <p>{{'PUBLIC.CART.CART_EMPTY'| translate}}</p>
+          </div>
+        } @else {
+  
+  
+          <!-- TODO - LISTA DE PRODUCTOS -->
+          <div class="cart-items">
+            @for (item of cartService.items(); track item.id) {
+              <div class="cart-item">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-price">{{ item.price | currency:'US$ ':'code':'1.0-2' }}</span>
+              </div>
+            }
+          </div>
+        }
+      </div>
+  
+      <div class="c-shopping-cart--footer">
+        <div class="c-shopping-cart--footer-summary">
+          <span class="c-shopping-cart--footer-summary-label">Total ({{ cartService.totalItems() }} productos)</span>
+          <span class="c-shopping-cart--footer-summary-price">
+            {{ cartService.totalAmount() | currency:'US$ ':'code':'1.0-2' }}
+          </span>
+        </div>
+  
+        <button
+          class="c-shopping-cart--footer-button complete-book"
+          (click)="cartService.toggleDetails()">
+          {{'PUBLIC.CART.BUTTONS.CHECK_AVAILABILITY'|translate}}
+        </button>
+
+        <button
+          class="c-shopping-cart--footer-button checkin"
+          [disabled]="cartService.items().length === 0">
+          {{'PUBLIC.CART.BUTTONS.CHECKIN'|translate}}
+        </button>
+  
+        @if (cartService.items().length === 0) {
+          <small class="c-shopping-cart--footer-hint">{{'PUBLIC.CART.ADD_TO_CONTINUE'|translate}}</small>
+        }
+      </div>
+    </div>
+    
+  </mat-drawer>
+
+  <!-- CONTENIDO DE LA PÁGINA O ROUTER-OUTLET -->
+  <mat-drawer-content>
+    <ng-content></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

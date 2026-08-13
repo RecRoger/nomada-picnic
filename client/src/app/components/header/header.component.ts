@@ -1,20 +1,27 @@
 import { AsyncPipe, isPlatformBrowser, NgClass } from '@angular/common';
 import { AfterViewInit, Component, inject, NgZone, PLATFORM_ID } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterModule } from '@angular/router';
 import { NavLink } from '@models/nav-link';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 import { filter, map, Observable } from 'rxjs';
+import { CartService } from '@services/cart.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TranslateModule, RouterModule, MatIconModule, MatButtonModule, AsyncPipe, NgClass],
+  imports: [
+    TranslateModule,
+    RouterModule,
+    RouterLink,
+    MatIconModule,
+    AsyncPipe,
+    NgClass,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -22,6 +29,8 @@ export class HeaderComponent implements AfterViewInit {
   public openMenu = false
 
   protected readonly router = inject(Router)
+
+  protected readonly cartService = inject(CartService)
 
   public isHome$: Observable<boolean> =
     this.router.events.pipe(

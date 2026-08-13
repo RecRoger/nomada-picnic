@@ -12,7 +12,7 @@
         {{link.label | translate}}
       </a>
       }
-      <a aria-label="book" href="https://wa.me/5491126908781" class="c-header--menu-book-btn">
+      <a aria-label="book" routerLink="/picnics" class="c-header--menu-book-btn" (click)="openMenu = false">
         {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}
       </a>
     </div>
@@ -40,11 +40,26 @@
       }
     </nav>
     
+    <div class="c-header--buttons">
+      <a class="c-header--buttons-book hide-mobile hide-tablet"
+        aria-label="book"
+        routerLink="/picnics">
+        {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}
+      </a>
+      <button 
+        class="c-header--buttons-cart" 
+        type="button"
+        (click)="cartService.toggleCart()"
+        aria-label="Ver carrito de compras">      
+        <mat-icon>shopping_cart</mat-icon>
+        @if (cartService.totalItems() > 0) {
+          <span class="cart-badge">
+            {{ cartService.totalItems() }}
+          </span>
+        }
+      </button>
+    </div>
 
-    <a aria-label="book" href="https://wa.me/5491126908781" class="c-header--book-btn hide-mobile hide-tablet">
-      {{ 'PUBLIC.MENU.BOOKING_BTN' | translate}}
-    </a>
-    
 
   </div>
 

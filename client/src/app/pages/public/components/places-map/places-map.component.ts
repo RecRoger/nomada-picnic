@@ -19,6 +19,8 @@ import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { RECOMENDED_TAG } from '@constants/important-tags';
 import { normalizeString } from 'src/app/core/functions/search';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
+import { CartService } from '@services/cart.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -74,6 +76,10 @@ export class PlacesMapComponent implements OnInit {
 
   private readonly placesService = inject(PlacesService)
 
+  private readonly cartService = inject(CartService)
+
+  private readonly router = inject(Router)
+
   private readonly destroyRef = inject(DestroyRef)
 
   readonly dialog = inject(MatDialog);
@@ -107,16 +113,14 @@ export class PlacesMapComponent implements OnInit {
       width: '750px',
       maxWidth: '90vw',
       height: 'auto',
-      panelClass: 'nomada-place-dialog-panel'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // TODO - logica de selccion de lugar
-        const message = `¡Hola! Me interesaria tener informacion sobre un picnic en ${place!.name}`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        this.cartService.updateBookingDetails({
+          place
+        })
+        this.router.navigate(['/picnics'])
       }
     });
   }

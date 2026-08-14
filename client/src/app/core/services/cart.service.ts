@@ -64,21 +64,12 @@ export class CartService {
   public isEmpty = computed(() => !this.cartState().booking && this.cartState().additionals.length === 0);
 
   // --- MÉTODOS DE ACCIÓN / MUTACIONES DE ESTADO ---
-  /** Asigna o actualiza la configuración principal del picnic */
-  setBooking(booking: IPicnicBooking): void {
-    this.cartState.update((state) => ({
-      ...state,
-      booking,
-    }));
-  }
-
-  /** Actualiza parcialmente campos de la reserva (ej. cuando editan fecha u hora desde el drawer) */
+  /** Actualiza parcialmente campos de la reserva */
   updateBookingDetails(partialBooking: Partial<IPicnicBooking>) {
     this.cartState.update((state) => {
-      if (!state.booking) return state;
       return {
         ...state,
-        booking: { ...state.booking, ...partialBooking },
+        booking: { ...(state.booking || {}), ...partialBooking },
       };
     });
   }
@@ -159,8 +150,8 @@ export class CartService {
   }
 
   // --- CONTROLES DE UI ---
-  public toggleDetails(): void {
-    this.showDetails.update((val) => !val);
+  public toggleDetails(forceClose?: boolean): void {
+    this.showDetails.update((val) => forceClose ?? !val);
   }
 
   public openCart(): void {

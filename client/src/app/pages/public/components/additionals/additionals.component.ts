@@ -7,7 +7,7 @@ import { AdditionalDialogComponent } from '@components/additional-dialog/additio
 import { TranslateModule } from '@ngx-translate/core';
 import { CostsService } from '@services/costs.service';
 import { CostsTypes } from '@shared/enums';
-import { ICost } from '@shared/interfaces';
+import { ICartAdditional, ICost } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { forkJoin } from 'rxjs';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -90,7 +90,17 @@ export class AdditionalsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.cartService.addAdditional(additional, result)
+        const cartAdditionals = this.cartService.additionals()
+        const cartItem = cartAdditionals.find((item: ICartAdditional) => item.cost._id === additional._id)
+        if (cartItem) {
+          if (additional.multipleAllowed) {
+            this.cartService.updateAdditionalQuantity(additional._id!, cartItem.quantity + result)
+          } else {
+            this.cartService.openCart()
+          }
+        } else {
+          this.cartService.addAdditional(additional, result)
+        }
       }
     });
 

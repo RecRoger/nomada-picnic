@@ -2,9 +2,12 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { PackageDialogComponent } from '@components/package-dialog/package-dialog.component';
+import { RecommendedDialogComponent } from '@components/recommended-dialog copy/recommended-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
+import { CartService } from '@services/cart.service';
 import { PackagesService } from '@services/packages.service';
 import { IPackagePrice, IPicnicEvent, IPicnicPackage } from '@shared/interfaces';
 import { map, Observable } from 'rxjs';
@@ -17,6 +20,8 @@ import { map, Observable } from 'rxjs';
 })
 export class PicnicPackagesComponent {
   protected readonly packageService = inject(PackagesService);
+  protected readonly cartService = inject(CartService);
+  protected readonly router = inject(Router);
 
   public packagesList: IPicnicPackage[] = []
 
@@ -35,18 +40,35 @@ export class PicnicPackagesComponent {
       width: '1200px',
       maxWidth: '90vw',
       maxHeight: '85vh',
-      panelClass: 'nomada-place-dialog-panel'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.group) {
-        // TODO - logica de selccion de paquete
         const group = result.group as IPackagePrice
         const event = result.event as IPicnicEvent
-        const message = `¡Hola! Me interesaria tener informacion sobre un ${pkg!.name} de ${event.name} para ${group.minGuests} - ${group.maxGuests} personas (${group.price} US$)`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        this.cartService.updateBookingDetails({
+          package: pkg,
+          event,
+          minGuests: group.minGuests,
+          maxGuests: group.maxGuests,
+          basePrice: pkg!.minPrice,
+        })
+
+        const dialogRef2 = this.dialog.open(RecommendedDialogComponent, {
+          data: event,
+          width: '700px',
+          maxWidth: '90vw',
+          maxHeight: '90vh',
+        });
+
+        dialogRef2.afterClosed().subscribe(result => {
+          if (result) {
+            this.cartService.openCart()
+          } else {
+            this.router.navigate(['/additionals'])
+          }
+        })
+
       }
     });
   }

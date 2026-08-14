@@ -14,8 +14,10 @@
     "DETAIL": "Detalle",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
+    "MODIFIED": "Modificar",
     "NEW": "Nuevo",
     "ADD": "Agregar",
+    "ADDED": "Agregado",
     "SAVE": "Guardar",
     "LAT": "Latitud",
     "LNG": "Longitud",
@@ -220,7 +222,8 @@
     "CART": {
       "TITLE": "Tu carrito",
       "CLOSE": "Cerrar carrito",
-      "CART_EMPTY": "Tu carrito esta vacio",
+      "CART_EMPTY": "Tu carrito aún esta vacio",
+      "NO_PICNIC": "Selecciona un picnic para continuar",
       "ADD_TO_CONTINUE": "Agregá un picnic para continuar.",
       "DETAILS": {
         "MAIN_TITLE": "Detalles de tu reserva",
@@ -229,6 +232,7 @@
         "SUBTITLE": "Tocá el lápiz de cada dato para editarlo por separado."
       },
       "BUTTONS": {
+        "PICNICS": "Ver Picnics",
         "CHECK_AVAILABILITY": "Confirmar disponibilidad",
         "CHECKIN": "Ir al checkout"
       }
@@ -524,7 +528,13 @@
       "EVENTS": {
         "LABEL": "La ocasión",
         "TITLE": "¿Qué tipo de picnic están celebrando?",
-        "TEXT": "Contanos cuál es la ocasión y te sugerimos los adicionales que mejor combinan."
+        "TEXT": "Contanos cuál es la ocasión y te sugerimos los adicionales que mejor combinan.",
+        "RECOMMENDED": {
+          "TITLE": "¿Querés añadir más experiencias a tu picnic?",
+          "SUBTITLE": "Estos adicionales combinan muy bien con un picnic baby shower.",
+          "CART_BTN": "Listo, ir al carrito",
+          "ADDITIONALS_BTN": "Ver todos los adicionales"
+        }
       },
       "NO_PACKAGES": "No hay paquetes disponibles en este momento."
     }

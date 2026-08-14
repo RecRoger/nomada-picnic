@@ -7,6 +7,8 @@ import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { CurrencyPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { CartDetailComponent } from '@components/cart-detail/cart-detail.component';
+import { ICartAdditional } from '@shared/interfaces';
+import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,11 +19,29 @@ import { CartDetailComponent } from '@components/cart-detail/cart-detail.compone
     MatButtonModule,
     AppleEmojiPipe,
     CurrencyPipe,
-    CartDetailComponent
+    CartDetailComponent,
+    ApiImageUrlPipe
   ],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.scss'
 })
 export class ShoppingCartComponent {
   protected cartService = inject(CartService)
+
+  decreaseAdditional(additional: ICartAdditional) {
+    if (additional.quantity > 1) {
+      this.cartService.updateAdditionalQuantity(additional.cost._id!, additional.quantity - 1);
+    } else {
+      this.removeAdditional(additional);
+    }
+  }
+
+  increaseAdditional(additional: ICartAdditional) {
+    this.cartService.updateAdditionalQuantity(additional.cost._id!, additional.quantity + 1);
+  }
+
+
+  removeAdditional(additional: ICartAdditional) {
+    this.cartService.removeAdditional(additional.cost._id!);
+  }
 }

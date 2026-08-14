@@ -23,20 +23,69 @@
       </div>
   
       <div class="c-shopping-cart--body">
-        @if (cartService.items().length === 0) {
+        @if (!cartService.booking()) {
           <div class="empty-cart">
             <div class="empty-icon" [innerHTML]="'🧺' | appleEmoji"></div>
             <p>{{'PUBLIC.CART.CART_EMPTY'| translate}}</p>
           </div>
         } @else {
-  
+          
+          HAY COSAS
   
           <!-- TODO - LISTA DE PRODUCTOS -->
           <div class="cart-items">
-            @for (item of cartService.items(); track item.id) {
+
+            <!-- @for (item of cartService.items(); track additional.id) {
               <div class="cart-item">
-                <span class="item-name">{{ item.name }}</span>
-                <span class="item-price">{{ item.price | currency:'US$ ':'code':'1.0-2' }}</span>
+                <span class="item-name">{{ additional.name }}</span>
+                <span class="item-price">{{ additional.price | currency:'US$ ':'code':'1.0-2' }}</span>
+              </div>
+            } -->
+
+          </div>
+        }
+
+        @if (cartService.additionals().length) {
+          <div class="additionals-list">
+            @for (additional of cartService.additionals(); track $index) {
+              <div class="c-cart-additional">
+                <div class="c-cart-additional--image">
+                  <img 
+                    [src]="additional.cost.images![0] | apiImageUrl"  
+                    [alt]="additional.cost.name" />
+                </div>
+                <div class="c-cart-additional--info">
+                  <h4 class="c-cart-additional--info-title">{{ additional.cost.name }}</h4>
+                  <span class="c-cart-additional--info-price">{{ additional.cost.finalPrice | currency:'US$ ':'code':'1.0-0' }}</span>
+                
+                  @if(additional.cost.multipleAllowed) {
+                    <div class="c-cart-additional--info-quantity">
+                      <button 
+                        type="button" 
+                        class="qty-btn" 
+                        (click)="decreaseAdditional(additional)" 
+                        aria-label="Disminuir cantidad">
+                        <mat-icon>remove</mat-icon>
+                      </button>    
+                      <span class="qty-value">{{ additional.quantity }}</span>
+                      <button 
+                        type="button" 
+                        class="qty-btn" 
+                        (click)="increaseAdditional(additional)" 
+                        aria-label="Aumentar cantidad">
+                        <mat-icon>add</mat-icon>
+                      </button>
+                    </div>
+                  }
+                </div>
+                <div class="c-cart-additional--actions">
+                  <span class="c-cart-additional--actions-subtotal">
+                    {{ (additional.totalPrice) | currency:'US$ ':'code':'1.0-0' }}
+                  </span>
+                  <button type="button" class="c-cart-additional--actions-remove-btn" (click)="removeAdditional(additional)">
+                    Quitar
+                  </button>
+                </div>
               </div>
             }
           </div>
@@ -51,19 +100,21 @@
           </span>
         </div>
   
-        <button
-          class="c-shopping-cart--footer-button complete-book"
-          (click)="cartService.toggleDetails()">
-          {{'PUBLIC.CART.BUTTONS.CHECK_AVAILABILITY'|translate}}
-        </button>
+        @if (cartService.isIncomplete()) {
+          <button
+            class="c-shopping-cart--footer-button complete-book"
+            (click)="cartService.toggleDetails()">
+            {{'PUBLIC.CART.BUTTONS.CHECK_AVAILABILITY'|translate}}
+          </button>
+        }
 
         <button
           class="c-shopping-cart--footer-button checkin"
-          [disabled]="cartService.items().length === 0">
+          [disabled]="!cartService.isIncomplete()">
           {{'PUBLIC.CART.BUTTONS.CHECKIN'|translate}}
         </button>
   
-        @if (cartService.items().length === 0) {
+        @if (!cartService.booking()) {
           <small class="c-shopping-cart--footer-hint">{{'PUBLIC.CART.ADD_TO_CONTINUE'|translate}}</small>
         }
       </div>

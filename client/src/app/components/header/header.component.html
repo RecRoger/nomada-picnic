@@ -49,7 +49,7 @@
       <button 
         class="c-header--buttons-cart" 
         type="button"
-        (click)="cartService.toggleCart()"
+        (click)="cartService.openCart()"
         aria-label="Ver carrito de compras">      
         <mat-icon>shopping_cart</mat-icon>
         @if (cartService.totalItems() > 0) {

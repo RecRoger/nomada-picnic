@@ -13,6 +13,7 @@ import { forkJoin } from 'rxjs';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { normalizeString } from 'src/app/core/functions/search';
+import { CartService } from '@services/cart.service';
 
 @Component({
   selector: 'app-additionals',
@@ -31,6 +32,8 @@ import { normalizeString } from 'src/app/core/functions/search';
 })
 export class AdditionalsComponent implements OnInit {
   protected readonly fb = inject(FormBuilder)
+
+  protected readonly cartService = inject(CartService)
 
   public filteredList: ICost[] = []
 
@@ -87,11 +90,7 @@ export class AdditionalsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // TODO - logica de selccion de paquete
-        const message = `¡Hola! Me interesaria tener informacion sobre ${additional!.name} para mi picnic`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        this.cartService.addAdditional(additional, result)
       }
     });
 

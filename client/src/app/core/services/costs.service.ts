@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
 import { IApiResponse, ICost } from '@shared/interfaces';
-import { AlertTypes } from '@shared/enums';
+import { AlertTypes, CostsTypes } from '@shared/enums';
 import { API_URL } from '@constants/api-url';
 
 @Injectable({
@@ -38,6 +38,14 @@ export class CostsService {
         this.notificationService.openNotification({ message: 'COSTS.ERROR' }, AlertTypes.ERROR)
         return of([]);
       })
+    );
+  }
+
+  public getAdditionalById(costId: string, type: CostsTypes): Observable<ICost | undefined> {
+    if (!costId || !type) return of(undefined);
+
+    return this.getCostsCached(type).pipe(
+      map((costs: ICost[]) => costs.find((cost) => cost._id === costId))
     );
   }
 

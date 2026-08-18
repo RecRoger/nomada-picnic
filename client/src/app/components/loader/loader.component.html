@@ -1,0 +1,14 @@
+<div class="c-loader" [class.c-loader--fullscreen]="fullScreen" [class]="'c-loader--' + size">
+  <div class="c-loader__animation">
+    <app-animation
+      [src]="src"
+      [autoplay]="true"
+      [loop]="true"
+      [clickeable]="false">
+    </app-animation>
+  </div>
+  
+  @if (message) {
+    <p class="c-loader__text">{{ message }}</p>
+  }
+</div>

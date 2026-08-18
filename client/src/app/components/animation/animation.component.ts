@@ -1,18 +1,14 @@
-import { AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, inject, Input, NgZone, OnChanges, OnDestroy, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
 import lottie, { AnimationItem } from 'lottie-web'; // La librería base de Lottie
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Registrar el plugin de Scroll en GSAP
-gsap.registerPlugin(ScrollTrigger);
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-animation',
-  imports: [],
+  standalone: true,
   templateUrl: './animation.component.html',
   styleUrl: './animation.component.scss'
 })
-export class AnimationComponent implements AfterViewInit, OnDestroy {
+export class AnimationComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('lottieContainer', { static: true }) lottieContainer!: ElementRef;
 
   @Input() src = '';
@@ -22,25 +18,40 @@ export class AnimationComponent implements AfterViewInit, OnDestroy {
   @Input() scrollOptions: any | null = null;
 
   private animation?: AnimationItem;
-  private scrollTween?: gsap.core.Tween;
+  private scrollTween?: any;
+  private isBrowser: boolean;
 
-  constructor(private ngZone: NgZone) { }
+  constructor(
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) platformId: object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Si cambia el src dinámicamente, reiniciamos la animación
-    if (changes['src'] && !changes['src'].firstChange) {
+    if (this.isBrowser && changes['src'] && !changes['src'].firstChange) {
       this.loadAnimation();
     }
   }
 
   ngAfterViewInit(): void {
-    this.loadAnimation();
+    if (this.isBrowser) {
+      this.loadAnimation();
+    }
   }
 
-  private loadAnimation(): void {
+  private async loadAnimation(): Promise<void> {
+    if (!this.isBrowser || !this.src) return;
+
     if (this.animation) this.animation.destroy();
 
-    // Ejecutamos fuera de Angular para mejorar performance
+    // Importación dinámica para evitar que SSR procese las librerías del cliente
+    const [lottieModule] = await Promise.all([
+      import('lottie-web')
+    ]);
+
+    const lottie = lottieModule.default || lottieModule;
+
     this.ngZone.runOutsideAngular(() => {
       this.animation = lottie.loadAnimation({
         container: this.lottieContainer.nativeElement,
@@ -58,16 +69,22 @@ export class AnimationComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private initScrollAnimation(): void {
-    if (!this.animation) return;
+  private async initScrollAnimation(): Promise<void> {
+    if (!this.animation || !this.isBrowser) return;
+
+    const [gsapModule, scrollTriggerModule] = await Promise.all([
+      import('gsap'),
+      import('gsap/ScrollTrigger')
+    ]);
+
+    const gsap = gsapModule.default || gsapModule;
+    const ScrollTrigger = scrollTriggerModule.ScrollTrigger || scrollTriggerModule.default;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     const playhead = { frame: 0 };
 
-    // Matar animaciones previas si existen
     if (this.scrollTween) this.scrollTween.kill();
-    if (this.scrollTween?.vars.scrollTrigger) {
-      ScrollTrigger.getById('lottieTrigger')?.kill();
-    }
 
     this.scrollTween = gsap.to(playhead, {
       frame: this.animation.totalFrames - 1,
@@ -75,13 +92,12 @@ export class AnimationComponent implements AfterViewInit, OnDestroy {
       scrollTrigger: {
         id: 'lottieTrigger',
         trigger: this.scrollOptions?.trigger || this.lottieContainer.nativeElement,
-        start: this.scrollOptions?.start || "top center",
-        end: this.scrollOptions?.end || "bottom center",
+        start: this.scrollOptions?.start || 'top center',
+        end: this.scrollOptions?.end || 'bottom center',
         scrub: this.scrollOptions?.scrub ?? 1,
         markers: this.scrollOptions?.markers || false,
       },
       onUpdate: () => {
-        // Usamos requestAnimationFrame implícito de GSAP para suavidad total
         this.animation?.goToAndStop(playhead.frame, true);
       }
     });
@@ -89,18 +105,22 @@ export class AnimationComponent implements AfterViewInit, OnDestroy {
 
   toggleAnimation(): void {
     if (this.clickeable && this.animation) {
-      this.ngZone.run(() => { // Aquí sí volvemos a Angular si necesitas disparar eventos
+      this.ngZone.run(() => {
         this.animation?.isPaused ? this.animation.play() : this.animation!.pause();
       });
     }
   }
 
   ngOnDestroy(): void {
+    if (!this.isBrowser) return;
+
     this.ngZone.runOutsideAngular(() => {
       if (this.animation) this.animation.destroy();
       if (this.scrollTween) {
         this.scrollTween.kill();
-        this.scrollTween.scrollTrigger?.kill();
+        if (this.scrollTween.scrollTrigger) {
+          this.scrollTween.scrollTrigger.kill();
+        }
       }
     });
   }

@@ -1,3 +1,7 @@
+@let admin = isAdmin$ | async;
+@if(!admin) {
+  <app-wa-button></app-wa-button>
+}
 <footer class="c-footer">
   
   <div class="c-footer--wave">
@@ -9,7 +13,6 @@
   </div>
   
   <div class="c-footer--container">
-    @let admin = isAdmin$ | async;
     @if (!admin) {
       @if (isHome$ | async) {
         <div class="c-footer--cta">

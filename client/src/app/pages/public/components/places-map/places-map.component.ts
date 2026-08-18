@@ -21,6 +21,7 @@ import { normalizeString } from 'src/app/core/functions/search';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { CartService } from '@services/cart.service';
 import { Router } from '@angular/router';
+import { LoaderComponent } from '@components/loader/loader.component';
 
 
 @Component({
@@ -38,6 +39,7 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     AppleEmojiPipe,
     NgTemplateOutlet,
+    LoaderComponent
   ],
   templateUrl: './places-map.component.html',
   styleUrl: './places-map.component.scss',
@@ -48,6 +50,8 @@ export class PlacesMapComponent implements OnInit {
   protected readonly mapService = inject(MapsService)
 
   protected readonly fb = inject(FormBuilder)
+
+  protected readonly placesService = inject(PlacesService)
 
   public activeTab = signal<'list' | 'map'>('list');
 
@@ -70,11 +74,23 @@ export class PlacesMapComponent implements OnInit {
     tags: [['']],
   })
 
+  public places$ = this.placesService.getPlacesCached(PlacesTypes.PUBLIC)
+    .pipe(tap(resp => {
+      this.placesList = resp
+      this.filteredList = this.placesList
+      if (resp.length) {
+        this.options = this.placesList.map(place => place.name)
+        const rawTags = this.placesList.flatMap(place => place.tags);
+        this.tagList = Array.from(new Set(rawTags)) as string[];
+        this.setMarkers()
+        this.filterCosts()
+      }
+    })
+    )
+
   public readonly recomendedTag = RECOMENDED_TAG
 
   public highlightedIds: string[] = []
-
-  private readonly placesService = inject(PlacesService)
 
   private readonly cartService = inject(CartService)
 
@@ -88,7 +104,6 @@ export class PlacesMapComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
-    this.getPlaces()
     this.setFilters()
     if (isPlatformBrowser(this.platformId)) {
       if (typeof google !== 'undefined' && google.maps) {
@@ -110,7 +125,7 @@ export class PlacesMapComponent implements OnInit {
     const place = this.placesList.find(place => place._id === id)
     const dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
-      width: '750px',
+      width: '1200px',
       maxWidth: '90vw',
       height: 'auto',
     });
@@ -123,22 +138,6 @@ export class PlacesMapComponent implements OnInit {
         this.router.navigate(['/picnics'])
       }
     });
-  }
-
-
-  private getPlaces(): void {
-    this.placesService.getPlacesCached(PlacesTypes.PUBLIC)
-      .subscribe(resp => {
-        this.placesList = resp
-        this.filteredList = this.placesList
-        if (resp.length) {
-          this.options = this.placesList.map(place => place.name)
-          const rawTags = this.placesList.flatMap(place => place.tags);
-          this.tagList = Array.from(new Set(rawTags)) as string[];
-          this.setMarkers()
-          this.filterCosts()
-        }
-      })
   }
 
   private setMarkers(): void {

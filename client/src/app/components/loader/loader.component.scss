@@ -1,0 +1,43 @@
+@use "utils" as u;
+
+.c-loader {
+  @include u.flex(column, center, center, 1rem);
+  padding: 1rem;
+
+  &--fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+  }
+
+  &__animation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Control de tamaños de la animación */
+  &--small &__animation {
+    width: 60px;
+    height: 60px;
+  }
+
+  &--medium &__animation {
+    width: 120px;
+    height: 120px;
+  }
+
+  &--large &__animation {
+    width: 200px;
+    height: 200px;
+  }
+
+  &__text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+}

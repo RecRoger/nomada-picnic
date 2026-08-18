@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { LoaderComponent } from '@components/loader/loader.component';
 import { PackageDialogComponent } from '@components/package-dialog/package-dialog.component';
 import { RecommendedDialogComponent } from '@components/recommended-dialog copy/recommended-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,7 +15,14 @@ import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-picnic-packages',
-  imports: [AsyncPipe, TranslateModule, MatIconModule, CurrencyPipe, ApiImageUrlPipe],
+  imports: [
+    AsyncPipe,
+    TranslateModule,
+    MatIconModule,
+    CurrencyPipe,
+    ApiImageUrlPipe,
+    LoaderComponent
+  ],
   templateUrl: './picnic-packages.component.html',
   styleUrl: './picnic-packages.component.scss'
 })

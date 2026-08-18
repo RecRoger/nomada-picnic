@@ -1,13 +1,14 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { WaButtonComponent } from '@components/wa-button/wa-button.component';
 import { NavLink } from '@models/nav-link';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
-  imports: [TranslateModule, RouterLink, AsyncPipe],
+  imports: [TranslateModule, RouterLink, AsyncPipe, WaButtonComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })

@@ -4,16 +4,6 @@ import { PackagesService } from '@services/packages.service';
 import { CostsTypes } from '@shared/enums';
 import { IBookingCart, ICartAdditional, ICost, IPicnicBooking } from '@shared/interfaces';
 
-
-// TODO - modificar interfaz de carrito
-export interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  icon?: string;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -160,5 +150,6 @@ export class CartService {
 
   public closeCart(): void {
     this.isOpen.set(false);
+    this.showDetails.set(false);
   }
 }

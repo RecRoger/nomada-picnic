@@ -51,7 +51,7 @@ export class PicnicPackagesComponent {
           event,
           minGuests: group.minGuests,
           maxGuests: group.maxGuests,
-          basePrice: pkg!.minPrice,
+          basePrice: group.price,
         })
 
         const dialogRef2 = this.dialog.open(RecommendedDialogComponent, {

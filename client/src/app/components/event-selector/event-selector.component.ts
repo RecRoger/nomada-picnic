@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
@@ -14,13 +14,14 @@ import { Observable } from 'rxjs';
   styleUrl: './event-selector.component.scss'
 })
 export class EventSelectorComponent implements OnInit {
+  @Input() selectedEvent?: IPicnicEvent
+
   @Output() selectEvent: EventEmitter<IPicnicEvent> = new EventEmitter()
 
   protected readonly eventsService = inject(EventsService)
 
   public pricesGroups$?: Observable<IPicnicEvent[]>
 
-  public selectedEvent?: IPicnicEvent
 
   ngOnInit(): void {
     this.pricesGroups$ = this.eventsService.getEventsCached()

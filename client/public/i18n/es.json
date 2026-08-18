@@ -32,9 +32,11 @@
       "MAX_CHARACTERS_FIELD": "El campo puede tener hasta {{max}} caracteres"
     },
     "DATE": "Fecha",
+    "TIME": "Horario",
+    "PLACE": "Lugar",
+    "CELEBRATION": "Celebración",
     "PRICE_FROM": "Desde",
     "AMOUNT": "Cantidad",
-    "PLACE": "Lugar",
     "ADDRESS": "Direccion",
     "GUESTS_NUMBER": "Número de invitados",
     "PEOPLE": "personas",
@@ -46,6 +48,8 @@
     "TOTAL_COST": "Costo Total",
     "NEXT": "Siguiente",
     "PREVIOUS": "Anterior",
+    "AVAILABLE": "Disponible",
+    "SELECTED": "Elegido",
     "FINALIZE": "Finalizar",
     "GENERIC_ERROR": "Ha ocurrido un error",
     "LAST_UPDATE": "Última actualización:",
@@ -227,9 +231,39 @@
       "ADD_TO_CONTINUE": "Agregá un picnic para continuar.",
       "DETAILS": {
         "MAIN_TITLE": "Detalles de tu reserva",
+        "BACK_BTN": "Volver al detalle",
         "LABEL": "Disponibilidad",
         "TITLE": "Revisá y editá los detalles",
-        "SUBTITLE": "Tocá el lápiz de cada dato para editarlo por separado."
+        "SUBTITLE": "Tocá el lápiz de cada dato para editarlo por separado.",
+        "CONFIRM_BTN": "Confirmar disponibilidad",
+        "DATE": {
+          "LABEL": "Fecha",
+          "TITLE": "Elegí la fecha",
+          "SUBTITLE": "Consultá la disponibilidad en tiempo real y elegí el día que mejor se adapte a tu celebración."
+        },
+        "TIME": {
+          "LABEL": "Horario",
+          "TITLE": "Elegí el horario",
+          "SUBTITLE": "Estos son los turnos disponibles para el {{eventDate}}.",
+          "LABELS": {
+            "MORNING": "Mañana",
+            "NOON": "Mediodia",
+            "EVENING": "Tarde",
+            "LATE_EVENING": "Tarde noche",
+            "DOWN": "Atardecer"
+          }
+        },
+        "PLACE": {
+          "LABEL": "Dónde",
+          "TITLE": "Elegí el lugar",
+          "SUBTITLE": "Seleccioná uno de nuestros espacios recomendados en Buenos Aires para vivir tu experiencia Nómada.",
+          "BUTTON": "Ver información de los lugares"
+        },
+        "EVENT": {
+          "LABEL": "La ocasión",
+          "TITLE": "¿Qué están celebrando?",
+          "SUBTITLE": "Contanos cuál es la ocasión para preparar cada detalle pensando en tu celebración."
+        }
       },
       "BUTTONS": {
         "PICNICS": "Ver Picnics",

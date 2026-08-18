@@ -1,55 +1,154 @@
+@let booking = cartService.booking() || {};
+@let package = booking.package;
+@let event = booking.event;
+@let place = booking.place;
+
 <div class="c-cart-detail">
 
   <div class="c-cart-detail--header">
-    <h3 class="c-cart-detail--header-title">{{'PUBLIC.CART.DETAILS.MAIN_TITLE' | translate}}</h3>
+
+    @if (currentPage() === detailPages[0]) {
+      <h3 class="c-cart-detail--header-title">
+        {{'PUBLIC.CART.DETAILS.MAIN_TITLE' | translate}}
+      </h3>
+    } @else {
+      <button type="button" class="c-cart-detail--header-back-button"
+        (click)="setPage(0)">
+        <mat-icon>arrow_back</mat-icon>
+        {{'PUBLIC.CART.DETAILS.BACK_BTN' | translate}}
+      </button>
+    }
     <button mat-icon-button (click)="cartService.toggleDetails()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
   <div class="c-cart-detail--body">
-    <span class="c-cart-detail--body-label">{{'PUBLIC.CART.DETAILS.LABEL' | translate}}</span>
-    <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.TITLE' | translate}}</h2>
-    <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.SUBTITLE' | translate}}</p>
 
-    <!-- TARJETAS DE DATOS DE LA RESERVA -->
-    <div class="details-cards">
-      <div class="detail-card">
-        <div class="detail-info">
-          <span class="detail-label">FECHA</span>
-          <strong class="detail-value">Vie 7 de agosto 2026</strong>
-        </div>
-        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
-      </div>
+    @switch (currentPage()) {
+      @case (detailPages[1]) {
+        <section class="c-cart-detail--section">
+          <span class="c-cart-detail--body-label">{{'PUBLIC.CART.DETAILS.DATE.LABEL' | translate}}</span>
+          <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.DATE.TITLE' | translate}}</h2>
+          <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.DATE.SUBTITLE' | translate}}</p>
+          <div class="c-cart-detail--body-calendar">
+            <mat-calendar [minDate]="minDate" [maxDate]="maxDate" [selected]="booking.eventDate" (selectedChange)="selectDate($event)"></mat-calendar>
+          </div>
+        </section>
+      }
+      @case (detailPages[2]) {
+        <section class="c-cart-detail--section">
+          <span class="c-cart-detail--body-label">{{'PUBLIC.CART.DETAILS.TIME.LABEL' | translate}}</span>
+          <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.TIME.TITLE' | translate}}</h2>
+          <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.TIME.SUBTITLE' | translate:({
+            eventDate: ((booking.eventDate || minDate)| date:'EEE d \'de\' MMMM yyyy':'':'es')
+          })}}</p>
+          <div class="details-cards">
+            @for (availableTime of availableTimes; track $index) {
+              <div class="detail-card time-card" [class.selected]="booking.eventTime === availableTime.time" (click)="selectTime(availableTime.time)">
+                <div class="detail-info">
+                  <div class="available-time">{{availableTime.time}}</div>
+                  <div class="time-label">{{ 'PUBLIC.CART.DETAILS.TIME.LABELS.'+availableTime.label | translate }}</div>
+                </div>
+                <div class="time-pill">
+                  {{(booking.eventTime === availableTime.time ? 'COMMON.SELECTED': 'COMMON.AVAILABLE') | translate}}
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      }
+      @case (detailPages[3]) {
+        <section class="c-cart-detail--section">
+          <span class="c-cart-detail--body-label">{{'PUBLIC.CART.DETAILS.PLACE.LABEL' | translate}}</span>
+          <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.PLACE.TITLE' | translate}}</h2>
+          <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.PLACE.SUBTITLE' | translate}}</p>
+          
+          @if (places$ | async; as places) {
+            <div class="c-cart-detail--place-selector">
+              <!-- Campo principal visible -->
+              <button type="button" class="c-cart-detail--place-selector-input" (click)="toggleDropdown()">
+                <span>{{ booking.place?.name || '--'}}</span>
+                <span class="arrow" [class.open]="placeSelectOpen">❯</span>
+              </button>
+              
+              @if(placeSelectOpen) {
+                <div class="c-cart-detail--place-selector-dropdown">
+                  @for (place of places; track $index) {
+                    <div 
+                      class="select-option" 
+                      [class.selected]="place === booking.place"
+                      (click)="seleccionar(place)">
+                      {{ place.name }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+            <a class="c-cart-detail--place-selector-button" routerLink="/places" (click)="cartService.closeCart()">{{'PUBLIC.CART.DETAILS.PLACE.BUTTON' | translate}}</a>
+          }
+        </section>
+      }
+      @case (detailPages[4]) {
+        <section class="c-cart-detail--section">
+          <span class="c-cart-detail--body-label">{{'PUBLIC.CART.DETAILS.EVENT.LABEL' | translate}}</span>
+          <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.EVENT.TITLE' | translate}}</h2>
+          <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.EVENT.SUBTITLE' | translate}}</p>
 
-      <div class="detail-card">
-        <div class="detail-info">
-          <span class="detail-label">HORARIO</span>
-          <strong class="detail-value">15:00</strong>
-        </div>
-        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
-      </div>
+          <app-event-selector [selectedEvent]="booking.event" (selectEvent)="selectEvent($event)"></app-event-selector>
+        </section>
+      }
+      @default {
+        <section class="c-cart-detail--section" >
+          <span class="c-cart-detail--body-label">{{'PUBLIC.CART.DETAILS.LABEL' | translate}}</span>
+          <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.TITLE' | translate}}</h2>
+          <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.SUBTITLE' | translate}}</p>
+          <div class="details-cards" >
+            <div class="detail-card" (click)="setPage(1)">
+              <div class="detail-info">
+                <span class="detail-label">{{'COMMON.DATE' | translate}}</span>
+                <strong class="detail-value">{{ (booking?.eventDate | date:'EEE d \'de\' MMMM yyyy':'':'es') || '--' }}</strong>
+              </div>
+              <button mat-icon-button class="edit-btn" ><mat-icon>edit</mat-icon></button>
+            </div>
+      
+            <div class="detail-card" (click)="setPage(2)">
+              <div class="detail-info">
+                <span class="detail-label">{{'COMMON.TIME' | translate}}</span>
+                <strong class="detail-value">{{ booking?.eventTime || '--'}}</strong>
+              </div>
+              <button mat-icon-button class="edit-btn" ><mat-icon>edit</mat-icon></button>
+            </div>
+      
+            <div class="detail-card" (click)="setPage(3)">
+              <div class="detail-info">
+                <span class="detail-label">{{'COMMON.PLACE' | translate}}</span>
+                <strong class="detail-value">{{ place?.name || '--'}}</strong>
+              </div>
+              <button mat-icon-button class="edit-btn" ><mat-icon>edit</mat-icon></button>
+            </div>
+      
+            <div class="detail-card" (click)="setPage(4)">
+              <div class="detail-info">
+                <span class="detail-label">{{'COMMON.CELEBRATION' | translate}}</span>
+                <strong class="detail-value">{{ event?.name || '--' }}</strong>
+              </div>
+              <button mat-icon-button class="edit-btn" ><mat-icon>edit</mat-icon></button>
+            </div>
+          </div>
+        </section>
+      }
+    }
 
-      <div class="detail-card">
-        <div class="detail-info">
-          <span class="detail-label">LUGAR</span>
-          <strong class="detail-value">Lago de Regatas</strong>
-        </div>
-        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
-      </div>
 
-      <div class="detail-card">
-        <div class="detail-info">
-          <span class="detail-label">CELEBRACIÓN</span>
-          <strong class="detail-value">Romántico</strong>
-        </div>
-        <button mat-icon-button class="edit-btn"><mat-icon>edit</mat-icon></button>
-      </div>
-    </div>
   </div>
 
   <div class="c-cart-detail--footer">
     <span class="c-cart-detail--footer-text">Vie 7 de agosto 2026 · 15:00 · Lago de Regatas · Romántico</span>
-    <button class="c-cart-detail--footer-button">Confirmar disponibilidad</button>
+    @if (currentPage() === detailPages[0]) {
+      <button class="c-cart-detail--footer-button" (click)="cartService.toggleDetails()">{{'PUBLIC.CART.DETAILS.CONFIRM_BTN' | translate}}</button>
+    } @else {
+      <button class="c-cart-detail--footer-button" (click)="setPage(0)">{{'COMMON.SAVE' | translate}}</button>
+    }
   </div>
 </div>

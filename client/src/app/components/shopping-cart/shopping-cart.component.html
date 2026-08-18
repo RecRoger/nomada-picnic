@@ -55,7 +55,6 @@
                   {{'COMMON.PEOPLE' | translate}} · {{ event?.name }}
                 </p>
               </div>
-              
               <span class="package-price">
                 {{ booking.basePrice | currency:'US$ ':'code':'1.0-0' }}
               </span>
@@ -64,25 +63,21 @@
             @if (!cartService.isIncomplete()) {
               <div class="c-cart-booking--details">
                 <div class="detail-row">
-                  <span class="detail-label">FECHA</span>
+                  <span class="detail-label">{{'COMMON.DATE' | translate}}</span>
                   <span class="detail-value">{{ (booking?.eventDate | date:'EEE d \'de\' MMMM yyyy':'':'es') || '--' }}</span>
                 </div>
-  
                 <div class="detail-row">
-                  <span class="detail-label">HORA</span>
+                  <span class="detail-label">{{'COMMON.TIME' | translate}}</span>
                   <span class="detail-value">{{ booking?.eventTime || '--'}}</span>
                 </div>
-  
                 <div class="detail-row">
-                  <span class="detail-label">LUGAR</span>
+                  <span class="detail-label">{{'COMMON.PLACE' | translate}}</span>
                   <span class="detail-value">{{ place?.name || '--'}}</span>
                 </div>
-  
                 <div class="detail-row">
-                  <span class="detail-label">CELEBRACIÓN</span>
+                  <span class="detail-label">{{'COMMON.CELEBRATION' | translate}}</span>
                   <span class="detail-value">{{ event?.name }}</span>
                 </div>
-  
                 <div class="details-actions">
                   <button type="button" class="btn-link" (click)="cartService.toggleDetails()">
                     {{'COMMON.MODIFIED' | translate}}
@@ -156,6 +151,7 @@
           </span>
         </div>
   
+        <!-- TODO - REVERTIR IF -->
         @if (cartService.booking()?.package && cartService.isIncomplete()) {
           <button
             class="c-shopping-cart--footer-button complete-book"
@@ -166,7 +162,7 @@
 
         <button
           class="c-shopping-cart--footer-button checkin"
-          [disabled]="!cartService.isIncomplete()">
+          [disabled]="cartService.isIncomplete()" (click)="goToCheckout()">
           {{'PUBLIC.CART.BUTTONS.CHECKIN'|translate}}
         </button>
   

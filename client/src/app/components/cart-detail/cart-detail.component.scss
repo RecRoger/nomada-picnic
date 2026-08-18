@@ -18,6 +18,13 @@
       font-size: 1rem;
       margin: 0;
     }
+
+    &-back-button {
+      @include u.custom-button(var(--color-brand-blue), transparent);
+      @include u.flex(row, flex-start, center, 0.5rem);
+      font-weight: 700;
+      padding: 0;
+    }
   }
 
   &--footer {
@@ -63,14 +70,74 @@
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
     }
+
+    &-calendar {
+      background-color: var(--color-white);
+      border-radius: var(--radius-card-sm);
+      ::ng-deep {
+        .mat-calendar {
+          font-family: inherit;
+        }
+        /* Ocultar el botón header largo y personalizar navegación */
+        .mat-calendar-header {
+          padding: 0 0 1rem 0;
+        }
+        /* Días de la semana (LUN, MAR...) */
+        .mat-calendar-table-header th {
+          color: var(--color-text-muted);
+          font-size: 0.75rem;
+          font-weight: 700;
+          padding-bottom: 0.5rem;
+        }
+        /* Celda base del día */
+        .mat-calendar-body-cell-content {
+          border-radius: var(--radius-card-sm) !important;
+          font-weight: 700;
+          font-size: 0.9rem;
+          color: var(--color-text-dark);
+          background-color: var(--color-bg-softcream);
+          border: 1px solid transparent;
+        }
+        /* Día seleccionado */
+        .mat-calendar-body-selected {
+          background-color: var(
+            --color-brand-blue
+          ) !important; // Azul principal
+          color: var(--color-white) !important;
+        }
+        /* Días deshabilitados / Sin disponibilidad */
+        .mat-calendar-body-disabled > .mat-calendar-body-cell-content {
+          background-color: var(--color-white) !important;
+          border: 1px solid var(--color-outline) !important;
+          color: #d1d1d1 !important;
+        }
+        /* Eliminar el círculo de hover predeterminado de Material */
+        .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover
+          .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+          background-color: var(--color-bg-cream);
+        }
+        /* Ocultar indicador de día actual si no quieres un borde azul */
+        .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+          border-color: transparent !important;
+        }
+        /* Deshabilita el cursor de botón en el encabezado del mes/año */
+        .mat-calendar-period-button {
+          pointer-events: none;
+        }
+        .mat-calendar-arrow {
+          display: none;
+        }
+      }
+    }
   }
 
   .details-cards {
     @include u.flex(column, flex-start, stretch, 0.75rem);
 
     .detail-card {
-      background: #ffffff;
+      background: var(--color-white);
       border-radius: 12px;
+      border: 2px solid var(--color-outline);
       padding: 0.85rem 1.25rem;
       @include u.flex(row, space-between, center, 1rem);
 
@@ -89,6 +156,104 @@
         color: #3b46c4;
         background-color: #f0f2ff;
       }
+
+      &.time-card {
+        cursor: pointer;
+      }
+      .available-time {
+        font-family: var(--font-money);
+        font-weight: 800;
+        margin-bottom: 0.25rem;
+      }
+      .time-label {
+        font-size: var(--font-small);
+        color: var(--color-text-muted);
+      }
+      .time-pill {
+        @include u.pill(var(--color-brand-blue), var(--color-brand-blue50));
+        font-size: var(--font-small);
+      }
+
+      &.selected {
+        border-color: var(--color-brand-blue);
+        background-color: var(--color-brand-blue50);
+        .available-time {
+          color: var(--color-brand-blue);
+        }
+        .time-pill {
+          @include u.pill(var(--color-white), var(--color-brand-blue));
+          font-size: var(--font-small);
+        }
+      }
+    }
+  }
+
+  &--place-selector {
+    position: relative;
+    width: 100%;
+
+    &-input {
+      @include u.flex(row, space-between, center);
+      width: 100%;
+      padding: 14px 20px;
+      background: var(--color-white);
+      border: 2px solid var(--color-brand-blue);
+      border-radius: var(--radius-card-sm);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      cursor: pointer;
+      .arrow {
+        font-size: 12px;
+        transform: rotate(90deg);
+        transition: transform 0.2s ease;
+
+        &.open {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+    &-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 100%;
+      max-height: 260px;
+      background: var(--color-white);
+      border-radius: var(--radius-card-sm);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      padding: 8px;
+      overflow-y: auto;
+      z-index: 100;
+      box-sizing: border-box;
+
+      /* Opciones individuales */
+      .select-option {
+        padding: 12px 16px;
+        border-radius: var(--radius-card-sm);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--color-text-dark);
+        transition: background 0.15s ease;
+
+        &:hover {
+          background-color: var(--color-bg-cream);
+        }
+
+        /* Estado seleccionado igual al de tu imagen */
+        &.selected {
+          background-color: var(--color-brand-blue50);
+          color: var(--color-brand-blue);
+        }
+      }
+    }
+
+    &-button {
+      @include u.custom-button(var(--color-white), var(--color-brand-blue));
+      // width: 100%;
+      font-weight: 500;
+      margin: 2rem 0;
     }
   }
 
@@ -98,9 +263,7 @@
       color: var(--color-text-muted);
     }
     .confirm-btn {
-      background-color: #ff5722;
-      color: #fff;
-      border-radius: 20px;
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
     }
   }
 }

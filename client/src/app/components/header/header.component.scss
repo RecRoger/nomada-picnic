@@ -28,13 +28,15 @@
       }
       @include u.style-starting-from(desktop) {
         .c-header--logo {
-          height: 120px;
+          height: 6rem;
+          width: 180px;
         }
       }
       @include u.style-up-to(widescreen) {
         padding: 80px 50px 0;
-        .c-header--logo img {
+        .c-header--logo {
           height: 5rem;
+          width: 150px;
         }
       }
       @include u.style-up-to(mobile) {
@@ -50,6 +52,7 @@
   &--logo {
     display: flex;
     height: 60px;
+    width: 110px;
     text-decoration: none;
     transition: all 100ms ease-out;
     cursor: pointer;

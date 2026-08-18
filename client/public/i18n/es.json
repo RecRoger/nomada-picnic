@@ -228,6 +228,8 @@
       "TITLE": "Tu carrito",
       "CLOSE": "Cerrar carrito",
       "CART_EMPTY": "Tu carrito aún esta vacio",
+      "ADDITIONALS_TEXT": "¿Te gustaría personalizar tu picnic?",
+      "ADDITIONALS_BUTTON": "Ver adicionales",
       "NO_PICNIC": "Selecciona un picnic para continuar",
       "ADD_TO_CONTINUE": "Agregá un picnic para continuar.",
       "DETAILS": {

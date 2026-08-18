@@ -27,8 +27,8 @@
         display: none;
       }
       @include u.style-starting-from(desktop) {
-        .c-header--logo img {
-          height: 6rem;
+        .c-header--logo {
+          height: 120px;
         }
       }
       @include u.style-up-to(widescreen) {
@@ -49,11 +49,10 @@
 
   &--logo {
     display: flex;
-    img {
-      height: 54px;
-      margin: auto;
-      transition: all 100ms ease-out;
-    }
+    height: 60px;
+    text-decoration: none;
+    transition: all 100ms ease-out;
+    cursor: pointer;
   }
 
   &--nav {

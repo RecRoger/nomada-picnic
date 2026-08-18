@@ -4,38 +4,42 @@
     <h2 class="c-recommended-dialog--title">{{'PUBLIC.PACKAGES.EVENTS.RECOMMENDED.TITLE' | translate}}</h2>
     <p class="c-recommended-dialog--subtitle">{{'PUBLIC.PACKAGES.EVENTS.RECOMMENDED.SUBTITLE' | translate}}</p>  
   </div>
-  @if (recommendedList.length) {
-    <div class="c-recommended-dialog--list">
-      @for (additional of recommendedList; track $index) {
-
-        <article class="product-card">
-          <div class="product-card__header">
-            @if (additional.images?.length) {
-              <img [src]="additional.images[0] | apiImageUrl" [alt]="additional.name" class="product-card__image" />
-            }
-          </div>
-          <div class="product-card__body">
-            <h3 class="product-card__title">{{ additional.name }}</h3>
-            <div class="product-card__price">
-              {{ additional.finalPrice | currency: 'US$ ':'code':'1.0-2' }}
-            </div>
-            <button type="button"
-              class="product-card__add"
-              [class.added]="addedCost.includes(additional._id!)"
-              (click)="addAdditional(additional)">
-              @if(!addedCost.includes(additional._id!)) {
-                {{'COMMON.ADD' |translate}}
-              } @else {
-                <mat-icon>check</mat-icon>
-                {{'COMMON.ADDED' |translate}}
+  @if(rocommended$ | async) {
+    @if (recommendedList.length) {
+      <div class="c-recommended-dialog--list">
+        @for (additional of recommendedList; track $index) {
+  
+          <article class="product-card">
+            <div class="product-card__header">
+              @if (additional.images?.length) {
+                <img [src]="additional.images[0] | apiImageUrl" [alt]="additional.name" class="product-card__image" />
               }
-            </button>
-          </div>
-        </article>
-
-
-      }
-    </div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__title">{{ additional.name }}</h3>
+              <div class="product-card__price">
+                {{ additional.finalPrice | currency: 'US$ ':'code':'1.0-2' }}
+              </div>
+              <button type="button"
+                class="product-card__add"
+                [class.added]="addedCost.includes(additional._id!)"
+                (click)="addAdditional(additional)">
+                @if(!addedCost.includes(additional._id!)) {
+                  {{'COMMON.ADD' |translate}}
+                } @else {
+                  <mat-icon>check</mat-icon>
+                  {{'COMMON.ADDED' |translate}}
+                }
+              </button>
+            </div>
+          </article>
+  
+  
+        }
+      </div>
+    }
+  } @else {
+    <app-loader size="large"></app-loader>
   }
 
   <div class="c-recommended-dialog--actions">

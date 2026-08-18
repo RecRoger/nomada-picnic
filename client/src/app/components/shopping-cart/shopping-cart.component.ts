@@ -58,6 +58,11 @@ export class ShoppingCartComponent {
     this.cartService.removeAdditional(additional.cost._id!);
   }
 
+  public checkAdditionals(): void {
+    this.router.navigate(['/additionals'])
+    this.cartService.closeCart()
+  }
+
   public goToCheckout(): void {
     // TODO - logica saltar al checkout
     const booking = this.cartService.booking()

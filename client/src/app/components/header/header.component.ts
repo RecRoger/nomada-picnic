@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 import { filter, map, Observable } from 'rxjs';
 import { CartService } from '@services/cart.service';
+import { AnimationComponent } from '@components/animation/animation.component';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
     MatIconModule,
     AsyncPipe,
     NgClass,
+    AnimationComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

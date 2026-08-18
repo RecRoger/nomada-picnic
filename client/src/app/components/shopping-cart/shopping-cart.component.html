@@ -92,7 +92,15 @@
               </button>
             </div>
           </div>
-  
+          
+          @if(!cartService.additionals().length) {
+            <p class="c-shopping-cart--additionals-text">
+              {{'PUBLIC.CART.ADDITIONALS_TEXT' | translate}}
+            </p>
+            <button class="c-shopping-cart--additionals-button" (click)="checkAdditionals()">
+              {{'PUBLIC.CART.ADDITIONALS_BUTTON' | translate}}
+            </button>
+          }
           
         }
 

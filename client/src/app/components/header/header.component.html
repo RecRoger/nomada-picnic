@@ -27,7 +27,11 @@
 
   <div class="c-header--content" [ngClass]="{'is-big':isHome && !openMenu && !isScrolled, 'is-open': openMenu}">
     <a routerLink="/" class="c-header--logo" (click)="openMenu = false">
-      <img [src]="'images/logos/'+ (!openMenu ? 'NOMADA_LOGO_C_BLANCO.svg' : 'NOMADA_LOGO_C_AZUL.svg')" alt="Logo de la Aplicación">
+      <app-animation
+        [src]="!openMenu ? 'animations/nomada_logo_still_crema.json' : 'animations/nomada_logo_still_azul.json'"
+        [autoplay]="true"
+        [loop]="true">
+      </app-animation>
     </a>
 
     <nav class="c-header--nav hide-tablet hide-mobile">

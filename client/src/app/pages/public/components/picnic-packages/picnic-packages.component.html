@@ -50,6 +50,8 @@
           <p class="empty-state">{{'PUBLIC.PACKAGES.NO_PACKAGES' | translate}}</p>
         }
       </div>
+    } @else {
+      <app-loader size="large"></app-loader>
     }
   </main>
 

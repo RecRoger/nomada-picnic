@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { LoaderComponent } from '@components/loader/loader.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { EventsService } from '@services/events.service';
@@ -9,7 +10,13 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-selector',
-  imports: [AsyncPipe, TranslateModule, MatIconModule, AppleEmojiPipe],
+  imports: [
+    AsyncPipe,
+    TranslateModule,
+    MatIconModule,
+    AppleEmojiPipe,
+    LoaderComponent,
+  ],
   templateUrl: './event-selector.component.html',
   styleUrl: './event-selector.component.scss'
 })

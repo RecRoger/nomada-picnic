@@ -108,7 +108,8 @@
       "MIN_GUESTS": "Minimo de invitados",
       "MAX_GUESTS": "Maximo de invitados",
       "PRODUCTION_COSTS": "Costos de produccion",
-      "BUTTON": "Guardar Paquete"
+      "BUTTON": "Guardar Paquete",
+      "EXTRA_TRANSPORT": "Extra de transporte"
     }
   },
   "COSTS": {

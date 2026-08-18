@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { RouterLink } from "@angular/router";
 import { HeroComponent } from '@components/hero/hero.component';
 import { FeaturesCardsComponent } from '@components/features-cards/features-cards.component';
 import { PicnicsBannerComponent } from '@components/picnics-banner/picnics-banner.component';

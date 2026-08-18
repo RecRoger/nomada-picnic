@@ -14,6 +14,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { normalizeString } from 'src/app/core/functions/search';
 import { CartService } from '@services/cart.service';
+import { LoaderComponent } from '@components/loader/loader.component';
 
 @Component({
   selector: 'app-additionals',
@@ -25,7 +26,8 @@ import { CartService } from '@services/cart.service';
     CurrencyPipe,
     ApiImageUrlPipe,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoaderComponent,
   ],
   templateUrl: './additionals.component.html',
   styleUrl: './additionals.component.scss'

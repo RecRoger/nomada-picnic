@@ -87,11 +87,13 @@
             </div>
           </div>
         </article>
+      } @empty {
+        <p class="c-additionals--no-list">{{'PUBLIC.ADDITIONALS.NO_LIST' | translate}}</p>
       }
 
     </div>
   } @else {
-    <p class="c-additionals--no-list">{{'PUBLIC.ADDITIONALS.NO_LIST' | translate}}</p>
+    <app-loader size="large"></app-loader>
   }
 
 </div>

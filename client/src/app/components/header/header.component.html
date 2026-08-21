@@ -27,11 +27,18 @@
 
   <div class="c-header--content" [ngClass]="{'is-big':isHome && !openMenu && !isScrolled, 'is-open': openMenu}">
     <a routerLink="/" class="c-header--logo" role="img" [attr.aria-label]="'Ir a Inicio - Nomada Picnic'" (click)="openMenu = false">
-      <app-animation
+      
+      @if(!isScrolled || openMenu ) {
+        <app-animation
         [src]="!openMenu ? 'animations/nomada_logo_still_crema.json' : 'animations/nomada_logo_still_azul.json'"
         [autoplay]="true"
         [loop]="true">
       </app-animation>
+    }
+    <img class="logo-img" [class.hidden]="!isScrolled || openMenu"
+      [src]="'images/logos/'+ (!openMenu ? 'NOMADA_LOGO_C_BLANCO.svg' : 'NOMADA_LOGO_C_AZUL.svg')"
+      alt="Logo de la Aplicación">
+
     </a>
 
     <nav class="c-header--nav hide-tablet hide-mobile">

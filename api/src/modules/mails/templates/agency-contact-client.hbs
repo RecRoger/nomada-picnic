@@ -1,0 +1,136 @@
+<html lang='es'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Confirmación de Solicitud</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: #faeee5;
+        margin: 0;
+        padding: 24px 12px;
+        color: #1a1a1a;
+      }
+      .container {
+        max-width: 560px;
+        background-color: #ffffff;
+        border-radius: 20px;
+        padding: 36px;
+        margin: 0 auto;
+        border: 1px solid #ddd3c6;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      }
+      .brand-logo {
+        color: #4b4ceb;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-size: 24px;
+        margin: 0 0 16px 0;
+        color: #1a1a1a;
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #555555;
+        margin: 0 0 18px 0;
+        text-align: left;
+      }
+      .summary-card {
+        background-color: #fff7f0;
+        border-radius: 16px;
+        border-left: 4px solid #ff5a2c;
+        padding: 20px;
+        margin: 24px 0;
+        text-align: left;
+      }
+      .summary-card h3 {
+        font-size: 14px;
+        margin: 0 0 8px 0;
+        color: #1a1a1a;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .summary-card p {
+        font-size: 14px;
+        margin: 0;
+        color: #555555;
+      }
+      .btn-whatsapp {
+        display: inline-block;
+        background-color: #25d366;
+        color: #ffffff !important;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 14px 28px;
+        border-radius: 30px;
+        margin-top: 12px;
+        box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);
+      }
+      .footer {
+        font-size: 12px;
+        color: #8e8e93;
+        margin-top: 36px;
+        border-top: 1px solid #ddd3c6;
+        padding-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='container'>
+      <div class='brand-logo'>NÓMADA PICNIC</div>
+      <h1>¡Recibimos tu solicitud!</h1>
+
+      <p>Hola <strong>{{fullName}}</strong>,</p>
+      <p>Muchas gracias por escribirnos. Recibimos correctamente la información para la propuesta
+        corporativa / agencia de
+        <strong>{{company}}</strong>.</p>
+
+      <div class='summary-card'>
+        <h3>Resumen de tu evento</h3>
+        <p>
+          &bull;
+          <strong>Tipo de evento:</strong>
+          {{eventType}}<br />
+          &bull;
+          <strong>Invitados:</strong>
+          {{guestsRange}}<br />
+          {{#if eventDate}}&bull; <strong>Fecha estimada:</strong> {{eventDate}}<br />{{/if}}
+          &bull;
+          <strong>Ubicación:</strong>
+          {{placeChoice}}
+        </p>
+      </div>
+
+      <p>Nuestro equipo está revisando los detalles requeridos y nos pondremos en contacto contigo
+        dentro de las próximas 24 a 48 horas hábiles para presentar una propuesta a medida.</p>
+
+      <p style='text-align: center; margin-top: 24px; font-weight: 600; color: #1a1a1a;'>¿Necesitas
+        hacer una consulta rápida o ajustar algún dato?</p>
+
+      <!-- Botón directo a WhatsApp -->
+      <a
+        href='https://wa.me/{{whatsappNumber}}?text=Hola!%20Soy%20{{encodedFullName}}%20de%20{{encodedCompany}}%20y%20quisiera%20consultar%20sobre%20mi%20propuesta'
+        class='btn-whatsapp'
+        target='_blank'
+      >
+        Contactar por WhatsApp
+      </a>
+
+      <div class='footer'>
+        Nómada Picnic &bull; Experiencias & Eventos<br />
+        Si no realizaste esta solicitud, puedes ignorar este mensaje.
+      </div>
+    </div>
+  </body>
+</html>

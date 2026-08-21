@@ -1,0 +1,16 @@
+export interface IAgencyContact {
+  fullName: string,
+  company: string,
+  email: string,
+  phone: string,
+  clientType: string,
+  eventType: string,
+  guestsRange: string,
+  eventDate: Date | string,
+  eventTime: string,
+  placeChoice: string,
+  ownPlace: string,
+  services: string[],
+  budget: string,
+  comments: string,
+}    

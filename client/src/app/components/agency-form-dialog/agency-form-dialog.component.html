@@ -1,0 +1,165 @@
+<div class="c-agency-form">
+  <button mat-icon-button mat-dialog-close class="close-btn" type="button" aria-label="Cerrar">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <header class="c-agency-form__header">
+    <span class="c-agency-form__subtitle">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.LABEL' | translate}}</span>
+    <h1 class="c-agency-form__title">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.TITLE' | translate}}</h1>
+    <p class="c-agency-form__description">
+      {{'PUBLIC.PACKAGES.CORPORATIVE.FORM.SUBTITLE' | translate}}
+    </p>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="c-agency-form__body">
+    
+    <!-- SECCIÓN 1: Información de contacto -->
+    <section class="c-agency-form__section">
+      <h3 class="c-agency-form__section-title">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.TITLE' | translate}}</h3>
+      
+      <div class="c-agency-form__grid c-agency-form__grid--2col">
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'COMMON.NAME_LASTNAME' | translate}}</label>
+          <input type="text" formControlName="fullName" class="c-agency-form__input" [placeholder]="'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.NAME_PLACEHOLDER' | translate" />
+        </div>
+
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.ORGANIZATION' | translate}}</label>
+          <input type="text" formControlName="company" class="c-agency-form__input" [placeholder]="'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.ORGANIZATION_PLACEHOLDER' | translate" />
+        </div>
+
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'COMMON.EMAIL' | translate}}</label>
+          <input type="email" formControlName="email" class="c-agency-form__input" [placeholder]="'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.MAIL_PLACEHOLDER' | translate" />
+        </div>
+
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'COMMON.PHONE' | translate}}</label>
+          <input type="tel" formControlName="phone" class="c-agency-form__input" [placeholder]="'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.PHONE_PLACEHOLDER' | translate" />
+        </div>
+      </div>
+
+      <div class="c-agency-form__group">
+        <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.CLIENT_TYPE' | translate}}</label>
+        <div class="c-agency-form__pill-group">
+          @for (type of clientTypes; track type) {
+            <label class="c-agency-form__pill-option">
+              <input type="radio" formControlName="clientType" [value]="type" />
+              <span>{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.INFO.CLIENT_TYPE_'+type | translate}}</span>
+            </label>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: Información del evento -->
+    <section class="c-agency-form__section">
+      <h3 class="c-agency-form__section-title">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.TITLE' | translate}}</h3>
+
+      <div class="c-agency-form__grid c-agency-form__grid--2col">
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.EVENT_TYPE' | translate}}</label>
+          <select formControlName="eventType" class="c-agency-form__select">
+            @for (option of eventTypes; track option) {
+              <option [value]="option">
+                {{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.EVENT_TYPE_'+option | translate}}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.ASSISTANCE' | translate}}</label>
+          <select formControlName="guestsRange" class="c-agency-form__select">
+            @for (range of guestsRanges; track range) {
+              <option [value]="range">{{ range }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.ESTIMATED_DATE' | translate}}</label>
+          <div class="c-agency-form__datepicker-wrapper">
+            <input 
+              matInput 
+              [min]="minDate" [max]="maxDate"
+              [matDatepicker]="picker" 
+              formControlName="eventDate" 
+              class="c-agency-form__input"
+              placeholder="dd/mm/aaaa"
+              (click)="picker.open()" />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+
+        <div class="c-agency-form__group">
+          <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.ESTIMATED_TIME' | translate}}</label>
+          <input type="time" formControlName="eventTime" class="c-agency-form__input" />
+        </div>
+      </div>
+
+      <div class="c-agency-form__group">
+        <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.PLACE' | translate}}</label>
+        <div class="c-agency-form__pill-group">
+          @for (place of placesOptions; track place) {
+            <label class="c-agency-form__pill-option">
+              <input type="radio" formControlName="placeChoice" [value]="place" />
+              <span>{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.PLACE_'+place | translate}}</span>
+            </label>
+          }
+        </div>
+        @if(form.get('placeChoice')!.value === placesOptions[0]) {
+          <div class="c-agency-form__group own-address">
+            <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.PLACE_PARTICULAR_LABEL' | translate}}</label>
+            <input type="text" formControlName="ownPlace" class="c-agency-form__input" [placeholder]="'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.PLACE_PARTICULAR_PLACEHOLDER' | translate" />
+          </div>
+        }
+      </div>
+
+      <div class="c-agency-form__group">
+        <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.SERVICES' | translate}}</label>
+        <div class="c-agency-form__pill-group">
+          @for (service of servicesList; track service) {
+            <button 
+              type="button" 
+              class="c-agency-form__pill-checkbox" 
+              [class.c-agency-form__pill-checkbox--active]="isServiceSelected(service)"
+              (click)="toggleService(service)">
+              <span class="c-agency-form__checkbox-icon">
+                <mat-icon class="icon">check</mat-icon>
+              </span>
+              {{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.SERVICES_'+service | translate}}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="c-agency-form__group">
+        <label class="c-agency-form__label">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.BUDGET' | translate}}</label>
+        <input type="text" formControlName="budget" class="c-agency-form__input" [placeholder]="'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.BUDGET_PLACEHOLDER' | translate" />
+        <span class="c-agency-form__field-hint">{{'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.BUDGET_HINT' | translate}}</span>
+      </div>
+
+      <div class="c-agency-form__group">
+        <label class="c-agency-form__label">{{'COMMON.COMMENTS' | translate}}</label>
+        <textarea 
+          formControlName="comments" 
+          class="c-agency-form__textarea"
+          rows="4" 
+          [placeholder]="'PUBLIC.PACKAGES.CORPORATIVE.FORM.EVENT.COMMENTS_PLACEHOLDER' | translate">
+        </textarea>
+      </div>
+    </section>
+
+    <footer class="c-agency-form__footer">
+      <button 
+        type="submit" 
+        class="c-agency-form__submit-btn" 
+        [disabled]="form.invalid || isSubmitting()">
+        {{ (isSubmitting() ? 'PUBLIC.PACKAGES.CORPORATIVE.FORM.SENDING' : 'PUBLIC.PACKAGES.CORPORATIVE.FORM.BUTTON') | translate }}
+      </button>
+    </footer>
+
+  </form>
+</div>

@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { AgencyFormDialogComponent } from '@components/agency-form-dialog/agency-form-dialog.component';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { PackageDialogComponent } from '@components/package-dialog/package-dialog.component';
 import { RecommendedDialogComponent } from '@components/recommended-dialog copy/recommended-dialog.component';
@@ -82,9 +83,18 @@ export class PicnicPackagesComponent {
   }
 
   public corpoContact() {
-    const message = `¡Hola! Me interesaria tener informacion sobre un los paquetes corporativos`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    const dialogRef = this.dialog.open(AgencyFormDialogComponent, {
+      autoFocus: false,
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+    });
+
+
+
+
+    // const message = `¡Hola! Me interesaria tener informacion sobre un los paquetes corporativos`;
+    // const encodedMessage = encodeURIComponent(message);
+    // const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
+    // window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   }
 }

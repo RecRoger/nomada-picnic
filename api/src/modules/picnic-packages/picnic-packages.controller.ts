@@ -18,13 +18,18 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ParseNumberInterceptor } from 'src/common/interceptors/parse-number.interceptor';
 import { ParseArrayInterceptor } from 'src/common/interceptors/parse-array.interceptor';
 import { IPackagePrice } from '@shared/interfaces/package-prices.interface';
+import { AgencyContactDto } from 'src/common/models/agency-contact.dto';
+import { MailService } from 'src/modules/mails/mail.service';
 
 
 @Controller({ path: 'packages', version: '1' })
 @ApiTags('PicnicPackages')
 @UseInterceptors(ResponseInterceptor)
 export class PicnicPackagesController {
-  constructor(private readonly picnicPackageService: PicnicPackageService) { }
+  constructor(
+    private readonly picnicPackageService: PicnicPackageService,
+    private readonly mailService: MailService
+  ) { }
 
   @Get('')
   @ApiOperation({ summary: 'Obtener la lista completa de paquetes de picnic' })
@@ -147,5 +152,27 @@ export class PicnicPackagesController {
   })
   async delete(@Param('id') id: string): Promise<boolean> {
     return this.picnicPackageService.delete(id);
+  }
+
+  @Post('agencies')
+  @ApiOperation({ summary: 'Envia formularios de agencia' })
+  @ApiBody({ type: AgencyContactDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Correos de angencia enviados',
+    schema: {
+      properties: {
+        status: { type: 'string', example: 'SUCCESS' },
+        message: { type: 'string', example: 'Operación exitosa' },
+        data: {
+          type: 'boolean'
+        },
+      },
+    },
+  })
+  async agencyContact(
+    @Body() contactForm: AgencyContactDto,
+  ): Promise<boolean> {
+    return this.mailService.sendAgencyContactService(contactForm);
   }
 }

@@ -3,5 +3,5 @@ export const environment = {
   production: false,
   bucketUrl: 'https://storage.googleapis.com/nomada-storage-bucket',
   apiUrl: '',
-  appVersion: new Date().getTime(),
+  appVersion: '',
 };

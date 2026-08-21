@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
       provide: TRANSLATE_HTTP_LOADER_CONFIG,
       useValue: {
         prefix: './i18n/',
-        suffix: `.json?v=${environment.appVersion}`,
+        suffix: `.json${environment.appVersion ? '?v=' + environment.appVersion : ''}`,
       },
     },
     provideTranslateService({

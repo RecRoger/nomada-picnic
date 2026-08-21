@@ -56,6 +56,16 @@
     text-decoration: none;
     transition: all 100ms ease-out;
     cursor: pointer;
+
+    .logo-img {
+      height: 50px;
+      margin: auto;
+      transition: all 100ms ease-out;
+
+      &.hidden {
+        display: none;
+      }
+    }
   }
 
   &--nav {

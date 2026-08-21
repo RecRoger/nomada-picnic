@@ -1,5 +1,5 @@
 import { AsyncPipe, isPlatformBrowser, NgClass } from '@angular/common';
-import { AfterViewInit, Component, inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { Component, inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink, RouterModule } from '@angular/router';
 import { NavLink } from '@models/nav-link';
@@ -27,7 +27,7 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements AfterViewInit {
+export class HeaderComponent implements OnInit {
   public openMenu = false
 
   protected readonly router = inject(Router)
@@ -79,7 +79,7 @@ export class HeaderComponent implements AfterViewInit {
 
   private readonly platformId = inject(PLATFORM_ID);
 
-  ngAfterViewInit() {
+  ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.initScrollHeader();
     }

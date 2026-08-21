@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nueva Consulta de Agencia</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background-color: #faeee5; margin: 0; padding: 24px 12px; color: #1a1a1a; }
+    .container { max-width: 620px; background-color: #ffffff; border-radius: 20px; padding: 36px; margin: 0 auto; border: 1px solid #ddd3c6; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .header-badge { background-color: #4b4ceb; color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 6px 12px; border-radius: 12px; display: inline-block; margin-bottom: 12px; }
+    h1 { font-size: 22px; margin: 0 0 24px 0; color: #1a1a1a; }
+    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #4b4ceb; border-bottom: 2px solid #ddd3c6; padding-bottom: 6px; margin-top: 28px; }
+    .data-grid { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    .data-grid td { padding: 8px 0; font-size: 14px; vertical-align: top; }
+    .data-grid .label { font-weight: 600; color: #555555; width: 40%; }
+    .data-grid .value { color: #1a1a1a; font-weight: 500; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .pill { background-color: #fff7f0; border: 1px solid #ddd3c6; color: #4b4ceb; border-radius: 16px; padding: 6px 14px; font-size: 13px; font-weight: 600; display: inline-block; }
+    .comments-box { background-color: #fff7f0; border-radius: 12px; border-left: 4px solid #ff5a2c; padding: 14px 16px; font-size: 14px; color: #1a1a1a; margin-top: 10px; white-space: pre-line; line-height: 1.5; }
+    .footer { font-size: 12px; color: #8e8e93; margin-top: 36px; text-align: center; border-top: 1px solid #ddd3c6; padding-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="header-badge">Nueva Solicitud de Agencia</span>
+    <h1>Contacto Recibido: {{company}}</h1>
+
+    <!-- Datos del Contacto -->
+    <div class="section-title">Información de Contacto</div>
+    <table class="data-grid">
+      <tr><td class="label">Nombre completo:</td><td class="value"><strong>{{fullName}}</strong></td></tr>
+      <tr><td class="label">Empresa / Agencia:</td><td class="value">{{company}}</td></tr>
+      <tr><td class="label">Correo electrónico:</td><td class="value"><a href="mailto:{{email}}" style="color: #4b4ceb; text-decoration: none;">{{email}}</a></td></tr>
+      <tr><td class="label">Teléfono:</td><td class="value">{{phone}}</td></tr>
+      <tr><td class="label">Tipo de cliente:</td><td class="value">{{clientType}}</td></tr>
+    </table>
+
+    <!-- Datos del Evento -->
+    <div class="section-title">Detalles del Evento</div>
+    <table class="data-grid">
+      <tr><td class="label">Tipo de evento:</td><td class="value">{{eventType}}</td></tr>
+      <tr><td class="label">Cantidad de invitados:</td><td class="value">{{guestsRange}}</td></tr>
+      <tr><td class="label">Fecha estimada:</td><td class="value">{{eventDate}}</td></tr>
+      <tr><td class="label">Horario estimado:</td><td class="value">{{#if eventTime}}{{eventTime}} hs{{else}}No especificado{{/if}}</td></tr>
+      <tr><td class="label">Preferencia de lugar:</td><td class="value">{{placeChoice}}</td></tr>
+      {{#if ownPlace}}
+      <tr><td class="label">Lugar particular:</td><td class="value">{{ownPlace}}</td></tr>
+      {{/if}}
+      <tr><td class="label">Presupuesto estimado:</td><td class="value">{{#if budget}}{{budget}}{{else}}No especificado{{/if}}</td></tr>
+    </table>
+
+    <!-- Servicios Solicitados -->
+    {{#if services.length}}
+    <div class="section-title">Servicios Requeridos</div>
+    <div class="pills">
+      {{#each services}}
+        <span class="pill">{{this}}</span>
+      {{/each}}
+    </div>
+    {{/if}}
+
+    <!-- Comentarios -->
+    {{#if comments}}
+    <div class="section-title">Comentarios Adicionales</div>
+    <div class="comments-box">{{comments}}</div>
+    {{/if}}
+
+    <div class="footer">
+      Solicitud procesada automáticamente desde el portal de agencias.
+    </div>
+  </div>
+</body>
+</html>

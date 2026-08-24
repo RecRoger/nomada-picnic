@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 8080;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.setGlobalPrefix('api')
 

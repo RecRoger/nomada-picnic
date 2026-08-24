@@ -5,7 +5,7 @@
       "type": "node",
       "request": "attach",
       "name": "NestJS Debug",
-      "port": 3000,
+      "port": 8080,
       "restart": true,
       "protocol": "inspector",
       "skipFiles": ["<node_internals>/**"]

@@ -2,12 +2,11 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copiamos archivos de dependencias de la raíz
+# Copiamos archivos de dependencias de la raíz y de la API
 COPY package*.json ./
-# Copiamos package de la API
 COPY api/package*.json ./api/
 
-# Instalamos todo
+# Instalamos todas las dependencias
 RUN npm install
 
 # Copiamos el código fuente
@@ -20,18 +19,20 @@ RUN npm run build
 
 # ETAPA 2: Ejecución
 FROM node:20-alpine
-WORKDIR /app
+WORKDIR /app/api
 
-# Traemos el build desde la etapa anterior
+# Copiamos el package.json de la API y sus archivos compilados
+COPY package*.json ./
+COPY api/package*.json ./api/
+
+# Copiamos todo el directorio dist generado
 COPY --from=builder /app/api/dist ./dist
-# Traemos los node_modules desde la raíz del builder
-COPY --from=builder /app/node_modules ./node_modules
-# Traemos el package.json de la API
-COPY --from=builder /app/api/package*.json ./
+# Copiamos los node_modules
+COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/api/node_modules ./node_modules
 
+ENV PORT=8080
 EXPOSE 8080
 
-
-
-# Comando de inicio
-CMD ["node", "dist/api/src/main"]
+# ⚠️ Asegúrate de incluir la extensión .js y verificar la ruta del entrypoint
+CMD ["node", "dist/api/src/main.js"]

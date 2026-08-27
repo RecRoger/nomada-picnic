@@ -1,0 +1,23 @@
+<main class="c-checkout-form">
+  <section class="c-checkout-form--header">
+    <h1 class="c-checkout-form--header-title">{{'CHECKOUT.FORM.HEADER.TITLE_1' | translate}}
+      <span class="highlighted">{{'CHECKOUT.FORM.HEADER.TITLE_2' | translate}}</span>
+    </h1>
+    <p class="c-checkout-form--header-subtitle">{{'CHECKOUT.FORM.HEADER.SUBTITLE' | translate}}</p>
+  </section>
+
+  <div class="c-checkout-form--content">
+    
+    <div class="c-checkout-form--form" [formGroup]="form">  
+
+
+    </div>
+
+    <!-- Columna Derecha: Summary Sticky -->
+    <aside class="c-checkout-form--summary">
+      <app-checkout-summary [form]="form"></app-checkout-summary>
+    </aside>
+
+  </div>
+  
+</main>

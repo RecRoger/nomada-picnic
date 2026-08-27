@@ -23,11 +23,14 @@ export class FooterComponent {
       return event.urlAfterRedirects.includes('/admin') || event.url.includes('/admin');
     })
   );
-
+  public isCheckout$: Observable<boolean> = this.routeChange$.pipe(
+    map((event: NavigationEnd) => {
+      return event.urlAfterRedirects.includes('/checkout') || event.url.includes('/checkout');
+    })
+  );
   public isHome$: Observable<boolean> = this.routeChange$.pipe(
     filter(event => event instanceof NavigationEnd),
     map((event: NavigationEnd) => {
-      // Evaluamos si la URL actual es exactamente '/' o vacía
       return event.urlAfterRedirects === '/' || event.url === '/';
     })
   );

@@ -34,14 +34,26 @@ export class HeaderComponent implements OnInit {
 
   protected readonly cartService = inject(CartService)
 
-  public isHome$: Observable<boolean> =
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map((event: NavigationEnd) => {
-        // Evaluamos si la URL actual es exactamente '/' o vacía
-        return event.urlAfterRedirects === '/' || event.url === '/';
-      })
-    );
+  protected readonly routeChange$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+
+  public isAdmin$: Observable<boolean> = this.routeChange$.pipe(
+    map((event: NavigationEnd) => {
+      return event.urlAfterRedirects.includes('/admin') || event.url.includes('/admin');
+    })
+  );
+
+  public isCheckout$: Observable<boolean> = this.routeChange$.pipe(
+    map((event: NavigationEnd) => {
+      return event.urlAfterRedirects.includes('/checkout') || event.url.includes('/checkout');
+    })
+  );
+
+  public isHome$: Observable<boolean> = this.routeChange$.pipe(
+    filter(event => event instanceof NavigationEnd),
+    map((event: NavigationEnd) => {
+      return event.urlAfterRedirects === '/' || event.url === '/';
+    })
+  );
 
   public isScrolled = false
 

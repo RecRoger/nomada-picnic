@@ -1,0 +1,71 @@
+@use "utils" as u;
+
+.c-checkout-summary {
+  background: var(--color-white);
+  border-radius: var(--radius-card-sm);
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  @include u.flex(column, flex-start, stretch, 0);
+
+  &--title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+  }
+
+  &--subtitle {
+    margin-top: 0rem;
+    font-size: var(--font-small);
+    color: var(--color-text-muted);
+    // margin-bottom: 1.5rem;
+    // text-transform: uppercase;
+  }
+
+  &--list {
+    list-style: none;
+    @include u.flex(column, flex-start, stretch, 1rem);
+    margin: 1rem 0;
+    padding: 0;
+
+    &-item {
+      @include u.flex(row, space-between, stretch, 1rem);
+      font-size: 0.9rem;
+      color: var(--color-text-dark);
+
+      .item-price {
+        font-family: var(--font-money);
+      }
+    }
+  }
+
+  &--total {
+    @include u.flex(row, space-between, center, 1rem);
+    padding: 1rem 0;
+    border-top: 1px solid var(--color-outline);
+    font-weight: 800;
+    font-size: 1.1rem;
+
+    .item-price {
+      font-family: var(--font-money);
+      color: var(--color-brand-blue);
+      font-size: 1.3rem;
+    }
+  }
+
+  &--button {
+    &-continue {
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      padding: 0.9rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 1rem auto;
+      box-shadow: 0 4px 12px rgba(242, 84, 35, 0.3);
+    }
+
+    &-back {
+      @include u.custom-button(var(--color-text-muted), transparent);
+      font-size: 0.85rem;
+    }
+  }
+}

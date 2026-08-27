@@ -30,9 +30,9 @@
               <p class="empty-data-text">
                 {{(!cartService.additionals().length ? 'PUBLIC.CART.CART_EMPTY' : 'PUBLIC.CART.NO_PICNIC')| translate}}
               </p>
-              <button type="button" class="empty-data-button" (click)="checkPincis()">
+              <a type="button" class="empty-data-button" routerLink="/picnics" (click)="cartService.closeCart()">
                 {{'PUBLIC.CART.BUTTONS.PICNICS'|translate}}
-              </button>
+              </a>
             </div>
           </div>
         } @else {
@@ -97,9 +97,9 @@
             <p class="c-shopping-cart--additionals-text">
               {{'PUBLIC.CART.ADDITIONALS_TEXT' | translate}}
             </p>
-            <button class="c-shopping-cart--additionals-button" (click)="checkAdditionals()">
+            <a class="c-shopping-cart--additionals-button" routerLink="/additionals" (click)="cartService.closeCart()">
               {{'PUBLIC.CART.ADDITIONALS_BUTTON' | translate}}
-            </button>
+            </a>
           }
           
         }
@@ -169,7 +169,7 @@
 
         <button
           class="c-shopping-cart--footer-button checkin"
-          [disabled]="cartService.isIncomplete()" (click)="goToCheckout()">
+          [disabled]="!cartService.booking() || cartService.isIncomplete()" (click)="goToCheckout()">
           {{'PUBLIC.CART.BUTTONS.CHECKIN'|translate}}
         </button>
   

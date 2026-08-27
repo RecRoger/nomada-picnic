@@ -1,0 +1,17 @@
+  <section class="c-checkout-stepper">
+    <div class="c-checkout-stepper--container">
+      <div class="step-line"></div>
+      @for (step of steps(); track step.path; let i = $index) {
+        <div class="step" [class]="step.status">
+          <div class="step-badge">
+            @if(step.status == 'done') {
+              <mat-icon class="icon">check</mat-icon>
+            } @else { 
+              {{i +1}}
+            }  
+          </div>
+          <span class="step-label">{{step.label| translate}}</span>
+        </div>
+      }
+    </div>
+  </section>

@@ -330,7 +330,7 @@
         "TEXT": "Adaptamos cada picnic a tu ocasión, estilo y forma de celebrar."
       },
       "MEMORIES": {
-        "TITLE": "Espacios únicos en Buenos ",
+        "TITLE": "Espacios únicos en Buenos Aires",
         "TEXT": "Creamos momentos especiales en los lugares más lindos de la ciudad."
       }
     },
@@ -630,6 +630,44 @@
         }
       },
       "NO_PACKAGES": "No hay paquetes disponibles en este momento."
+    }
+  },
+  "CHECKOUT": {
+    "STEPPER": {
+      "PREVIEW": "Resumen",
+      "FORM": "Checkout",
+      "PAYMENT": "Pago",
+      "CONFIRMATION": "Confirmación"
+    },
+    "SUMMARY": {
+      "TITLE_1": "Resumen de tu reserva",
+      "TITLE_2": "Resumen del pedido",
+      "SUBTOTAL_LABEL": "Subtotal",
+      "TOTAL_LABEL": "Total",
+      "CONTINUE_BTN_1": "Continuar al checkout",
+      "CONTINUE_BTN_2": "Continuar al pago",
+      "EDIT_BTN_1": "Seguir editando",
+      "EDIT_BTN_2": "Volver al resumen"
+    },
+    "PREVIEW": {
+      "HEADER": {
+        "TITLE_1": "Revisá tu experiencia antes de ",
+        "TITLE_2": "Confirmar",
+        "SUBTITLE": "Verificá que toda la información sea correcta. Si necesitás modificar algún detalle, podés volver a cualquier paso antes de continuar con el checkout."
+      },
+      "MAIN_LABEL": "Experiencia elegida",
+      "GUESTS_LABEL": "Cantidad de personas",
+      "DATE_LABEL": "Fecha y hora",
+      "PLACE_LABEL": "Lugar",
+      "EVENT_LABEL": "Celebración",
+      "ADDITIONALS_TITLE": "Adicionales"
+    },
+    "FORM": {
+      "HEADER": {
+        "TITLE_1": "Ya casi",
+        "TITLE_2": "terminamos",
+        "SUBTITLE": "Completá tus datos para finalizar la reserva. Utilizaremos esta información para enviarte la confirmación y mantenernos en contacto antes del evento."
+      }
     }
   }
 }

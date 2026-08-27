@@ -1,0 +1,108 @@
+<main class="c-checkout-preview">
+  <section class="c-checkout-preview--header">
+    <h1 class="c-checkout-preview--header-title">{{'CHECKOUT.PREVIEW.HEADER.TITLE_1' | translate}}
+      <span class="highlighted">{{'CHECKOUT.PREVIEW.HEADER.TITLE_2' | translate}}</span>
+    </h1>
+    <p class="c-checkout-preview--header-subtitle">{{'CHECKOUT.PREVIEW.HEADER.SUBTITLE' | translate}}</p>
+  </section>
+
+  <div class="c-checkout-preview--content">
+    
+    <div class="c-checkout-preview--details">  
+      @if (booking()?.package; as pkg) {
+        <article class="c-checkout-preview--card main-card">
+          <div class="card-media">
+            <img [src]="pkg.image! | apiImageUrl" [alt]="pkg.name" />
+          </div>
+          <div class="card-info">
+            <span class="label">{{'CHECKOUT.PREVIEW.MAIN_LABEL' | translate}}</span>
+            <h3>{{ pkg.name }}</h3>
+            <p>{{ pkg.description }}</p>
+          </div>
+          <button class="btn-edit" (click)="onEditSection('package')">{{'COMMON.EDIT' | translate}}</button>
+        </article>
+      }
+
+      <div class="info-grid">
+        <article class="c-checkout-preview--card sub-card">
+          <div class="card-info">
+            <span class="label">{{'CHECKOUT.PREVIEW.GUESTS_LABEL' | translate}}</span>
+            <h3>@if (booking()?.minGuests === booking()?.maxGuests) {
+                {{ booking()?.minGuests }}
+              } @else {
+                {{ booking()?.minGuests }} – {{ booking()?.maxGuests }} 
+              }
+              {{'COMMON.PEOPLE' | translate}}
+            </h3>
+          </div>
+          <button class="btn-edit" (click)="onEditSection('guests')">{{'COMMON.EDIT' | translate}}</button>
+        </article>
+
+        <article class="c-checkout-preview--card sub-card">
+          <div class="card-info">
+            <span class="label">{{'CHECKOUT.PREVIEW.EVENT_LABEL' | translate}}</span>
+            <h3>{{ booking()?.event?.name }}</h3>
+          </div>
+          <button class="btn-edit" (click)="onEditSection('event')">{{'COMMON.EDIT' | translate}}</button>
+        </article>
+
+        <article class="c-checkout-preview--card sub-card">
+          <div class="card-info-media">
+            @if(booking()?.place!.images![0]; as image) {
+              <div class="card-media-small">
+                <img [src]="image | apiImageUrl" [alt]="booking()?.place?.name" />
+              </div>
+            }
+            <div class="card-info">
+              <span class="label">{{'CHECKOUT.PREVIEW.PLACE_LABEL' | translate}}</span>
+              <h3>{{ booking()?.place?.name || 'Por definir' }}</h3>
+            </div>
+          </div>
+          <button class="btn-edit" (click)="onEditSection('place')">{{'COMMON.EDIT' | translate}}</button>
+        </article>
+
+        <article class="c-checkout-preview--card sub-card">
+          <div class="card-info">
+            <span class="label">{{'CHECKOUT.PREVIEW.DATE_LABEL' | translate}}</span>
+            <h3>{{ booking()?.eventDate | date:'EEE d \'de\' MMMM yyyy':'':'es' }}</h3>
+            <span class="sub-text">{{ booking()?.eventTime }} hs</span>
+          </div>
+          <button class="btn-edit" (click)="onEditSection('datetime')">{{'COMMON.EDIT' | translate}}</button>
+        </article>
+      </div>
+
+      
+      <article class="c-checkout-preview--card additionals-card">
+        <div class="additionals-card--header">
+          <span class="additionals-card--header-title">{{'CHECKOUT.PREVIEW.ADDITIONALS_TITLE' | translate}}</span>
+          <button class="btn-edit" (click)="onEditSection('additionals')">{{'COMMON.EDIT' | translate}}</button>
+        </div>
+
+        <div class="additionals-card--list">
+          @for (item of additionals(); track item.cost._id) {
+            <div class="additionals-card--list-item">
+              <div class="item-info">
+                @if(item.cost.images![0]; as image) {
+                  <div class="card-media">
+                    <img [src]="image | apiImageUrl" [alt]="item.cost.name" />
+                  </div>
+                }
+                <span class="check-icon">✓</span>
+                <span class="item-name">{{ item.cost.name }}</span>
+              </div>
+              <span class="item-price">{{ item.totalPrice | currency: 'US$ ':'code':'1.0-2' }}</span>
+            </div>
+          }
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Columna Derecha: Summary Sticky -->
+    <aside class="c-checkout-preview--summary">
+      <app-checkout-summary></app-checkout-summary>
+    </aside>
+
+  </div>
+  
+</main>

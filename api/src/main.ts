@@ -12,7 +12,8 @@ async function bootstrap() {
   // 1. CORS - Configurarlo desde el inicio evita dolores de cabeza
   const allowedOrigins = [
     'https://nomada-client-389141432152.us-east1.run.app', // 👈 SIN LA BARRA DIAGONAL AL FINAL
-    'https://nomadapicnic.com'
+    'https://nomadapicnic.com',
+    'https://www.nomadapicnic.com'
   ];
 
   // Si la variable de entorno existe, le quitamos la barra final por seguridad y la sumamos al array
@@ -45,8 +46,6 @@ async function bootstrap() {
       .setTitle('Nómada Picnic API')
       .setDescription('Documentación de la API de reservas y logística')
       .setVersion('1.0')
-      // .addServer('https://nomada-backend-389141432152.us-east1.run.app')
-      // .addBearerAuth() // Útil si vas a usar JWT más adelante
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);

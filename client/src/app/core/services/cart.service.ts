@@ -1,9 +1,11 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Injectable, signal, computed, inject, effect, PLATFORM_ID } from '@angular/core';
 import { CostsService } from '@services/costs.service';
 import { PackagesService } from '@services/packages.service';
 import { CostsTypes } from '@shared/enums';
 import { IBookingCart, ICartAdditional, ICost, IPicnicBooking } from '@shared/interfaces';
 
+const CART_STORAGE_KEY = 'nomada_picnic_cart';
 @Injectable({
   providedIn: 'root',
 })
@@ -52,6 +54,49 @@ export class CartService {
   });
 
   public isEmpty = computed(() => !this.cartState().booking && this.cartState().additionals.length === 0);
+
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
+
+  constructor() {
+    if (this.isBrowser) {
+      const savedCart = this.loadCartFromStorage();
+      if (savedCart) {
+        this.cartState.set(savedCart);
+      }
+    }
+
+    // 2. Persistir cambios únicamente cuando corra en el navegador
+    effect(() => {
+      const currentCart = this.cartState();
+      if (this.isBrowser) {
+        try {
+          localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(currentCart));
+        } catch (error) {
+          console.error('Error guardando el carrito en localStorage:', error);
+        }
+      }
+    });
+  }
+
+  private loadCartFromStorage(): IBookingCart | null {
+    try {
+      const saved = localStorage.getItem(CART_STORAGE_KEY);
+      if (!saved) return null;
+
+      const parsed = JSON.parse(saved) as IBookingCart;
+
+      // Deserializar la fecha si existía en el almacenamiento
+      if (parsed.booking?.eventDate) {
+        parsed.booking.eventDate = new Date(parsed.booking.eventDate);
+      }
+
+      return parsed;
+    } catch (error) {
+      console.error('Error leyendo carrito de localStorage:', error);
+      return null;
+    }
+  }
 
   // --- MÉTODOS DE ACCIÓN / MUTACIONES DE ESTADO ---
   /** Actualiza parcialmente campos de la reserva */

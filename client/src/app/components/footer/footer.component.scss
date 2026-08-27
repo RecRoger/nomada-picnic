@@ -141,5 +141,16 @@
       opacity: 0.7;
       margin: 0;
     }
+
+    &.checkout {
+      margin-top: 2rem;
+      padding: 1rem;
+      p {
+        font-weight: 500;
+        padding-top: 1rem;
+        color: var(--color-brand-blue);
+        border-top: 1px solid var(--color-outline);
+      }
+    }
   }
 }

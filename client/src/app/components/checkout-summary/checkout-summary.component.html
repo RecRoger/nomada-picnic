@@ -1,0 +1,44 @@
+<div class="c-checkout-summary">
+  <h2 class="c-checkout-summary--title">
+    {{('CHECKOUT.SUMMARY.TITLE_'+(!form? '1':'2')) | translate}}
+  </h2>
+  @if(form) {
+    <p class="c-checkout-summary--subtitle">
+      {{booking()?.package!.name}} - 
+      @if (booking()?.minGuests === booking()?.maxGuests) {
+        {{ booking()?.minGuests }}
+      } @else {
+        {{ booking()?.minGuests }} – {{ booking()?.maxGuests }} 
+      } {{'COMMON.PEOPLE' | translate}} -
+      {{ booking()?.eventDate | date:'EEE d \'de\' MMMM yyyy':'':'es' }} - {{ booking()?.eventTime }} hs
+    </p>
+  }
+
+  <ul class="c-checkout-summary--list">
+    @if (booking()?.package; as pkg) {
+      <li class="c-checkout-summary--list-item">
+        <span>{{ pkg.name }}</span>
+        <span class="item-price">{{ booking()?.basePrice | currency: 'US$ ':'code':'1.0-2' }}</span>
+      </li>
+    }
+    @for (item of additionals(); track item.cost._id) {
+      <li class="c-checkout-summary--list-item">
+        <span>{{ item.cost.name }}</span>
+        <span class="item-price">{{ item.totalPrice | currency: 'US$ ':'code':'1.0-2' }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="c-checkout-summary--total">
+    <span>{{'CHECKOUT.SUMMARY.TOTAL_LABEL' | translate}}</span>
+    <span class="item-price">{{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}</span>
+  </div>
+
+  <button class="c-checkout-summary--button-continue" (click)="onProceedToNextStep()">
+    {{('CHECKOUT.SUMMARY.CONTINUE_BTN_'+(!form? '1':'2')) | translate}}
+  </button>
+
+  <button class="c-checkout-summary--button-back" (click)="onBack()">
+    {{('CHECKOUT.SUMMARY.EDIT_BTN_'+(!form? '1':'2')) | translate}}
+  </button>
+</div>

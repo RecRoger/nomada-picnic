@@ -100,7 +100,9 @@
 
     <!-- Columna Derecha: Summary Sticky -->
     <aside class="c-checkout-preview--summary">
-      <app-checkout-summary></app-checkout-summary>
+      <app-checkout-summary 
+        (onContinue)="onProceedToNextStep()"
+        (onBack)="onBack()"></app-checkout-summary>
     </aside>
 
   </div>

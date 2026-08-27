@@ -7,15 +7,151 @@
   </section>
 
   <div class="c-checkout-form--content">
-    
     <div class="c-checkout-form--form" [formGroup]="form">  
+      
+      <fieldset class="c-checkout-form--form__section">
+          <legend class="c-checkout-form--form__title">{{'CHECKOUT.FORM.TITLES.PERSONAL' | translate}}</legend>
+          
+          <div class="c-checkout-form--form__grid c-checkout-form--form__grid--2-cols">
+            <div class="c-checkout-form--form__group">
+              <input 
+                type="text" 
+                class="c-checkout-form--form__input" 
+                [class.c-checkout-form--form__input--error]="isFieldInvalid('name')"
+                [placeholder]="'COMMON.NAME' | translate" 
+                formControlName="name" 
+              />
+            </div>
 
+            <div class="c-checkout-form--form__group">
+              <input 
+                type="text" 
+                class="c-checkout-form--form__input" 
+                [class.c-checkout-form--form__input--error]="isFieldInvalid('lastname')"
+                [placeholder]="'COMMON.LASTNAME' | translate" 
+                formControlName="lastname" 
+              />
+            </div>
+
+            <div class="c-checkout-form--form__group">
+              <input 
+                type="email" 
+                class="c-checkout-form--form__input" 
+                [class.c-checkout-form--form__input--error]="isFieldInvalid('email')"
+                [placeholder]="'COMMON.EMAIL' | translate" 
+                formControlName="email" 
+              />
+            </div>
+
+            <div class="c-checkout-form--form__group">
+              <input 
+                type="tel" 
+                class="c-checkout-form--form__input" 
+                [class.c-checkout-form--form__input--error]="isFieldInvalid('phone')"
+                [placeholder]="'COMMON.PHONE' | translate" 
+                formControlName="phone" 
+              />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Sección: Información Adicional -->
+        <fieldset class="c-checkout-form--form__section">
+          <legend class="c-checkout-form--form__title">{{'CHECKOUT.FORM.TITLES.ADDITIONAL' | translate}}</legend>
+
+          <div class="c-checkout-form--form__grid c-checkout-form--form__grid--2-cols">
+            <div class="c-checkout-form--form__group">
+              <input 
+                type="text" 
+                class="c-checkout-form--form__input" 
+                [placeholder]="'CHECKOUT.FORM.LABELS.HONORED' | translate" 
+                formControlName="honoredName" 
+              />
+            </div>
+          </div>
+
+          <div class="c-checkout-form--form__group c-checkout-form--form__group--full">
+            <label class="c-checkout-form--form__label">
+              {{'CHECKOUT.FORM.LABELS.COMMENT_TEXT' | translate}}
+            </label>
+            <textarea 
+              class="c-checkout-form--form__textarea" 
+              [placeholder]="'CHECKOUT.FORM.LABELS.COMMENTS' | translate" 
+              rows="3" 
+              formControlName="comments"
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Sección: Facturación -->
+        <fieldset class="c-checkout-form--form__section">
+          <legend class="c-checkout-form--form__title">{{'CHECKOUT.FORM.TITLES.BILLING' | translate}}</legend>
+
+          <div class="c-checkout-form--form__checkbox-wrapper">
+            <mat-checkbox color="primary" formControlName="requiredBill">
+              {{'CHECKOUT.FORM.LABELS.BILLING_NEEDED' | translate}}
+            </mat-checkbox>
+          </div>
+
+          @if (form!.get('requiredBill')?.value) {
+            <div class="c-checkout-form--form__grid c-checkout-form--form__grid--2-cols c-checkout-form--form__billing">
+              <div class="c-checkout-form--form__group">
+                <input 
+                  type="text" 
+                  class="c-checkout-form--form__input" 
+                  [placeholder]="'CHECKOUT.FORM.LABELS.SOCIL_NAME' | translate" 
+                  formControlName="socialName" 
+                />
+              </div>
+
+              <div class="c-checkout-form--form__group">
+                <input 
+                  type="text" 
+                  class="c-checkout-form--form__input" 
+                  [class.c-checkout-form--form__input--error]="isFieldInvalid('cuit')"
+                  [placeholder]="'CHECKOUT.FORM.LABELS.CUIT' | translate" 
+                  formControlName="cuit" 
+                />
+              </div>
+
+              <div class="c-checkout-form--form__group">
+                <input 
+                  type="text" 
+                  class="c-checkout-form--form__input" 
+                  [placeholder]="'CHECKOUT.FORM.LABELS.IVA_STATUS' | translate" 
+                  formControlName="ivaCondition" 
+                />
+              </div>
+            </div>
+          }
+        </fieldset>
+
+        <!-- Sección: Políticas -->
+        <fieldset class="c-checkout-form--form__section">
+          <legend class="c-checkout-form--form__title">{{'CHECKOUT.FORM.TITLES.POLICY' | translate}}</legend>
+
+          <div class="c-checkout-form--form__checkbox-group">
+            <mat-checkbox color="primary" formControlName="tyc">
+              {{'CHECKOUT.FORM.LABELS.TERMS_1' | translate}} 
+              <a [routerLink]="['/terms']" class="c-checkout-form--form__link" target="_blank" rel="noopener noreferrer">{{'CHECKOUT.FORM.LABELS.TERMS_2' | translate}}</a>.
+            </mat-checkbox>
+
+            <mat-checkbox color="primary" formControlName="policy">
+              {{'CHECKOUT.FORM.LABELS.POLICY_1' | translate}} 
+              <a [routerLink]="['/policy']" class="c-checkout-form--form__link" target="_blank" rel="noopener noreferrer">{{'CHECKOUT.FORM.LABELS.POLICY_2' | translate}}</a>.
+            </mat-checkbox>
+          </div>
+        </fieldset>
 
     </div>
 
     <!-- Columna Derecha: Summary Sticky -->
     <aside class="c-checkout-form--summary">
-      <app-checkout-summary [form]="form"></app-checkout-summary>
+      <app-checkout-summary
+        [form]="form"
+        (onContinue)="onProceedToNextStep()"
+        (onBack)="onBack()">
+      </app-checkout-summary>
     </aside>
 
   </div>

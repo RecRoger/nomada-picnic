@@ -1,9 +1,9 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CartService } from '@services/cart.service';
+
 
 @Component({
   selector: 'app-checkout-summary',
@@ -15,23 +15,13 @@ export class CheckoutSummaryComponent {
 
   @Input() form?: FormGroup
 
+  @Output() onContinue: EventEmitter<void> = new EventEmitter()
+
+  @Output() onBack: EventEmitter<void> = new EventEmitter()
+
   protected readonly cartService = inject(CartService);
 
   readonly booking = this.cartService.booking;
   readonly additionals = this.cartService.additionals;
   readonly totalAmount = this.cartService.totalAmount;
-
-  private router = inject(Router);
-
-  onProceedToNextStep() {
-    this.router.navigate([
-      this.form ? '/checkout/payment' : '/checkout/form'
-    ]);
-  }
-
-  onBack() {
-    this.router.navigate([
-      this.form ? '/checkout' : '/picnics'
-    ]);
-  }
 }

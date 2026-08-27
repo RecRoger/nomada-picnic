@@ -36,14 +36,21 @@ export class CheckoutPreviewComponent {
         break
       case 'event':
       case 'datetime':
-      case 'guests':
-        this.router.navigate(['/picnics']);
         this.cartService.openCart();
+        this.cartService.showDetails();
         break
+      case 'guests':
       default:
         this.router.navigate(['/picnics']);
         break
-
     }
+  }
+
+  onProceedToNextStep() {
+    this.router.navigate(['/checkout/form']);
+  }
+
+  onBack() {
+    this.router.navigate(['/picnics']);
   }
 }

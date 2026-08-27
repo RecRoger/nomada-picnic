@@ -19,8 +19,24 @@ export interface IPicnicBooking {
   basePrice?: number;
 }
 
+export interface IBookingClientInfo {
+  name: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  honoredName?: string;
+  comments: string;
+  requiredBill?: boolean;
+  socialName?: string;
+  cuit?: string;
+  ivaCondition?: string;
+  tyc: boolean;
+  policy: boolean;
+}
+
 // Estado global del Carrito
 export interface IBookingCart {
   booking: IPicnicBooking | null;
   additionals: ICartAdditional[];
+  clientInfo?: IBookingClientInfo
 }

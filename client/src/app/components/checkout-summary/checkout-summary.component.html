@@ -34,11 +34,18 @@
     <span class="item-price">{{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}</span>
   </div>
 
-  <button class="c-checkout-summary--button-continue" (click)="onProceedToNextStep()">
+  <button class="c-checkout-summary--button-continue"
+    type="button"
+    [disabled]="form && form.invalid"
+    (click)="onContinue.emit()">
     {{('CHECKOUT.SUMMARY.CONTINUE_BTN_'+(!form? '1':'2')) | translate}}
   </button>
 
-  <button class="c-checkout-summary--button-back" (click)="onBack()">
+  <button class="c-checkout-summary--button-back" type="button" (click)="onBack.emit()">
     {{('CHECKOUT.SUMMARY.EDIT_BTN_'+(!form? '1':'2')) | translate}}
   </button>
+
+  @if(form && (form.get('tyc')!.invalid || form.get('policy')!.invalid)) {
+    <p class="c-checkout-summary--policy-message">{{'CHECKOUT.SUMMARY.POLICY_MESSAGE' | translate}}</p>
+  }
 </div>

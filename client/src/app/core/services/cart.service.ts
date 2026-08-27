@@ -3,7 +3,7 @@ import { Injectable, signal, computed, inject, effect, PLATFORM_ID } from '@angu
 import { CostsService } from '@services/costs.service';
 import { PackagesService } from '@services/packages.service';
 import { CostsTypes } from '@shared/enums';
-import { IBookingCart, ICartAdditional, ICost, IPicnicBooking } from '@shared/interfaces';
+import { IBookingCart, IBookingClientInfo, ICartAdditional, ICost, IPicnicBooking } from '@shared/interfaces';
 
 const CART_STORAGE_KEY = 'nomada_picnic_cart';
 @Injectable({
@@ -13,7 +13,6 @@ export class CartService {
   protected packagesService = inject(PackagesService);
   protected additionalsService = inject(CostsService);
 
-  // Estado de visibilidad del Sidenav/Drawer
   public isOpen = signal<boolean>(false);
   public showDetails = signal<boolean>(false); // 💡 Controla el estado expandido
 
@@ -25,6 +24,8 @@ export class CartService {
   public booking = computed(() => this.cartState().booking);
 
   public additionals = computed(() => this.cartState().additionals);
+
+  public clientForm = computed(() => this.cartState().clientInfo);
 
   additionalsTotal = computed(() => {
     return this.cartState().additionals.reduce(
@@ -65,8 +66,6 @@ export class CartService {
         this.cartState.set(savedCart);
       }
     }
-
-    // 2. Persistir cambios únicamente cuando corra en el navegador
     effect(() => {
       const currentCart = this.cartState();
       if (this.isBrowser) {
@@ -127,7 +126,6 @@ export class CartService {
       let updatedAdditionals = [...state.additionals];
 
       if (existingIndex > -1) {
-        // Si ya existe, incrementamos la cantidad
         const current = updatedAdditionals[existingIndex];
         updatedAdditionals[existingIndex] = {
           ...current,
@@ -135,7 +133,6 @@ export class CartService {
           quantity: current.quantity + quantity,
         };
       } else {
-        // Si no existe, lo agregamos completo
         updatedAdditionals.push({
           cost: newAdditional,
           quantity,
@@ -176,11 +173,21 @@ export class CartService {
     }));
   }
 
+  updateClientInfo(clientForm: IBookingClientInfo) {
+    this.cartState.update((state) => {
+      return {
+        ...state,
+        clientInfo: { ...clientForm },
+      };
+    });
+  }
+
   /** Limpia completamente el carrito */
   public clearCart(): void {
     this.cartState.set({
       booking: null,
       additionals: [],
+      clientInfo: undefined
     });
   }
 

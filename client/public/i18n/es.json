@@ -5,6 +5,7 @@
     "CANCEL": "Cancelar",
     "NO": "No",
     "NAME": "Nombre",
+    "LASTNAME": "Apellido",
     "NAME_LASTNAME": "Nombre y apellido",
     "ICON": "Icono",
     "EMAIL": "Correo Electronico",
@@ -647,7 +648,8 @@
       "CONTINUE_BTN_1": "Continuar al checkout",
       "CONTINUE_BTN_2": "Continuar al pago",
       "EDIT_BTN_1": "Seguir editando",
-      "EDIT_BTN_2": "Volver al resumen"
+      "EDIT_BTN_2": "Volver al resumen",
+      "POLICY_MESSAGE": "Para continuar, aceptá los términos y la política de cancelación."
     },
     "PREVIEW": {
       "HEADER": {
@@ -667,6 +669,25 @@
         "TITLE_1": "Ya casi",
         "TITLE_2": "terminamos",
         "SUBTITLE": "Completá tus datos para finalizar la reserva. Utilizaremos esta información para enviarte la confirmación y mantenernos en contacto antes del evento."
+      },
+      "TITLES": {
+        "PERSONAL": "Información Personal",
+        "ADDITIONAL": "Información Adicional",
+        "BILLING": "Facturación",
+        "POLICY": "Políticas"
+      },
+      "LABELS": {
+        "HONORED": "Nombre del homenajeado (opcional)",
+        "COMMENT_TEXT": "Comentario o indicaciones especiales",
+        "COMMENTS": "Mensaje de pizarra, bebidas de cortecia o personas de tratos especiales (celíacos, veganos, discapacitados)",
+        "BILLING_NEEDED": "Necesito factura A",
+        "SOCIL_NAME": "Razon Social",
+        "CUIT": "CUIT",
+        "IVA_STATUS": "Situación frente al IVA",
+        "TERMS_1": "Acepto los",
+        "TERMS_2": "términos y condiciones",
+        "POLICY_1": "Acepto la",
+        "POLICY_2": "política de cancelacion y reprogramación"
       }
     }
   }

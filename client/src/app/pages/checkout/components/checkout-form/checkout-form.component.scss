@@ -105,6 +105,7 @@
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--color-text-muted);
+      margin: 0.5rem 0;
     }
 
     &__input,
@@ -144,8 +145,20 @@
 
     &__textarea {
       resize: vertical;
-      min-height: 90px;
+      min-height: 100px;
       font-family: inherit;
+    }
+
+    &__pills {
+      @include u.flex(row, flex-start, center, 0.8rem);
+      flex-wrap: wrap;
+      &-item {
+        @include u.custom-button(var(--color-text-dark), var(--color-bg-cream));
+        padding: 0 1rem 0 0.5rem;
+        &.active {
+          border: 2px solid var(--color-brand-blue);
+        }
+      }
     }
 
     &__checkbox-wrapper {

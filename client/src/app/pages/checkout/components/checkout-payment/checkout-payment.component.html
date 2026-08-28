@@ -1,1 +1,68 @@
-<p>checkout-payment works!</p>
+<section class="c-checkout-payment">
+  <!-- Encabezado -->
+  <header class="c-checkout-payment--header">
+    <h1 class="c-checkout-payment--header-title">
+      {{'CHECKOUT.PAYMENT.HEADER.TITLE_1' | translate}} <span class="highlighted">{{'CHECKOUT.PAYMENT.HEADER.TITLE_2' | translate}}</span>
+    </h1>
+    <p class="c-checkout-payment--header-subtitle">
+      {{'CHECKOUT.PAYMENT.HEADER.SUBTITLE' | translate}}
+    </p>
+  </header>
+
+  <!-- Tarjeta Principal -->
+  <div class="c-checkout-payment--card">
+    <div class="c-checkout-payment--card-details">
+      <div class="c-checkout-payment--card-row">
+        <span class="c-checkout-payment--card-label">{{'CHECKOUT.PAYMENT.REFFERENCE' | translate}}</span>
+        <span class="c-checkout-payment--card-value c-checkout-payment--card-value--code">
+          {{ tempBookingCode }}
+        </span>
+      </div>
+
+      <div class="c-checkout-payment--card-row">
+        <span class="c-checkout-payment--card-label"></span>
+        <span class="c-checkout-payment--card-value">
+          {{ booking()?.package?.name || 'Picnic Signature' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="c-checkout-payment--card-row c-checkout-payment--card-row--total">
+      <span class="c-checkout-payment--card-total-label">{{'COMMON.TOTAL' | translate}}</span>
+      <span class="c-checkout-payment--card-total-price">
+        {{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}
+      </span>
+    </div>
+
+    <!-- Métodos Disponibles -->
+    <div class="c-checkout-payment--card-methods">
+      <span class="c-checkout-payment--card-methods-title">
+        MÉTODOS DISPONIBLES EN MERCADO PAGO
+      </span>
+      <div class="c-checkout-payment--card-tags">
+        @for (method of paymentMethods; track method) {
+          <span class="c-checkout-payment--card-tag">{{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}</span>
+        }
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="c-checkout-payment--card-actions">
+      <button class="c-checkout-payment--card-btn-submit" (click)="onPay()">
+        {{'CHECKOUT.PAYMENT.PAY_BTN' | translate}}
+      </button>
+      <button class="c-checkout-payment--card-btn-back" (click)="onBack()">
+        {{'CHECKOUT.PAYMENT.BACK_BTN' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Banner de Seguridad -->
+  <div class="c-checkout-payment--security-banner">
+    <div class="c-checkout-payment--security-icon">🔒</div>
+    <div class="c-checkout-payment--security-info">
+      <h4>{{'CHECKOUT.PAYMENT.SECURITY.TITLE' | translate}}</h4>
+      <p>{{'CHECKOUT.PAYMENT.SECURITY.MESSAGE' | translate}}</p>
+    </div>
+  </div>
+</section>

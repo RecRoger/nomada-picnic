@@ -24,6 +24,8 @@ export interface IBookingClientInfo {
   lastname: string;
   email: string;
   phone: string;
+  boardMessage?: string;
+  giftDrinks?: string[];
   honoredName?: string;
   comments: string;
   requiredBill?: boolean;

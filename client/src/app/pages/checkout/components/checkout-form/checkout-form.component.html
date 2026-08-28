@@ -64,11 +64,40 @@
               <input 
                 type="text" 
                 class="c-checkout-form--form__input" 
+                [placeholder]="'CHECKOUT.FORM.LABELS.BOARD_MESSAGE' | translate" 
+                formControlName="boardMessage" 
+              />
+            </div>
+
+            <div class="c-checkout-form--form__group">
+              <input 
+                type="text" 
+                class="c-checkout-form--form__input" 
+                [class.c-checkout-form--form__input--error]="isFieldInvalid('honoredName')"
                 [placeholder]="'CHECKOUT.FORM.LABELS.HONORED' | translate" 
                 formControlName="honoredName" 
               />
             </div>
           </div>
+
+            <div class="c-checkout-form--form__group c-checkout-form--form__group--full">
+              <label class="c-checkout-form--form__label">
+                {{
+                  'CHECKOUT.FORM.LABELS.GIFT_DRINKS' | translate:{ammount: drinksAmount}
+                }}
+              </label>
+              <div class="c-checkout-form--form__pills">
+                @for (drink of giftDrinks; track drink) {
+                  <mat-checkbox class="c-checkout-form--form__pills-item"
+                    [checked]="isDrinkSelected(drink)"
+                    [class.active]="isDrinkSelected(drink)"
+                    [disabled]="!isDrinkSelected(drink) && (form.get('giftDrinks')?.value || []).length == drinksAmount"
+                    (click)="toggleDrink(drink)">
+                    {{'CHECKOUT.FORM.LABELS.DRINKS.'+drink | translate}}
+                  </mat-checkbox>
+                }
+              </div>
+            </div>
 
           <div class="c-checkout-form--form__group c-checkout-form--form__group--full">
             <label class="c-checkout-form--form__label">
@@ -88,7 +117,7 @@
           <legend class="c-checkout-form--form__title">{{'CHECKOUT.FORM.TITLES.BILLING' | translate}}</legend>
 
           <div class="c-checkout-form--form__checkbox-wrapper">
-            <mat-checkbox color="primary" formControlName="requiredBill">
+            <mat-checkbox formControlName="requiredBill">
               {{'CHECKOUT.FORM.LABELS.BILLING_NEEDED' | translate}}
             </mat-checkbox>
           </div>
@@ -131,12 +160,12 @@
           <legend class="c-checkout-form--form__title">{{'CHECKOUT.FORM.TITLES.POLICY' | translate}}</legend>
 
           <div class="c-checkout-form--form__checkbox-group">
-            <mat-checkbox color="primary" formControlName="tyc">
+            <mat-checkbox formControlName="tyc">
               {{'CHECKOUT.FORM.LABELS.TERMS_1' | translate}} 
               <a [routerLink]="['/terms']" class="c-checkout-form--form__link" target="_blank" rel="noopener noreferrer">{{'CHECKOUT.FORM.LABELS.TERMS_2' | translate}}</a>.
             </mat-checkbox>
 
-            <mat-checkbox color="primary" formControlName="policy">
+            <mat-checkbox formControlName="policy">
               {{'CHECKOUT.FORM.LABELS.POLICY_1' | translate}} 
               <a [routerLink]="['/policy']" class="c-checkout-form--form__link" target="_blank" rel="noopener noreferrer">{{'CHECKOUT.FORM.LABELS.POLICY_2' | translate}}</a>.
             </mat-checkbox>

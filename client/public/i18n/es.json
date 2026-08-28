@@ -678,8 +678,18 @@
       },
       "LABELS": {
         "HONORED": "Nombre del homenajeado (opcional)",
+        "BOARD_MESSAGE": "Mensaje para la pizarra",
+        "GIFT_DRINKS": "Seleciona las bebida de cortesía (hasta {{ammount}} bebidas diferentes)",
+        "DRINKS": {
+          "RED_WINE": "Vino tinto",
+          "WHITE_WINE": "Vino blanco",
+          "CHAMPAIGN": "Espumante",
+          "JUICE": "Jugo",
+          "SODA": "Gaseosa",
+          "OTHER": "Otros"
+        },
         "COMMENT_TEXT": "Comentario o indicaciones especiales",
-        "COMMENTS": "Mensaje de pizarra, bebidas de cortecia o personas de tratos especiales (celíacos, veganos, discapacitados)",
+        "COMMENTS": "Ejm: personas de tratos especiales (celíacos, veganos, discapacitados), sugerencias, etc.",
         "BILLING_NEEDED": "Necesito factura A",
         "SOCIL_NAME": "Razon Social",
         "CUIT": "CUIT",
@@ -688,6 +698,28 @@
         "TERMS_2": "términos y condiciones",
         "POLICY_1": "Acepto la",
         "POLICY_2": "política de cancelacion y reprogramación"
+      }
+    },
+    "PAYMENT": {
+      "HEADER": {
+        "TITLE_1": "Pago ",
+        "TITLE_2": "seguro",
+        "SUBTITLE": "Finalizá tu reserva realizando el pago a través de Mercado Pago. Todos los pagos son procesados en un entorno seguro."
+      },
+      "REFFERENCE": "Número de reserva temporal",
+      "EXPERIENCE": "Experiencia",
+      "METHODS": {
+        "CREDIT": "Tarjetas de crédito",
+        "DEBIT": "Tarjetas de débito",
+        "TRANSFER": "Dinero en cuenta",
+        "QUOTAS": "Cuotas disponibles",
+        "OTHER": "Otros métodos"
+      },
+      "PAY_BTN": "Pagar con Mercado Pago",
+      "BACK_BTN": "Volver al checkout",
+      "SECURITY": {
+        "TITLE": "Pago protegido",
+        "MESSAGE": "Todos los pagos son procesados de forma segura mediante Mercado Pago."
       }
     }
   }

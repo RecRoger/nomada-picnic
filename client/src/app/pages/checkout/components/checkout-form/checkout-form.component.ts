@@ -34,6 +34,8 @@ export class CheckoutFormComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]+$/)]],
     honoredName: [''],
+    boardMessage: ['', [Validators.required]],
+    giftDrinks: [[] as string[], [Validators.required]],
     comments: [''],
     requiredBill: [false],
     socialName: [''],
@@ -43,12 +45,24 @@ export class CheckoutFormComponent implements OnInit {
     policy: [false, [Validators.requiredTrue]],
   })
 
+  public giftDrinks = [
+    'RED_WINE',
+    'WHITE_WINE',
+    'CHAMPAIGN',
+    'JUICE',
+    'SODA',
+    'OTHER'
+  ]
+
+  public drinksAmount = 1
+
   private readonly router = inject(Router)
 
   private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit(): void {
     this.checkValidators()
+    this.drinksAmount = Math.ceil((this.booking()?.maxGuests || 4) / 4)
     if (this.cartService.clientForm()) {
       this.form.patchValue({ ...this.cartService.clientForm() })
     }
@@ -57,6 +71,24 @@ export class CheckoutFormComponent implements OnInit {
   public isFieldInvalid(fieldName: string): boolean {
     const control = this.form.get(fieldName);
     return !!(control && control.invalid && (control.touched || control.dirty));
+  }
+
+  toggleDrink(drink: string): void {
+    const currentServices: string[] = this.form.get('giftDrinks')?.value || [];
+    const index = currentServices.indexOf(drink);
+
+    if (index > -1) {
+      currentServices.splice(index, 1);
+    } else {
+      currentServices.push(drink);
+    }
+
+    this.form.patchValue({ giftDrinks: currentServices });
+  }
+
+  isDrinkSelected(drink: string): boolean {
+    const currentServices: string[] = this.form.get('giftDrinks')?.value || [];
+    return currentServices.includes(drink);
   }
 
   public onProceedToNextStep() {

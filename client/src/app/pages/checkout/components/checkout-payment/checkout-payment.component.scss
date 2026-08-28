@@ -1,0 +1,169 @@
+@use "utils" as u;
+
+.c-checkout-payment {
+  @include u.flex(column, flex-start, center, 1rem);
+  max-width: 500px;
+  margin: 0 auto;
+
+  &--header {
+    text-align: center;
+    margin-bottom: 1rem;
+    &-title {
+      text-transform: uppercase;
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+
+      .highlighted {
+        display: inline-block;
+        background: linear-gradient(
+          1deg,
+          var(--color-brand-lime) 60%,
+          transparent 40%
+        );
+        padding: 0 0.4rem;
+      }
+    }
+
+    &-subtitle {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      margin-top: 0rem;
+      line-height: 1.4;
+    }
+  }
+
+  &--card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card-sm);
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+
+    &-details {
+      @include u.flex(column, flex-start, stretch, 1rem);
+    }
+
+    &-row {
+      @include u.flex(row, space-between, center, 1rem);
+
+      &--total {
+        border-top: 1px solid var(--color-outline);
+        margin-top: 1.2rem;
+        padding-top: 1rem;
+      }
+    }
+
+    &-label {
+      color: var(--color-text-muted);
+    }
+
+    &-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text-dark);
+
+      &--code {
+        font-family: var(--font-money);
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    &-total {
+      &-label {
+        font-size: 1.1rem;
+        font-weight: 800;
+      }
+
+      &-price {
+        font-family: var(--font-money);
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--color-brand-blue);
+      }
+    }
+
+    &-methods {
+      margin-top: 2rem;
+
+      &-title {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: var(--color-soft-gray);
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: 0.8rem;
+      }
+    }
+
+    &-tags {
+      @include u.flex(row, flex-start, center, 0.5rem);
+      flex-wrap: wrap;
+    }
+
+    &-tag {
+      @include u.pill(
+        var(--color-text-muted),
+        var(--color-bg-softcream),
+        1px solid var(--color-outline)
+      );
+      padding: 0.5rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    &-actions {
+      @include u.flex(column, flex-start, center, 1rem);
+      margin-top: 2rem;
+    }
+
+    &-btn-submit {
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      padding: 1rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    &-btn-back {
+      @include u.custom-button(var(--color-text-dark), transparent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.5rem;
+    }
+  }
+
+  &--security {
+    &-banner {
+      background-color: var(--color-bg-cream);
+      border-radius: var(--radius-card-sm);
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+      @include u.flex(row, flex-start, base-line, 0.7rem);
+      box-sizing: border-box;
+    }
+
+    &-icon {
+      font-size: 1.5rem;
+      padding: 0 0.4rem;
+      @include u.flex(row, flex-start, baseline, 0);
+    }
+
+    &-info {
+      h4 {
+        margin: 0;
+        // font-size: 0.9rem;
+        font-weight: 800;
+        color: var(--color-text-dark);
+      }
+
+      p {
+        margin: 0.2rem 0 0 0;
+        // font-size: 0.8rem;
+        color: var(--color-text-muted);
+      }
+    }
+  }
+}

@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { BookingStatus } from '@shared/enums';
 import { Model } from 'mongoose';
 import { Picnic, PicnicsDocument } from 'src/common/database/schemas/picnics.schema';
-import { PicnicDto } from 'src/common/models/picnic.dto';
+import { CreatePicnicDto } from 'src/common/models/create-picnic.dto';
 
 @Injectable()
 export class PicnicsService {
@@ -10,47 +11,38 @@ export class PicnicsService {
 
   constructor(@InjectModel(Picnic.name) private picnicsModel: Model<PicnicsDocument>) { }
 
-  async findOne(id?: string, email?: string, lastname?: string): Promise<PicnicDto> {
-    this.logger.log(`[findOne] - ${id || (email + ' - ' + lastname)}`)
-    if (!(id || email || lastname)) {
-      this.logger.error(`Error finding picnic, no parameters`, PicnicsService.name);
-      throw new Error('Error finding picnic');
-    }
-    if (!id) {
-      return this.picnicsModel.findOne({ 'client.email': email, 'client.lastname': lastname }).exec() as unknown as PicnicDto
-    }
-
-    const picnic = await this.picnicsModel.findById(id).exec() as unknown as PicnicDto;
-    if (picnic.client.email == email || (picnic.client.name).toLowerCase().includes(lastname.toLowerCase())) {
-      return picnic
-    }
-
-    this.logger.error(`Picnic not found`, PicnicsService.name);
-    throw new Error('Not Found 404');
-
-  }
-
-  async create(picnicData: PicnicDto): Promise<PicnicDto> {
-    this.logger.log('[create] - ', picnicData.client?.email)
-    const createdCost = new this.picnicsModel(picnicData);
-    // TODO - logica y calculos
+  async createPicnic(dto: CreatePicnicDto): Promise<PicnicsDocument> {
+    this.logger.log('[createPicnic]', dto.clientInfo.name)
 
     try {
-      return await createdCost.save() as unknown as PicnicDto;
+      const additionalsTotal = dto.additionals.reduce((sum, item) => sum + item.totalPrice, 0);
+      const totalAmount = dto.booking.basePrice + additionalsTotal;
+
+      const newPicnic = new this.picnicsModel({
+        package: dto.booking.packageId,
+        event: dto.booking.eventId,
+        place: dto.booking.placeId,
+        minGuest: dto.booking.minGuest,
+        maxGuest: dto.booking.maxGuest,
+        eventDate: new Date(dto.booking.eventDate),
+        eventTime: dto.booking.eventTime,
+        basePrice: dto.booking.basePrice,
+        additionals: dto.additionals.map((add) => ({
+          cost: add.costId,
+          unitPrice: add.unitPrice,
+          quantity: add.quantity,
+          totalPrice: add.totalPrice,
+        })),
+        clientInfo: dto.clientInfo,
+        totalAmount,
+        status: BookingStatus.PENDING,
+      });
+
+      return newPicnic.save();
+
     } catch (err) {
-      this.logger.error(`Error creating production cost: ${err.message}`, err.stack, PicnicsService.name);
-      throw new Error('Error al crear el costo de producción');
+      this.logger.error(`Error booking picnic: ${err.message}`, err.stack, PicnicsService.name);
+      throw new Error('Error al guardar la reserva del picnic');
     }
-  }
-
-  async update(id: string, updatePicnicData: PicnicDto): Promise<PicnicDto> {
-    this.logger.log(`[update] - ${id}`,)
-    return this.picnicsModel.findByIdAndUpdate(id, updatePicnicData, { new: true }).exec() as unknown as PicnicDto;
-  }
-
-  async remove(id: string): Promise<boolean> {
-    this.logger.log(`[remove] - ${id}`,)
-    await this.picnicsModel.findByIdAndDelete(id).exec();
-    return true
   }
 }

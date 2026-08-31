@@ -135,6 +135,7 @@ export class CartService {
       } else {
         updatedAdditionals.push({
           cost: newAdditional,
+          unitPrice: newAdditional.finalPrice || 0,
           quantity,
           totalPrice: newAdditional.finalPrice! * quantity
         });

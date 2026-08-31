@@ -2,6 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { CartService } from '@services/cart.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { CartService } from '@services/cart.service';
 export class CheckoutPaymentComponent {
   private cartService = inject(CartService);
   private router = inject(Router);
+  private bookingService = inject(BookingPicnicsService);
 
   readonly booking = this.cartService.booking;
   readonly totalAmount = this.cartService.totalAmount;
@@ -33,8 +35,9 @@ export class CheckoutPaymentComponent {
   ];
 
   onPay(): void {
-    // TODO - Aquí disparas la petición a NestJS para generar el preferenceId de Mercado Pago
-    console.log('Iniciando pago...');
+    this.bookingService.saveBooking().subscribe(resp => {
+      console.log(resp)
+    })
   }
 
   onBack(): void {

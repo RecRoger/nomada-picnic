@@ -3,6 +3,7 @@ import { ICost, IPicnicEvent, IPicnicPackage, IPlace } from "@shared/interfaces"
 // Modelo para un adicional seleccionado en el carrito
 export interface ICartAdditional {
   cost: ICost;
+  unitPrice: number;
   totalPrice: number;
   quantity: number;
 }

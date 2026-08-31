@@ -1,9 +1,8 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { PicnicEventDocument } from 'src/common/database/schemas/picnic-events.schema';
+import { PicnicEvent, PicnicEventDocument } from 'src/common/database/schemas/picnic-events.schema';
 import { PicnicEventDto } from 'src/common/models/picnic-events.dto';
-import { PicnicEvent } from 'src/common/models/picnic.dto';
 
 @Injectable()
 export class PicnicEventsService {

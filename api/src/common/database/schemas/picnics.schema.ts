@@ -1,72 +1,87 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, HydratedDocument } from 'mongoose';
+import { BookingStatus } from '@shared/enums';
+import { Document, Types } from 'mongoose';
 
-export type PicnicsDocument = HydratedDocument<Picnic>
+export type PicnicsDocument = Picnic & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Picnic {
-  @Prop({ type: Object })
-  client: {
-    name: string;
-    email: string;
-    phone: string;
-  };
+  // Información de la experiencia
+  @Prop({ type: Types.ObjectId, ref: 'PicnicPackage', required: true })
+  package: Types.ObjectId;
 
-  @Prop({ type: Object })
-  event: {
-    description: string;
-    guestsAmount: number;
-    date: Date;
-    extraHours: number;
-    place: mongoose.Types.ObjectId
-    newPlace: {
-      address: string;
-      zone: number
-    };
-    boardText: string;
-  };
+  @Prop({ type: Types.ObjectId, ref: 'PicnicEvent' })
+  event?: Types.ObjectId;
 
-  @Prop({ type: Object })
-  basicProduction: {
-    promoIndicator: boolean;
-    blanketsAmount: number;
-    tableAmount: number;
-    bigTableIndicator: boolean;
-    archIndicator: boolean;
-    gifts: [{
-      item: mongoose.Types.ObjectId,
-      amount: number
-    }]
-    basicCost: {
-      productionCost: number;
-      transportationCost: number;
-      giftCost: number;
-    };
-    basicEarnPercentage: number;
-    basicPrice: number;
-  };
+  @Prop({ type: Types.ObjectId, ref: 'Place' })
+  place?: Types.ObjectId;
 
-  @Prop({ type: Object })
+  @Prop({ required: true })
+  minGuest: number;
+
+  @Prop({ required: true })
+  maxGuest: number;
+
+  @Prop({ required: true })
+  eventDate: Date;
+
+  @Prop({ required: true })
+  eventTime: string;
+
+  @Prop({ required: true })
+  basePrice: number;
+
+  // Adicionales seleccionados (subdocumento)
+  @Prop([
+    {
+      cost: { type: Types.ObjectId, ref: 'Cost', required: true },
+      unitPrice: { type: Number },
+      quantity: { type: Number, required: true },
+      totalPrice: { type: Number, required: true },
+    },
+  ])
   additionals: {
-    items: [{
-      item: mongoose.Types.ObjectId,
-      amount: number
-    }]
-    additionalCost: number;
-    additionalEarnPercentage: number;
-    additionalPrice: number;
-  };
+    cost: Types.ObjectId;
+    unitPrice?: number;
+    quantity: number;
+    totalPrice: number;
+  }[];
 
-  @Prop({ type: Object })
-  food: {
-    foods: [{
-      item: mongoose.Types.ObjectId,
-      amount: number
-    }];
-    foodCost: number;
-    foodEarnPercentage: number;
-    foodPrice: number;
-  };
+  // Datos del cliente
+  @Prop({
+    type: {
+      name: { type: String, required: true },
+      lastname: { type: String, required: true },
+      email: { type: String, required: true },
+      phone: { type: String, required: true },
+      boardMessage: String,
+      giftDrinks: [String],
+      honoredName: String,
+      comments: String,
+      requiredBill: { type: Boolean, default: false },
+      socialName: String,
+      cuit: String,
+      ivaCondition: String,
+      tyc: { type: Boolean, required: true },
+      policy: { type: Boolean, required: true },
+    },
+    required: true,
+  })
+  clientInfo: Record<string, any>;
+
+  // Totales y estado del pago
+  @Prop({ required: true })
+  totalAmount: number;
+
+  @Prop({ type: String, enum: BookingStatus, default: BookingStatus.PENDING })
+  status: BookingStatus;
+
+  // Referencias para pasarela de pago (Mercado Pago)
+  @Prop()
+  preferenceId?: string;
+
+  @Prop()
+  paymentId?: string;
 }
 
 export const PicnicsSchema = SchemaFactory.createForClass(Picnic);

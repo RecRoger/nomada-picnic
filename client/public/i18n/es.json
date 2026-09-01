@@ -37,6 +37,7 @@
     "DATE": "Fecha",
     "TIME": "Horario",
     "PLACE": "Lugar",
+    "EXPERIENCE": "Experiencía",
     "CELEBRATION": "Celebración",
     "PRICE_FROM": "Desde",
     "AMOUNT": "Cantidad",
@@ -720,6 +721,20 @@
       "SECURITY": {
         "TITLE": "Pago protegido",
         "MESSAGE": "Todos los pagos son procesados de forma segura mediante Mercado Pago."
+      }
+    },
+    "CONFIRMATION": {
+      "IMG_ALT": "Picnic confirmado",
+      "HEADER": {
+        "TITLE": "¡TU RESERVA ESTÁ CONFIRMADA!",
+        "SUBTITLE": "¡Gracias por elegir Nómada Picnic!",
+        "TEXT": "Recibimos correctamente tu pago y ya comenzamos a preparar tu experiencia. \n En los próximos minutos recibirás un correo electrónico con todos los detalles de tu reserva."
+      },
+      "DETAIL": {
+        "REFERENCE_NUMBER": "número de reserva",
+        "CONFIRMED": "Confirmado",
+        "CONTACT_TEXT": "Ante cualquier consulta, no dudes en ",
+        "CONTACT_BTN": "Contactar por WhatsApp"
       }
     }
   }

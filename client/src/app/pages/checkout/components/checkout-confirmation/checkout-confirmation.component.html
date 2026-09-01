@@ -1,1 +1,109 @@
-<p>checkout-confirmation works!</p>
+<div class="c-checkout-confirmation">
+  
+  <!-- Foto estilo Polaroid con sombra y rotación leve -->
+    <div class="c-checkout-confirmation--media">
+      <div class="polaroid-wrapper">
+        <img src="images/picnics/foto_home_picnics_01.jpg" alt="{{'CHECKOUT.CONFIRMATION.IMG_ALT' | translate}}" class="polaroid-img">
+      </div>
+    </div>
+
+  <!-- Encabezado Principal -->
+  <header class="c-checkout-confirmation--header">
+    <h1 class="c-checkout-confirmation--header-title">
+      {{'CHECKOUT.CONFIRMATION.HEADER.TITLE' | translate}} <span class="icon" [innerHTML]="'🎉' | appleEmoji"></span>
+    </h1>
+    <p class="c-checkout-confirmation--header-subtitle">
+      {{'CHECKOUT.CONFIRMATION.HEADER.SUBTITLE' | translate}}
+    </p>
+    <p class="c-checkout-confirmation--header-description">
+      {{'CHECKOUT.CONFIRMATION.HEADER.TEXT' | translate}}
+    </p>
+  </header>
+
+  <!-- Grilla principal de los dos bloques -->
+  <main class="c-checkout-confirmation--grid">
+    
+    <!-- Bloque Izquierdo: Resumen de Reserva -->
+    <section class="c-checkout-confirmation--details">
+      <div class="card-header-row">
+        <div>
+          <span class="label">{{'CHECKOUT.CONFIRMATION.DETAIL.REFERENCE_NUMBER' | translate}}</span>
+          <h2 class="booking-number">{{ bookingDetails().bookingNumber }}</h2>
+        </div>
+        <span class="status-badge">
+          <span class="dot"></span>
+          {{'CHECKOUT.CONFIRMATION.DETAIL.CONFIRMED' | translate}}
+        </span>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="label">{{'COMMON.DATE' | translate}}</span>
+          <p class="value">{{ bookingDetails().date  | date:'EEE d \'de\' MMMM yyyy':'':'es' }}</p>
+        </div>
+        <div class="detail-item">
+          <span class="label">{{'COMMON.TIME' | translate}}</span>
+          <p class="value">{{ bookingDetails().time }}</p>
+        </div>
+        <div class="detail-item">
+          <span class="label">{{'COMMON.PLACE' | translate}}</span>
+          <p class="value">{{ bookingDetails().location }}</p>
+        </div>
+        <div class="detail-item">
+          <span class="label">{{'COMMON.EXPERIENCE' | translate}}</span>
+          <p class="value">{{ bookingDetails().experienceName }}</p>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <p class="card-label">
+          {{'CHECKOUT.CONFIRMATION.DETAIL.CONTACT_TEXT' | translate}}
+          <button class="btn-link" (click)="openWhatsApp()">
+            {{'CHECKOUT.CONFIRMATION.DETAIL.CONTACT_BTN' | translate}}
+          </button>
+        </p>
+      </div>
+    </section>
+
+    <!-- Bloque Derecho: Timeline Próximos Pasos -->
+    <section class="c-checkout-confirmation--steps">
+      <h3 class="steps-title">PRÓXIMOS PASOS</h3>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="icon-box active" [innerHTML]="'✅' | appleEmoji"></div>
+          <div class="timeline-content">
+            <h4>Reserva confirmada</h4>
+            <p>Pago recibido correctamente.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="icon-box" [innerHTML]="'📨' | appleEmoji"></div>
+          <div class="timeline-content">
+            <h4>Confirmación enviada</h4>
+            <p>Revisá tu correo electrónico.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="icon-box" [innerHTML]="'📅' | appleEmoji"></div>
+          <div class="timeline-content">
+            <h4>Recordatorio</h4>
+            <p>Te enviaremos un recordatorio antes de tu picnic.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="icon-box" [innerHTML]="'🌿' | appleEmoji"></div>
+          <div class="timeline-content">
+            <h4>Disfrutá la experiencia</h4>
+            <p>Nos vemos el día de tu reserva.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>

@@ -36,6 +36,7 @@ export class CheckoutPaymentComponent {
 
   onPay(): void {
     this.bookingService.saveBooking().subscribe(resp => {
+      // window.open(resp, '_blank');
       console.log(resp)
     })
   }

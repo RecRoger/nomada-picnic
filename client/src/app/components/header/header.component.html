@@ -32,14 +32,14 @@
       
       @if(!isScrolled || openMenu ) {
         <app-animation
-        [src]="!openMenu ? 'animations/nomada_logo_still_crema.json' : 'animations/nomada_logo_still_azul.json'"
-        [autoplay]="true"
-        [loop]="true">
-      </app-animation>
-    }
-    <img class="logo-img" [class.hidden]="!isScrolled || openMenu"
-      [src]="'images/logos/'+ (!openMenu ? 'NOMADA_LOGO_C_BLANCO.svg' : 'NOMADA_LOGO_C_AZUL.svg')"
-      alt="Logo de la Aplicación">
+          [src]="!openMenu ? 'animations/nomada_logo_still_crema.json' : 'animations/nomada_logo_still_azul.json'"
+          [autoplay]="true"
+          [loop]="true">
+        </app-animation>
+      }
+      <img class="logo-img" [class.hidden]="!isScrolled || openMenu"
+        [src]="'images/logos/'+ (!openMenu ? 'NOMADA_LOGO_C_BLANCO.svg' : 'NOMADA_LOGO_C_AZUL.svg')"
+        alt="Logo de la Aplicación">
 
     </a>
 

@@ -141,6 +141,10 @@
     &-actions {
       @include u.flex(column, flex-start, center, 1rem);
       margin-top: 2rem;
+
+      .action-buttons {
+        @include u.flex(row, flex-start, center, 1rem);
+      }
     }
 
     &-btn-total {
@@ -197,6 +201,17 @@
         // font-size: 0.8rem;
         color: var(--color-text-muted);
       }
+    }
+  }
+
+  &--loader {
+    min-height: 70vh;
+    @include u.flex(column, flex-start, center, 0);
+    text-align: center;
+
+    &-title {
+      text-transform: uppercase;
+      margin: 0;
     }
   }
 }

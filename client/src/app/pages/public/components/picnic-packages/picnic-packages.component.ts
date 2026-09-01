@@ -20,7 +20,7 @@ import { map, Observable } from 'rxjs';
     AsyncPipe,
     TranslateModule,
     MatIconModule,
-    CurrencyPipe,
+    // CurrencyPipe,
     ApiImageUrlPipe,
     LoaderComponent
   ],

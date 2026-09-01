@@ -77,7 +77,7 @@ export class PicnicsService {
       const clientInfo = savedPicnic.clientInfo
 
       // TODO -  mejorar integracion de cambio
-      const exchangeResp = await fetch('https://dolarapi.com/v1/dolares/blue');
+      const exchangeResp = await fetch('https://dolarapi.com/v1/dolares/oficial');
       if (!exchangeResp.ok) {
         throw new Error(`Error en la API de cotización: ${exchangeResp.statusText}`);
       }
@@ -92,7 +92,7 @@ export class PicnicsService {
       // Se utiliza generalmente el valor de venta para calcular cobros
       const exchange = data.venta;
 
-      this.logger.log('[generatePayment] tasa de cambio' + exchange)
+      this.logger.log('[generatePayment] tasa de cambio $' + exchange)
 
       const preferenceBody = {
         items: [
@@ -129,9 +129,6 @@ export class PicnicsService {
         external_reference: savedPicnic._id.toString(),
         notification_url: `${process.env.BACKEND_URL}/api/picnics/webhook`,
       }
-      this.logger.debug(
-        `[generatePayment] Preference body: ${JSON.stringify(preferenceBody, null, 2)}`,
-      );
       const response = await preference.create({
         body: preferenceBody,
       });

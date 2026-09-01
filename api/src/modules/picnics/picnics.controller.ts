@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { PicnicsService } from './picnics.service';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
 import { CreatePicnicDto } from 'src/common/models/create-picnic.dto';
 
@@ -20,6 +20,7 @@ export class PicnicsController {
     type: CreatePicnicDto,
     description: 'Estructura completa de la reserva iniciada desde el checkout',
   })
+  @ApiQuery({ name: 'payType', required: false })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'La reserva del picnic ha sido creada exitosamente.',
@@ -36,10 +37,10 @@ export class PicnicsController {
     description: 'Error interno en el servidor al intentar registrar el picnic.',
   })
   async create(
-    @Query() partialPayment: 'full' | 'deposit',
+    @Query('payType') payType: 'full' | 'deposit',
     @Body() createPicnicDto: CreatePicnicDto
   ): Promise<string> {
-    return this.picnicsService.createPicnic(createPicnicDto, partialPayment);
+    return this.picnicsService.createPicnic(createPicnicDto, payType);
   }
 
   @Post('webhook')

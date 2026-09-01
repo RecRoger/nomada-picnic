@@ -210,8 +210,8 @@ export class PicnicClientInfoDto {
     example: '20-19110527-6',
   })
   @IsString()
-  @Matches(/^\d{2}-\d{8}-\d{1}$/)
   @IsOptional()
+  // @Matches(/^\d{2}-\d{8}-\d{1}$/)
   cuit?: string;
 
   @ApiPropertyOptional({

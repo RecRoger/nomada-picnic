@@ -35,8 +35,11 @@ export class PicnicsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Error interno en el servidor al intentar registrar el picnic.',
   })
-  async create(@Body() createPicnicDto: CreatePicnicDto): Promise<string> {
-    return this.picnicsService.createPicnic(createPicnicDto);
+  async create(
+    @Query() partialPayment: 'full' | 'deposit',
+    @Body() createPicnicDto: CreatePicnicDto
+  ): Promise<string> {
+    return this.picnicsService.createPicnic(createPicnicDto, partialPayment);
   }
 
   @Post('webhook')

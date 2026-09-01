@@ -48,6 +48,8 @@
     "IMAGES": "Imagenes",
     "EARN_PERCENTAGE": "Ganancia",
     "TOTAL": "Total",
+    "EXCHANGE": "Tasa de cambio (dolar blue)",
+    "EXCHANGE_TOTAL": "Total al cambio",
     "FINAL_PRICE": "Precio Final",
     "TOTAL_COST": "Costo Total",
     "NEXT": "Siguiente",
@@ -710,14 +712,18 @@
       "REFFERENCE": "Número de reserva temporal",
       "EXPERIENCE": "Experiencia",
       "METHODS": {
+        "LABEL": "Métodos disponibles en Mercado Pago",
         "CREDIT": "Tarjetas de crédito",
         "DEBIT": "Tarjetas de débito",
         "TRANSFER": "Dinero en cuenta",
         "QUOTAS": "Cuotas disponibles",
         "OTHER": "Otros métodos"
       },
-      "PAY_BTN": "Pagar con Mercado Pago",
-      "BACK_BTN": "Volver al checkout",
+      "BUTTONS": {
+        "TOTAL": "Pagar Total del valor",
+        "PARTIAL": "Pagar seña 50%",
+        "BACK": "Volver al checkout"
+      },
       "SECURITY": {
         "TITLE": "Pago protegido",
         "MESSAGE": "Todos los pagos son procesados de forma segura mediante Mercado Pago."

@@ -1,5 +1,5 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
@@ -7,11 +7,11 @@ import { CartService } from '@services/cart.service';
 
 @Component({
   selector: 'app-checkout-payment',
-  imports: [TranslateModule, CurrencyPipe],
+  imports: [TranslateModule, CurrencyPipe, DecimalPipe],
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.scss'
 })
-export class CheckoutPaymentComponent {
+export class CheckoutPaymentComponent implements OnInit {
   private cartService = inject(CartService);
   private router = inject(Router);
   private bookingService = inject(BookingPicnicsService);
@@ -34,14 +34,27 @@ export class CheckoutPaymentComponent {
     'OTHER',
   ];
 
-  onPay(): void {
+  public DOLLAR_VALUE = 1500
+
+  async ngOnInit(): Promise<void> {
+    await this.getDolar();
+  }
+  async onPay(): Promise<void> {
     this.bookingService.saveBooking().subscribe(resp => {
-      // window.open(resp, '_blank');
-      console.log(resp)
+      window.open(resp, '_blank');
     })
   }
 
   onBack(): void {
     this.router.navigate(['/checkout/form']);
+  }
+
+  async getDolar() {
+    // TODO - Refactorizar cambio de moneda
+    await fetch('https://dolarapi.com/v1/dolares/blue')
+      .then(response => response.json())
+      .then(data => {
+        this.DOLLAR_VALUE = data.venta
+      });
   }
 }

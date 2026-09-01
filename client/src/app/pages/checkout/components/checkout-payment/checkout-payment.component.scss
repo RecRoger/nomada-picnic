@@ -54,6 +54,10 @@
         margin-top: 1.2rem;
         padding-top: 1rem;
       }
+
+      &--exchange {
+        margin: 1rem 0;
+      }
     }
 
     &-label {
@@ -83,6 +87,25 @@
         font-size: 1.6rem;
         font-weight: 800;
         color: var(--color-brand-blue);
+      }
+    }
+
+    &-exchange {
+      &-label {
+        font-size: var(--font-small);
+        &-total {
+          font-size: 1rem;
+          font-weight: 700;
+        }
+      }
+      &-price {
+        font-size: var(--font-small);
+        font-family: var(--font-money);
+        &-total {
+          font-size: 1.2rem;
+          color: var(--color-brand-blue);
+          font-weight: 700;
+        }
       }
     }
 
@@ -120,8 +143,18 @@
       margin-top: 2rem;
     }
 
-    &-btn-submit {
+    &-btn-total {
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      padding: 1rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    &-btn-partial {
+      @include u.custom-button(
+        var(--color-brand-coral),
+        transparent,
+        2px solid var(--color-brand-coral)
+      );
       padding: 1rem 1.5rem;
       font-size: 0.95rem;
       font-weight: 700;

@@ -48,7 +48,7 @@
     "IMAGES": "Imagenes",
     "EARN_PERCENTAGE": "Ganancia",
     "TOTAL": "Total",
-    "EXCHANGE": "Tasa de cambio (dolar blue)",
+    "EXCHANGE": "Tasa de cambio",
     "EXCHANGE_TOTAL": "Total al cambio",
     "FINAL_PRICE": "Precio Final",
     "TOTAL_COST": "Costo Total",
@@ -618,7 +618,7 @@
         "BUTTON": "Añadir mi picnic al carrito"
       },
       "PRICES": {
-        "LABEL": "InviLa ocasióntados",
+        "LABEL": "Invitados",
         "TITLE": "¿Cuántas personas asistirán?",
         "TEXT": "Seleccioná la cantidad de invitados. El precio se actualizará automáticamente según el tamaño de tu experiencia."
       },
@@ -665,7 +665,8 @@
       "DATE_LABEL": "Fecha y hora",
       "PLACE_LABEL": "Lugar",
       "EVENT_LABEL": "Celebración",
-      "ADDITIONALS_TITLE": "Adicionales"
+      "ADDITIONALS_TITLE": "Adicionales",
+      "ADDITIONALS_EMPTY": "No hay adicionales seleccionados para este picnic"
     },
     "FORM": {
       "HEADER": {
@@ -727,6 +728,10 @@
       "SECURITY": {
         "TITLE": "Pago protegido",
         "MESSAGE": "Todos los pagos son procesados de forma segura mediante Mercado Pago."
+      },
+      "LOADER": {
+        "TITLE": "Procesando tu pago",
+        "TEXT": "Estamos confirmando la operación con Mercado Pago. \n No cierres esta ventana."
       }
     },
     "CONFIRMATION": {

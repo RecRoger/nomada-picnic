@@ -1,83 +1,97 @@
 <section class="c-checkout-payment">
-  <!-- Encabezado -->
-  <header class="c-checkout-payment--header">
-    <h1 class="c-checkout-payment--header-title">
-      {{'CHECKOUT.PAYMENT.HEADER.TITLE_1' | translate}} <span class="highlighted">{{'CHECKOUT.PAYMENT.HEADER.TITLE_2' | translate}}</span>
-    </h1>
-    <p class="c-checkout-payment--header-subtitle">
-      {{'CHECKOUT.PAYMENT.HEADER.SUBTITLE' | translate}}
-    </p>
-  </header>
 
-  <!-- Tarjeta Principal -->
-  <div class="c-checkout-payment--card">
-    <div class="c-checkout-payment--card-details">
-      <div class="c-checkout-payment--card-row">
-        <span class="c-checkout-payment--card-label">{{'CHECKOUT.PAYMENT.REFFERENCE' | translate}}</span>
-        <span class="c-checkout-payment--card-value c-checkout-payment--card-value--code">
-          {{ tempBookingCode }}
+  @if(!loadPayment) {
+    <!-- Encabezado -->
+    <header class="c-checkout-payment--header">
+      <h1 class="c-checkout-payment--header-title">
+        {{'CHECKOUT.PAYMENT.HEADER.TITLE_1' | translate}} <span class="highlighted">{{'CHECKOUT.PAYMENT.HEADER.TITLE_2' | translate}}</span>
+      </h1>
+      <p class="c-checkout-payment--header-subtitle">
+        {{'CHECKOUT.PAYMENT.HEADER.SUBTITLE' | translate}}
+      </p>
+    </header>
+  
+    <!-- Tarjeta Principal -->
+    <div class="c-checkout-payment--card">
+      <div class="c-checkout-payment--card-details">
+        <div class="c-checkout-payment--card-row">
+          <span class="c-checkout-payment--card-label">{{'CHECKOUT.PAYMENT.REFFERENCE' | translate}}</span>
+          <span class="c-checkout-payment--card-value c-checkout-payment--card-value--code">
+            {{ tempBookingCode }}
+          </span>
+        </div>
+  
+        <div class="c-checkout-payment--card-row">
+          <span class="c-checkout-payment--card-label">{{'COMMON.EXPERIENCE' | translate}}</span>
+          <span class="c-checkout-payment--card-value">
+            {{ booking()?.package?.name || 'Picnic Signature' }}
+          </span>
+        </div>
+      </div>
+  
+      <div class="c-checkout-payment--card-row c-checkout-payment--card-row--total">
+        <span class="c-checkout-payment--card-total-label">{{'COMMON.TOTAL' | translate}}</span>
+        <span class="c-checkout-payment--card-total-price">
+          {{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}
         </span>
       </div>
-
-      <div class="c-checkout-payment--card-row">
-        <span class="c-checkout-payment--card-label">{{'COMMON.EXPERIENCE' | translate}}</span>
-        <span class="c-checkout-payment--card-value">
-          {{ booking()?.package?.name || 'Picnic Signature' }}
+      <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange">
+        <span class="c-checkout-payment--card-exchange-label">{{'COMMON.EXCHANGE' | translate}}</span>
+        <span class="c-checkout-payment--card-exchange-price">
+          ${{ DOLLAR_VALUE | number:'1.0-2' }} x 1 US$
         </span>
       </div>
-    </div>
-
-    <div class="c-checkout-payment--card-row c-checkout-payment--card-row--total">
-      <span class="c-checkout-payment--card-total-label">{{'COMMON.TOTAL' | translate}}</span>
-      <span class="c-checkout-payment--card-total-price">
-        {{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}
-      </span>
-    </div>
-    <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange">
-      <span class="c-checkout-payment--card-exchange-label">{{'COMMON.EXCHANGE' | translate}}</span>
-      <span class="c-checkout-payment--card-exchange-price">
-        ${{ DOLLAR_VALUE | number:'1.0-2' }} x 1 US$
-      </span>
-    </div>
-    <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange-total">
-      <span class="c-checkout-payment--card-exchange-label-total">{{'COMMON.EXCHANGE_TOTAL' | translate}}</span>
-      <span class="c-checkout-payment--card-exchange-price-total">
-        ${{ DOLLAR_VALUE * totalAmount() | number:'1.0-2' }}
-      </span>
-    </div>
-    
-    <!-- Métodos Disponibles -->
-    <div class="c-checkout-payment--card-methods">
-      <span class="c-checkout-payment--card-methods-title">
-        {{'CHECKOUT.PAYMENT.METHODS.LABEL' | translate}}
-      </span>
-      <div class="c-checkout-payment--card-tags">
-        @for (method of paymentMethods; track method) {
-          <span class="c-checkout-payment--card-tag">{{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}</span>
-        }
+      <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange-total">
+        <span class="c-checkout-payment--card-exchange-label-total">{{'COMMON.EXCHANGE_TOTAL' | translate}}</span>
+        <span class="c-checkout-payment--card-exchange-price-total">
+          ${{ DOLLAR_VALUE * totalAmount() | number:'1.0-2' }}
+        </span>
+      </div>
+      
+      <!-- Métodos Disponibles -->
+      <div class="c-checkout-payment--card-methods">
+        <span class="c-checkout-payment--card-methods-title">
+          {{'CHECKOUT.PAYMENT.METHODS.LABEL' | translate}}
+        </span>
+        <div class="c-checkout-payment--card-tags">
+          @for (method of paymentMethods; track method) {
+            <span class="c-checkout-payment--card-tag">{{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}</span>
+          }
+        </div>
+      </div>
+  
+      <!-- Acciones -->
+      <div class="c-checkout-payment--card-actions">
+        <div class="action-buttons">
+          <button class="c-checkout-payment--card-btn-partial" (click)="onPay(true)">
+            {{'CHECKOUT.PAYMENT.BUTTONS.PARTIAL' | translate}}
+          </button>
+          <button class="c-checkout-payment--card-btn-total" (click)="onPay()">
+            {{'CHECKOUT.PAYMENT.BUTTONS.TOTAL' | translate}}
+          </button>
+        </div>
+        <button class="c-checkout-payment--card-btn-back" (click)="onBack()">
+          {{'CHECKOUT.PAYMENT.BUTTONS.BACK' | translate}}
+        </button>
       </div>
     </div>
-
-    <!-- Acciones -->
-    <div class="c-checkout-payment--card-actions">
-      <button class="c-checkout-payment--card-btn-total" (click)="onPay()">
-        {{'CHECKOUT.PAYMENT.BUTTONS.TOTAL' | translate}}
-      </button>
-      <button class="c-checkout-payment--card-btn-partial" (click)="onPay()">
-        {{'CHECKOUT.PAYMENT.BUTTONS.PARTIAL' | translate}}
-      </button>
-      <button class="c-checkout-payment--card-btn-back" (click)="onBack()">
-        {{'CHECKOUT.PAYMENT.BUTTONS.BACK' | translate}}
-      </button>
+  
+    <!-- Banner de Seguridad -->
+    <div class="c-checkout-payment--security-banner">
+      <div class="c-checkout-payment--security-icon">🔒</div>
+      <div class="c-checkout-payment--security-info">
+        <h4>{{'CHECKOUT.PAYMENT.SECURITY.TITLE' | translate}}</h4>
+        <p>{{'CHECKOUT.PAYMENT.SECURITY.MESSAGE' | translate}}</p>
+      </div>
     </div>
-  </div>
-
-  <!-- Banner de Seguridad -->
-  <div class="c-checkout-payment--security-banner">
-    <div class="c-checkout-payment--security-icon">🔒</div>
-    <div class="c-checkout-payment--security-info">
-      <h4>{{'CHECKOUT.PAYMENT.SECURITY.TITLE' | translate}}</h4>
-      <p>{{'CHECKOUT.PAYMENT.SECURITY.MESSAGE' | translate}}</p>
+  } @else {
+    <div class="c-checkout-payment--loader">
+      <app-loader size="medium"></app-loader>
+      <h2 class="c-checkout-payment--loader-title">{{'CHECKOUT.PAYMENT.LOADER.TITLE' | translate}}</h2>
+      <p class="c-checkout-payment--loader-text" [innerHTML]="'CHECKOUT.PAYMENT.LOADER.TEXT' | translate"></p>
     </div>
-  </div>
+  }
+
+
+
 </section>

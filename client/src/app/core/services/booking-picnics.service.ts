@@ -16,13 +16,15 @@ export class BookingPicnicsService {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  public saveBooking(): Observable<any> {
+  public saveBooking(partialPay = false): Observable<any> {
     const bookingBody = this.mapCartToCreatePicnicDto({
       booking: this.cartService.booking(),
       additionals: this.cartService.additionals(),
       clientInfo: this.cartService.clientForm(),
     })
-    return this.http.post(API_URL + '/api/picnics', bookingBody).pipe(
+    return this.http.post(API_URL + '/api/picnics', bookingBody, {
+      ...(partialPay ? { params: { payType: 'deposit' } } : {})
+    }).pipe(
       map((response: any) => {
         if (response) {
           return response.data as any

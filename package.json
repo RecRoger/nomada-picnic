@@ -14,7 +14,7 @@
     "start:client:pro": "npm run start:pre --workspace=client",
     "start:api": "npm run start:dev --workspace=api",
     "start:debug": "npm run start:debug --workspace=api",
-    "start:tunnel": "$ ngrok start --all",
+    "start:tunnel": "ngrok start --all",
     "build:api": "npm run build --workspace=api",
     "auth:api": "npm run cloud:auth --workspace=api",
     "deploy:api": "bash deploy.sh api",

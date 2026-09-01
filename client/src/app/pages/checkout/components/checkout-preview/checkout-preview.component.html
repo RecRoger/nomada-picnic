@@ -92,6 +92,8 @@
               </div>
               <span class="item-price">{{ item.totalPrice | currency: 'US$ ':'code':'1.0-2' }}</span>
             </div>
+          } @empty {
+            <p>{{'CHECKOUT.PREVIEW.ADDITIONALS_EMPTY' | translate}}</p>
           }
         </div>
       </article>

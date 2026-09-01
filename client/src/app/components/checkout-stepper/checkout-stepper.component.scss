@@ -8,17 +8,32 @@
   &--container {
     max-width: 900px;
     margin: auto;
-    @include u.flex(row, space-between, center);
+    @include u.flex(row, space-between, flex-start);
     position: relative;
 
     .step {
       z-index: 2;
-      background-color: var(--color-white);
+      flex: 1;
+      position: relative;
       @include u.flex(column, center, center, 0.5rem);
 
-      min-width: 80px;
-      @include u.style-up-to(tablet) {
-        min-width: 60px;
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        // Posicionar horizontalmente centrado con el badge
+        top: 16px; // (32px de alto del badge / 2)
+        left: calc(50% + 24px); // Inicia justo después del badge
+        width: calc(100% - 48px); // Se estira hasta el badge del siguiente paso
+        height: 2px;
+        background-color: var(--color-outline);
+        z-index: -1;
+        transition: background-color 0.3s ease;
+
+        @include u.style-up-to(tablet) {
+          top: 12px; // (24px de alto del badge / 2)
+          left: calc(50% + 18px);
+          width: calc(100% - 36px);
+        }
       }
 
       .step-badge {
@@ -30,6 +45,8 @@
         color: var(--color-text-muted);
         width: 32px;
         height: 32px;
+        z-index: 2; // Queda por encima de la línea
+
         @include u.style-up-to(tablet) {
           width: 24px;
           height: 24px;
@@ -46,8 +63,24 @@
       .step-label {
         font-size: 0.8rem;
         color: var(--color-text-muted);
+        text-align: center;
       }
 
+      &.done {
+        .step-badge {
+          background-color: var(--color-brand-blue);
+          border-color: var(--color-brand-blue);
+          color: #fff;
+        }
+
+        .step-label {
+          color: var(--color-text-dark);
+          font-weight: 600;
+        }
+        &::after {
+          background-color: var(--color-brand-blue);
+        }
+      }
       &.active {
         .step-badge {
           background-color: var(--color-brand-coral);
@@ -58,27 +91,10 @@
           color: var(--color-text-dark);
           font-weight: 600;
         }
-      }
-
-      &.done {
-        .step-badge {
-          background-color: var(--color-brand-blue);
-          border-color: var(--color-brand-blue);
-          color: #fff;
-        }
-        .step-label {
-          color: var(--color-text-dark);
-          font-weight: 600;
+        &::after {
+          background-color: var(--color-outline);
         }
       }
-    }
-    .step-line {
-      z-index: 1;
-      position: absolute;
-      width: 100%;
-      height: 1px;
-      background-color: var(--color-outline);
-      margin-bottom: 1.5rem;
     }
   }
 }

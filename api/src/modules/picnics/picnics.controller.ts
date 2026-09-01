@@ -24,33 +24,7 @@ export class PicnicsController {
     status: HttpStatus.CREATED,
     description: 'La reserva del picnic ha sido creada exitosamente.',
     schema: {
-      example: {
-        _id: '65f1a2b3c4d5e6f7a8b9c0d5',
-        package: '65f1a2b3c4d5e6f7a8b9c0d2',
-        guestsCount: 4,
-        eventDate: '2026-09-15T00:00:00.000Z',
-        eventTime: '16:00',
-        basePrice: 150000,
-        additionals: [
-          {
-            cost: '65f1a2b3c4d5e6f7a8b9c0d1',
-            quantity: 2,
-            totalPrice: 15000,
-          },
-        ],
-        clientInfo: {
-          name: 'Rogelio',
-          lastname: 'Arzola',
-          email: 'rogelio@example.com',
-          phone: '+5491112345678',
-          tyc: true,
-          policy: true,
-        },
-        totalAmount: 165000,
-        status: 'PENDING',
-        createdAt: '2026-08-28T18:00:00.000Z',
-        updatedAt: '2026-08-28T18:00:00.000Z',
-      },
+      $ref: 'Object'
     },
   })
   @ApiResponse({
@@ -61,8 +35,21 @@ export class PicnicsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Error interno en el servidor al intentar registrar el picnic.',
   })
-  async create(@Body() createPicnicDto: CreatePicnicDto) {
+  async create(@Body() createPicnicDto: CreatePicnicDto): Promise<string> {
     return this.picnicsService.createPicnic(createPicnicDto);
+  }
+
+  @Post('webhook')
+  @ApiOperation({ summary: 'Recibir notificaciones asíncronas IPN/Webhook de Mercado Pago' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Notificación procesada correctamente' })
+  async handleWebhook(@Query() query: any, @Body() body: any) {
+    // Mercado Pago envía notificaciones tipo payment.created / payment.updated
+    const topic = query.topic || query.type || body.type;
+    const paymentId = query['data.id'] || body?.data?.id;
+    if (topic === 'payment' && paymentId) {
+      await this.picnicsService.processPaymentWebhook(paymentId);
+    }
+    return { status: 'ok' };
   }
 
 }

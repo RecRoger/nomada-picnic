@@ -20,7 +20,7 @@
       </div>
 
       <div class="c-checkout-payment--card-row">
-        <span class="c-checkout-payment--card-label"></span>
+        <span class="c-checkout-payment--card-label">{{'COMMON.EXPERIENCE' | translate}}</span>
         <span class="c-checkout-payment--card-value">
           {{ booking()?.package?.name || 'Picnic Signature' }}
         </span>
@@ -33,11 +33,23 @@
         {{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}
       </span>
     </div>
-
+    <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange">
+      <span class="c-checkout-payment--card-exchange-label">{{'COMMON.EXCHANGE' | translate}}</span>
+      <span class="c-checkout-payment--card-exchange-price">
+        ${{ DOLLAR_VALUE | number:'1.0-2' }} x 1 US$
+      </span>
+    </div>
+    <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange-total">
+      <span class="c-checkout-payment--card-exchange-label-total">{{'COMMON.EXCHANGE_TOTAL' | translate}}</span>
+      <span class="c-checkout-payment--card-exchange-price-total">
+        ${{ DOLLAR_VALUE * totalAmount() | number:'1.0-2' }}
+      </span>
+    </div>
+    
     <!-- Métodos Disponibles -->
     <div class="c-checkout-payment--card-methods">
       <span class="c-checkout-payment--card-methods-title">
-        MÉTODOS DISPONIBLES EN MERCADO PAGO
+        {{'CHECKOUT.PAYMENT.METHODS.LABEL' | translate}}
       </span>
       <div class="c-checkout-payment--card-tags">
         @for (method of paymentMethods; track method) {
@@ -48,11 +60,14 @@
 
     <!-- Acciones -->
     <div class="c-checkout-payment--card-actions">
-      <button class="c-checkout-payment--card-btn-submit" (click)="onPay()">
-        {{'CHECKOUT.PAYMENT.PAY_BTN' | translate}}
+      <button class="c-checkout-payment--card-btn-total" (click)="onPay()">
+        {{'CHECKOUT.PAYMENT.BUTTONS.TOTAL' | translate}}
+      </button>
+      <button class="c-checkout-payment--card-btn-partial" (click)="onPay()">
+        {{'CHECKOUT.PAYMENT.BUTTONS.PARTIAL' | translate}}
       </button>
       <button class="c-checkout-payment--card-btn-back" (click)="onBack()">
-        {{'CHECKOUT.PAYMENT.BACK_BTN' | translate}}
+        {{'CHECKOUT.PAYMENT.BUTTONS.BACK' | translate}}
       </button>
     </div>
   </div>

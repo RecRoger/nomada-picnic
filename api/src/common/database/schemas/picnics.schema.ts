@@ -73,6 +73,18 @@ export class Picnic {
   @Prop({ required: true })
   totalAmount: number;
 
+  @Prop({ required: true })
+  depositAmount: number;
+
+  @Prop({ required: true })
+  paymentOption: 'DEPOSIT' | 'FULL'
+
+  @Prop({ required: true })
+  paidAmount: number;
+
+  @Prop({ required: true })
+  pendingAmount: number;
+
   @Prop({ type: String, enum: BookingStatus, default: BookingStatus.PENDING })
   status: BookingStatus;
 

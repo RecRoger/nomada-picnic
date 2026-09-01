@@ -18,12 +18,16 @@ export class PicnicsService {
     });
   }
 
-  async createPicnic(dto: CreatePicnicDto): Promise<string> {
+  async createPicnic(dto: CreatePicnicDto, paymentOption: 'full' | 'deposit' = 'full'): Promise<string> {
     this.logger.log('[createPicnic]', dto.clientInfo.name)
 
     try {
       const additionalsTotal = dto.additionals.reduce((sum, item) => sum + item.totalPrice, 0);
       const totalAmount = dto.booking.basePrice + additionalsTotal;
+
+      const isDeposit = paymentOption === 'deposit';
+      const depositAmount = totalAmount * 0.5;
+      const initialChargeAmount = isDeposit ? depositAmount : totalAmount;
 
       const newPicnic = new this.picnicsModel({
         package: dto.booking.packageId,
@@ -41,14 +45,23 @@ export class PicnicsService {
           totalPrice: add.totalPrice,
         })),
         clientInfo: dto.clientInfo,
-        totalAmount,
         status: BookingStatus.PENDING,
+        totalAmount,
+        depositAmount: depositAmount,
+        paymentOption: isDeposit ? 'DEPOSIT' : 'FULL',
+        paidAmount: 0,
+        pendingAmount: totalAmount,
       });
 
       const savedPicnic = await newPicnic.save();
       this.logger.log('[createPicnic] Picnic guardado en BD (PENDING)')
 
-      const payLink = await this.generatePayment(savedPicnic, totalAmount)
+      const payLink = await this.generatePayment(
+        savedPicnic,
+        initialChargeAmount,
+        isDeposit ? `Seña (50%) - Picnic` : `Pago Total - Picnic`,
+        paymentOption
+      )
 
       return payLink
     } catch (err) {
@@ -57,19 +70,37 @@ export class PicnicsService {
     }
   }
 
-  private async generatePayment(savedPicnic: PicnicsDocument, amount: number): Promise<string> {
+  private async generatePayment(savedPicnic: PicnicsDocument, amount: number, paymentTitle: string, paymentOption: 'full' | 'deposit' = 'full'): Promise<string> {
     this.logger.log('[generatePayment]', savedPicnic._id)
     try {
       const preference = new Preference(this.mpClient);
-
       const clientInfo = savedPicnic.clientInfo
+
+      // TODO -  mejorar integracion de cambio
+      const exchangeResp = await fetch('https://dolarapi.com/v1/dolares/blue');
+      if (!exchangeResp.ok) {
+        throw new Error(`Error en la API de cotización: ${exchangeResp.statusText}`);
+      }
+      const data: {
+        compra: number;
+        venta: number;
+        casa: string;
+        nombre: string;
+        fechaActualizacion: string;
+      } = await exchangeResp.json();
+
+      // Se utiliza generalmente el valor de venta para calcular cobros
+      const exchange = data.venta;
+
+      this.logger.log('[generatePayment] tasa de cambio' + exchange)
+
       const preferenceBody = {
         items: [
           {
             id: savedPicnic._id.toString(),
-            title: 'Reserva Nómada Picnic',
+            title: paymentTitle,
             quantity: 1,
-            unit_price: amount,
+            unit_price: amount * exchange,
             currency_id: 'ARS',
           },
         ],
@@ -105,7 +136,6 @@ export class PicnicsService {
         body: preferenceBody,
       });
 
-      // 4. Guardar preferenceId en la reserva y retornar init_point
       savedPicnic.preferenceId = response.id;
       this.logger.log(`[generatePayment] preference=${response.id}`);
       this.logger.log(`[generatePayment] init_point=${response.init_point}`);
@@ -120,34 +150,55 @@ export class PicnicsService {
   }
 
   async processPaymentWebhook(paymentId: string): Promise<void> {
-
-    this.logger.log('[processPaymentWebhook]', paymentId)
+    this.logger.log('[processPaymentWebhook]', paymentId);
 
     try {
-      let payment = new Payment(this.mpClient);
-      let paymentData = await payment.get({ id: paymentId });
+      const payment = new Payment(this.mpClient);
+      const paymentData = await payment.get({ id: paymentId });
 
-      if (!paymentData || !paymentData.external_reference) return
+      if (!paymentData || !paymentData.external_reference) return;
 
+      const picnicId = paymentData.external_reference;
+      const picnic = await this.picnicsModel.findById(picnicId);
 
-      const picnicId = paymentData?.external_reference;
+      if (!picnic) {
+        this.logger.warn(`[processPaymentWebhook] Picnic no encontrado: ${picnicId}`);
+        return;
+      }
 
       if (paymentData.status === 'approved') {
+        const isDeposit = picnic.paymentOption === 'DEPOSIT';
+        const transactionAmount = isDeposit ? picnic.depositAmount : picnic.totalAmount;
+
+        const newPaidAmount = (picnic.paidAmount || 0) + transactionAmount;
+        const newPendingAmount = Math.max(0, picnic.totalAmount - newPaidAmount);
+
+        const isFullyPaid = newPendingAmount === 0;
+        const newStatus = isFullyPaid ? BookingStatus.PAID : BookingStatus.PARTIALLY_PAID;
+
         await this.picnicsModel.findByIdAndUpdate(picnicId, {
-          status: BookingStatus.PAID,
+          status: newStatus,
           paymentId: paymentId,
+          paidAmount: newPaidAmount,
+          pendingAmount: newPendingAmount,
         });
 
-        // TODO - Disparar el envío de email de confirmación (Resend)
+        this.logger.log(
+          `[processPaymentWebhook] Picnic ${picnicId} actualizado. Pagado: ${newPaidAmount}, Pendiente: ${newPendingAmount}, Estado: ${newStatus}`
+        );
 
-      } else if (paymentData?.status === 'cancelled' || paymentData?.status === 'rejected') {
-        await this.picnicsModel.findByIdAndUpdate(picnicId, {
-          status: BookingStatus.CANCELLED,
-          paymentId: paymentId,
-        });
+        // TODO - Disparar el envío de email de confirmación con Resend
+
+      } else if (paymentData.status === 'cancelled' || paymentData.status === 'rejected') {
+        if (picnic.paidAmount === 0) {
+          await this.picnicsModel.findByIdAndUpdate(picnicId, {
+            status: BookingStatus.CANCELLED,
+            paymentId: paymentId,
+          });
+        }
       }
     } catch (error) {
-      console.error(`Error al procesar el pago ${paymentId}:`, error);
+      this.logger.error(`Error al procesar el pago ${paymentId}: ${error.message}`, error.stack);
     }
   }
 }

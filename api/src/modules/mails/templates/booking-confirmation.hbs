@@ -1,0 +1,427 @@
+<html lang='es'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Confirmación de tu reserva - Nómada Picnic</title>
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link
+      href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Prompt:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap'
+      rel='stylesheet'
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #faeee5;
+        font-family: 'Inter', sans-serif;
+        color: #1a1a1a;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+  </head>
+  <body
+    style="margin: 0; padding: 30px 0; background-color: #faeee5; font-family: 'Inter', sans-serif; color: #1a1a1a;"
+  >
+
+    <!-- Contenedor Principal Centrado -->
+    <table
+      role='presentation'
+      width='100%'
+      cellspacing='0'
+      cellpadding='0'
+      border='0'
+      style='background-color: #faeee5;'
+    >
+      <tr>
+        <td align='center' style='padding: 10px;'>
+
+          <!-- Pre-header / Subtítulo pequeño superior -->
+          <div
+            style="font-size: 11px; color: #8e8e93; margin-bottom: 12px; font-family: 'Inter', sans-serif;"
+          >
+            Confirmación de tu reserva · Nómada Picnic
+          </div>
+
+          <!-- Tarjeta Blanca Principal -->
+          <table
+            role='presentation'
+            width='100%'
+            cellspacing='0'
+            cellpadding='0'
+            border='0'
+            style='max-width: 580px; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03);'
+          >
+
+            <!-- Banner Superior Azul -->
+            <tr>
+              <td
+                align='center'
+                style='background-color: #4b4ceb; padding: 40px 20px; color: #ffffff;'
+              >
+                <!-- Logo / Isotipo en blanco -->
+                <img
+                  src='https://nomadapicnic.com/images/logos/NOMADA_LOGO_C_BLANCO.svg'
+                  alt='Nómada Picnic'
+                  width='140'
+                  style='display: block; margin: 0 auto 12px auto; width: 140px; max-width: 140px; height: auto; border: 0;'
+                />
+                <h1
+                  style="margin: 0; font-family: 'Prompt', sans-serif; font-size: 26px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px;"
+                >
+                  ¡TU PICNIC ESTÁ CONFIRMADO!
+                </h1>
+              </td>
+            </tr>
+
+            <!-- Mensaje de Bienvenida -->
+            <tr>
+              <td
+                style='padding: 32px 32px 20px 32px; font-size: 14px; line-height: 1.6; color: #555555;'
+              >
+                <p style='margin: 0 0 16px 0; color: #1a1a1a; font-weight: 600; font-size: 15px;'>
+                  Hola
+                  {{clientName}},
+                </p>
+                <p style='margin: 0;'>
+                  Recibimos tu
+                  {{#if isDeposit}}seña{{else}}pago{{/if}}
+                  y ya guardamos tu lugar. El
+                  {{eventDateFormatted}}
+                  solo tenés que llegar: la mesa, la canasta, la decoración y todos los detalles los
+                  preparamos nosotros.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Tabla de Datos Principales de la Reserva (Cream Box) -->
+            <tr>
+              <td style='padding: 0 32px 24px 32px;'>
+                <table
+                  role='presentation'
+                  width='100%'
+                  cellspacing='0'
+                  cellpadding='10'
+                  border='0'
+                  style='background-color: #fff7f0; border-radius: 12px; font-size: 13px; border-collapse: separate; border-spacing: 0;'
+                >
+                  <tr>
+                    <td
+                      style='color: #555555; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >Número de reserva</td>
+                    <td
+                      align='right'
+                      style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #1a1a1a; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;"
+                    >{{bookingNumber}}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      style='color: #555555; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >Experiencia</td>
+                    <td
+                      align='right'
+                      style='font-weight: 600; color: #1a1a1a; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >{{experienceName}}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      style='color: #555555; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >Personas</td>
+                    <td
+                      align='right'
+                      style='font-weight: 600; color: #1a1a1a; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >{{guestsCount}} personas</td>
+                  </tr>
+                  <tr>
+                    <td
+                      style='color: #555555; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >Fecha</td>
+                    <td
+                      align='right'
+                      style='font-weight: 600; color: #1a1a1a; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >{{eventDateFormatted}}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      style='color: #555555; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >Hora</td>
+                    <td
+                      align='right'
+                      style='font-weight: 600; color: #1a1a1a; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >{{eventTime}}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      style='color: #555555; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >Lugar</td>
+                    <td
+                      align='right'
+                      style='font-weight: 600; color: #1a1a1a; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >{{locationName}}</td>
+                  </tr>
+                  <tr>
+                    <td
+                      style='color: #555555; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >Celebración</td>
+                    <td
+                      align='right'
+                      style='font-weight: 600; color: #1a1a1a; border-bottom: 1px solid #ddd3c6; padding: 12px 16px;'
+                    >{{celebrationType}}</td>
+                  </tr>
+                  <tr>
+                    <td style='color: #555555; padding: 12px 16px;'>Estado</td>
+                    <td
+                      align='right'
+                      style='font-weight: 600; color: #1a1a1a; padding: 12px 16px;'
+                    >Confirmada</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Adicionales y Resumen Financiero -->
+            <tr>
+              <td style='padding: 0 32px 24px 32px; font-size: 13px;'>
+                {{#if additionals.length}}
+                  <div
+                    style='font-size: 12px; font-weight: 600; color: #555555; margin-bottom: 10px;'
+                  >
+                    Adicionales contratados
+                  </div>
+
+                  <table
+                    role='presentation'
+                    width='100%'
+                    cellspacing='0'
+                    cellpadding='4'
+                    border='0'
+                    style='margin-bottom: 16px;'
+                  >
+                    {{#each additionals}}
+                      <tr>
+                        <td style='color: #555555; padding: 4px 0;'>{{this.name}}</td>
+                        <td
+                          align='right'
+                          style="font-family: 'JetBrains Mono', monospace; color: #8e8e93; padding: 4px 0;"
+                        >{{this.priceFormatted}} US$</td>
+                      </tr>
+                    {{/each}}
+                  </table>
+                {{/if}}
+
+                <table
+                  role='presentation'
+                  width='100%'
+                  cellspacing='0'
+                  cellpadding='6'
+                  border='0'
+                  style='border-top: 1px solid #ddd3c6; padding-top: 12px;'
+                >
+                  <tr>
+                    <td style='color: #555555;'>Subtotal</td>
+                    <td
+                      align='right'
+                      style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #1a1a1a;"
+                    >{{subtotalFormatted}} US$</td>
+                  </tr>
+                  {{#if isDeposit}}
+                    <tr>
+                      <td style='color: #4b4ceb; font-weight: 500;'>Seña abonada (50%)</td>
+                      <td
+                        align='right'
+                        style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #4b4ceb;"
+                      >{{paidAmountFormatted}} US$</td>
+                    </tr>
+                    <tr>
+                      <td style='color: #1a1a1a; font-weight: 700; font-size: 14px;'>Saldo pendiente</td>
+                      <td
+                        align='right'
+                        style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1a1a1a; font-size: 15px;"
+                      >{{pendingAmountFormatted}} US$</td>
+                    </tr>
+                  {{else}}
+                    <tr>
+                      <td style='color: #1a1a1a; font-weight: 700; font-size: 14px;'>Total Pagado</td>
+                      <td
+                        align='right'
+                        style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #4b4ceb; font-size: 15px;"
+                      >{{paidAmountFormatted}} US$</td>
+                    </tr>
+                  {{/if}}
+                </table>
+              </td>
+            </tr>
+
+            <!-- Bloque Violeta/Azul Suave: ¿Necesitás cambiar algo? -->
+            <tr>
+              <td style='padding: 0 32px 32px 32px;'>
+                <table
+                  role='presentation'
+                  width='100%'
+                  cellspacing='0'
+                  cellpadding='0'
+                  border='0'
+                  style='background-color: #4b4ceb15; border-radius: 16px; padding: 24px; text-align: center;'
+                >
+                  <tr>
+                    <td>
+                      <h3
+                        style="margin: 0 0 8px 0; font-family: 'Prompt', sans-serif; font-size: 18px; font-weight: 900; color: #1a1a1a; text-transform: uppercase;"
+                      >
+                        ¿NECESITÁS CAMBIAR ALGO?
+                      </h3>
+                      <p
+                        style='margin: 0 0 20px 0; font-size: 12px; color: #555555; line-height: 1.5; max-width: 380px; margin-left: auto; margin-right: auto;'
+                      >
+                        Desde Mi Reserva Nómada podés ver el estado de tu picnic, mover la fecha,
+                        ajustar los detalles o pedir una cancelación.
+                      </p>
+
+                      <!-- Botón Gestionar Mi Reserva -->
+                      <a
+                        href='{{manageBookingUrl}}'
+                        target='_blank'
+                        style='display: inline-block; background-color: #ff5a2c; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 12px 32px; border-radius: 25px; box-shadow: 0 4px 10px rgba(255, 90, 44, 0.2);'
+                      >
+                        Gestionar mi reserva
+                      </a>
+
+                      <div style='font-size: 11px; color: #8e8e93; margin-top: 16px;'>
+                        Vas a necesitar tu nombre, apellido y el número
+                        <strong style='color: #1a1a1a;'>{{bookingNumber}}</strong>.
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Instrucciones "Para el día del picnic" -->
+            <tr>
+              <td
+                style='padding: 0 32px 32px 32px; font-size: 13px; line-height: 1.5; color: #555555;'
+              >
+                <div
+                  style='font-size: 12px; font-weight: 600; color: #8e8e93; margin-bottom: 16px;'
+                >
+                  Para el día del picnic
+                </div>
+
+                <!-- Item 1: Punto de encuentro -->
+                <table
+                  role='presentation'
+                  width='100%'
+                  cellspacing='0'
+                  cellpadding='0'
+                  border='0'
+                  style='margin-bottom: 16px;'
+                >
+                  <tr>
+                    <td width='28' valign='top' style='font-size: 16px;'>📍</td>
+                    <td>
+                      <strong style='color: #1a1a1a; display: block; margin-bottom: 2px;'>Punto de
+                        encuentro</strong>
+                      Una persona de nuestro equipo se pondrá en contacto para indicar la ubicacion
+                      exacta en
+                      {{locationName}}
+                      donde será el picnic. Te esperamos con un cartel de Nómada.
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Item 2: Horario de llegada -->
+                <table
+                  role='presentation'
+                  width='100%'
+                  cellspacing='0'
+                  cellpadding='0'
+                  border='0'
+                  style='margin-bottom: 16px;'
+                >
+                  <tr>
+                    <td width='28' valign='top' style='font-size: 16px;'>⏰</td>
+                    <td>
+                      <strong style='color: #1a1a1a; display: block; margin-bottom: 2px;'>Horario de
+                        llegada</strong>
+                      Llegá 10 minutos antes de las
+                      {{eventTime}}. El picnic dura
+                      {{durationHours}}
+                      horas.
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Item 3: Qué llevar -->
+                <table
+                  role='presentation'
+                  width='100%'
+                  cellspacing='0'
+                  cellpadding='0'
+                  border='0'
+                  style='margin-bottom: 24px;'
+                >
+                  <tr>
+                    <td width='28' valign='top' style='font-size: 16px;'>👒</td>
+                    <td>
+                      <strong style='color: #1a1a1a; display: block; margin-bottom: 2px;'>Qué llevar</strong>
+                      Ropa cómoda, abrigo liviano para la tarde y protector solar. Del resto nos
+                      ocupamos nosotros.
+                    </td>
+                  </tr>
+                </table>
+
+                <p style='margin: 0 0 16px 0;'>
+                  Cualquier cosa, respondé este correo o escribinos por
+                  <a
+                    href='{{whatsappUrl}}'
+                    target='_blank'
+                    style='color: #4b4ceb; font-weight: 600; text-decoration: underline;'
+                  >WhatsApp</a>. Nos vemos el
+                  {{eventDateFormatted}}.
+                </p>
+
+                <p style='margin: 0;'>
+                  Gracias por elegirnos,<br />
+                  <strong style='color: #1a1a1a;'>El equipo de Nómada Picnic</strong>
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer Interno (Gris/Beige) -->
+            <tr>
+              <td
+                align='center'
+                style='background-color: #fff7f0; padding: 20px; font-size: 11px; color: #8e8e93; border-top: 1px solid #ddd3c6;'
+              >
+                <div style='margin-bottom: 4px; font-weight: 500; color: #555555;'>
+                  Nómada Picnic · Buenos Aires, Argentina
+                </div>
+                <div>
+                  <a
+                    href='{{faqUrl}}'
+                    target='_blank'
+                    style='color: #8e8e93; text-decoration: underline;'
+                  >Preguntas frecuentes</a>
+                  ·
+                  <a
+                    href='{{cancellationPolicyUrl}}'
+                    target='_blank'
+                    style='color: #8e8e93; text-decoration: underline;'
+                  >Política de cancelación</a>
+                </div>
+              </td>
+            </tr>
+
+          </table>
+
+          <!-- Footer Externo fuera de la tarjeta -->
+          <div style='font-size: 11px; color: #8e8e93; margin-top: 16px; text-align: center;'>
+            Recibís este correo porque hiciste una reserva en nomadapicnic.com
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>

@@ -6,7 +6,6 @@ import { PicnicPackage, PicnicPackageSchema } from 'src/common/database/schemas/
 import { Cost, ProductionCostsSchema } from 'src/common/database/schemas/production-cost.schema';
 import { Place, PlacesSchema } from 'src/common/database/schemas/places.schema';
 import { FilesService } from 'src/modules/files/files.service';
-import { MailService } from 'src/modules/mails/mail.service';
 import { MailModule } from 'src/modules/mails/mail.module';
 
 @Module({

@@ -7,19 +7,21 @@ import { AdminComponent } from 'src/app/pages/admin/admin.component';
 export const CheckoutRoutes: Routes = [
   {
     path: '',
-    canActivate: [checkoutGuard],
     component: CheckoutComponent,
     children: [
       {
         path: '',
+        canActivate: [checkoutGuard],
         loadComponent: () => import('./components/checkout-preview/checkout-preview.component').then(c => c.CheckoutPreviewComponent)
       },
       {
         path: 'form',
+        canActivate: [checkoutGuard],
         loadComponent: () => import('./components/checkout-form/checkout-form.component').then(c => c.CheckoutFormComponent)
       },
       {
         path: 'payment',
+        canActivate: [checkoutGuard],
         loadComponent: () => import('./components/checkout-payment/checkout-payment.component').then(c => c.CheckoutPaymentComponent)
       },
       {

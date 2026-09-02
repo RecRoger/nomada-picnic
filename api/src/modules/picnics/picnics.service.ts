@@ -1,18 +1,26 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { BookingStatus } from '@shared/enums';
-import { IBookingClientInfo } from '@shared/interfaces';
+import { IBookingClientInfo, IBookingConfirmationEmail } from '@shared/interfaces';
 import MercadoPagoConfig, { Payment, Preference } from 'mercadopago';
 import { Model } from 'mongoose';
+import { PicnicPackage, PicnicPackageDocument } from 'src/common/database/schemas/picnic-packages.schema';
 import { Picnic, PicnicsDocument } from 'src/common/database/schemas/picnics.schema';
+import { Place, PlacesDocument } from 'src/common/database/schemas/places.schema';
 import { CreatePicnicDto } from 'src/common/models/create-picnic.dto';
+import { MailService } from 'src/modules/mails/mail.service';
 
 @Injectable()
 export class PicnicsService {
   private readonly logger = new Logger(PicnicsService.name)
   private mpClient: MercadoPagoConfig;
 
-  constructor(@InjectModel(Picnic.name) private picnicsModel: Model<PicnicsDocument>) {
+  constructor(
+    @InjectModel(Picnic.name) private picnicsModel: Model<PicnicsDocument>,
+    @InjectModel(PicnicPackage.name) private packagesModel: Model<PicnicPackageDocument>,
+    @InjectModel(Place.name) private placesModel: Model<PlacesDocument>,
+    private readonly mailService: MailService,
+  ) {
     this.mpClient = new MercadoPagoConfig({
       accessToken: process.env.MP_ACCESS_TOKEN || '',
     });
@@ -56,11 +64,13 @@ export class PicnicsService {
       const savedPicnic = await newPicnic.save();
       this.logger.log('[createPicnic] Picnic guardado en BD (PENDING)')
 
+      const pkg = await this.packagesModel.findById(dto.booking.packageId).lean().exec()
+      const place = await this.placesModel.findById(dto.booking.placeId).lean().exec()
       const payLink = await this.generatePayment(
         savedPicnic,
         initialChargeAmount,
-        isDeposit ? `Seña (50%) - Picnic` : `Pago Total - Picnic`,
-        paymentOption
+        isDeposit ? `Seña (50%) - ${pkg.name}` : `Pago Total - ${pkg.name}`,
+        `picnicId=${savedPicnic._id}&placeName=${place.name.replaceAll(' ', '_')}&packageName=${pkg.name.replaceAll(' ', '_')}&eventDate=${dto.booking.eventDate.toString()}&eventTime=${dto.booking.eventTime}&clientName=${dto.clientInfo.name.replaceAll(' ', '_') + '_' + dto.clientInfo.lastname.replaceAll(' ', '_')}`
       )
 
       return payLink
@@ -70,7 +80,7 @@ export class PicnicsService {
     }
   }
 
-  private async generatePayment(savedPicnic: PicnicsDocument, amount: number, paymentTitle: string, paymentOption: 'full' | 'deposit' = 'full'): Promise<string> {
+  private async generatePayment(savedPicnic: PicnicsDocument, amount: number, paymentTitle: string, sucessParams: string): Promise<string> {
     this.logger.log('[generatePayment]', savedPicnic._id)
     try {
       const preference = new Preference(this.mpClient);
@@ -89,11 +99,8 @@ export class PicnicsService {
         fechaActualizacion: string;
       } = await exchangeResp.json();
 
-      // Se utiliza generalmente el valor de venta para calcular cobros
       const exchange = data.venta;
-
       this.logger.log('[generatePayment] tasa de cambio $' + exchange)
-
       const preferenceBody = {
         items: [
           {
@@ -121,7 +128,7 @@ export class PicnicsService {
           installments: 6,
         },
         back_urls: {
-          success: `${process.env.FRONTEND_URL}/checkout/confirmation?picnicId=${savedPicnic._id}`,
+          success: `${process.env.FRONTEND_URL}/checkout/confirmation?${sucessParams}`,
           failure: `${process.env.FRONTEND_URL}/checkout/payment?error=true&picnicId=${savedPicnic._id}`,
           pending: `${process.env.FRONTEND_URL}/checkout/payment?picnicId=${savedPicnic._id}`,
         },
@@ -183,8 +190,7 @@ export class PicnicsService {
         this.logger.log(
           `[processPaymentWebhook] Picnic ${picnicId} actualizado. Pagado: ${newPaidAmount}, Pendiente: ${newPendingAmount}, Estado: ${newStatus}`
         );
-
-        // TODO - Disparar el envío de email de confirmación con Resend
+        await this.startConfirmationProcess(picnicId)
 
       } else if (paymentData.status === 'cancelled' || paymentData.status === 'rejected') {
         if (picnic.paidAmount === 0) {
@@ -197,5 +203,53 @@ export class PicnicsService {
     } catch (error) {
       this.logger.error(`Error al procesar el pago ${paymentId}: ${error.message}`, error.stack);
     }
+  }
+
+  private async startConfirmationProcess(picnicId: string): Promise<void> {
+    const picnic: any = await this.picnicsModel
+      .findById(picnicId)
+      .populate('package')
+      .populate('event')
+      .populate('place')
+      .populate({
+        path: 'additionals.cost', // Popula la referencia cargada en cost (add.costId)
+      })
+      .exec();
+
+    const eventDateFormatted = new Date(picnic.eventDate).toLocaleDateString('es-AR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    const isDeposit = picnic.paymentOption === 'DEPOSIT';
+
+    const emailData: IBookingConfirmationEmail = {
+      clientName: picnic.clientInfo.name,
+      bookingNumber: picnicId,
+      experienceName: picnic.package.name,
+      guestsCount: `${picnic.minGuest}${picnic.minGuest != picnic.maxGuest ? (' - ' + picnic.maxGuest) : ''}`,
+      eventDateFormatted,
+      eventTime: picnic.eventTime,
+      locationName: picnic.place?.name || 'Lugar a convenir',
+      celebrationType: picnic.event?.name || 'Evento Especial',
+      // Financiero
+      isDeposit,
+      subtotalFormatted: picnic.totalAmount.toLocaleString('es-AR'),
+      paidAmountFormatted: picnic.paidAmount.toLocaleString('es-AR'),
+      pendingAmountFormatted: picnic.pendingAmount.toLocaleString('es-AR'),
+      // Lista de Adicionales
+      additionals: picnic.additionals.map((item: any) => ({
+        name: item.cost?.name || 'Adicional',
+        priceFormatted: item.totalPrice.toLocaleString('es-AR'),
+      })),
+
+      // Logística / Instrucciones
+      durationHours: 3,
+      manageBookingUrl: `${process.env.FRONTEND_URL}/booking?id=${picnic._id}`,
+      whatsappUrl: `https://wa.me/5491112345678?text=Hola!%20Tengo%20una%20consulta%20sobre%20mi%20reserva%20${picnic._id}`,
+      faqUrl: `${process.env.FRONTEND_URL}/contact`,
+      cancellationPolicyUrl: `${process.env.FRONTEND_URL}/policy`,
+    }
+    await this.mailService.sendBookingConfirmation(emailData, picnic.clientInfo.email)
   }
 }

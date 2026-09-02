@@ -5,6 +5,9 @@ import { LoaderComponent } from '@components/loader/loader.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { CartService } from '@services/cart.service';
+import { NotificationService } from '@services/notification.service';
+import { AlertTypes } from '@shared/enums';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -16,6 +19,7 @@ export class CheckoutPaymentComponent implements OnInit {
   private cartService = inject(CartService);
   private router = inject(Router);
   private bookingService = inject(BookingPicnicsService);
+  private notificationService = inject(NotificationService);
 
   readonly booking = this.cartService.booking;
   readonly totalAmount = this.cartService.totalAmount;
@@ -43,10 +47,13 @@ export class CheckoutPaymentComponent implements OnInit {
 
   async onPay(partialPay = false): Promise<void> {
     this.loadPayment = true
-    this.bookingService.saveBooking(partialPay).subscribe(resp => {
-      console.log(resp)
-      window.open(resp, '_blank');
-      // window.location.href = resp;
+    this.bookingService.saveBooking(partialPay).pipe(catchError((err) => {
+      this.loadPayment = false
+      this.notificationService.openNotification({ message: 'Ha ocurrido un error, intentelo nuevamente mas tarde' }, AlertTypes.ERROR)
+      throw err
+    })).subscribe(resp => {
+      // window.open(resp, '_blank');
+      window.location.href = resp;
     })
   }
 

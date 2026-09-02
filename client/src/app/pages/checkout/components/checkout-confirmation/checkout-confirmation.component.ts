@@ -36,14 +36,22 @@ export class CheckoutConfirmationComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      if (params['picnicId']) {
+      const { picnicId, placeName, packageName, eventDate, eventTime, clientName } = params
+      if (
+        picnicId &&
+        placeName &&
+        packageName &&
+        eventDate &&
+        eventTime &&
+        clientName
+      ) {
         this.bookingDetails.set({
-          bookingNumber: params['picnicId'] as string,
-          completeName: `${this.cartService.clientForm()?.name} ${this.cartService.clientForm()?.lastname}`,
-          date: this.cartService.booking()?.eventDate,
-          time: this.cartService.booking()?.eventTime,
-          location: this.cartService.booking()?.place?.name,
-          experienceName: this.cartService.booking()?.package?.name
+          bookingNumber: picnicId as string,
+          completeName: `${clientName.replaceAll('_', ' ')}`,
+          date: new Date(eventDate),
+          time: eventTime,
+          location: placeName.replaceAll('_', ' '),
+          experienceName: packageName.replaceAll('_', ' ')
         })
         this.cartService.clearCart()
       } else {

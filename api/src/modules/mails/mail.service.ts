@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { AgencyContactDto } from 'src/common/models/agency-contact.dto';
 import { CLIENT_TYPES_MAP, EVENT_TYPES_MAP, PLACES_OPTIONS_MAP, SERVICES_MAP } from '@shared/const';
+import { IBookingConfirmationEmail } from '@shared/interfaces';
 
 @Injectable()
 export class MailService {
@@ -53,9 +54,26 @@ export class MailService {
       });
       return true
     } catch (err) {
-      this.logger.error(` - Error finding Packages: ${err.message}`, err.stack);
-      throw new Error('Error al consultar paquetes');
+      this.logger.error(` - Error sending mails: ${err.message}`, err.stack);
+      throw new Error('Error al enviar correos');
     }
 
+  }
+
+  async sendBookingConfirmation(emailData: IBookingConfirmationEmail, toEmail: string) {
+    this.logger.log('[sendBookingConfirmation] - from ' + emailData.bookingNumber)
+
+    try {
+      await this.mailerService.sendMail({
+        to: [toEmail],
+        subject: `¡Tu reserva ${emailData.bookingNumber} está confirmada! 🧺`,
+        template: './booking-confirmation',
+        context: emailData,
+      });
+      return true
+    } catch (err) {
+      this.logger.error(` - Error sending mails: ${err.message}`, err.stack);
+      throw new Error('Error al enviar correos');
+    }
   }
 }

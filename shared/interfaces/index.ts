@@ -1,6 +1,7 @@
 export * from './user.interface'
 export * from './language-text.interface'
 export * from './notification.interface'
+export * from './booking-confirmation-email.interface'
 export * from './package-prices.interface'
 export * from './picnic-package.interface'
 export * from './booking-picnic.interface'

@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { EventSelectorComponent } from '@components/event-selector/event-selector.component';
+import { LoaderComponent } from '@components/loader/loader.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CartService } from '@services/cart.service';
 import { PlacesService } from '@services/places.service';
@@ -24,6 +25,7 @@ import { IPicnicEvent, IPlace } from '@shared/interfaces';
     MatDatepickerModule,
     RouterLink,
     EventSelectorComponent,
+    LoaderComponent
   ],
   providers: [
     provideNativeDateAdapter(),

@@ -47,7 +47,7 @@ export class AdditionalsComponent implements OnInit {
 
   private costService = inject(CostsService)
 
-  private additionalsList: ICost[] = []
+  public additionalsList: ICost[] = []
 
   public typesList: string[] = [
     'all',

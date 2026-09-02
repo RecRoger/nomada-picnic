@@ -86,6 +86,8 @@
               }
             </div>
             <a class="c-cart-detail--place-selector-button" routerLink="/places" (click)="cartService.closeCart()">{{'PUBLIC.CART.DETAILS.PLACE.BUTTON' | translate}}</a>
+          } @else {
+            <app-loader size="medium"></app-loader>
           }
         </section>
       }

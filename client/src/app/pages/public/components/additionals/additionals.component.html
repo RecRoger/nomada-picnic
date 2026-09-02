@@ -51,7 +51,7 @@
      }
   </div>
 
-  @if (filteredList.length) {
+  @if (additionalsList.length) {
     <div class="c-additionals--list">
       @for (item of filteredList; track $index) {
         <article class="product-card" (click)="checkAdditional(item)">

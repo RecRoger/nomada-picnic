@@ -6,6 +6,7 @@ import { Picnic, PicnicsSchema } from 'src/common/database/schemas/picnics.schem
 import { PicnicPackage, PicnicPackageSchema } from 'src/common/database/schemas/picnic-packages.schema';
 import { Place, PlacesSchema } from 'src/common/database/schemas/places.schema';
 import { MailModule } from 'src/modules/mails/mail.module';
+import { GoogleCalendarService } from 'src/modules/calendar/google-calendar.service';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { MailModule } from 'src/modules/mails/mail.module';
     MailModule,
   ],
   controllers: [PicnicsController],
-  providers: [PicnicsService]
+  providers: [PicnicsService, GoogleCalendarService]
 })
 export class PicnicsModule { }

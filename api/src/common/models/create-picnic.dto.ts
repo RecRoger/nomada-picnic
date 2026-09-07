@@ -14,6 +14,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CartAdditionalDto {
   @ApiProperty({
@@ -265,3 +266,5 @@ export class CreatePicnicDto {
   @IsNotEmpty()
   clientInfo: PicnicClientInfoDto;
 }
+
+export class UpdatePicnicDto extends PartialType(CreatePicnicDto) { }

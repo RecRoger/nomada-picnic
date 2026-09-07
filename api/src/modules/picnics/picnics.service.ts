@@ -1,13 +1,16 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { BookingStatus } from '@shared/enums';
-import { IBookingClientInfo, IBookingConfirmationEmail } from '@shared/interfaces';
+import { IBookingClientInfo, IBookingConfirmationEmail, ICost, IPaginatedPicnics, IPicnicEvent, IPicnicPackage, IPlace } from '@shared/interfaces';
+import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 import MercadoPagoConfig, { Payment, Preference } from 'mercadopago';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { PicnicPackage, PicnicPackageDocument } from 'src/common/database/schemas/picnic-packages.schema';
 import { Picnic, PicnicsDocument } from 'src/common/database/schemas/picnics.schema';
 import { Place, PlacesDocument } from 'src/common/database/schemas/places.schema';
-import { CreatePicnicDto } from 'src/common/models/create-picnic.dto';
+import { CreatePicnicDto, UpdatePicnicDto } from 'src/common/models/create-picnic.dto';
+import { QueryPicnicDto } from 'src/common/models/query-picnic.dto';
+import { GoogleCalendarService } from 'src/modules/calendar/google-calendar.service';
 import { MailService } from 'src/modules/mails/mail.service';
 
 @Injectable()
@@ -20,10 +23,107 @@ export class PicnicsService {
     @InjectModel(PicnicPackage.name) private packagesModel: Model<PicnicPackageDocument>,
     @InjectModel(Place.name) private placesModel: Model<PlacesDocument>,
     private readonly mailService: MailService,
+    private readonly calendarService: GoogleCalendarService,
   ) {
     this.mpClient = new MercadoPagoConfig({
       accessToken: process.env.MP_ACCESS_TOKEN || '',
     });
+  }
+
+  async findAllPicnics(queryDto: QueryPicnicDto): Promise<IPaginatedPicnics> {
+    this.logger.log('[findAllPicnics]')
+    const { page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc' } = queryDto;
+    const skip = (page - 1) * limit;
+    const order = sortOrder.toLowerCase() === 'asc' ? 1 : -1;
+
+    const [picnics, totalItems] = await Promise.all([
+      this.picnicsModel
+        .find()
+        .populate<{ package: IPicnicPackage }>('package', 'name description includedItems')
+        .populate<{ event: IPicnicEvent }>('event', 'name')
+        .populate<{ place: IPlace }>('place', 'name address location mapsLink')
+        .populate<{ 'additionals.cost': ICost }>({
+          path: 'additionals.cost',
+          select: 'name type guestsCoverage',
+        })
+        .sort({ [sortBy]: order })
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      this.picnicsModel.countDocuments().exec(),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return {
+      picnics: picnics as unknown as IPicnicDetail[],
+      meta: {
+        totalItems,
+        itemCount: picnics.length,
+        itemsPerPage: limit,
+        totalPages,
+        currentPage: page,
+      },
+    };
+  }
+
+  async getPicnicDetails(picnicId): Promise<IPicnicDetail> {
+    this.logger.log('[getPicnicDetails]', picnicId)
+    const picnic = await this.picnicsModel
+      .findById(picnicId)
+      .populate<{ package: IPicnicPackage }>('package', 'name description includedItems')
+      .populate<{ event: IPicnicEvent }>('event', 'name')
+      .populate<{ place: IPlace }>('place', 'name address location mapsLink')
+      .populate<{ 'additionals.cost': ICost }>({
+        path: 'additionals.cost',
+        select: 'name type guestsCoverage',
+      })
+      .exec();
+
+    if (!picnic) {
+      throw new NotFoundException(`Picnic con ID ${picnicId} no encontrado`);
+    }
+
+    return picnic as unknown as IPicnicDetail;
+  }
+
+  async updatePicnic(id: string, updatePicnicDto: UpdatePicnicDto): Promise<IPicnicDetail> {
+    this.logger.log('[updatePicnic]', id)
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`ID no válido: ${id}`);
+    }
+
+    const updatedPicnic = await this.picnicsModel
+      .findByIdAndUpdate(id, { $set: updatePicnicDto }, { new: true })
+      .populate('package')
+      .populate('event')
+      .populate('place')
+      .populate({ path: 'additionals.cost' })
+      .exec();
+
+    if (!updatedPicnic) {
+      throw new NotFoundException(`Picnic con ID ${id} no encontrado para actualizar`);
+    }
+
+    return updatedPicnic as unknown as IPicnicDetail;
+  }
+
+  async removePicnic(id: string): Promise<{ message: string; id: string }> {
+    this.logger.log('[removePicnic]', id)
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`ID no válido: ${id}`);
+    }
+
+    const deletedPicnic = await this.picnicsModel.findByIdAndDelete(id).exec();
+
+    if (!deletedPicnic) {
+      throw new NotFoundException(`Picnic con ID ${id} no encontrado para eliminar`);
+    }
+
+    return {
+      message: 'Picnic eliminado exitosamente',
+      id,
+    };
   }
 
   async createPicnic(dto: CreatePicnicDto, paymentOption: 'full' | 'deposit' = 'full'): Promise<string> {
@@ -198,6 +298,7 @@ export class PicnicsService {
             status: BookingStatus.CANCELLED,
             paymentId: paymentId,
           });
+          this.logger.log('[processPaymentWebhook] picnic cancelado', paymentId);
         }
       }
     } catch (error) {
@@ -206,50 +307,75 @@ export class PicnicsService {
   }
 
   private async startConfirmationProcess(picnicId: string): Promise<void> {
-    const picnic: any = await this.picnicsModel
-      .findById(picnicId)
-      .populate('package')
-      .populate('event')
-      .populate('place')
-      .populate({
-        path: 'additionals.cost', // Popula la referencia cargada en cost (add.costId)
-      })
-      .exec();
+    this.logger.log('[startConfirmationProcess]', picnicId);
+    const picnic: IPicnicDetail = await this.getPicnicDetails(picnicId)
+    await this.sendConfirmationMail(picnic)
+    await this.createClientCalendarEvent(picnic)
+  }
 
-    const eventDateFormatted = new Date(picnic.eventDate).toLocaleDateString('es-AR', {
+  private async sendConfirmationMail(picnicData: IPicnicDetail): Promise<void> {
+    this.logger.log('[startConfirmationProcess]', picnicData._id!);
+    const eventDateFormatted = new Date(picnicData.eventDate).toLocaleDateString('es-AR', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     });
-    const isDeposit = picnic.paymentOption === 'DEPOSIT';
+    const isDeposit = picnicData.paymentOption === 'DEPOSIT';
 
     const emailData: IBookingConfirmationEmail = {
-      clientName: picnic.clientInfo.name,
-      bookingNumber: picnicId,
-      experienceName: picnic.package.name,
-      guestsCount: `${picnic.minGuest}${picnic.minGuest != picnic.maxGuest ? (' - ' + picnic.maxGuest) : ''}`,
+      clientName: picnicData.clientInfo.name,
+      bookingNumber: picnicData._id!,
+      experienceName: picnicData.package.name,
+      guestsCount: `${picnicData.minGuest}${picnicData.minGuest != picnicData.maxGuest ? (' - ' + picnicData.maxGuest) : ''}`,
       eventDateFormatted,
-      eventTime: picnic.eventTime,
-      locationName: picnic.place?.name || 'Lugar a convenir',
-      celebrationType: picnic.event?.name || 'Evento Especial',
+      eventTime: picnicData.eventTime,
+      locationName: picnicData.place?.name || 'Lugar a convenir',
+      celebrationType: picnicData.event?.name || 'Evento Especial',
       // Financiero
       isDeposit,
-      subtotalFormatted: picnic.totalAmount.toLocaleString('es-AR'),
-      paidAmountFormatted: picnic.paidAmount.toLocaleString('es-AR'),
-      pendingAmountFormatted: picnic.pendingAmount.toLocaleString('es-AR'),
+      subtotalFormatted: picnicData.totalAmount.toLocaleString('es-AR'),
+      paidAmountFormatted: picnicData.paidAmount.toLocaleString('es-AR'),
+      pendingAmountFormatted: picnicData.pendingAmount.toLocaleString('es-AR'),
       // Lista de Adicionales
-      additionals: picnic.additionals.map((item: any) => ({
+      additionals: picnicData.additionals.map((item: any) => ({
         name: item.cost?.name || 'Adicional',
         priceFormatted: item.totalPrice.toLocaleString('es-AR'),
       })),
-
       // Logística / Instrucciones
       durationHours: 3,
-      manageBookingUrl: `${process.env.FRONTEND_URL}/booking?id=${picnic._id}`,
-      whatsappUrl: `https://wa.me/5491112345678?text=Hola!%20Tengo%20una%20consulta%20sobre%20mi%20reserva%20${picnic._id}`,
+      manageBookingUrl: `${process.env.FRONTEND_URL}/booking?id=${picnicData._id}`,
+      whatsappUrl: `https://wa.me/5491112345678?text=Hola!%20Tengo%20una%20consulta%20sobre%20mi%20reserva%20${picnicData._id}`,
       faqUrl: `${process.env.FRONTEND_URL}/contact`,
       cancellationPolicyUrl: `${process.env.FRONTEND_URL}/policy`,
     }
-    await this.mailService.sendBookingConfirmation(emailData, picnic.clientInfo.email)
+    await this.mailService.sendBookingConfirmation(emailData, picnicData.clientInfo.email)
+    this.logger.log('[startConfirmationProcess] mensaje enviado');
+    return
+  }
+
+  private async createClientCalendarEvent(picnicData: IPicnicDetail): Promise<void> {
+    this.logger.log('[createClientCalendarEvent]', picnicData._id!);
+    const [hours, minutes] = picnicData.eventTime.split(':').map(Number);
+    const startDateTime = new Date(picnicData.eventDate);
+    startDateTime.setHours(hours || 17, minutes || 0, 0, 0);
+
+    // TODO - Mejorar informacion del evento
+    const description = `
+    ${picnicData._id.toString()}
+    Experiencia: ${picnicData.package?.name}
+    Invitados: ${picnicData.maxGuest} personas
+    Teléfono: ${picnicData.clientInfo.phone}
+    `
+    await this.calendarService.createPicnicEvent({
+      summary: `🧺 Picnic Nómada - Picnic de ${picnicData.event.name}`,
+      clientEmail: picnicData.clientInfo.email,
+      clientName: `${picnicData.clientInfo.name} ${picnicData.clientInfo.lastname}`,
+      startDateTime,
+      durationHours: 3,
+      latitude: picnicData.place?.location.lat,
+      longitude: picnicData.place?.location.lng,
+      locationName: picnicData.place?.name,
+      description,
+    });
   }
 }

@@ -1,14 +1,110 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { PicnicsService } from './picnics.service';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiParam } from '@nestjs/swagger';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
-import { CreatePicnicDto } from 'src/common/models/create-picnic.dto';
+import { CreatePicnicDto, UpdatePicnicDto } from 'src/common/models/create-picnic.dto';
+import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
+import { QueryPicnicDto } from 'src/common/models/query-picnic.dto';
+import { IPaginatedPicnics } from '@shared/interfaces';
 
 @Controller({ path: 'picnics', version: '1' })
 @ApiTags('Picnics')
 @UseInterceptors(ResponseInterceptor)
 export class PicnicsController {
   constructor(private readonly picnicsService: PicnicsService) { }
+
+  @Get()
+  @ApiOperation({
+    summary: 'Obtener listado de picnics paginado',
+    description: 'Devuelve la lista paginada y ordenada de picnics con todas sus relaciones populadas.',
+  })
+  @ApiQuery({ name: 'page', required: false, type: Number, example: 1, description: 'Número de página' })
+  @ApiQuery({ name: 'limit', required: false, type: Number, example: 10, description: 'Cantidad de elementos por página' })
+  @ApiQuery({ name: 'sortBy', required: false, type: String, example: 'createdAt', description: 'Campo por el cual ordenar' })
+  @ApiQuery({ name: 'sortOrder', required: false, enum: ['asc', 'desc'], example: 'desc', description: 'Dirección del ordenamiento' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Lista de picnics obtenida exitosamente.',
+  })
+  async findAllPicnics(@Query() queryDto: QueryPicnicDto): Promise<IPaginatedPicnics> {
+    return this.picnicsService.findAllPicnics(queryDto);
+  }
+
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Obtener detalle de un picnic por ID',
+    description: 'Devuelve la información completa de un picnic con paquete, evento, lugar y adicionales populados.',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'ID de Mongo (ObjectId) del picnic',
+    example: '65f1a2b3c4d5e6f7a8b9c0d1',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Detalle del picnic encontrado.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Picnic no encontrado.',
+  })
+  async getPicnicDetails(@Param('id') id: string): Promise<IPicnicDetail> {
+    return this.picnicsService.getPicnicDetails(id);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Actualizar datos de un picnic',
+    description: 'Permite la modificación parcial de un picnic existente.',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'ID de Mongo (ObjectId) del picnic a actualizar',
+    example: '65f1a2b3c4d5e6f7a8b9c0d1',
+  })
+  @ApiBody({
+    type: UpdatePicnicDto,
+    description: 'Campos del picnic que se desean actualizar',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Picnic actualizado exitosamente.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Picnic no encontrado o ID no válido.',
+  })
+  async updatePicnic(
+    @Param('id') id: string,
+    @Body() updatePicnicDto: UpdatePicnicDto,
+  ): Promise<IPicnicDetail> {
+    return this.picnicsService.updatePicnic(id, updatePicnicDto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Eliminar un picnic',
+    description: 'Elimina permanentemente un registro de picnic por su ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'ID de Mongo (ObjectId) del picnic a eliminar',
+    example: '65f1a2b3c4d5e6f7a8b9c0d1',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Picnic eliminado exitosamente.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Picnic no encontrado o ID no válido.',
+  })
+  async removePicnic(@Param('id') id: string): Promise<{ message: string; id: string }> {
+    return this.picnicsService.removePicnic(id);
+  }
 
   @Post()
   @ApiOperation({

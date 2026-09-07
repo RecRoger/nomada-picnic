@@ -32,7 +32,7 @@ export const AdminRoutes: Routes = [
         path: 'picnics',
         loadComponent: () => import('./components/admin-picnics/admin-picnics.component').then(c => c.AdminPicnicsComponent)
       },
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
+      { path: '', redirectTo: '/admin/picnics', pathMatch: 'full' }
     ]
   },
   {

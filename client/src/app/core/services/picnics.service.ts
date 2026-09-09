@@ -44,7 +44,7 @@ export class PicnicsService {
         return null
       }),
       catchError((error) => {
-        console.error('No se eliminó el lugar:', error);
+        console.error('No se editó el lugar:', error);
         return of(null);
       })
     );

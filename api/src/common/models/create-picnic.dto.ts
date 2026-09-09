@@ -15,6 +15,7 @@ import {
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { PartialType } from '@nestjs/mapped-types';
+import { BookingStatus, PaymentMethods, PaymentTypes } from '@shared/enums';
 
 export class CartAdditionalDto {
   @ApiProperty({
@@ -267,4 +268,58 @@ export class CreatePicnicDto {
   clientInfo: PicnicClientInfoDto;
 }
 
-export class UpdatePicnicDto extends PartialType(CreatePicnicDto) { }
+export class UpdatePicnicDto extends PartialType(CreatePicnicDto) {
+
+  @ApiProperty({
+    description: 'Fecha en que se llevará a cabo el picnic (formato ISO 8601)',
+    example: '2026-09-15T00:00:00.000Z',
+  })
+  @IsDateString()
+  @IsOptional()
+  eventDate: string;
+
+  @ApiProperty({
+    description: 'Hora pactada para la experiencia',
+    example: '16:00',
+  })
+  @IsString()
+  @IsOptional()
+  eventTime: string;
+
+  @ApiProperty({
+    description: 'Precio de depósito',
+    example: '230',
+  })
+  @IsNumber()
+  @IsOptional()
+  depositAmount: number;
+
+  @ApiProperty({
+    description: 'Precio Pagado de depósito',
+    example: '230',
+  })
+  @IsNumber()
+  @IsOptional()
+  paidAmount: number;
+
+  @ApiProperty({
+    description: 'Tipo de pago (Deposito o full)',
+    example: 'FULL',
+  })
+  @IsOptional()
+  paymentOption: PaymentTypes;
+
+  @ApiProperty({
+    description: 'Forma de pago ',
+    example: 'MP',
+  })
+  @IsOptional()
+  paymentMethod: PaymentMethods;
+
+  @ApiProperty({
+    description: 'Status de la reserva',
+    example: 'PENDING',
+  })
+  @IsOptional()
+  status: BookingStatus
+}

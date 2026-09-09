@@ -6,6 +6,7 @@ import { CreatePicnicDto, UpdatePicnicDto } from 'src/common/models/create-picni
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 import { QueryPicnicDto } from 'src/common/models/query-picnic.dto';
 import { IPaginatedPicnics } from '@shared/interfaces';
+import { PaymentMethods, PaymentTypes } from '@shared/enums';
 
 @Controller({ path: 'picnics', version: '1' })
 @ApiTags('Picnics')
@@ -53,7 +54,7 @@ export class PicnicsController {
     return this.picnicsService.getPicnicDetails(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({
     summary: 'Actualizar datos de un picnic',
     description: 'Permite la modificación parcial de un picnic existente.',
@@ -116,7 +117,8 @@ export class PicnicsController {
     type: CreatePicnicDto,
     description: 'Estructura completa de la reserva iniciada desde el checkout',
   })
-  @ApiQuery({ name: 'payType', required: false })
+  @ApiQuery({ name: 'payOption', required: false, enum: PaymentTypes })
+  @ApiQuery({ name: 'payMethod', required: false, enum: PaymentMethods })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'La reserva del picnic ha sido creada exitosamente.',
@@ -133,10 +135,11 @@ export class PicnicsController {
     description: 'Error interno en el servidor al intentar registrar el picnic.',
   })
   async create(
-    @Query('payType') payType: 'full' | 'deposit',
+    @Query('payOption') payOption: PaymentTypes,
+    @Query('payMethod') payMethod: PaymentMethods,
     @Body() createPicnicDto: CreatePicnicDto
   ): Promise<string> {
-    return this.picnicsService.createPicnic(createPicnicDto, payType);
+    return this.picnicsService.createPicnic(createPicnicDto, payOption, payMethod);
   }
 
   @Post('webhook')

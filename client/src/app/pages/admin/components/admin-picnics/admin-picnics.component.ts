@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,9 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { PicnicEditionDialogComponent } from '@components/picnic-edition-dialog/picnic-edition-dialog.component';
 import { PicnicsService } from '@services/picnics.service';
+import { PaymentMethods } from '@shared/enums';
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 
 const MAT_MODULES = [
@@ -49,14 +51,15 @@ export class AdminPicnicsComponent implements OnInit {
   sortOrder: 'asc' | 'desc' = 'desc';
   isLoading = false;
 
+  public METHODS = PaymentMethods;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(
-    private picnicsService: PicnicsService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) { }
+  readonly dialog = inject(MatDialog);
+  private picnicsService = inject(PicnicsService)
+  private snackBar = inject(MatSnackBar)
+
 
   ngOnInit(): void {
     this.loadPicnics();
@@ -101,11 +104,31 @@ export class AdminPicnicsComponent implements OnInit {
     this.loadPicnics();
   }
 
-  // editPicnic(picnic: IPicnicDetail, event: MouseEvent): void {
-  //   event.stopPropagation();
-  //   // Aquí puedes abrir tu MatDialog de Edición pasándole la data
-  //   this.snackBar.open(`Editar picnic ${picnic._id}`, 'Cerrar', { duration: 2000 });
-  // }
+  editPicnic(id: string, picnic: FormData): void {
+    this.picnicsService.editPicnic(id, picnic).subscribe(resp => {
+      if (resp) {
+        this.loadPicnics()
+      }
+    })
+  }
+
+  confirmPicnic(picnic: IPicnicDetail, event: MouseEvent): void {
+    event.stopPropagation();
+
+    const dialogRef = this.dialog.open(PicnicEditionDialogComponent, {
+      data: picnic,
+      width: '600px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.editPicnic(picnic._id, result)
+      }
+    });
+
+  }
 
   deletePicnic(id: string, event: MouseEvent): void {
     event.stopPropagation();

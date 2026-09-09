@@ -1,4 +1,4 @@
-import { BookingStatus } from "../enums";
+import { BookingStatus, PaymentMethods, PaymentTypes } from "../enums";
 import { IBookingClientInfo } from "./booking-cart.interface";
 import { ICost } from "./cost.interface";
 import { IPicnicEvent } from "./picnic-event.interface";
@@ -47,7 +47,8 @@ export interface IPicnicDetail {
   status: BookingStatus;
   totalAmount: number;
   depositAmount: number;
-  paymentOption: 'DEPOSIT' | 'FULL';
+  paymentOption: PaymentTypes;
+  paymentMethod: PaymentMethods;
   paidAmount: number;
   pendingAmount: number;
   preferenceId?: string;

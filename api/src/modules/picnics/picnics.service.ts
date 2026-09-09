@@ -1,7 +1,8 @@
 import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { BookingStatus } from '@shared/enums';
-import { IBookingClientInfo, IBookingConfirmationEmail, ICost, IPaginatedPicnics, IPicnicEvent, IPicnicPackage, IPlace } from '@shared/interfaces';
+import { PAYMENT_METHODS_MAP } from '@shared/const';
+import { BookingStatus, PaymentMethods, PaymentTypes } from '@shared/enums';
+import { IBookingConfirmationEmail, ICost, IPaginatedPicnics, IPicnicEvent, IPicnicPackage, IPlace } from '@shared/interfaces';
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 import MercadoPagoConfig, { Payment, Preference } from 'mercadopago';
 import { Model, Types } from 'mongoose';
@@ -17,6 +18,7 @@ import { MailService } from 'src/modules/mails/mail.service';
 export class PicnicsService {
   private readonly logger = new Logger(PicnicsService.name)
   private mpClient: MercadoPagoConfig;
+  private DOLAR_EXCHANGE = 1500
 
   constructor(
     @InjectModel(Picnic.name) private picnicsModel: Model<PicnicsDocument>,
@@ -93,16 +95,46 @@ export class PicnicsService {
       throw new NotFoundException(`ID no válido: ${id}`);
     }
 
+    const currentPicnic = await this.picnicsModel.findById(id).select('status totalAmount').exec();
+
+    if (!currentPicnic) {
+      throw new NotFoundException(`Picnic con ID ${id} no encontrado`);
+    }
+    const previousStatus = currentPicnic.status;
+
+    const updates = {
+      eventDate: updatePicnicDto.eventDate,
+      eventTime: updatePicnicDto.eventTime,
+      depositAmount: updatePicnicDto.depositAmount,
+      paidAmount: updatePicnicDto.paidAmount,
+      pendingAmount: Number(currentPicnic.totalAmount) - Number(updatePicnicDto.paidAmount),
+      paymentOption: updatePicnicDto.paymentOption,
+      paymentMethod: updatePicnicDto.paymentMethod,
+      status: updatePicnicDto.status,
+      'clientInfo.boardMessage': updatePicnicDto.clientInfo.boardMessage,
+      'clientInfo.honoredName': updatePicnicDto.clientInfo.honoredName,
+      'clientInfo.comments': updatePicnicDto.clientInfo.comments,
+    }
+
+
     const updatedPicnic = await this.picnicsModel
-      .findByIdAndUpdate(id, { $set: updatePicnicDto }, { new: true })
-      .populate('package')
-      .populate('event')
-      .populate('place')
-      .populate({ path: 'additionals.cost' })
+      .findByIdAndUpdate(id, { $set: updates }, { new: true })
+      .populate<{ package: IPicnicPackage }>('package', 'name description includedItems')
+      .populate<{ event: IPicnicEvent }>('event', 'name')
+      .populate<{ place: IPlace }>('place', 'name address location mapsLink')
+      .populate<{ 'additionals.cost': ICost }>({
+        path: 'additionals.cost',
+        select: 'name type guestsCoverage',
+      })
       .exec();
 
     if (!updatedPicnic) {
       throw new NotFoundException(`Picnic con ID ${id} no encontrado para actualizar`);
+    }
+
+    if (previousStatus == BookingStatus.PENDING && [BookingStatus.PAID, BookingStatus.PARTIALLY_PAID].includes(updatePicnicDto.status) && previousStatus !== updatePicnicDto.status) {
+      await this.getExchange()
+      await this.startConfirmationProcess(id);
     }
 
     return updatedPicnic as unknown as IPicnicDetail;
@@ -126,14 +158,14 @@ export class PicnicsService {
     };
   }
 
-  async createPicnic(dto: CreatePicnicDto, paymentOption: 'full' | 'deposit' = 'full'): Promise<string> {
+  async createPicnic(dto: CreatePicnicDto, paymentOption: PaymentTypes = PaymentTypes.FULL, paymentMethods: PaymentMethods = PaymentMethods.OTHER): Promise<string> {
     this.logger.log('[createPicnic]', dto.clientInfo.name)
 
     try {
       const additionalsTotal = dto.additionals.reduce((sum, item) => sum + item.totalPrice, 0);
       const totalAmount = dto.booking.basePrice + additionalsTotal;
 
-      const isDeposit = paymentOption === 'deposit';
+      const isDeposit = paymentOption === PaymentTypes.DEPOSIT;
       const depositAmount = totalAmount * 0.5;
       const initialChargeAmount = isDeposit ? depositAmount : totalAmount;
 
@@ -156,7 +188,8 @@ export class PicnicsService {
         status: BookingStatus.PENDING,
         totalAmount,
         depositAmount: depositAmount,
-        paymentOption: isDeposit ? 'DEPOSIT' : 'FULL',
+        paymentOption: paymentOption,
+        paymentMethod: paymentMethods,
         paidAmount: 0,
         pendingAmount: totalAmount,
       });
@@ -166,18 +199,69 @@ export class PicnicsService {
 
       const pkg = await this.packagesModel.findById(dto.booking.packageId).lean().exec()
       const place = await this.placesModel.findById(dto.booking.placeId).lean().exec()
-      const payLink = await this.generatePayment(
-        savedPicnic,
-        initialChargeAmount,
-        isDeposit ? `Seña (50%) - ${pkg.name}` : `Pago Total - ${pkg.name}`,
-        `picnicId=${savedPicnic._id}&placeName=${place.name.replaceAll(' ', '_')}&packageName=${pkg.name.replaceAll(' ', '_')}&eventDate=${dto.booking.eventDate.toString()}&eventTime=${dto.booking.eventTime}&clientName=${dto.clientInfo.name.replaceAll(' ', '_') + '_' + dto.clientInfo.lastname.replaceAll(' ', '_')}`
-      )
+      if (paymentMethods == PaymentMethods.MP) {
+        const payLink = await this.generatePayment(
+          savedPicnic,
+          initialChargeAmount,
+          isDeposit ? `Seña (50%) - ${pkg.name}` : `Pago Total - ${pkg.name}`,
+          `picnicId=${savedPicnic._id}&placeName=${place.name.replaceAll(' ', '_')}&packageName=${pkg.name.replaceAll(' ', '_')}&eventDate=${dto.booking.eventDate.toString()}&eventTime=${dto.booking.eventTime}&clientName=${dto.clientInfo.name.replaceAll(' ', '_') + '_' + dto.clientInfo.lastname.replaceAll(' ', '_')}`
+        )
+        return payLink
+      } else {
+        return await this.createWhPaymentNotification(savedPicnic, place, pkg, paymentOption, paymentMethods)
+      }
 
-      return payLink
     } catch (err) {
       this.logger.error(`Error booking picnic: ${err.message}`, err.stack, PicnicsService.name);
       throw new Error('Error al guardar la reserva del picnic');
     }
+  }
+
+  private async getExchange(): Promise<number> {
+    this.logger.log('[getExchange] init')
+    const exchangeResp = await fetch('https://dolarapi.com/v1/dolares/oficial');
+    if (!exchangeResp.ok) {
+      throw new Error(`Error en la API de cotización: ${exchangeResp.statusText}`);
+    }
+    const data: {
+      compra: number;
+      venta: number;
+      casa: string;
+      nombre: string;
+      fechaActualizacion: string;
+    } = await exchangeResp.json();
+
+    this.DOLAR_EXCHANGE = data.venta;
+    this.logger.log('[generatePayment] tasa de cambio $' + this.DOLAR_EXCHANGE)
+    return this.DOLAR_EXCHANGE
+  }
+
+  private async createWhPaymentNotification(savedPicnic: PicnicsDocument, place: PlacesDocument, pkg: PicnicPackageDocument, paymentOption: PaymentTypes, paymentMethod: PaymentMethods): Promise<string> {
+    this.logger.log('[createWhPaymentNotification]')
+    const clientInfo = savedPicnic.clientInfo
+    const exchange = await this.getExchange()
+    const eventDateFormatted = new Date(savedPicnic.eventDate).toLocaleDateString('es-AR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    let message = `¡Hola! Mi mi nombre es ${clientInfo.name} y me gustaria coordinar el pago de mi ${pkg.name}: \n - PicnicId: ${savedPicnic._id} \n - Nº de invitados: ${savedPicnic.maxGuest} personas \n - Lugar: ${place!.name} \n - Fecha y hora: ${eventDateFormatted} a las ${savedPicnic.eventTime} \n - Precio del picnic: US$ ${(savedPicnic!.basePrice).toLocaleString('es-AR')}`;
+    if (savedPicnic.additionals.length) {
+      const additionalsPrice = savedPicnic.additionals.reduce((acc, cost) => acc + cost.totalPrice, 0)
+      let additionalsText = `\n - Precio de adicionales: US$ ${additionalsPrice.toLocaleString('es-AR')}`
+      message = message + additionalsText
+    }
+
+    message = message + `\n - *Precio Total: US$ ${(savedPicnic.totalAmount).toLocaleString('es-AR')}* \n - Forma de pago: ${PAYMENT_METHODS_MAP[paymentMethod] || paymentMethod}`
+    if (paymentOption == PaymentTypes.DEPOSIT) {
+      const price = savedPicnic.totalAmount / 2
+      message = message + `\n - Valor de la seña: US$ ${price.toLocaleString('es-AR')} \n - Tasa de cambio: $ ${exchange.toLocaleString('es-AR')} x 1 US$ \n - Precio al cambio: $ ${(price * exchange).toLocaleString('es-AR')}`
+    } else {
+      message = message + `\n - Tasa de cambio: $ ${exchange.toLocaleString('es-AR')} x 1 US$ \n - Precio al cambio: $ ${(savedPicnic.totalAmount * exchange).toLocaleString('es-AR')}`
+    }
+    message = message + '\n Quedo a la espera de metodos de pago y formas de proceder con la reserva (: .'
+    const encodedMessage = encodeURIComponent(message);
+    return `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
   }
 
   private async generatePayment(savedPicnic: PicnicsDocument, amount: number, paymentTitle: string, sucessParams: string): Promise<string> {
@@ -186,21 +270,7 @@ export class PicnicsService {
       const preference = new Preference(this.mpClient);
       const clientInfo = savedPicnic.clientInfo
 
-      // TODO -  mejorar integracion de cambio
-      const exchangeResp = await fetch('https://dolarapi.com/v1/dolares/oficial');
-      if (!exchangeResp.ok) {
-        throw new Error(`Error en la API de cotización: ${exchangeResp.statusText}`);
-      }
-      const data: {
-        compra: number;
-        venta: number;
-        casa: string;
-        nombre: string;
-        fechaActualizacion: string;
-      } = await exchangeResp.json();
-
-      const exchange = data.venta;
-      this.logger.log('[generatePayment] tasa de cambio $' + exchange)
+      const exchange = await this.getExchange()
       const preferenceBody = {
         items: [
           {
@@ -309,8 +379,9 @@ export class PicnicsService {
   private async startConfirmationProcess(picnicId: string): Promise<void> {
     this.logger.log('[startConfirmationProcess]', picnicId);
     const picnic: IPicnicDetail = await this.getPicnicDetails(picnicId)
-    await this.sendConfirmationMail(picnic)
+    // await this.sendConfirmationMail(picnic)
     await this.createClientCalendarEvent(picnic)
+    await this.createProductionCalendarEvent(picnic)
   }
 
   private async sendConfirmationMail(picnicData: IPicnicDetail): Promise<void> {
@@ -357,17 +428,33 @@ export class PicnicsService {
     this.logger.log('[createClientCalendarEvent]', picnicData._id!);
     const [hours, minutes] = picnicData.eventTime.split(':').map(Number);
     const startDateTime = new Date(picnicData.eventDate);
-    startDateTime.setHours(hours || 17, minutes || 0, 0, 0);
+    startDateTime.setHours(hours || 13, minutes || 0, 0, 0);
 
-    // TODO - Mejorar informacion del evento
-    const description = `
-    ${picnicData._id.toString()}
-    Experiencia: ${picnicData.package?.name}
-    Invitados: ${picnicData.maxGuest} personas
-    Teléfono: ${picnicData.clientInfo.phone}
-    `
+    const description = this.calendarService.createEventDescription(picnicData, this.DOLAR_EXCHANGE)
+
     await this.calendarService.createPicnicEvent({
       summary: `🧺 Picnic Nómada - Picnic de ${picnicData.event.name}`,
+      clientEmail: picnicData.clientInfo.email,
+      clientName: `${picnicData.clientInfo.name} ${picnicData.clientInfo.lastname}`,
+      startDateTime,
+      durationHours: 3,
+      latitude: picnicData.place?.location.lat,
+      longitude: picnicData.place?.location.lng,
+      locationName: picnicData.place?.name,
+      description,
+    });
+  }
+
+  private async createProductionCalendarEvent(picnicData: IPicnicDetail): Promise<void> {
+    this.logger.log('[createProductionCalendarEvent]', picnicData._id!);
+    const [hours, minutes] = picnicData.eventTime.split(':').map(Number);
+    const startDateTime = new Date(picnicData.eventDate);
+    startDateTime.setHours((hours - 1) || 11, minutes || 0, 0, 0);
+
+    const description = this.calendarService.createEventDescription(picnicData, this.DOLAR_EXCHANGE, true)
+
+    await this.calendarService.createProductionEvent({
+      summary: `[PRODUCCION] - Picnic de ${picnicData.event.name} ${picnicData._id}`,
       clientEmail: picnicData.clientInfo.email,
       clientName: `${picnicData.clientInfo.name} ${picnicData.clientInfo.lastname}`,
       startDateTime,

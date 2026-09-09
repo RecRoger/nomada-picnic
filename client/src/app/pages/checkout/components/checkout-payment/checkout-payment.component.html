@@ -49,24 +49,63 @@
       </div>
       
       <!-- Métodos Disponibles -->
-      <div class="c-checkout-payment--card-methods">
-        <span class="c-checkout-payment--card-methods-title">
-          {{'CHECKOUT.PAYMENT.METHODS.LABEL' | translate}}
-        </span>
-        <div class="c-checkout-payment--card-tags">
-          @for (method of paymentMethods; track method) {
-            <span class="c-checkout-payment--card-tag">{{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}</span>
-          }
-        </div>
-      </div>
+       <div class="c-checkout-payment--card-methods" [formGroup]="form">
+         <mat-radio-group formControlName="payMethod">
+           <div class="c-checkout-payment--card-methods-collapse">
+             <mat-radio-button value="MP">
+               <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.MP_TITLE' | translate}}</span>
+             </mat-radio-button>
+
+             @if (form.get('payMethod')!.value == 'MP') {
+               <div class="c-checkout-payment--card-methods-content" @expandCollapse>
+                 <span class="c-checkout-payment--card-methods-title">
+                   {{'CHECKOUT.PAYMENT.METHODS.MP_LABEL' | translate}}
+                 </span>
+                 <div class="c-checkout-payment--card-tags">
+                   @for (method of MP_PAYMENTH_METHODS; track method) {
+                     <span class="c-checkout-payment--card-tag">{{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}</span>
+                   }
+                 </div>
+               </div>
+             }
+           </div>
+
+           <div class="c-checkout-payment--card-methods-collapse">
+             <mat-radio-button value="OTHER">
+               <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.OTHER_TITLE' | translate}}</span>
+             </mat-radio-button>
+             @if (form.get('payMethod')!.value && form.get('payMethod')!.value != 'MP') {
+               <div class="c-checkout-payment--card-methods-content" @expandCollapse>
+                 <span class="c-checkout-payment--card-methods-title">
+                   {{'CHECKOUT.PAYMENT.METHODS.OTHER_LABEL' | translate}}
+                 </span>
+                 <mat-radio-group class="c-checkout-payment--card-tags" formControlName="payMethod">
+                   @for (method of OTHER_PAYMENTH_METHODS; track method) {
+                     <mat-radio-button [value]="method" class="c-checkout-payment--card-tag radio-tag" [class.active]="form.get('payMethod')!.value == method">
+                      {{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}
+                    </mat-radio-button>
+                   }
+                 </mat-radio-group>
+               </div>
+             }
+           </div>
+         </mat-radio-group>
+       </div>
   
       <!-- Acciones -->
       <div class="c-checkout-payment--card-actions">
+        <p class="c-checkout-payment--card-actions-label">
+          {{'CHECKOUT.PAYMENT.BUTTONS.LABEL' | translate}}
+        </p>
         <div class="action-buttons">
-          <button class="c-checkout-payment--card-btn-partial" (click)="onPay(true)">
+          <button class="c-checkout-payment--card-btn-partial" 
+            [disabled]="form.invalid"
+            (click)="onPay(true)">
             {{'CHECKOUT.PAYMENT.BUTTONS.PARTIAL' | translate}}
           </button>
-          <button class="c-checkout-payment--card-btn-total" (click)="onPay()">
+          <button class="c-checkout-payment--card-btn-total" 
+            [disabled]="form.invalid"
+            (click)="onPay()">
             {{'CHECKOUT.PAYMENT.BUTTONS.TOTAL' | translate}}
           </button>
         </div>

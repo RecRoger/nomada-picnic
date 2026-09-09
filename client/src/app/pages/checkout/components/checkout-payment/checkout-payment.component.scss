@@ -112,6 +112,16 @@
     &-methods {
       margin-top: 2rem;
 
+      &-collapse-title {
+        font-weight: 500;
+      }
+
+      &-content {
+        padding: 1rem 0 1rem 1rem;
+        margin-top: 0.5rem;
+        border-top: 2px solid var(--color-outline);
+      }
+
       &-title {
         font-size: 0.7rem;
         font-weight: 800;
@@ -136,20 +146,37 @@
       padding: 0.5rem 0.8rem;
       font-size: 0.8rem;
       font-weight: 600;
+
+      &.radio-tag {
+        @include u.custom-button(
+          var(--color-text-dark),
+          transparent,
+          2px solid var(--color-outline)
+        );
+        padding: 0 1rem 0 0.5rem;
+        &.active {
+          border: 2px solid var(--color-brand-blue);
+        }
+      }
     }
 
     &-actions {
       @include u.flex(column, flex-start, center, 1rem);
-      margin-top: 2rem;
+      margin-top: 1rem;
+
+      &-label {
+        margin-bottom: 0;
+      }
 
       .action-buttons {
-        @include u.flex(row, flex-start, center, 1rem);
+        @include u.flex(row, center, center, 1rem);
+        flex-wrap: wrap;
       }
     }
 
     &-btn-total {
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
-      padding: 1rem 1.5rem;
+      padding: 0.7rem 1rem;
       font-size: 0.95rem;
       font-weight: 700;
     }
@@ -159,7 +186,7 @@
         transparent,
         2px solid var(--color-brand-coral)
       );
-      padding: 1rem 1.5rem;
+      padding: 0.7rem 1rem;
       font-size: 0.95rem;
       font-weight: 700;
     }
@@ -213,5 +240,36 @@
       text-transform: uppercase;
       margin: 0;
     }
+  }
+}
+
+/* Customización mínima para integrar mat-checkbox con la tipografía */
+:host ::ng-deep {
+  .mat-mdc-radio-button
+    .mdc-radio__native-control:enabled:checked
+    + .mdc-radio__background
+    > .mdc-radio__outer-circle,
+  .mat-mdc-radio-button
+    .mdc-radio__native-control:enabled:checked
+    + .mdc-radio__background
+    > .mdc-radio__inner-circle {
+    // background-color: var(--color-brand-blue);
+    border-color: var(--color-brand-blue);
+  }
+  .mat-mdc-radio-button
+    .mdc-radio:hover
+    > .mdc-radio__native-control:enabled:checked
+    + .mdc-radio__background
+    > .mdc-radio__outer-circle,
+  .mat-mdc-radio-button
+    .mdc-radio:hover
+    > .mdc-radio__native-control:enabled:checked
+    + .mdc-radio__background
+    > .mdc-radio__inner-circle {
+    border-color: var(--color-brand-blue);
+  }
+  .mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element,
+  .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
+    background-color: var(--color-brand-blue);
   }
 }

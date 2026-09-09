@@ -48,9 +48,10 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let element">
-          <!-- <button mat-icon-button color="primary" (click)="editPicnic(element, $event)" title="Editar">
-            <mat-icon>edit</mat-icon>
-          </button> -->
+
+            <button mat-icon-button color="primary" (click)="confirmPicnic(element, $event)" title="Editar">
+              <mat-icon>{{(element.status == 'PENDING' && element.paymentMethod != 'MP') ? 'card_membership': 'edit'}}</mat-icon>
+            </button>
           <button mat-icon-button color="warn" (click)="deletePicnic(element._id, $event)" title="Eliminar">
             <mat-icon>delete</mat-icon>
           </button>
@@ -79,6 +80,11 @@
                 <p><strong>Nombre:</strong> {{ element.clientInfo?.name }} {{ element.clientInfo?.lastname }}</p>
                 <p><strong>Email:</strong> {{ element.clientInfo?.email }}</p>
                 <p><strong>Teléfono:</strong> {{ element.clientInfo?.phone }}</p>
+                <h4><mat-icon>info</mat-icon> Detalles:</h4>
+                <p><strong>Bebidas de cortesia:</strong> {{ element.clientInfo?.giftDrinks.join(', ')}}</p>
+                <p><strong>Nombre del homenajeado:</strong> {{ element.clientInfo?.honoredName}}</p>
+                <p><strong>Observaciones:</strong> {{ element.clientInfo?.comments}}</p>
+
               </div>
 
               <!-- Paquete y Evento -->
@@ -94,6 +100,7 @@
                 <h4><mat-icon>payments</mat-icon> Detalle Financiero</h4>
                 <p><strong>Monto Pagado:</strong> {{ element.paidAmount | currency }}</p>
                 <p><strong>Monto Pendiente:</strong> {{ element.pendingAmount | currency }}</p>
+                <p><strong>Forma de pago:</strong> {{ element.paymentMethod }}</p>
                 <p><strong>Modo:</strong> {{ element.paymentOption }}</p>
               </div>
 

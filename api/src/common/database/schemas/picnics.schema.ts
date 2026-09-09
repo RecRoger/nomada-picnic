@@ -80,6 +80,9 @@ export class Picnic {
   paymentOption: 'DEPOSIT' | 'FULL'
 
   @Prop({ required: true })
+  paymentMethod: string
+
+  @Prop({ required: true })
   paidAmount: number;
 
   @Prop({ required: true })

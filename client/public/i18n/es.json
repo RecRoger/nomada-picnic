@@ -713,16 +713,25 @@
       "REFFERENCE": "Número de reserva temporal",
       "EXPERIENCE": "Experiencia",
       "METHODS": {
-        "LABEL": "Métodos disponibles en Mercado Pago",
+        "MP_TITLE": "Pagar con Mercado Pago",
+        "OTHER_TITLE": "Coordinar otra forma de pago",
+        "MP_LABEL": "Métodos disponibles en Mercado Pago",
+        "OTHER_LABEL": "Otros métodos disponibles",
         "CREDIT": "Tarjetas de crédito",
         "DEBIT": "Tarjetas de débito",
-        "TRANSFER": "Dinero en cuenta",
+        "TRANSFER": "Transferencia",
         "QUOTAS": "Cuotas disponibles",
+        "CASH_DOLLAR": "Dólares en efectivo",
+        "CASH_PESOS": "Pesos en efectivo",
+        "TRANSFER_DOLLAR": "Transferencia en dólares",
+        "TRANSFER_PESOS": "Transferencia en pesos",
+        "CRYPTO": "Transferencia con cripto",
         "OTHER": "Otros métodos"
       },
       "BUTTONS": {
-        "TOTAL": "Pagar Total del valor",
-        "PARTIAL": "Pagar seña 50%",
+        "LABEL": "¿Cómo deseas reservar tu picnic?",
+        "TOTAL": "Pagar total de la reserva",
+        "PARTIAL": "Pagar la seña del 50%",
         "BACK": "Volver al checkout"
       },
       "SECURITY": {

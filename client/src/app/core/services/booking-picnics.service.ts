@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { API_URL } from '@constants/api-url';
 import { CartService } from '@services/cart.service';
 import { NotificationService } from '@services/notification.service';
-import { AlertTypes } from '@shared/enums';
+import { AlertTypes, PaymentMethods, PaymentTypes } from '@shared/enums';
 import { IBookingCart, IBookingClientInfo, ICartAdditionalDto, ICreatePicnicDto, IPicnicBookingDto } from '@shared/interfaces';
 import { catchError, map, Observable, of } from 'rxjs';
 
@@ -16,14 +16,17 @@ export class BookingPicnicsService {
 
   private readonly notificationService: NotificationService = inject(NotificationService)
 
-  public saveBooking(partialPay = false): Observable<any> {
+  public saveBooking(payMethod: string, partialPay = false): Observable<any> {
     const bookingBody = this.mapCartToCreatePicnicDto({
       booking: this.cartService.booking(),
       additionals: this.cartService.additionals(),
       clientInfo: this.cartService.clientForm(),
     })
     return this.http.post(API_URL + '/api/picnics', bookingBody, {
-      ...(partialPay ? { params: { payType: 'deposit' } } : {})
+      params: {
+        payOption: partialPay ? PaymentTypes.DEPOSIT : PaymentTypes.FULL,
+        payMethod,
+      }
     }).pipe(
       map((response: any) => {
         if (response) {

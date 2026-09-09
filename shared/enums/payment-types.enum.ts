@@ -1,0 +1,14 @@
+export enum PaymentTypes {
+  FULL = 'FULL',
+  DEPOSIT = 'DEPOSIT',
+}
+
+export enum PaymentMethods {
+  MP = 'MERCADO_PAGO',
+  CASH_DOLLAR = 'CASH_DOLLAR',
+  CASH_PESOS = 'CASH_PESOS',
+  TRANSFER_DOLLAR = 'TRANSFER_DOLLAR',
+  TRANSFER_PESOS = 'TRANSFER_PESOS',
+  CRYPTO = 'CRYPTO',
+  OTHER = 'OTHER',
+}

@@ -104,6 +104,15 @@ export const CHECKLIST_ELEMENTS = [
   },
 ]
 
+export const DRINKS_MAP: Record<string, string> = {
+  RED_WINE: 'Vino tinto',
+  WHITE_WINE: 'Vino Blanco',
+  CHAMPAIGN: 'Champagn',
+  JUICE: 'Jugo',
+  SODA: 'Gaseosa',
+  OTHER: 'Otro',
+};
+
 export const PICNIC_NAMES = {
   ESSENCIAL: 'Picnic Esencial',
   SIGNATURE: 'Picnic Signature',

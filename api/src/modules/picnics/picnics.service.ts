@@ -379,7 +379,7 @@ export class PicnicsService {
   private async startConfirmationProcess(picnicId: string): Promise<void> {
     this.logger.log('[startConfirmationProcess]', picnicId);
     const picnic: IPicnicDetail = await this.getPicnicDetails(picnicId)
-    // await this.sendConfirmationMail(picnic)
+    await this.sendConfirmationMail(picnic)
     await this.createClientCalendarEvent(picnic)
     await this.createProductionCalendarEvent(picnic)
   }

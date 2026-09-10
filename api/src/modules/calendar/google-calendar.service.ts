@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CHECKLIST_ELEMENTS, PAYMENT_METHODS_MAP, PICNIC_NAMES, PRODUCTION_EMAIL } from '@shared/const';
+import { CHECKLIST_ELEMENTS, DRINKS_MAP, PAYMENT_METHODS_MAP, PICNIC_NAMES, PRODUCTION_EMAIL } from '@shared/const';
 import { ICalendarEvent } from '@shared/interfaces';
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 import { calendar_v3, google } from 'googleapis';
@@ -190,7 +190,7 @@ ${includedItemsList}
 ${additionalsList}
 
 🎁 CORTESÍA:
-${courtesyAmount} bebidas 🍾 (${clientInfo.giftDrinks.join(', ')})
+${courtesyAmount} bebidas 🍾 (${clientInfo.giftDrinks.map(item => DRINKS_MAP[item]).join(', ')})
 ${courtesyAmount} Servicios de pan y Untable 🥖
 ${maxGuest} Medialunas de cortesía 🥐
 

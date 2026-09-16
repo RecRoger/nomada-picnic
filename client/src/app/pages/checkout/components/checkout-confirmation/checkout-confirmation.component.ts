@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { CartService } from '@services/cart.service';
+import { BUSINESS_NUMBER } from '@shared/const';
 
 export interface IPicnicConfirmationDetails {
   bookingNumber: string;
@@ -63,7 +64,7 @@ export class CheckoutConfirmationComponent {
   public openWhatsApp(): void {
     let message = `¡Hola! Mi nombre es ${this.bookingDetails()?.completeName} y tengo algunas dudas sobre mi reserva de ${this.bookingDetails().experienceName} bajo el numero de reserva ${this.bookingDetails().bookingNumber}`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${BUSINESS_NUMBER}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   }
 }

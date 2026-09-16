@@ -1,0 +1,62 @@
+<section class="c-booking-form">
+  <div class="c-booking-form--header">
+    <span class="c-booking-form--header-label">{{'BOOKINGS.FORM.LABEL' | translate}}</span>
+    <h1 class="c-booking-form--header-title">{{'BOOKINGS.FORM.TITLE' | translate}}</h1>
+    <p class="c-booking-form--header-subtitle">
+      {{'BOOKINGS.FORM.SUBTITLE' | translate}}
+    </p>
+  </div>
+  
+  <form class="c-booking-form--form" [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    
+    @if(loading) {
+      <div class="loader-container">
+        <app-loader size="medium" class="loader"></app-loader>
+      </div>
+    }
+
+    <div class="form-field">
+      <label for="name">{{'COMMON.NAME'|translate}}</label>
+      <input 
+        id="name" 
+        type="text" 
+        formControlName="name" 
+        placeholder="Maria" 
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="lastname">{{'COMMON.LASTNAME'|translate}}</label>
+      <input 
+        id="lastname" 
+        type="text" 
+        formControlName="lastname" 
+        placeholder="Martinez" 
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="bookingId">{{'COMMON.BOOKING_NUMBER'|translate}}</label>
+      <input 
+        id="bookingId" 
+        type="text" 
+        formControlName="bookingId" 
+        placeholder="xxxxxxxxxxxxxxxxxxxxxxxx" 
+      />
+    </div>
+
+    <button type="submit" class="btn-submit" [disabled]="bookingForm.invalid">
+      {{'BOOKINGS.FORM.BUTTON' | translate}}
+    </button>
+    
+  </form>
+
+  <!-- Pie con ayuda / WhatsApp -->
+  <footer class="c-booking-form--footer">
+    {{'BOOKINGS.FORM.FOOTER.TEXT_1' | translate}}
+    <a href="https://wa.me/{{WH_BUTTON}}" target="_blank" rel="noopener noreferrer">
+      {{'BOOKINGS.FORM.FOOTER.LINK' | translate}}
+    </a> 
+    {{'BOOKINGS.FORM.FOOTER.TEXT_2' | translate}}
+  </footer>
+</section>

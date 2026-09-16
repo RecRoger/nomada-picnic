@@ -1,0 +1,392 @@
+@use "utils" as u;
+
+.c-booking-detail {
+  background-color: var(--color-bg-softcream);
+  min-height: 100vh;
+  padding: 10rem 3rem 1.5rem;
+  max-width: 1080px;
+  margin: 0 auto;
+
+  @include u.style-up-to(tablet) {
+    padding: 10rem 1rem 1.5rem;
+  }
+
+  &--header {
+    @include u.flex(row, space-between, flex-start, 0);
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+
+    &-label {
+      color: var(--color-brand-blue);
+      font-family: var(--font-money);
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: block;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    &-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      margin: 0;
+      line-height: 1;
+      font-family: var(--font-title);
+      text-transform: uppercase;
+    }
+
+    &-subtitle {
+      color: var(--color-text-muted);
+      margin-top: 0.5rem;
+    }
+
+    &-badges {
+      display: flex;
+      gap: 0.5rem;
+
+      .badge {
+        @include u.pill(var(--color-white), var(--color-brand-blue));
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &.badge-blue {
+          background-color: var(--color-brand-blue);
+          color: var(--color-white);
+        }
+
+        &.badge-light {
+          background-color: var(--color-bg-cream);
+          color: var(--color-text-muted);
+        }
+      }
+    }
+  }
+
+  .grid-layout {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+
+    @include u.style-up-to(tablet) {
+      grid-template-columns: 1fr;
+    }
+
+    // &.top-grid {
+    //   grid-template-columns: 1fr 1fr;
+    // }
+
+    // &.bottom-grid {
+    //   grid-template-columns: 1fr 1fr;
+    // }
+  }
+
+  &--aside {
+    @include u.flex(column, flex-start, stretch, 1.5rem);
+  }
+
+  &--timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    @include u.flex(column, space-between, start, 1.5rem);
+    position: relative;
+    // display: flex;
+    // justify-content: space-between;
+
+    .timeline-item {
+      @include u.flex(row, flex-start, center, 1rem);
+      font-size: 1rem;
+      font-weight: 700;
+
+      &::before {
+        content: "";
+        position: absolute;
+        // Posiciona la línea justo en el centro del ícono (18px = mitad de 36px de ancho)
+        left: 20px;
+        top: 36px; // Inicia debajo del centro del círculo actual
+        bottom: 0; // Se extiende hasta tocar la parte superior del siguiente círculo
+        width: 2px;
+        background-color: var(--color-brand-blue);
+        transform: translateX(-50%);
+        z-index: 1;
+      }
+
+      .timeline-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        @include u.flex(row, center, center, 0);
+        color: var(--color-white);
+        font-size: 1rem;
+        z-index: 2;
+      }
+
+      &.completed .timeline-icon {
+        background-color: var(--color-brand-blue);
+      }
+
+      &.active .timeline-icon {
+        background-color: var(--color-brand-coral);
+      }
+    }
+  }
+
+  &--actions {
+    margin: 3rem 0;
+
+    &-title {
+      font-family: var(--font-title);
+      margin: 0 0 0.2rem 0;
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    &-subtitle {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .actions-grid {
+      @include u.flex(row, flex-start, center, 1rem);
+      flex-wrap: wrap;
+
+      .action-card {
+        max-width: 200px;
+        // margin: auto;
+        background: var(--color-white);
+        border-radius: var(--radius-card-sm);
+        padding: 1.25rem;
+        border: 1px solid transparent;
+        @include u.flex(column, flex-start, stretch, 0.5rem);
+        transition: all 0.2s;
+
+        &:hover {
+          cursor: pointer;
+          border: 1px solid var(--color-brand-blue);
+          box-shadow: 6px 7px 20px rgb(0 0 0 / 15%);
+          transform: translateY(-0.5rem);
+        }
+
+        .action-icon {
+          width: 30px;
+          ::ng-deep img.emoji {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        h3 {
+          font-size: 1rem;
+          font-weight: 700;
+          margin: 0 0 0.4rem 0;
+        }
+
+        p {
+          color: var(--color-text-muted);
+          font-size: 0.8rem;
+          margin: 0 0 1rem 0;
+          // flex-grow: 1;
+        }
+
+        .action-link {
+          color: var(--color-brand-blue);
+          text-decoration: none;
+          font-size: 0.8rem;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  &--notices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    .notice-item {
+      display: flex;
+      gap: 0.8rem;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      background-color: var(--color-bg-cream);
+
+      strong {
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      p {
+        margin: 0;
+        color: var(--color-text-muted);
+      }
+      .notice-icon {
+        max-width: 20px;
+        ::ng-deep img.emoji {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+
+  /* Listas de Información (Día del Picnic) */
+  &--info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    @include u.flex(column, flex-start, stretch, 1rem);
+
+    &-item {
+      @include u.flex(row, flex-start, start, 1rem);
+      font-size: 0.9rem;
+
+      .info-icon {
+        max-width: 25px;
+        ::ng-deep img.emoji {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+      }
+
+      strong {
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      p {
+        margin: 0;
+        color: var(--color-text-muted);
+      }
+    }
+  }
+
+  &--contact {
+    background-color: var(--color-brand-blue) !important;
+    color: #ffffff;
+
+    p {
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .banner-buttons {
+      @include u.flex(row, flex-start, center, 1rem);
+
+      .btn-white {
+        @include u.custom-button(var(--color-brand-blue), var(--color-white));
+        padding: 0.6rem 1.2rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+      }
+
+      .btn-outline-white {
+        @include u.custom-button(var(--color-white), transparent);
+        font-weight: 700;
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+.booking-card {
+  background: var(--color-white);
+  border-radius: var(--radius-card-sm);
+  padding: 1.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+
+  &.card-tan {
+    background-color: var(--color-bg-cream);
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin: 0 0 1.25rem 0;
+    font-family: var(--font-title);
+    text-transform: uppercase;
+  }
+}
+
+/* Tablas de Información */
+.detail-table td {
+  border-bottom: 1px solid var(--color-outline);
+}
+.detail-table,
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 0.5rem 0;
+    color: var(--color-soft-gray);
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  .text-bold {
+    font-weight: 700;
+    color: var(--color-text-dark);
+  }
+
+  .row-subtotal td {
+    border-bottom: 1px solid var(--color-outline);
+    padding-bottom: 1.3rem;
+  }
+
+  .money-data {
+    font-family: var(--font-money);
+  }
+
+  .row-highlight-blue td {
+    padding-top: 1rem;
+    &.color-blue {
+      color: var(--color-brand-blue);
+    }
+  }
+  .row-highlight-dark td {
+    // padding: 0rem 0 1rem;
+    font-size: 1.2rem;
+    color: var(--color-text-dark);
+    font-weight: 700;
+  }
+}
+
+.card-footnote {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 1rem;
+}
+
+/* Tags / Pills */
+.tags-container {
+  margin-top: 1.5rem;
+
+  .tags-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .tag-pill {
+      @include u.pill(var(--color-text-dark), var(--color-bg-cream));
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  }
+}

@@ -1,0 +1,231 @@
+<div class="c-booking-detail">
+  <header class="c-booking-detail--header">
+    <div class="c-booking-detail--header-info">
+      <span class="c-booking-detail--header-label">{{'BOOKINGS.DETAIL.HEADER.LABEL' |translate}}</span>
+      <h1 class="c-booking-detail--header-title">{{'BOOKINGS.DETAIL.HEADER.TITLE' |translate:({name:clientData?.name})}}</h1>
+      <p class="c-booking-detail--header-subtitle" [innerHTML]="'BOOKINGS.DETAIL.HEADER.SUBTITLE' |translate:({id: '...'+(bookingData?._id | slice:-6), days: daysLeft})">
+      </p>
+    </div>
+    <div class="c-booking-detail--header-badges">
+      <span class="badge badge-blue">{{'BOOKINGS.DETAIL.HEADER.STATUS.'+bookingData?.status |translate}}</span>
+      <span class="badge badge-light">{{'BOOKINGS.DETAIL.HEADER.PAID_BADGE' |translate:({paid:paidPercentage})}}</span>
+    </div>
+  </header>
+
+  <div class="grid-layout top-grid">
+    
+    <div class="c-booking-detail--preview booking-card">
+      <h2 class="card-title">{{'BOOKINGS.DETAIL.PREVIEW.TITLE' | translate}}</h2>
+      <table class="detail-table">
+        <tbody>
+          <tr><td>{{'COMMON.EXPERIENCE'|translate}}</td><td class="text-bold">{{bookingData?.package?.name}}</td></tr>
+          <tr><td>{{'COMMON.PEOPLE'|translate|titlecase}}</td><td class="text-bold">{{bookingData?.maxGuest}} {{'COMMON.PEOPLE'|translate}}</td></tr>
+          <tr><td>{{'COMMON.DATE'|translate}}</td><td class="text-bold">{{bookingData?.eventDate | date:'longDate':'':'es'}}</td></tr>
+          <tr><td>{{'COMMON.TIME'|translate}}</td><td class="text-bold">{{bookingData?.eventTime}} hs</td></tr>
+          <tr><td>{{'COMMON.PLACE'|translate}}</td><td class="text-bold">{{bookingData?.place.name}}</td></tr>
+          <tr><td>{{'COMMON.CELEBRATION'|translate}}</td><td class="text-bold">Cumpleaños</td></tr>
+          <tr><td>{{'BOOKINGS.DETAIL.PREVIEW.NAMED_BY' | translate}}</td><td class="text-bold">{{clientData?.name}} {{clientData?.lastname}}</td></tr>
+          <tr><td>{{'COMMON.CONTACT'|translate}}</td><td class="text-bold">+{{clientData?.phone}}</td></tr>
+        </tbody>
+      </table>
+
+      @if (additionals?.length) {
+        <div class="tags-container">
+          <span class="tags-label">{{'BOOKINGS.DETAIL.PREVIEW.ADDITIONALS_TITLE' | translate}}</span>
+          <div class="tags-list">
+            @for (item of additionals; track $index) {
+              <span class="tag-pill">{{item.cost.name}}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="c-booking-detail--aside">
+      
+      <!-- Bloque: Resumen Económico -->
+      <div class="c-booking-detail--prices booking-card">
+        <h2 class="card-title">RESUMEN ECONÓMICO</h2>
+        <table class="pricing-table">
+          <tbody>
+            <tr>
+              <td>{{bookingData?.package.name}} ({{bookingData?.maxGuest}} {{'COMMON.PEOPLE' | translate}})</td>
+              <td class="text-bold">{{bookingData?.basePrice | currency: 'US$ ':'code':'1.0-2'}}</td>
+            </tr>
+
+            @for (item of additionals; track $index) {
+              <tr>
+                <td>{{item.cost.name}}</td>
+                <td class="text-bold money-data">{{item.totalPrice | currency: 'US$ ':'code':'1.0-2'}}</td>
+              </tr>
+            }
+            <tr class="row-subtotal">
+              <td>{{'COMMON.SUBTOTAL' | translate}}</td>
+              <td class="text-bold money-data">{{bookingData?.totalAmount  | currency: 'US$ ':'code':'1.0-2'}}</td>
+            </tr>
+            <tr class="row-highlight-blue">
+              <td>{{'COMMON.PAID_TOTAL' | translate}}</td>
+              <td class="text-bold color-blue money-data">{{bookingData?.paidAmount  | currency: 'US$ ':'code':'1.0-2'}}</td>
+            </tr>
+            <tr class="row-highlight-dark">
+              <td>{{'COMMON.PENDING_TOTAL' | translate}}</td>
+              <td class="text-bold color-dark money-data">{{bookingData?.pendingAmount  | currency: 'US$ ':'code':'1.0-2'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="card-footnote">{{'BOOKINGS.DETAIL.PREVIEW.PRICE_TEXT' | translate}}</p>
+      </div>
+
+      
+      <div class="booking-card card-tan">
+        <h2 class="card-title">{{'BOOKINGS.DETAIL.STEPS.TITLE' | translate}}</h2>
+        <ul class="c-booking-detail--timeline">
+          <li class="timeline-item completed">
+            <mat-icon class="timeline-icon">check</mat-icon>
+            <span class="timeline-label">{{'BOOKINGS.DETAIL.STEPS.CREATION' | translate}}</span>
+          </li>
+          <li class="timeline-item completed">
+            <mat-icon class="timeline-icon">check</mat-icon>
+            <span class="timeline-label">{{'BOOKINGS.DETAIL.STEPS.PAYMENT' | translate}}</span>
+          </li>
+          <li class="timeline-item completed">
+            <mat-icon class="timeline-icon">check</mat-icon>
+            <span class="timeline-label">{{'BOOKINGS.DETAIL.STEPS.CONFIRMED' | translate}}</span>
+          </li>
+          <li class="timeline-item active">
+            <span class="timeline-icon">4</span>
+            <span class="timeline-label">{{'BOOKINGS.DETAIL.STEPS.NEXT_DATE' | translate}}</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <section class="c-booking-detail--actions">
+    <div class="c-booking-detail--actions-header">
+      <h2 class="c-booking-detail--actions-title">{{'BOOKINGS.DETAIL.ACTIONS.TITLE'|translate}}</h2>
+      <p class="c-booking-detail--actions-subtitle">{{'BOOKINGS.DETAIL.ACTIONS.SUBTITLE'|translate}}</p>
+    </div>
+
+    <div class="actions-grid">
+      <div class="action-card" (click)="callAction('date')">
+        <div class="action-icon" [innerHTML]="'📅' | appleEmoji"></div>
+        <h3>{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.DATE_TITLE'|translate}}</h3>
+        <p>{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.DATE_TEXT'|translate}}</p>
+        <a href="#" class="action-link">Elegir {{'BOOKINGS.DETAIL.ACTIONS.ITEMS.DATE_BUTTON'|translate}}</a>
+      </div>
+
+      <div class="action-card" (click)="callAction('edit')">
+        <div class="action-icon" [innerHTML]="'✏️' | appleEmoji"></div>
+        <h3>{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.EDIT_TITLE'|translate}}</h3>
+        <p>{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.EDIT_TEXT'|translate}}</p>
+        <a href="#" class="action-link">{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.EDIT_BUTTON'|translate}}</a>
+      </div>
+
+      <div class="action-card" (click)="callAction('cancel')">
+        <div class="action-icon" [innerHTML]="'🕊️' | appleEmoji"></div>
+        <h3>{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.CANCEL_TITLE'|translate}}</h3>
+        <p>{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.CANCEL_TEXT'|translate}}</p>
+        <a href="#" class="action-link">{{'BOOKINGS.DETAIL.ACTIONS.ITEMS.CANCEL_BUTTON'|translate}}</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid-layout bottom-grid">
+    
+    <div class="booking-card">
+      <h2 class="card-title">{{'BOOKINGS.DETAIL.ALERTS.TITLE' | translate}}</h2>
+      <div class="c-booking-detail--notices">
+        <div class="notice-item">
+          <span class="notice-icon" [innerHTML]="'✅' | appleEmoji"></span>
+          <div>
+            <strong>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.BOOKING_TITLE' | translate}}</strong>
+            <p>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.BOOKING_TEXT' | translate:({date: bookingData?.eventDate | date})}}</p>
+          </div>
+        </div>
+
+        @if (bookingData?.pendingAmount) {
+          <div class="notice-item">
+            <span class="notice-icon" [innerHTML]="'💳' | appleEmoji"></span>
+            <div>
+              <strong>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.PRICE_TITLE' | translate:({amount: bookingData?.pendingAmount | currency})}}</strong>
+              <p>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.PRICE_TEXT' | translate}}</p>
+            </div>
+          </div>
+        }
+
+        <div class="notice-item">
+          <span class="notice-icon" [innerHTML]="'🌧️' | appleEmoji"></span>
+          <div>
+            <strong>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.WEATHER_TITLE' | translate}}</strong>
+            <p>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.WEATHER_TEXT' | translate:({date: bookingData?.eventDate | date, weather: weather()})}}</p>
+          </div>
+        </div>
+
+        <div class="notice-item">
+          <span class="notice-icon" [innerHTML]="'⛺' | appleEmoji"></span>
+          <div>
+            <strong>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.DATE_TITLE' | translate:({daysLeft})}}</strong>
+            <p>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.DATE_TEXT' | translate}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-booking-detail--aside">
+      <div class="booking-card">
+        <h2 class="card-title">{{'BOOKINGS.DETAIL.INFO.TITLE' | translate}}</h2>
+        <ul class="c-booking-detail--info">
+          <li class="c-booking-detail--info-item">
+            <span class="info-icon" [innerHTML]="'🧺' | appleEmoji"></span>
+            <div>
+              <strong>{{'BOOKINGS.DETAIL.INFO.ITEMS.PRODUCTION_TITLE' | translate}}</strong>
+              <p>{{'BOOKINGS.DETAIL.INFO.ITEMS.PRODUCTION_TEXT' | translate}}</p>
+            </div>
+          </li>
+          <li class="c-booking-detail--info-item">
+            <span class="info-icon" [innerHTML]="'👕' | appleEmoji"></span>
+            <div>
+              <strong>{{'BOOKINGS.DETAIL.INFO.ITEMS.WEAR_TITLE' | translate}}</strong>
+              <p>{{'BOOKINGS.DETAIL.INFO.ITEMS.WEAR_TEXT' | translate}}</p>
+            </div>
+          </li>
+          <li class="c-booking-detail--info-item">
+            <span class="info-icon" [innerHTML]="'📍' | appleEmoji"></span>
+            <div>
+              <strong>{{'BOOKINGS.DETAIL.INFO.ITEMS.PLACE_TITLE' | translate}}</strong>
+              <p>{{'BOOKINGS.DETAIL.INFO.ITEMS.PLACE_TEXT' | translate:({place:bookingData?.place.name})}}</p>
+            </div>
+          </li>
+          <li class="c-booking-detail--info-item">
+            <span class="info-icon" [innerHTML]="'⏰' | appleEmoji"></span>
+            <div>
+              <strong>{{'BOOKINGS.DETAIL.INFO.ITEMS.TIME_TITLE' | translate}}</strong>
+              <p>{{'BOOKINGS.DETAIL.INFO.ITEMS.TIME_TEXT' | translate:({time: bookingData?.eventTime})}}</p>
+            </div>
+          </li>
+          <li class="c-booking-detail--info-item">
+            <span class="info-icon" [innerHTML]="'🌤️' | appleEmoji"></span>
+            <div>
+              <strong>{{'BOOKINGS.DETAIL.INFO.ITEMS.WEATHER_TITLE' | translate}}</strong>
+              <p>{{'BOOKINGS.DETAIL.INFO.ITEMS.WEATHER_TEXT' | translate}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="c-booking-detail--contact booking-card">
+        <h2 class="card-title">{{"BOOKINGS.DETAIL.CONTACT.TITLE" |translate}}</h2>
+        <p>{{"BOOKINGS.DETAIL.CONTACT.SUBTITLE" |translate}}</p>
+        <div class="banner-buttons">
+          <button class="btn-white" (click)="callAction('whatsapp')">{{"BOOKINGS.DETAIL.CONTACT.WHATSAPP" |translate}}</button>
+          <button class="btn-outline-white" (click)="callAction('mail')">{{"BOOKINGS.DETAIL.CONTACT.MAIL" |translate}}</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

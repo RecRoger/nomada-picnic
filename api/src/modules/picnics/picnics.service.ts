@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PAYMENT_METHODS_MAP } from '@shared/const';
+import { BUSINESS_NUMBER, PAYMENT_METHODS_MAP } from '@shared/const';
 import { BookingStatus, PaymentMethods, PaymentTypes } from '@shared/enums';
 import { IBookingConfirmationEmail, ICost, IPaginatedPicnics, IPicnicEvent, IPicnicPackage, IPlace } from '@shared/interfaces';
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
@@ -69,8 +69,13 @@ export class PicnicsService {
     };
   }
 
-  async getPicnicDetails(picnicId): Promise<IPicnicDetail> {
+  async getPicnicDetails(picnicId: string, name?: string, lastname?: string): Promise<IPicnicDetail> {
     this.logger.log('[getPicnicDetails]', picnicId)
+
+    if (!Types.ObjectId.isValid(picnicId)) {
+      throw new NotFoundException(`ID no válido: ${picnicId}`);
+    }
+
     const picnic = await this.picnicsModel
       .findById(picnicId)
       .populate<{ package: IPicnicPackage }>('package', 'name description includedItems')
@@ -84,6 +89,27 @@ export class PicnicsService {
 
     if (!picnic) {
       throw new NotFoundException(`Picnic con ID ${picnicId} no encontrado`);
+    }
+
+    if (name && lastname) {
+      const normalizeString = (value: unknown): string => {
+        if (value === null || value === undefined) return '';
+        return String(value)
+          .trim()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '') // Elimina acentos (ej: "Gómez" -> "gomez")
+          .replace(/\s+/g, '')             // Elimina espacios
+          .toLowerCase();
+      }
+
+      const parseName = normalizeString(name)
+      const parseLastname = normalizeString(lastname)
+      const parsePicnicName = normalizeString(picnic.clientInfo.name)
+      const parsePicnicLastname = normalizeString(picnic.clientInfo.lastname)
+
+      if (!parsePicnicName.includes(parseName) || !parsePicnicLastname.includes(parseLastname)) {
+        throw new NotFoundException(`Apellido y nombre no cohinciden con dueño de la reserva`);
+      }
     }
 
     return picnic as unknown as IPicnicDetail;
@@ -261,7 +287,7 @@ export class PicnicsService {
     }
     message = message + '\n Quedo a la espera de metodos de pago y formas de proceder con la reserva (: .'
     const encodedMessage = encodeURIComponent(message);
-    return `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
+    return `https://wa.me/${BUSINESS_NUMBER}?text=${encodedMessage}`;
   }
 
   private async generatePayment(savedPicnic: PicnicsDocument, amount: number, paymentTitle: string, sucessParams: string): Promise<string> {
@@ -414,7 +440,7 @@ export class PicnicsService {
       })),
       // Logística / Instrucciones
       durationHours: 3,
-      manageBookingUrl: `${process.env.FRONTEND_URL}/booking?id=${picnicData._id}`,
+      manageBookingUrl: `${process.env.FRONTEND_URL}/bookings?id=${picnicData._id}`,
       whatsappUrl: `https://wa.me/5491112345678?text=Hola!%20Tengo%20una%20consulta%20sobre%20mi%20reserva%20${picnicData._id}`,
       faqUrl: `${process.env.FRONTEND_URL}/contact`,
       cancellationPolicyUrl: `${process.env.FRONTEND_URL}/policy`,

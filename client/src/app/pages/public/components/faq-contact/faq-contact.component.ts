@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { StaticData } from '@models/static-data';
 import { TranslateModule } from '@ngx-translate/core';
+import { BUSINESS_NUMBER } from '@shared/const';
 
 @Component({
   selector: 'app-faq-contact',
@@ -10,6 +11,8 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './faq-contact.component.scss'
 })
 export class FAQContactComponent {
+  public readonly WH_NUMBER = BUSINESS_NUMBER
+
   public readonly questions = (length: number, offset: number = 1): StaticData[] => Array.from({ length }, (_, index) => ({
     title: "PUBLIC.FAQ.CONTENT.QUESTION_" + (index + offset),
     data1: "PUBLIC.FAQ.CONTENT.ANSWER_" + (index + offset)

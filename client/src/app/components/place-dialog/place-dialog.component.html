@@ -7,7 +7,7 @@
     @if (place.tags && place.tags.length && place.tags.includes(recomendedTag)) {
       <span class="badge-recommended">
         <mat-icon class="icon">star</mat-icon>
-        Recomendado
+        {{'PUBLIC.PLACES.FAVORITE' | translate}}
       </span>
     }
     @if (place.images?.length) {

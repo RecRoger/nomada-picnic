@@ -4,6 +4,7 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { WaButtonComponent } from '@components/wa-button/wa-button.component';
 import { NavLink } from '@models/nav-link';
 import { TranslateModule } from '@ngx-translate/core';
+import { BUSINESS_NUMBER } from '@shared/const';
 import { filter, map, Observable } from 'rxjs';
 
 @Component({
@@ -61,7 +62,7 @@ export class FooterComponent {
     ],
     CONTACT: [
       {
-        href: 'tel:+5491126908781',
+        href: `tel:+${BUSINESS_NUMBER}`,
         label: 'COMMON.BUSINESS_PHONE'
       },
       {
@@ -83,7 +84,7 @@ export class FooterComponent {
         label: 'PUBLIC.FOOTER.LEGAL.PP'
       },
       {
-        href: 'https://wa.me/5491126908781',
+        href: `https://wa.me/${BUSINESS_NUMBER}`,
         label: 'PUBLIC.FOOTER.LEGAL.PHONE_SUPERT'
       },
     ]

@@ -28,9 +28,12 @@ export class PicnicPackageService {
     const isPublic = !query || query !== 'full'
     this.logger.log('[findPackages]', `public: ${isPublic}`);
     try {
-      const packages = await this.packageModel.find().populate('productionCostIds').lean().exec();
-      const courtesyCosts = await this.costModel.find({ type: CostsTypes.GIFTS }).lean().exec();
-      const basePlace = await this.placeModel.findOne({ type: PlacesTypes.BASIC, zone: 0 }).lean().exec();
+
+      const [packages, courtesyCosts, basePlace] = await Promise.all([
+        await this.packageModel.find().populate('productionCostIds').lean().exec(),
+        await this.costModel.find({ type: CostsTypes.GIFTS }).lean().exec(),
+        await this.placeModel.findOne({ type: PlacesTypes.BASIC, zone: 0 }).lean().exec(),
+      ])
       const baseTransportCost = basePlace?.transportationCost || 0;
       return packages.map((pkg) => {
         const minGuests = pkg.minGuests || 2;

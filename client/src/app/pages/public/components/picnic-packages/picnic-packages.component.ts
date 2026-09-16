@@ -88,13 +88,5 @@ export class PicnicPackagesComponent {
       maxWidth: '90vw',
       maxHeight: '90vh',
     });
-
-
-
-
-    // const message = `¡Hola! Me interesaria tener informacion sobre un los paquetes corporativos`;
-    // const encodedMessage = encodeURIComponent(message);
-    // const whatsappUrl = `https://wa.me/${'5491126908781'}?text=${encodedMessage}`;
-    // window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   }
 }

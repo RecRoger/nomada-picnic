@@ -42,6 +42,8 @@ export class PicnicsController {
     description: 'ID de Mongo (ObjectId) del picnic',
     example: '65f1a2b3c4d5e6f7a8b9c0d1',
   })
+  @ApiQuery({ name: 'name', required: true, example: 'Maria', description: 'Nombre del dueño de la reserva' })
+  @ApiQuery({ name: 'lastname', required: true, example: 'Martinez', description: 'Apellido del dueño de la reserva' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Detalle del picnic encontrado.',
@@ -50,8 +52,12 @@ export class PicnicsController {
     status: HttpStatus.NOT_FOUND,
     description: 'Picnic no encontrado.',
   })
-  async getPicnicDetails(@Param('id') id: string): Promise<IPicnicDetail> {
-    return this.picnicsService.getPicnicDetails(id);
+  async getPicnicDetails(
+    @Param('id') id: string,
+    @Query('name') name: string,
+    @Query('lastname') lastname: string
+  ): Promise<IPicnicDetail> {
+    return this.picnicsService.getPicnicDetails(id, name, lastname);
   }
 
   @Put(':id')

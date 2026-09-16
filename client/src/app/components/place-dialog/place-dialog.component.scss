@@ -39,15 +39,27 @@
     position: relative;
     height: 350px;
     width: 100%;
+    @include u.flex(column, center, center, 0);
     overflow: hidden;
 
     @include u.style-starting-from(tablet) {
       height: 100%;
     }
+    .media-img {
+      width: 100%;
+      // height: 100%;
+      transform: translateY(-15%);
+      object-fit: cover;
+      @include u.style-starting-from(tablet) {
+        transform: translateY(0);
+        height: 100%;
+      }
+    }
 
     .badge-recommended {
       position: absolute;
       @include u.pill(var(--color-text-dark), var(--color-white));
+      text-transform: uppercase;
       padding: 4px 12px;
       top: 1.2rem;
       left: 12px;
@@ -63,11 +75,6 @@
         height: 16px;
         color: var(--color-brand-coral, #f5a623);
       }
-    }
-    .media-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
   }
 
@@ -148,10 +155,15 @@
   /* Texto de Datos */
   &--info {
     &-description {
-      margin: 1rem 0 1rem 0;
-      font-size: 0.925rem;
+      background-color: var(--color-brand-blue);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: var(--radius-card-sm);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      font-size: 1rem;
+      font-weight: 500;
       line-height: 1.55;
-      color: var(--color-text-muted);
+      color: var(--color-white);
     }
 
     &-detail {

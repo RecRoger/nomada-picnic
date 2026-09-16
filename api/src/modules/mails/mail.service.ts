@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { AgencyContactDto } from 'src/common/models/agency-contact.dto';
-import { CLIENT_TYPES_MAP, EVENT_TYPES_MAP, PLACES_OPTIONS_MAP, SERVICES_MAP } from '@shared/const';
+import { BUSINESS_NUMBER, CLIENT_TYPES_MAP, EVENT_TYPES_MAP, PLACES_OPTIONS_MAP, SERVICES_MAP } from '@shared/const';
 import { IBookingConfirmationEmail } from '@shared/interfaces';
 
 @Injectable()
@@ -47,7 +47,7 @@ export class MailService {
           guestsRange: formattedData.guestsRange,
           eventDate: formattedData.eventDate,
           placeChoice: formattedData.placeChoice,
-          whatsappNumber: '+5491126908781',
+          whatsappNumber: `+${BUSINESS_NUMBER}`,
           encodedFullName: encodeURIComponent(formattedData.fullName),
           encodedCompany: encodeURIComponent(formattedData.company),
         },

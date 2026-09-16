@@ -8,6 +8,10 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/checkout/checkout.routes').then(m => m.CheckoutRoutes),
   },
   {
+    path: 'bookings',
+    loadChildren: () => import('./pages/bookings/bookings.routes').then(m => m.BookingRoutes),
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin.routes').then(m => m.AdminRoutes),
   },

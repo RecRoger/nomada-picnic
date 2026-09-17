@@ -1,15 +1,19 @@
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, signal, computed, inject, effect, PLATFORM_ID } from '@angular/core';
+import { API_URL } from '@constants/api-url';
 import { CostsService } from '@services/costs.service';
 import { PackagesService } from '@services/packages.service';
-import { CostsTypes } from '@shared/enums';
 import { IBookingCart, IBookingClientInfo, ICartAdditional, ICost, IPicnicBooking } from '@shared/interfaces';
+import { catchError, map, Observable, shareReplay, tap } from 'rxjs';
 
 const CART_STORAGE_KEY = 'nomada_picnic_cart';
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  private readonly http: HttpClient = inject(HttpClient)
+
   protected packagesService = inject(PackagesService);
   protected additionalsService = inject(CostsService);
 
@@ -20,6 +24,8 @@ export class CartService {
     booking: null,
     additionals: [],
   });
+
+  private availability$?: Observable<{ date: string; time: string, maxGuest: number }[]>
 
   public booking = computed(() => this.cartState().booking);
 
@@ -181,6 +187,28 @@ export class CartService {
         clientInfo: { ...clientForm },
       };
     });
+  }
+
+  public getAvailability(force = false): Observable<{ date: string; time: string, maxGuest: number }[]> {
+    if (!this.availability$ || force) {
+      this.availability$ = this.http.get(API_URL + '/api/picnics/availability').pipe(
+        map((response: any) => {
+          if (response) {
+            return response.data
+          } else {
+            return ([])
+          }
+        }),
+        shareReplay(1),
+        catchError((error) => {
+          console.error('No se consultó disponibilidad', error);
+          return ([])
+        })
+      )
+      return this.availability$
+    }
+    return this.availability$
+
   }
 
   /** Limpia completamente el carrito */

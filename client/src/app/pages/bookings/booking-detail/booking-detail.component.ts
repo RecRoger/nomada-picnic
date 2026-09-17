@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
@@ -18,6 +18,8 @@ export class BookingDetailComponent implements OnInit {
 
   private readonly router = inject(Router)
 
+  private readonly route = inject(ActivatedRoute)
+
   public bookingData = this.bookingService.bookingData()
 
   public daysLeft = this.bookingService.bookingDaysLeft()
@@ -32,7 +34,7 @@ export class BookingDetailComponent implements OnInit {
 
   // http://localhost:4200/bookings/6aa20640401be9bbb00a0182
   async ngOnInit(): Promise<void> {
-    if (!this.bookingService.bookingData()) {
+    if (!this.bookingService.bookingData() || this.route.snapshot.params['id'] !== this.bookingService.bookingData()?._id) {
       this.router.navigate(['/bookings'])
     }
     const { lat, lng } = this.bookingData?.place.location || {}
@@ -66,7 +68,7 @@ export class BookingDetailComponent implements OnInit {
       const response = await fetch(url);
       const data = await response.json();
       const daily = data.daily;
-      return daily.precipitation_probability_max[0]
+      return daily?.precipitation_probability_max[0] || null
     } catch (error) {
       console.error('Error al consultar el clima:', error);
       return '10';

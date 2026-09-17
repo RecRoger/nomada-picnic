@@ -150,18 +150,22 @@
     }
 
     .actions-grid {
-      @include u.flex(row, flex-start, center, 1rem);
+      @include u.flex(row, flex-start, stretch, 1rem);
       flex-wrap: wrap;
 
       .action-card {
-        max-width: 200px;
-        // margin: auto;
+        // max-width: 29%;
+        width: 25%;
         background: var(--color-white);
         border-radius: var(--radius-card-sm);
         padding: 1.25rem;
         border: 1px solid transparent;
         @include u.flex(column, flex-start, stretch, 0.5rem);
         transition: all 0.2s;
+
+        @include u.style-up-to(tablet) {
+          width: 100%;
+        }
 
         &:hover {
           cursor: pointer;
@@ -193,6 +197,7 @@
         }
 
         .action-link {
+          margin-top: auto;
           color: var(--color-brand-blue);
           text-decoration: none;
           font-size: 0.8rem;

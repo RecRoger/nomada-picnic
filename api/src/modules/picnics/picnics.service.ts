@@ -32,6 +32,30 @@ export class PicnicsService {
     });
   }
 
+  async getBookedDatesNextYear(): Promise<{ date: string; time: string, maxGuest: number }[]> {
+    this.logger.log('[getBookedDatesNextYear]')
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const nextYear = new Date();
+    nextYear.setFullYear(today.getFullYear() + 1);
+
+    const picnics = await this.picnicsModel
+      .find({
+        eventDate: { $gte: today, $lte: nextYear },
+        status: {
+          $in: [BookingStatus.PENDING, BookingStatus.PAID, BookingStatus.PARTIALLY_PAID],
+        },
+      })
+      .select('eventDate eventTime maxGuest')
+      .exec();
+
+    return picnics.map((picnic) => ({
+      date: new Date(picnic.eventDate).toString(),
+      time: picnic.eventTime,
+      maxGuest: picnic.maxGuest
+    }));
+  }
+
   async findAllPicnics(queryDto: QueryPicnicDto): Promise<IPaginatedPicnics> {
     this.logger.log('[findAllPicnics]')
     const { page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc' } = queryDto;
@@ -230,7 +254,8 @@ export class PicnicsService {
           savedPicnic,
           initialChargeAmount,
           isDeposit ? `Seña (50%) - ${pkg.name}` : `Pago Total - ${pkg.name}`,
-          `picnicId=${savedPicnic._id}&placeName=${place.name.replaceAll(' ', '_')}&packageName=${pkg.name.replaceAll(' ', '_')}&eventDate=${dto.booking.eventDate.toString()}&eventTime=${dto.booking.eventTime}&clientName=${dto.clientInfo.name.replaceAll(' ', '_') + '_' + dto.clientInfo.lastname.replaceAll(' ', '_')}`
+          `picnicId=${savedPicnic._id}&placeName=${place.name.replaceAll(' ', '_')}&packageName=${pkg.name.replaceAll(' ', '_')}&eventDate=${dto.booking.eventDate
+            .toString()}&eventTime=${dto.booking.eventTime}&clientName=${dto.clientInfo.name.replaceAll(' ', '_') + '_' + dto.clientInfo.lastname.replaceAll(' ', '_')}`
         )
         return payLink
       } else {

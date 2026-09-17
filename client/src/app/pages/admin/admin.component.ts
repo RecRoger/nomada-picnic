@@ -9,6 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavLink } from '@models/nav-link';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-admin',
@@ -19,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AdminComponent implements OnInit {
   protected readonly authService: AuthService = inject(AuthService)
+
+  private analyticsService = inject(AnalyticsService)
 
   public readonly user = this.authService.user
 
@@ -56,6 +59,7 @@ export class AdminComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit(): void {
+    this.analyticsService.setNoIndex()
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntilDestroyed(this.destroyRef)

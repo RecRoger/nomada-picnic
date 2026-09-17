@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CheckoutStepperComponent } from '@components/checkout-stepper/checkout-stepper.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-checkout',
@@ -9,6 +10,9 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './checkout.component.scss',
   imports: [TranslateModule, CheckoutStepperComponent, RouterOutlet],
 })
-export class CheckoutComponent {
-
+export class CheckoutComponent implements OnInit {
+  private analyticsService = inject(AnalyticsService)
+  ngOnInit(): void {
+    this.analyticsService.setNoIndex()
+  }
 }

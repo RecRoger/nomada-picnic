@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AnalyticsService } from '@services/analytics.service';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { NotificationService } from '@services/notification.service';
 import { BUSINESS_NUMBER } from '@shared/const';
@@ -20,11 +21,13 @@ import { catchError } from 'rxjs';
   templateUrl: './booking-form.component.html',
   styleUrl: './booking-form.component.scss'
 })
-export class BookingFormComponent {
+export class BookingFormComponent implements OnInit {
 
   public readonly WH_BUTTON = BUSINESS_NUMBER
 
   private fb = inject(FormBuilder);
+
+  private analyticsService = inject(AnalyticsService)
 
   private readonly bookingService = inject(BookingPicnicsService)
 
@@ -45,6 +48,10 @@ export class BookingFormComponent {
   });
 
   public loading = false;
+
+  ngOnInit(): void {
+    this.analyticsService.setNoIndex()
+  }
 
   onSubmit(): void {
     if (this.bookingForm.valid) {

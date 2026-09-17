@@ -32,7 +32,7 @@
           <h2 class="c-cart-detail--body-title">{{'PUBLIC.CART.DETAILS.DATE.TITLE' | translate}}</h2>
           <p class="c-cart-detail--body-subtitle">{{'PUBLIC.CART.DETAILS.DATE.SUBTITLE' | translate}}</p>
           <div class="c-cart-detail--body-calendar">
-            <mat-calendar [minDate]="minDate" [maxDate]="maxDate" [selected]="booking.eventDate" (selectedChange)="selectDate($event)"></mat-calendar>
+            <mat-calendar [minDate]="minDate" [maxDate]="maxDate" [selected]="booking.eventDate" [dateFilter]="myDateFilter" (selectedChange)="selectDate($event)"></mat-calendar>
           </div>
         </section>
       }

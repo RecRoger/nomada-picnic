@@ -73,7 +73,9 @@
             </tr>
           </tbody>
         </table>
-        <p class="card-footnote">{{'BOOKINGS.DETAIL.PREVIEW.PRICE_TEXT' | translate}}</p>
+        @if (bookingData?.pendingAmount) {
+          <p class="card-footnote">{{'BOOKINGS.DETAIL.PREVIEW.PRICE_TEXT' | translate}}</p>
+        }
       </div>
 
       
@@ -155,13 +157,15 @@
           </div>
         }
 
-        <div class="notice-item">
-          <span class="notice-icon" [innerHTML]="'🌧️' | appleEmoji"></span>
-          <div>
-            <strong>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.WEATHER_TITLE' | translate}}</strong>
-            <p>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.WEATHER_TEXT' | translate:({date: bookingData?.eventDate | date, weather: weather()})}}</p>
+        @if(weather()) {
+          <div class="notice-item">
+            <span class="notice-icon" [innerHTML]="'🌧️' | appleEmoji"></span>
+            <div>
+              <strong>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.WEATHER_TITLE' | translate}}</strong>
+              <p>{{'BOOKINGS.DETAIL.ALERTS.ITEMS.WEATHER_TEXT' | translate:({date: bookingData?.eventDate | date, weather: weather()})}}</p>
+            </div>
           </div>
-        </div>
+        }
 
         <div class="notice-item">
           <span class="notice-icon" [innerHTML]="'⛺' | appleEmoji"></span>

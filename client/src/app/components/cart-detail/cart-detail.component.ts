@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, model, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -32,7 +32,7 @@ import { IPicnicEvent, IPlace } from '@shared/interfaces';
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
   ]
 })
-export class CartDetailComponent {
+export class CartDetailComponent implements OnInit {
   protected readonly cartService = inject(CartService)
   public detailPages = [
     'base',
@@ -57,6 +57,26 @@ export class CartDetailComponent {
   public places$ = inject(PlacesService).getPlacesCached(PlacesTypes.PUBLIC)
 
   placeSelectOpen = false;
+
+  bookedDatesSet: { date: string; time: string, maxGuest: number }[] = [];
+
+  myDateFilter = (d: Date | null): boolean => {
+    if (!d) return false;
+    const formattedDate = d.toISOString().split('T')[0];
+    return !this.bookedDatesSet.find((event) => (
+      (new Date(event.date)).toISOString().split('T')[0] === formattedDate
+      && Number(event.maxGuest) + Number(this.cartService.booking()?.maxGuests || 0) > 30
+    ));
+  };
+
+  ngOnInit(): void {
+    this.cartService.getAvailability(this.bookedDatesSet.length ? false : true).subscribe({
+      next: (dates: { date: string; time: string, maxGuest: number }[]) => {
+        this.bookedDatesSet = dates;
+      },
+      error: (err) => console.error('Error al obtener fechas reservadas:', err),
+    });
+  }
 
   public setPage(page: number): void {
     this.currentPage.set(this.detailPages[page]);

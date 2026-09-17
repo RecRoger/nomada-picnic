@@ -126,8 +126,12 @@
   } @else {
     <div class="c-checkout-payment--loader">
       <app-loader size="medium"></app-loader>
-      <h2 class="c-checkout-payment--loader-title">{{'CHECKOUT.PAYMENT.LOADER.TITLE' | translate}}</h2>
-      <p class="c-checkout-payment--loader-text" [innerHTML]="'CHECKOUT.PAYMENT.LOADER.TEXT' | translate"></p>
+      <h2 class="c-checkout-payment--loader-title">
+        {{'CHECKOUT.PAYMENT.LOADER.TITLE_'+(this.form.value['payMethod'] == 'MP' ? 'PAYMENT' : 'BOOKING') | translate}}
+      </h2>
+      <p class="c-checkout-payment--loader-text" 
+        [innerHTML]="'CHECKOUT.PAYMENT.LOADER.TEXT_'+(this.form.value['payMethod'] == 'MP' ? 'PAYMENT' : 'BOOKING') | translate">
+      </p>
     </div>
   }
 

@@ -745,8 +745,10 @@
         "MESSAGE": "Todos los pagos son procesados de forma segura mediante Mercado Pago."
       },
       "LOADER": {
-        "TITLE": "Procesando tu pago",
-        "TEXT": "Estamos confirmando la operación con Mercado Pago. \n No cierres esta ventana."
+        "TITLE_PAYMENT": "Procesando tu pago",
+        "TEXT_PAYMENT": "Estamos confirmando la operación con Mercado Pago. \n No cierres esta ventana.",
+        "TITLE_BOOKING": "Procesando tu reserva",
+        "TEXT_BOOKING": "Estamos confirmando la creación de la reserva. \n No cierres esta ventana."
       }
     },
     "CONFIRMATION": {

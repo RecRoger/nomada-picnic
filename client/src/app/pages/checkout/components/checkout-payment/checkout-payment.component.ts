@@ -91,6 +91,9 @@ export class CheckoutPaymentComponent implements OnInit {
       throw err
     })).subscribe(resp => {
       if (resp) {
+        if (this.form.get('payMethod')!.value !== PaymentMethods.MP) {
+          this.cartService.clearCart()
+        }
         window.location.href = resp;
       }
     })

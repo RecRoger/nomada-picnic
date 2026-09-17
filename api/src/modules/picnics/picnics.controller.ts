@@ -14,6 +14,19 @@ import { PaymentMethods, PaymentTypes } from '@shared/enums';
 export class PicnicsController {
   constructor(private readonly picnicsService: PicnicsService) { }
 
+  @Get('availability')
+  @ApiOperation({
+    summary: 'Obtener listado de fechas ocupadas',
+    description: 'Devuelve una lista con la fecha y hora de los picnics en el proximo año para validar disponibilidad',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Lista de fechas obtenida exitosamente.',
+  })
+  async getBookedDates() {
+    return await this.picnicsService.getBookedDatesNextYear();
+  }
+
   @Get()
   @ApiOperation({
     summary: 'Obtener listado de picnics paginado',

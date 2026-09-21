@@ -22,6 +22,7 @@ import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { CartService } from '@services/cart.service';
 import { Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
+import { SeoService } from '@services/seo.service';
 
 
 @Component({
@@ -102,8 +103,13 @@ export class PlacesMapComponent implements OnInit {
 
   private platformId = inject(PLATFORM_ID);
 
+  private seoService = inject(SeoService);
 
   async ngOnInit(): Promise<void> {
+    this.seoService.setSeoData({
+      url: 'places',
+      page: 'PLACES',
+    })
     this.setFilters()
     if (isPlatformBrowser(this.platformId)) {
       if (typeof google !== 'undefined' && google.maps) {

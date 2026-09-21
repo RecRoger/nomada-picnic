@@ -1,8 +1,9 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, PLATFORM_ID, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OverlapCardsComponent } from '@components/overlap-cards/overlap-cards.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SeoService } from '@services/seo.service';
 
 @Component({
   selector: 'app-our-story',
@@ -10,10 +11,10 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './our-story.component.html',
   styleUrl: './our-story.component.scss'
 })
-export class OurStoryComponent implements AfterViewInit, OnDestroy {
+export class OurStoryComponent implements OnInit, OnDestroy {
   @ViewChildren('textPathRef') textPathRefs!: QueryList<ElementRef<SVGTextPathElement>>;
   @ViewChildren('patternRef') patternRefs!: QueryList<ElementRef<SVGTSpanElement>>;
-
+  private seoService = inject(SeoService);
 
   public valuesCards = [
     {
@@ -45,7 +46,11 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
 
   private readonly platformId = inject(PLATFORM_ID);
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    this.seoService.setSeoData({
+      url: 'story',
+      page: 'STORY',
+    })
     if (isPlatformBrowser(this.platformId)) {
       this.updateSpeedByScreenSize();
       this.calculateLengths();

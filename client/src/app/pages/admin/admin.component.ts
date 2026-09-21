@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavLink } from '@models/nav-link';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AnalyticsService } from '@services/analytics.service';
+import { SeoService } from '@services/seo.service';
 
 @Component({
   selector: 'app-admin',
@@ -21,7 +21,7 @@ import { AnalyticsService } from '@services/analytics.service';
 export class AdminComponent implements OnInit {
   protected readonly authService: AuthService = inject(AuthService)
 
-  private analyticsService = inject(AnalyticsService)
+  private seoService = inject(SeoService)
 
   public readonly user = this.authService.user
 
@@ -59,7 +59,7 @@ export class AdminComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit(): void {
-    this.analyticsService.setNoIndex()
+    this.seoService.setNoIndex()
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntilDestroyed(this.destroyRef)

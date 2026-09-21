@@ -15,6 +15,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { normalizeString } from 'src/app/core/functions/search';
 import { CartService } from '@services/cart.service';
 import { LoaderComponent } from '@components/loader/loader.component';
+import { SeoService } from '@services/seo.service';
 
 @Component({
   selector: 'app-additionals',
@@ -62,8 +63,12 @@ export class AdditionalsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
   private readonly destroyRef = inject(DestroyRef)
-
+  private seoService = inject(SeoService);
   ngOnInit(): void {
+    this.seoService.setSeoData({
+      url: 'additionals',
+      page: 'ADDITIONALS',
+    })
     this.getAdditionals()
     this.setFilters();
   }

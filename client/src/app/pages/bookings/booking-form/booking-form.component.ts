@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { AnalyticsService } from '@services/analytics.service';
+import { SeoService } from '@services/seo.service';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { NotificationService } from '@services/notification.service';
 import { BUSINESS_NUMBER } from '@shared/const';
@@ -27,7 +27,7 @@ export class BookingFormComponent implements OnInit {
 
   private fb = inject(FormBuilder);
 
-  private analyticsService = inject(AnalyticsService)
+  private seoService = inject(SeoService)
 
   private readonly bookingService = inject(BookingPicnicsService)
 
@@ -50,7 +50,7 @@ export class BookingFormComponent implements OnInit {
   public loading = false;
 
   ngOnInit(): void {
-    this.analyticsService.setNoIndex()
+    this.seoService.setNoIndex()
   }
 
   onSubmit(): void {

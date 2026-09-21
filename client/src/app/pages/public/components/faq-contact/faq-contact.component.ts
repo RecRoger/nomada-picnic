@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { StaticData } from '@models/static-data';
 import { TranslateModule } from '@ngx-translate/core';
+import { SeoService } from '@services/seo.service';
 import { BUSINESS_NUMBER } from '@shared/const';
 
 @Component({
@@ -10,7 +11,7 @@ import { BUSINESS_NUMBER } from '@shared/const';
   templateUrl: './faq-contact.component.html',
   styleUrl: './faq-contact.component.scss'
 })
-export class FAQContactComponent {
+export class FAQContactComponent implements OnInit {
   public readonly WH_NUMBER = BUSINESS_NUMBER
 
   public readonly questions = (length: number, offset: number = 1): StaticData[] => Array.from({ length }, (_, index) => ({
@@ -32,4 +33,13 @@ export class FAQContactComponent {
       list: this.questions(2, 8)
     },
   ]
+
+  private seoService = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seoService.setSeoData({
+      url: 'contact',
+      page: 'CONTACT',
+    })
+  }
 }

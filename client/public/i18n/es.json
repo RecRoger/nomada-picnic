@@ -856,5 +856,39 @@
         "MAIL": "Enviar un correo"
       }
     }
+  },
+  "META": {
+    "HOME": {
+      "TITLE": "Experiencias al Aire Libre",
+      "DESCRIPTION": "Reserva tu picnic gourmet y personalizado al aire libre. Cuidamos cada detalle de la ambientación, decoración y menú para momentos inolvidables."
+    },
+    "STORY": {
+      "TITLE": "Nuestra Historia",
+      "DESCRIPTION": "Conoce la historia detrás de Nómada Picnic y nuestra pasión por transformar espacios naturales en experiencias gastronómicas y memorables."
+    },
+    "PLACES": {
+      "TITLE": "Lugares y Parques para Picnic",
+      "DESCRIPTION": "Descubre las mejores locaciones, parques y espacios al aire libre seleccionados en la ciudad para disfrutar tu experiencia Nómada Picnic."
+    },
+    "ADDITIONALS": {
+      "TITLE": "Servicios Adicionales y Menú",
+      "DESCRIPTION": "Personaliza tu picnic con nuestros servicios adicionales: opciones gastronómicas extra, pastelería artesanal, bebidas y detalles de ambientación."
+    },
+    "PICNICS": {
+      "TITLE": "Paquetes y Experiencias de Picnic",
+      "DESCRIPTION": "Explora nuestras propuestas de picnic románticos, cumpleaños y eventos. Elige la experiencia y ambientación perfecta para tu celebración."
+    },
+    "CONTACT": {
+      "TITLE": "Preguntas Frecuentes y Contacto",
+      "DESCRIPTION": "¿Tienes dudas sobre cómo reservar tu picnic? Revisa nuestras preguntas frecuentes o contáctanos directamente para asesorarte."
+    },
+    "TERMS": {
+      "TITLE": "Términos y Condiciones",
+      "DESCRIPTION": "Consulta las condiciones del servicio, políticas de reserva, reprogramación y términos legales de Nómada Picnic."
+    },
+    "POLICIES": {
+      "TITLE": "Políticas de Privacidad",
+      "DESCRIPTION": "Conoce nuestras políticas de privacidad, tratamiento de datos personales y garantías de servicio en Nómada Picnic."
+    }
   }
 }

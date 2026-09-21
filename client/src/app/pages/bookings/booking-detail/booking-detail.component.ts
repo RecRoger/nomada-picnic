@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
-import { AnalyticsService } from '@services/analytics.service';
+import { SeoService } from '@services/seo.service';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { BUSINESS_MAIL, BUSINESS_NUMBER } from '@shared/const';
 
@@ -21,7 +21,7 @@ export class BookingDetailComponent implements OnInit {
 
   private readonly route = inject(ActivatedRoute)
 
-  private analyticsService = inject(AnalyticsService)
+  private seoService = inject(SeoService)
 
   public bookingData = this.bookingService.bookingData()
 
@@ -37,7 +37,7 @@ export class BookingDetailComponent implements OnInit {
 
   // http://localhost:4200/bookings/6aa20640401be9bbb00a0182
   async ngOnInit(): Promise<void> {
-    this.analyticsService.setNoIndex()
+    this.seoService.setNoIndex()
 
     if (!this.bookingService.bookingData() || this.route.snapshot.params['id'] !== this.bookingService.bookingData()?._id) {
       this.router.navigate(['/bookings'])

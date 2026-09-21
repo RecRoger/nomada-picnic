@@ -1,5 +1,5 @@
 import { AsyncPipe, CurrencyPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { CartService } from '@services/cart.service';
 import { PackagesService } from '@services/packages.service';
+import { SeoService } from '@services/seo.service';
 import { IPackagePrice, IPicnicEvent, IPicnicPackage } from '@shared/interfaces';
 import { map, Observable } from 'rxjs';
 
@@ -27,7 +28,7 @@ import { map, Observable } from 'rxjs';
   templateUrl: './picnic-packages.component.html',
   styleUrl: './picnic-packages.component.scss'
 })
-export class PicnicPackagesComponent {
+export class PicnicPackagesComponent implements OnInit {
   protected readonly packageService = inject(PackagesService);
   protected readonly cartService = inject(CartService);
   protected readonly router = inject(Router);
@@ -41,6 +42,16 @@ export class PicnicPackagesComponent {
     }));
 
   readonly dialog = inject(MatDialog);
+
+  private seoService = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seoService.setSeoData({
+      url: 'picnics',
+      page: 'PICNICS',
+    })
+
+  }
 
   public checkPackage(id: string): void {
     const pkg = this.packagesList.find(place => place._id === id)

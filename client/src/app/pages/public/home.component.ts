@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,6 +9,7 @@ import { InfoStepsComponent } from '@components/info-steps/info-steps.component'
 import { PlacesBannerComponent } from '@components/places-banner/places-banner.component';
 import { AdditionalsBannerComponent } from '@components/additionals-banner/additionals-banner.component';
 import { StoryBannerComponent } from '@components/story-banner/story-banner.component';
+import { SeoService } from '@services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,14 @@ import { StoryBannerComponent } from '@components/story-banner/story-banner.comp
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  private seoService = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seoService.setSeoData({
+      url: '',
+      page: 'HOME',
+    })
+  }
 
 }

@@ -4,14 +4,14 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Router, RouterLink } from '@angular/router';
 import { CheckoutSummaryComponent } from '@components/checkout-summary/checkout-summary.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CartService } from '@services/cart.service';
 import { IBookingClientInfo } from '@shared/interfaces';
 
 @Component({
   selector: 'app-checkout-form',
   imports: [
-    TranslateModule,
+    TranslatePipe,
     ReactiveFormsModule,
     FormsModule,
     MatCheckboxModule,

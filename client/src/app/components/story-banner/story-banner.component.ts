@@ -1,11 +1,11 @@
 import { afterNextRender, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CarouselComponent, CarouselOptions } from '@components/carousel/carousel.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-story-banner',
-  imports: [TranslateModule, CarouselComponent, RouterLink],
+  imports: [TranslatePipe, CarouselComponent, RouterLink],
   templateUrl: './story-banner.component.html',
   styleUrl: './story-banner.component.scss'
 })

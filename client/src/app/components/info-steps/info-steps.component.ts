@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-info-steps',
-  imports: [TranslateModule],
+  imports: [TranslatePipe],
   templateUrl: './info-steps.component.html',
   styleUrl: './info-steps.component.scss'
 })

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { EventSelectorComponent } from '@components/event-selector/event-selector.component';
 import { LoaderComponent } from '@components/loader/loader.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CartService } from '@services/cart.service';
 import { PlacesService } from '@services/places.service';
 import { PlacesTypes } from '@shared/enums';
@@ -19,7 +19,7 @@ import { IPicnicEvent, IPlace } from '@shared/interfaces';
   styleUrl: './cart-detail.component.scss',
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,

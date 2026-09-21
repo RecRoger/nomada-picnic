@@ -3,13 +3,13 @@ import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { WaButtonComponent } from '@components/wa-button/wa-button.component';
 import { NavLink } from '@models/nav-link';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BUSINESS_NUMBER } from '@shared/const';
 import { filter, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
-  imports: [TranslateModule, RouterLink, AsyncPipe, WaButtonComponent],
+  imports: [TranslatePipe, RouterLink, AsyncPipe, WaButtonComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })

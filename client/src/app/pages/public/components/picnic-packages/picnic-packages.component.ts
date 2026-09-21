@@ -7,7 +7,7 @@ import { AgencyFormDialogComponent } from '@components/agency-form-dialog/agency
 import { LoaderComponent } from '@components/loader/loader.component';
 import { PackageDialogComponent } from '@components/package-dialog/package-dialog.component';
 import { RecommendedDialogComponent } from '@components/recommended-dialog copy/recommended-dialog.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { CartService } from '@services/cart.service';
 import { PackagesService } from '@services/packages.service';
@@ -19,7 +19,7 @@ import { map, Observable } from 'rxjs';
   selector: 'app-picnic-packages',
   imports: [
     AsyncPipe,
-    TranslateModule,
+    TranslatePipe,
     MatIconModule,
     // CurrencyPipe,
     ApiImageUrlPipe,

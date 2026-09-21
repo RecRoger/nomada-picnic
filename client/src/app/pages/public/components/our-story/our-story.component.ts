@@ -2,12 +2,12 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OverlapCardsComponent } from '@components/overlap-cards/overlap-cards.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SeoService } from '@services/seo.service';
 
 @Component({
   selector: 'app-our-story',
-  imports: [TranslateModule, OverlapCardsComponent, RouterLink],
+  imports: [TranslatePipe, OverlapCardsComponent, RouterLink],
   templateUrl: './our-story.component.html',
   styleUrl: './our-story.component.scss'
 })

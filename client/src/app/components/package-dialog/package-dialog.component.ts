@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IPackagePrice, IPicnicEvent, IPicnicPackage } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { RECOMENDED_TAG } from '@constants/important-tags';
@@ -13,7 +13,7 @@ import { EventSelectorComponent } from '@components/event-selector/event-selecto
 @Component({
   selector: 'app-package-dialog',
   imports: [
-    TranslateModule,
+    TranslatePipe,
     MatDialogModule,
     MatButtonModule,
     MatIcon,

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { SeoService } from '@services/seo.service';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
@@ -10,7 +10,7 @@ import { BUSINESS_MAIL, BUSINESS_NUMBER } from '@shared/const';
 
 @Component({
   selector: 'app-booking-detail',
-  imports: [CommonModule, TranslateModule, MatIconModule, AppleEmojiPipe],
+  imports: [CommonModule, TranslatePipe, MatIconModule, AppleEmojiPipe],
   templateUrl: './booking-detail.component.html',
   styleUrl: './booking-detail.component.scss'
 })

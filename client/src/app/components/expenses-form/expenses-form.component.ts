@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
@@ -9,7 +9,7 @@ import { IExpense } from '@shared/interfaces';
 @Component({
   selector: 'app-expenses-form',
   standalone: true,
-  imports: [TranslateModule, ReactiveFormsModule, FormsModule, ...MAT_FORMS_MODULES, MatSlideToggleModule, FormControlComponent],
+  imports: [TranslatePipe, ReactiveFormsModule, FormsModule, ...MAT_FORMS_MODULES, MatSlideToggleModule, FormControlComponent],
   templateUrl: './expenses-form.component.html',
   styleUrl: './expenses-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

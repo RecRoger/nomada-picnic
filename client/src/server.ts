@@ -12,7 +12,16 @@ const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();
-const angularApp = new AngularNodeAppEngine();
+const angularApp = new AngularNodeAppEngine({
+  trustProxyHeaders: true,
+  allowedHosts: [
+    'nomadapicnic.com',
+    'www.nomadapicnic.com',
+    'nomada-client-389141432152.us-east1.run.app',
+  ],
+});
+
+app.set('trust proxy', true);
 
 /**
  * Servir archivos estáticos del browser

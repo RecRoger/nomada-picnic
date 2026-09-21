@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatExpansionModule } from '@angular/material/expansion';
 import { Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { CartService } from '@services/cart.service';
 import { NotificationService } from '@services/notification.service';
@@ -16,7 +16,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-checkout-payment',
   imports: [
-    TranslateModule,
+    TranslatePipe,
     CurrencyPipe,
     DecimalPipe,
     LoaderComponent,

@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { FormControlComponent } from '@components/form-control/form-control.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NotificationService } from '@services/notification.service';
 import { AlertTypes } from '@shared/enums';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
@@ -11,7 +11,7 @@ import { MAT_FORMS_MODULES } from '@constants/material-modules';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [TranslateModule, ReactiveFormsModule, ...MAT_FORMS_MODULES, FormControlComponent],
+  imports: [TranslatePipe, ReactiveFormsModule, ...MAT_FORMS_MODULES, FormControlComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

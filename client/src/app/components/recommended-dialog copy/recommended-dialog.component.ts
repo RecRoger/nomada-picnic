@@ -2,7 +2,7 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ICost, IPicnicEvent } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { RECOMENDED_TAG } from '@constants/important-tags';
@@ -18,7 +18,7 @@ import { LoaderComponent } from '@components/loader/loader.component';
   selector: 'app-recommended-dialog',
   imports: [
     AsyncPipe,
-    TranslateModule,
+    TranslatePipe,
     MatDialogModule,
     MatButtonModule,
     ApiImageUrlPipe,

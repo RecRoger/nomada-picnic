@@ -1,13 +1,13 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CartService } from '@services/cart.service';
 
 
 @Component({
   selector: 'app-checkout-summary',
-  imports: [TranslateModule, CurrencyPipe, DatePipe],
+  imports: [TranslatePipe, CurrencyPipe, DatePipe],
   templateUrl: './checkout-summary.component.html',
   styleUrl: './checkout-summary.component.scss'
 })

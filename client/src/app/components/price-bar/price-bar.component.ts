@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 
@@ -11,7 +11,7 @@ import { of } from 'rxjs';
   imports: [
     CommonModule,
     AsyncPipe,
-    TranslateModule,
+    TranslatePipe,
     MatButton,
   ],
   templateUrl: './price-bar.component.html',

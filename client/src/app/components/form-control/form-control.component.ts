@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { EditorModule } from '@tinymce/tinymce-angular';
 
 export const MY_FORMATS = {
@@ -23,7 +23,7 @@ export const MY_FORMATS = {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     ReactiveFormsModule,
     EditorModule,
     ...MAT_FORMS_MODULES

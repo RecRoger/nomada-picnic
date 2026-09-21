@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { CartService } from '@services/cart.service';
 import { BUSINESS_NUMBER } from '@shared/const';
@@ -17,7 +17,7 @@ export interface IPicnicConfirmationDetails {
 
 @Component({
   selector: 'app-checkout-confirmation',
-  imports: [TranslateModule, DatePipe, AppleEmojiPipe],
+  imports: [TranslatePipe, DatePipe, AppleEmojiPipe],
   templateUrl: './checkout-confirmation.component.html',
   styleUrl: './checkout-confirmation.component.scss'
 })

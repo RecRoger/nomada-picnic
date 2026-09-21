@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { StaticData } from '@models/static-data';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SeoService } from '@services/seo.service';
 import { BUSINESS_NUMBER } from '@shared/const';
 
 @Component({
   selector: 'app-faq-contact',
-  imports: [TranslateModule, MatExpansionModule],
+  imports: [TranslatePipe, MatExpansionModule],
   templateUrl: './faq-contact.component.html',
   styleUrl: './faq-contact.component.scss'
 })

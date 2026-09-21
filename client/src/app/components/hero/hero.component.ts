@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hero',
-  imports: [TranslateModule, MatIconModule],
+  imports: [TranslatePipe, MatIconModule],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss'
 })

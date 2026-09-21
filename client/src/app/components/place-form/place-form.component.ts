@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
 import { IPlace } from '@shared/interfaces';
@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-place-form',
   standalone: true,
   imports: [
-    TranslateModule,
+    TranslatePipe,
     ReactiveFormsModule,
     FormsModule,
     ...MAT_FORMS_MODULES,

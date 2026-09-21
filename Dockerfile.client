@@ -2,18 +2,15 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copiamos manifiestos
+# Copiamos manifiestos e instalamos todas las dependencias
 COPY package*.json ./
 COPY client/package*.json ./client/
-
-# Instalamos dependencias
 RUN npm install
 
-# Copiamos código fuente
+# Copiamos código fuente y compilamos Angular SSR
 COPY shared/ ./shared/
 COPY client/ ./client/
 
-# Compilamos Angular SSR
 WORKDIR /app/client
 RUN npm run build -- --configuration production
 
@@ -22,12 +19,21 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV PORT=8080
 
-# Copiamos la carpeta dist de la app cliente
+# Copiamos manifiestos de dependencias
+COPY package*.json ./
+COPY client/package*.json ./client/
+
+# Instalamos SOLO dependencias de producción en la etapa final
+WORKDIR /app/client
+RUN npm ci --omit=dev
+
+# Copiamos la carpeta compilada desde builder
 COPY --from=builder /app/client/dist/client ./dist/client
 
 # Exponemos el puerto
 EXPOSE 8080
 
-# Ejecutamos con la ruta exacta desde la raíz de trabajo
+# Ejecutamos el servidor SSR de Angular
 CMD ["node", "dist/client/server/server.mjs"]

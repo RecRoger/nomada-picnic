@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '@services/auth.service';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { SeoService } from '@services/seo.service';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatTabsModule, RouterModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, TranslatePipe, MatTabsModule, RouterModule, MatIconModule, MatButtonModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

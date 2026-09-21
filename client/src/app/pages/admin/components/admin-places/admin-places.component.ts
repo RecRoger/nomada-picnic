@@ -5,7 +5,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PlacesService } from '@services/places.service';
 import { MatCardModule } from '@angular/material/card'
 import { CommonModule } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@components/confirmation-dialog/confirmation-dialog.component';
@@ -25,7 +25,7 @@ import { MatChipsModule } from '@angular/material/chips';
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     GoogleMapsModule,
     GoogleMap,
     MapAdvancedMarker,

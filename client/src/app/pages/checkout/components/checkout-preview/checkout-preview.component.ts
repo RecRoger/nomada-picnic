@@ -2,14 +2,14 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CheckoutSummaryComponent } from '@components/checkout-summary/checkout-summary.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { CartService } from '@services/cart.service';
 
 @Component({
   selector: 'app-checkout-preview',
   imports: [
-    TranslateModule,
+    TranslatePipe,
     CurrencyPipe,
     DatePipe,
     ApiImageUrlPipe,

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SeoService } from '@services/seo.service';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { NotificationService } from '@services/notification.service';
@@ -13,7 +13,7 @@ import { catchError } from 'rxjs';
 @Component({
   selector: 'app-booking-form',
   imports: [
-    TranslateModule,
+    TranslatePipe,
     LoaderComponent,
     FormsModule,
     ReactiveFormsModule,

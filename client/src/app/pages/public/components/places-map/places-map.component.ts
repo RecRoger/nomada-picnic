@@ -2,7 +2,7 @@ import { CommonModule, isPlatformBrowser, NgTemplateOutlet } from '@angular/comm
 import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MapsService } from '@services/maps.service';
 import { PlacesService } from '@services/places.service';
 import { PlacesTypes } from '@shared/enums';
@@ -29,7 +29,7 @@ import { SeoService } from '@services/seo.service';
   selector: 'app-places-map',
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     GoogleMapsModule,
     GoogleMap,
     MapAdvancedMarker,

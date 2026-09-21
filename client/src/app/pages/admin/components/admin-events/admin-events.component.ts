@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,7 +26,7 @@ const MAT_MODULES = [
   selector: 'app-events',
   standalone: true,
   imports: [
-    TranslateModule,
+    TranslatePipe,
     ...MAT_MODULES,
     FormControlComponent,
     ReactiveFormsModule,

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CartService } from '@services/cart.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,7 +15,7 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'app-shopping-cart',
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     MatSidenavModule,
     MatIconModule,
     MatButtonModule,

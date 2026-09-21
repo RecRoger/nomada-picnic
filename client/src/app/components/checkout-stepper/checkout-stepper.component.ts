@@ -2,12 +2,12 @@ import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { filter, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-checkout-stepper',
-  imports: [TranslateModule, MatIconModule],
+  imports: [TranslatePipe, MatIconModule],
   templateUrl: './checkout-stepper.component.html',
   styleUrl: './checkout-stepper.component.scss'
 })

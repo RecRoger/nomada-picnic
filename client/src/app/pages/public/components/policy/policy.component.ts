@@ -1,13 +1,13 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { StaticData } from '@models/static-data';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SeoService } from '@services/seo.service';
 import { BUSINESS_NUMBER } from '@shared/const';
 
 @Component({
   selector: 'app-policy',
-  imports: [TranslateModule, DatePipe, NgClass],
+  imports: [TranslatePipe, DatePipe, NgClass],
   templateUrl: './policy.component.html',
   styleUrl: './policy.component.scss'
 })

@@ -3,7 +3,7 @@ import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from '@angular/
 import { RouterLink } from '@angular/router';
 import { CarouselComponent, CarouselOptions } from '@components/carousel/carousel.component';
 import { MOST_SELL_TAG } from '@constants/important-tags';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { CostsService } from '@services/costs.service';
 import { CostsTypes } from '@shared/enums';
@@ -13,7 +13,7 @@ import { forkJoin, map, Observable } from 'rxjs';
 @Component({
   selector: 'app-additionals-banner',
   imports: [
-    TranslateModule,
+    TranslatePipe,
     RouterLink,
     CarouselComponent,
     AsyncPipe,

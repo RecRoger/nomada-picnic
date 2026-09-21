@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MailService } from '@services/mail.service';
 import { IAgencyContact } from '@shared/interfaces';
 import { catchError } from 'rxjs';
@@ -20,7 +20,7 @@ import { AlertTypes } from '@shared/enums';
   templateUrl: './agency-form-dialog.component.html',
   styleUrl: './agency-form-dialog.component.scss',
   imports: [
-    TranslateModule,
+    TranslatePipe,
     MatDialogModule,
     ReactiveFormsModule,
     MatDatepickerModule,

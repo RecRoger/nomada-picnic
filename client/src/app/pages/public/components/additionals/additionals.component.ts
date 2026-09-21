@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { AdditionalDialogComponent } from '@components/additional-dialog/additional-dialog.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CostsService } from '@services/costs.service';
 import { CostsTypes } from '@shared/enums';
 import { ICartAdditional, ICost } from '@shared/interfaces';
@@ -21,7 +21,7 @@ import { SeoService } from '@services/seo.service';
   selector: 'app-additionals',
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     MatButtonModule,
     MatIconModule,
     CurrencyPipe,

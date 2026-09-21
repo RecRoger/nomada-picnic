@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlComponent } from '@components/form-control/form-control.component';
 import { merge } from 'rxjs';
@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-costs-form',
   standalone: true,
-  imports: [TranslateModule,
+  imports: [TranslatePipe,
     ReactiveFormsModule,
     FormsModule,
     ...MAT_FORMS_MODULES,

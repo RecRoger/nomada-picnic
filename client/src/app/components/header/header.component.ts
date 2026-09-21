@@ -3,7 +3,7 @@ import { Component, inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink, RouterModule } from '@angular/router';
 import { NavLink } from '@models/nav-link';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 import { filter, map, Observable } from 'rxjs';
@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger);
   selector: 'app-header',
   standalone: true,
   imports: [
-    TranslateModule,
+    TranslatePipe,
     RouterModule,
     RouterLink,
     MatIconModule,

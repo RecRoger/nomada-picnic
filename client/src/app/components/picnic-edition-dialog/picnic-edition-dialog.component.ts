@@ -8,7 +8,6 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { TranslateModule } from '@ngx-translate/core';
 import { BookingStatus, PaymentMethods, PaymentTypes } from '@shared/enums';
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 
@@ -16,7 +15,6 @@ import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
   selector: 'app-picnic-edition-dialog',
   imports: [
     CommonModule,
-    TranslateModule,
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,

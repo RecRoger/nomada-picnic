@@ -118,7 +118,9 @@ export class CartService {
         disableClose: true,
         width: '780px',
         maxWidth: '90vw',
-        height: 'auto',
+        autoFocus: false,
+        restoreFocus: false,
+        maxHeight: '80vh',
         panelClass: 'nomada-price-disclaimer-panel'
       });
       this.showPriceDisclaimer.set(true)

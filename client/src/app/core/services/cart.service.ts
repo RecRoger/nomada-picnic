@@ -10,6 +10,7 @@ import { IBookingCart, IBookingClientInfo, ICartAdditional, ICost, IPicnicBookin
 import { catchError, map, Observable, shareReplay, tap } from 'rxjs';
 
 const CART_STORAGE_KEY = 'nomada_picnic_cart';
+const PRICE_DISCLAIMER_KEY = 'nomada_picnic_disclaimer';
 @Injectable({
   providedIn: 'root',
 })
@@ -113,17 +114,24 @@ export class CartService {
   }
 
   public openPriceDisclaimer() {
-    if (this.isBrowser && !this.showPriceDisclaimer()) {
-      this.dialog.open(PriceDisclaimerComponent, {
-        disableClose: true,
-        width: '780px',
-        maxWidth: '90vw',
-        autoFocus: false,
-        restoreFocus: false,
-        maxHeight: '80vh',
-        panelClass: 'nomada-price-disclaimer-panel'
-      });
-      this.showPriceDisclaimer.set(true)
+    if (this.isBrowser) {
+      const time = localStorage.getItem(PRICE_DISCLAIMER_KEY)
+      if (!this.showPriceDisclaimer() && (!time || (new Date()).getTime() > Number(time))) {
+        this.dialog.open(PriceDisclaimerComponent, {
+          disableClose: true,
+          width: '780px',
+          maxWidth: '90vw',
+          autoFocus: false,
+          restoreFocus: false,
+          maxHeight: '80vh',
+          panelClass: 'nomada-price-disclaimer-panel'
+        });
+        this.showPriceDisclaimer.set(true)
+        const now = new Date();
+        const ttl = 3 * 24 * 60 * 60 * 1000;
+
+        localStorage.setItem(PRICE_DISCLAIMER_KEY, JSON.stringify(now.getTime() + ttl));
+      }
     }
   }
 

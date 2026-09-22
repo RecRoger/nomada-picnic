@@ -1,0 +1,37 @@
+<div class="c-price-disclaimer">
+  <h2 class="c-price-disclaimer--title">
+    {{'PUBLIC.DISCLAIMER.TITLE' | translate}} <span class="icon" [innerHTML]="'👀' | appleEmoji"></span>
+  </h2>
+
+  <p class="disclaimer-text" [innerHTML]="'PUBLIC.DISCLAIMER.SUBTITLE'| translate">
+  </p>
+
+  <div class="c-price-disclaimer--notification">
+    <h3 class="c-price-disclaimer--notification-title">
+      {{'PUBLIC.DISCLAIMER.NOTIFICATION.TITLE'| translate}}
+    </h3>
+    <p class="c-price-disclaimer--notification-text" [innerHTML]="'PUBLIC.DISCLAIMER.NOTIFICATION.TEXT'| translate">
+    </p>
+  </div>
+
+  <p class="disclaimer-text" [innerHTML]="'PUBLIC.DISCLAIMER.TEXT'| translate">
+  </p>
+
+  <div class="c-price-disclaimer--payments">
+    <span class="c-price-disclaimer--payments-label">
+      {{'PUBLIC.DISCLAIMER.METHODS.LABEL'| translate}}
+    </span>
+    <div class="pills-group">
+      <span class="pill">{{'PUBLIC.DISCLAIMER.METHODS.TRANSFER'| translate}}</span>
+      <span class="pill">{{'PUBLIC.DISCLAIMER.METHODS.CASH'| translate}}</span>
+      <span class="pill">{{'PUBLIC.DISCLAIMER.METHODS.CRYPTO'| translate}}</span>
+    </div>
+  </div>
+
+  <!-- Botón de Acción -->
+  <div class="c-price-disclaimer--actions">
+    <button type="button" class="c-price-disclaimer--actions-button" mat-dialog-close>
+      {{'PUBLIC.DISCLAIMER.BUTTON'| translate}}
+    </button>
+  </div>
+</div>

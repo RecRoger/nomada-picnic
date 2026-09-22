@@ -1,6 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal, computed, inject, effect, PLATFORM_ID } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PriceDisclaimerComponent } from '@components/price-disclaimer/price-disclaimer.component';
 import { API_URL } from '@constants/api-url';
 import { CostsService } from '@services/costs.service';
 import { PackagesService } from '@services/packages.service';
@@ -15,9 +17,13 @@ export class CartService {
   private readonly http: HttpClient = inject(HttpClient)
 
   protected packagesService = inject(PackagesService);
+
   protected additionalsService = inject(CostsService);
 
+  public showPriceDisclaimer = signal<boolean>(false);
+
   public isOpen = signal<boolean>(false);
+
   public showDetails = signal<boolean>(false); // 💡 Controla el estado expandido
 
   private cartState = signal<IBookingCart>({
@@ -63,7 +69,10 @@ export class CartService {
   public isEmpty = computed(() => !this.cartState().booking && this.cartState().additionals.length === 0);
 
   private platformId = inject(PLATFORM_ID);
+
   private isBrowser = isPlatformBrowser(this.platformId);
+
+  readonly dialog = inject(MatDialog);
 
   constructor() {
     if (this.isBrowser) {
@@ -100,6 +109,19 @@ export class CartService {
     } catch (error) {
       console.error('Error leyendo carrito de localStorage:', error);
       return null;
+    }
+  }
+
+  public openPriceDisclaimer() {
+    if (this.isBrowser && !this.showPriceDisclaimer()) {
+      this.dialog.open(PriceDisclaimerComponent, {
+        disableClose: true,
+        width: '780px',
+        maxWidth: '90vw',
+        height: 'auto',
+        panelClass: 'nomada-price-disclaimer-panel'
+      });
+      this.showPriceDisclaimer.set(true)
     }
   }
 

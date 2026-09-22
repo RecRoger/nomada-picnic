@@ -15,7 +15,7 @@
   }
 
   @include u.style-up-to(tablet) {
-    padding: 2rem 1rem;
+    padding: 2rem 1.5rem;
   }
 
   &--title {
@@ -61,6 +61,7 @@
       line-height: 1.5;
       color: var(--color-text-muted);
       margin: 0;
+      text-align: justify;
     }
   }
 
@@ -75,9 +76,13 @@
     }
 
     .pills-group {
-      display: flex;
+      @include u.flex(row, flex-start, center, 10px);
       flex-wrap: wrap;
       gap: 10px;
+
+      @include u.style-up-to(tablet) {
+        justify-content: center;
+      }
     }
 
     .pill {
@@ -86,6 +91,7 @@
         var(--color-bg-softcream),
         1px solid var(--color-outline)
       );
+      text-align: center;
       padding: 8px 16px;
       font-size: 0.88rem;
       font-weight: 600;
@@ -94,11 +100,17 @@
 
   &--actions {
     margin-top: 8px;
+    @include u.flex(row, flex-end, center);
     &-button {
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
       padding: 14px 28px;
       font-size: 1rem;
       font-weight: 700;
+      // margin-left: auto;
+
+      @include u.style-up-to(tablet) {
+        width: 100%;
+      }
     }
   }
 
@@ -107,5 +119,6 @@
     line-height: 1.55;
     color: var(--color-text-muted);
     margin: 0 0 20px 0;
+    text-align: justify;
   }
 }

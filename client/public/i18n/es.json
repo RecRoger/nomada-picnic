@@ -640,6 +640,22 @@
         }
       },
       "NO_PACKAGES": "No hay paquetes disponibles en este momento."
+    },
+    "DISCLAIMER": {
+      "TITLE": "Antes de comenzar",
+      "SUBTITLE": "<strong>Nuestros precios están expresados en USD</strong> para <strong>mantener el valor de tu reserva</strong> estable frente a las variaciones del peso argentino y de los costos de nuestros proveedores.",
+      "NOTIFICATION": {
+        "TITLE":"¿Por qué?",
+        "TEXT":"Como muchas reservas se hacen con <strong>meses de anticipación</strong>, esta es la forma de <strong>mantener el mismo valor</strong> desde que reservás hasta el día de tu picnic, <strong>sin importar el tiempo que pase.</strong>"
+      },
+      "TEXT": "Podés pagar el total o una seña del 50% <strong>mediante Mercado Pago.</strong> Al momento de reservar, <strong>convertimos el monto a pesos argentinos según la cotización del día.</strong>",
+      "METHODS": {
+        "LABEL": "También contamos con otros medios de pago a la hora de hacer tu reserva:",
+        "TRANSFER": "Transferencia en pesos o dólares",
+        "CASH": "Efectivo",
+        "CRYPTO": "USDT"
+      },
+      "BUTTON":"Entendido, continuar"
     }
   },
   "CHECKOUT": {

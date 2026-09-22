@@ -69,6 +69,7 @@ export class AdditionalsComponent implements OnInit {
       url: 'additionals',
       page: 'ADDITIONALS',
     })
+    this.cartService.openPriceDisclaimer()
     this.getAdditionals()
     this.setFilters();
   }

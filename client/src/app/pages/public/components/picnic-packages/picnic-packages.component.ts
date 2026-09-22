@@ -50,7 +50,7 @@ export class PicnicPackagesComponent implements OnInit {
       url: 'picnics',
       page: 'PICNICS',
     })
-
+    this.cartService.openPriceDisclaimer()
   }
 
   public checkPackage(id: string): void {

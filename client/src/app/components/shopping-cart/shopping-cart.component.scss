@@ -195,9 +195,16 @@
           color: var(--color-text-muted);
           text-decoration: underline;
           cursor: pointer;
+          @include u.flex(row, flex-start, center, 0.2rem);
 
           &:hover {
             color: var(--color-brand-coral);
+          }
+
+          .icon {
+            font-size: 1rem;
+            width: 1rem;
+            height: 1rem;
           }
         }
       }

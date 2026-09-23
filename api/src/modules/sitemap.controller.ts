@@ -19,14 +19,14 @@ export class SitemapController {
 
     // 1. Rutas estáticas principales de la app
     const staticRoutes = [
-      '',
-      '/story',
-      '/places',
-      '/additionals',
-      '/picnics',
-      '/contact',
-      '/terms',
-      '/policy',
+      { path: '', changefreq: 'weekly', priority: '1.0', comment: '<!-- Inicio / Home -->' },
+      { path: '/picnics', changefreq: 'weekly', priority: '0.9', comment: '<!-- Experiencias y Paquetes (Página comercial clave) -->' },
+      { path: '/places', changefreq: 'monthly', priority: '0.8', comment: '<!-- Lugares y Puntos de Encuentro -->' },
+      { path: '/additionals', changefreq: 'monthly', priority: '0.8', comment: '<!-- Adicionales y Menú -->' },
+      { path: '/story', changefreq: 'monthly', priority: '0.7', comment: '<!-- Nuestra Historia -->' },
+      { path: '/contact', changefreq: 'monthly', priority: '0.6', comment: '<!-- Preguntas Frecuentes y Contacto -->' },
+      { path: '/terms', changefreq: 'yearly', priority: '0.3', comment: '<!-- Términos y Condiciones -->' },
+      { path: '/policy', changefreq: 'yearly', priority: '0.3', comment: '<!-- Políticas de Privacidad -->' },
     ];
 
     // 2. Obtener datos dinámicos desde MongoDB
@@ -52,43 +52,48 @@ export class SitemapController {
     // Rutas estáticas
     staticRoutes.forEach((route) => {
       urlsXml += `
+        ${route.comment}
         <url>
-          <loc>${baseUrl}${route}</loc>
-          <changefreq>weekly</changefreq>
-          <priority>${route === '' ? '1.0' : '0.8'}</priority>
+          <loc>${baseUrl}${route.path}</loc>
+          <changefreq>${route.changefreq}</changefreq>
+          <priority>${route.priority}</priority>
         </url>`;
     });
 
     // Paquetes de picnics dinámicos si tienen URL propia
+
+    urlsXml += '<!-- Paquetes de picnics -->';
     packages.forEach((pkg) => {
       const slug = slugify(pkg.name);
       urlsXml += `
         <url>
           <loc>${baseUrl}/picnics/${slug}</loc>
-          <changefreq>monthly</changefreq>
-          <priority>0.6</priority>
+          <changefreq>weekly</changefreq>
+          <priority>0.9</priority>
         </url>`;
     });
 
     // Lugares dinámicos (/places/:slug)
+    urlsXml += '<!-- Parques y Lugares publicos disponibles -->';
     places.forEach((place) => {
       const slug = slugify(place.name);
       urlsXml += `
       <url>
-      <loc>${baseUrl}/places/${slug}</loc>
-      <changefreq>weekly</changefreq>
-      <priority>0.8</priority>
+        <loc>${baseUrl}/places/${slug}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
       </url>`;
     });
 
     // Adicionales/Servicios dinámicos si tienen URL propia
+    urlsXml += '<!-- Adicionales disponibles -->';
     additions.forEach((addition) => {
       const slug = slugify(addition.name);
       urlsXml += `
         <url>
           <loc>${baseUrl}/additionals/${slug}</loc>
           <changefreq>monthly</changefreq>
-          <priority>0.6</priority>
+          <priority>0.8</priority>
         </url>`;
     });
 

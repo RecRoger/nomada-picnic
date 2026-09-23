@@ -25,47 +25,47 @@ const angularApp = new AngularNodeAppEngine({
 
 app.set('trust proxy', true);
 
-app.get('/sitemap.xml', async (req, res) => {
-  const apiBaseUrl = process.env['API_URL']
-    ? process.env['API_URL']
-    : `${req.protocol}://${req.get('host')}`;
-  const targetUrl = apiBaseUrl.endsWith('/')
-    ? `${apiBaseUrl}api/sitemap.xml`
-    : `${apiBaseUrl}/api/sitemap.xml`;
+app.get('/sitemap.xml', async (req, res, next) => {
+  // Construir URL de NestJS
+  const apiBaseUrl = process.env['API_URL'] || 'https://nomada-backend-389141432152.us-east1.run.app/api';
+  const targetUrl = `${apiBaseUrl.replace(/\/$/, '')}/sitemap.xml`;
 
   try {
     const response = await fetch(targetUrl, {
-      headers: {
-        'Accept': 'application/xml',
-      },
+      headers: { 'Accept': 'application/xml' },
     });
 
     if (!response.ok) {
-      throw new Error(`Error en NestJS sitemap (Status ${response.status})`);
+      throw new Error(`Error NestJS sitemap status: ${response.status}`);
     }
 
     const xmlContent = await response.text();
 
+    // Importante: Limpiar cualquier encabezado previo y enviar como XML puro
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=86400');
-    return res.status(200).send(xmlContent);
+
+    // Con 'return res.send()' Express finaliza la respuesta y Angular SSR NO intervendrá
+    return res.status(200).send(xmlContent.trim());
 
   } catch (error) {
-    console.error(`Error obteniendo sitemap desde ${targetUrl}, buscando fallback estático...`, error);
+    console.error(`Error obteniendo sitemap desde ${targetUrl}, buscando fallback...`, error);
+
     const possiblePaths = [
       join(browserDistFolder, 'sitemap.xml'),
       join(browserDistFolder, 'static_sitemap.xml'),
-      join(process.cwd(), 'src', 'public', 'sitemap.xml'),
-      join(process.cwd(), 'src', 'public', 'static_sitemap.xml'),
       join(process.cwd(), 'public', 'sitemap.xml'),
       join(process.cwd(), 'public', 'static_sitemap.xml'),
     ];
+
     const fallbackPath = possiblePaths.find((p) => existsSync(p));
+
     if (fallbackPath) {
       const fileContent = readFileSync(fallbackPath, 'utf-8');
       res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-      return res.status(200).send(fileContent);
+      return res.status(200).send(fileContent.trim());
     }
+
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     return res.status(500).send(
       '<?xml version="1.0" encoding="UTF-8"?><error>Sitemap no disponible</error>'

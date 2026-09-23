@@ -28,8 +28,12 @@ export class EventsService {
       params: { ...(isPrivate ? { query: 'full' } : {}) }
     }).pipe(
       map((response) => {
-        if (response) {
-          return response.data as IPicnicEvent[]
+        if (response?.data) {
+          return response.data.sort((a, b) => {
+            if (a.name === 'Otro') return 1;
+            if (b.name === 'Otro') return -1;
+            return a.name.localeCompare(b.name); // Ordena el resto alfabéticamente
+          }) as IPicnicEvent[]
         }
         return []
       }),

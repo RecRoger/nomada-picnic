@@ -1,4 +1,6 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { MapsService } from '@services/maps.service';
 import { authGuard } from 'src/app/core/guards/auth.guard';
 import { AdminComponent } from 'src/app/pages/admin/admin.component';
 
@@ -10,6 +12,9 @@ export const AdminRoutes: Routes = [
     children: [
       {
         path: 'places',
+        resolve: {
+          mapsLoaded: () => inject(MapsService).load(),
+        },
         loadComponent: () => import('./components/admin-places/admin-places.component').then(c => c.AdminPlacesComponent)
       },
       {

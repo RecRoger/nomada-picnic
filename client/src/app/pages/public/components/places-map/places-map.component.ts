@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -8,11 +8,11 @@ import { PlacesService } from '@services/places.service';
 import { PlacesTypes } from '@shared/enums';
 import { IPlace } from '@shared/interfaces';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { map, Observable, of, startWith, tap } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Observable, of, tap } from 'rxjs';
 import { MAP_OPTIONS } from '@constants/map-options';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PlaceDialogComponent } from '@components/place-dialog/place-dialog.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
@@ -20,9 +20,10 @@ import { RECOMENDED_TAG } from '@constants/important-tags';
 import { normalizeString } from 'src/app/core/functions/search';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { CartService } from '@services/cart.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { SeoService } from '@services/seo.service';
+import { urlParameter } from 'src/app/core/functions/url-parameter';
 
 
 @Component({
@@ -85,6 +86,7 @@ export class PlacesMapComponent implements OnInit {
         this.tagList = Array.from(new Set(rawTags)) as string[];
         this.setMarkers()
         this.filterCosts()
+        this.checkPlaceParam()
       }
     })
     )
@@ -97,6 +99,8 @@ export class PlacesMapComponent implements OnInit {
 
   private readonly router = inject(Router)
 
+  private readonly route = inject(ActivatedRoute);
+
   private readonly destroyRef = inject(DestroyRef)
 
   readonly dialog = inject(MatDialog);
@@ -104,6 +108,8 @@ export class PlacesMapComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
 
   private seoService = inject(SeoService);
+
+  private dialogRef: MatDialogRef<PlaceDialogComponent> | null = null;
 
   async ngOnInit(): Promise<void> {
     this.seoService.setSeoData({
@@ -118,6 +124,23 @@ export class PlacesMapComponent implements OnInit {
     }
   }
 
+  public checkPlaceParam(): void {
+    this.route.firstChild?.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+      if (params['name']) {
+        const name = params['name'];
+        const selectedPlace = this.placesList.find(place => urlParameter(place.name) === name)
+        if (selectedPlace) {
+          this.openModal(selectedPlace);
+        } else {
+          this.router.navigate(['/places'])
+        }
+      } else if (this.dialogRef) {
+        this.dialogRef.close();
+        this.dialogRef = null;
+      }
+    });
+  }
+
   public toggleTag(tag: string): void {
     const current: string[] = this.filterForm.get('tags')?.value || [];
     if (current.includes(tag)) {
@@ -129,19 +152,27 @@ export class PlacesMapComponent implements OnInit {
 
   public checkPlace(id: string): void {
     const place = this.placesList.find(place => place._id === id)
-    const dialogRef = this.dialog.open(PlaceDialogComponent, {
+    this.router.navigate(['/places', urlParameter(place?.name)])
+    this.openModal(place)
+  }
+
+  public openModal(place?: IPlace): void {
+    this.dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
       width: '1200px',
       maxWidth: '90vw',
       height: 'auto',
+      autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.cartService.updateBookingDetails({
           place
         })
         this.router.navigate(['/picnics'])
+      } else {
+        this.router.navigate(['/places'])
       }
     });
   }

@@ -24,11 +24,16 @@ export class PicnicPackageService {
     private filesService: FilesService,
   ) { }
 
+  public async findAllActive(): Promise<PicnicPackageDocument[]> {
+    this.logger.log('[findAllActive]');
+    const pkgQuery = await this.packageModel.find().populate('productionCostIds').exec()
+    return pkgQuery
+  }
+
   async findPackages(query?: string): Promise<PicnicPackageDto[]> {
     const isPublic = !query || query !== 'full'
     this.logger.log('[findPackages]', `public: ${isPublic}`);
     try {
-
       const [packages, courtesyCosts, basePlace] = await Promise.all([
         await this.packageModel.find().populate('productionCostIds').lean().exec(),
         await this.costModel.find({ type: CostsTypes.GIFTS }).lean().exec(),

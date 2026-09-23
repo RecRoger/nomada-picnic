@@ -12,6 +12,7 @@ import { Cost, ProductionCostsSchema } from 'src/common/database/schemas/product
     FilesModule,
   ],
   controllers: [ProductionCostsController],
-  providers: [ProductionCostsService, FilesService]
+  providers: [ProductionCostsService, FilesService],
+  exports: [ProductionCostsService]
 })
 export class ProductionCostsModule { }

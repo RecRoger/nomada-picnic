@@ -4,8 +4,10 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
+import { API_URL } from '@constants/api-url';
 import express from 'express';
-import { dirname, resolve } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
@@ -22,6 +24,54 @@ const angularApp = new AngularNodeAppEngine({
 });
 
 app.set('trust proxy', true);
+
+app.get('/sitemap.xml', async (req, res) => {
+  const apiBaseUrl = process.env['API_URL']
+    ? process.env['API_URL']
+    : `${req.protocol}://${req.get('host')}`;
+  const targetUrl = apiBaseUrl.endsWith('/')
+    ? `${apiBaseUrl}api/sitemap.xml`
+    : `${apiBaseUrl}/api/sitemap.xml`;
+
+  try {
+    const response = await fetch(targetUrl, {
+      headers: {
+        'Accept': 'application/xml',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error en NestJS sitemap (Status ${response.status})`);
+    }
+
+    const xmlContent = await response.text();
+
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+    return res.status(200).send(xmlContent);
+
+  } catch (error) {
+    console.error(`Error obteniendo sitemap desde ${targetUrl}, buscando fallback estático...`, error);
+    const possiblePaths = [
+      join(browserDistFolder, 'sitemap.xml'),
+      join(browserDistFolder, 'static_sitemap.xml'),
+      join(process.cwd(), 'src', 'public', 'sitemap.xml'),
+      join(process.cwd(), 'src', 'public', 'static_sitemap.xml'),
+      join(process.cwd(), 'public', 'sitemap.xml'),
+      join(process.cwd(), 'public', 'static_sitemap.xml'),
+    ];
+    const fallbackPath = possiblePaths.find((p) => existsSync(p));
+    if (fallbackPath) {
+      const fileContent = readFileSync(fallbackPath, 'utf-8');
+      res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+      return res.status(200).send(fileContent);
+    }
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    return res.status(500).send(
+      '<?xml version="1.0" encoding="UTF-8"?><error>Sitemap no disponible</error>'
+    );
+  }
+});
 
 /**
  * Servir archivos estáticos del browser

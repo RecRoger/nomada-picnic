@@ -13,5 +13,6 @@ import { FilesModule } from 'src/modules/files/files.module';
   ],
   controllers: [PlacesController],
   providers: [PlacesService, FilesService],
+  exports: [PlacesService]
 })
 export class PlacesModule { }

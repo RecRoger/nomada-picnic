@@ -16,6 +16,12 @@ export class PlacesService {
     private filesService: FilesService,
   ) { }
 
+  public async findAllActive(): Promise<PlacesDocument[]> {
+    this.logger.log('[findAllActive]');
+    const placesQuery = await (this.placesModel.find({ type: PlacesTypes.PUBLIC }, { transportationCost: 0 }).exec());
+    return placesQuery
+  }
+
   async findPlace(type?: string): Promise<PlaceDto[]> {
     this.logger.log('[findPlace]', 'type:' + (type || 'all'));
     const placesQuery = await (!type

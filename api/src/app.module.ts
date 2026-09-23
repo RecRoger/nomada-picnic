@@ -9,6 +9,7 @@ import { ExpensesModule } from 'src/modules/expenses/expenses.module';
 import { PicnicsModule } from 'src/modules/picnics/picnics.module';
 import { PicnicPackagesModule } from 'src/modules/picnic-packages/picnic-packages.module';
 import { PicnicEventsModule } from 'src/modules/picnic-events/picnic-events.module';
+import { SitemapController } from 'src/modules/sitemap.controller';
 
 @Module({
   imports: [
@@ -25,5 +26,6 @@ import { PicnicEventsModule } from 'src/modules/picnic-events/picnic-events.modu
     PicnicEventsModule,
     PicnicsModule,
   ],
+  controllers: [SitemapController]
 })
 export class AppModule { }

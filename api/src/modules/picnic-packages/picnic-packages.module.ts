@@ -19,5 +19,6 @@ import { MailModule } from 'src/modules/mails/mail.module';
   ],
   controllers: [PicnicPackagesController],
   providers: [PicnicPackageService, FilesService],
+  exports: [PicnicPackageService]
 })
 export class PicnicPackagesModule { }

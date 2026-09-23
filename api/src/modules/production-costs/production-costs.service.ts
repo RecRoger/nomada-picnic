@@ -5,6 +5,7 @@ import { CostDto } from 'src/common/models/cost.dto';
 import { Cost, CostDocument } from 'src/common/database/schemas/production-cost.schema';
 import { FilesService } from 'src/modules/files/files.service';
 import { sanitizeContent } from 'src/common/constants/html-sanitizer';
+import { CostsTypes } from '@shared/enums';
 
 @Injectable()
 export class ProductionCostsService {
@@ -14,6 +15,13 @@ export class ProductionCostsService {
     @InjectModel(Cost.name) private costsModel: Model<CostDocument>,
     private filesService: FilesService,
   ) { }
+
+  public async findAllActive(): Promise<CostDocument[]> {
+    this.logger.log('[findAllActive]')
+    const costsQuery = await this.costsModel.find({ type: { $in: [CostsTypes.ADDITIONAL, CostsTypes.DRINKS, CostsTypes.FOOD, CostsTypes.FURNITURE] } })
+      .exec()
+    return costsQuery;
+  }
 
   async findAll(type?: string): Promise<CostDto[]> {
     this.logger.log('[findAll]', type || 'All')

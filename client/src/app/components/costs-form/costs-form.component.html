@@ -21,6 +21,14 @@
     </app-form-control>
   </div>
 
+    <app-form-control
+      class="form-control"
+      [control]="getControl('meta')"
+      label="{{ 'COMMON.META' | translate }}"
+      type="text"
+    >
+    </app-form-control>
+
   <app-form-control
     class="form-control"
     [control]="getControl('description')"

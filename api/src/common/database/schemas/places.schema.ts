@@ -22,6 +22,9 @@ export class Place {
   @Prop()
   description: string;
 
+  @Prop()
+  meta: string;
+
   @Prop({ type: [String], default: [] })
   tags: string[];
 

@@ -43,6 +43,7 @@ export class PlaceFormComponent implements OnInit {
       address: [this.place?.address || '', Validators.required],
       description: [this.place?.description || '', Validators.required],
       detail: [this.place?.detail || ''],
+      meta: [this.place?.meta || ''],
       images: [null],
       tags: this.fb.array(this.place?.tags || []),
       location: this.fb.group({

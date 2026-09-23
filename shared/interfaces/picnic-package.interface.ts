@@ -4,6 +4,7 @@ export interface IPicnicPackage {
   description: string;
   tag?: string;
   detail?: string;
+  meta?: string;
   image?: string;
   minGuests?: number;
   maxGuests?: number;

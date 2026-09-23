@@ -1,28 +1,26 @@
 import { isPlatformBrowser } from '@angular/common';
-import { inject, Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapsService {
   private readonly MAPS_KEY = 'AIzaSyB64dsMLc_CM0NGwz7o9gLmOd5MrOW7qeM';
+  private platformId = inject(PLATFORM_ID);
 
   private scriptLoaded = false;
+  private loadingPromise?: Promise<void>;
 
   public get mapReady(): boolean {
-    return this.scriptLoaded
+    return this.scriptLoaded;
   }
 
   public get apiKey(): string {
-    return this.MAPS_KEY
+    return this.MAPS_KEY;
   }
 
-  private platformId: any = inject(PLATFORM_ID)
-
-  private loadingPromise?: Promise<void>
-
   public load(): Promise<void> {
-
     if (!isPlatformBrowser(this.platformId)) {
       return Promise.resolve();
     }
@@ -35,25 +33,26 @@ export class MapsService {
       return this.loadingPromise;
     }
 
-    this.loadingPromise = new Promise((resolve, reject) => {
-
-      const script = document.createElement('script');
-
-      script.src =
-        `https://maps.googleapis.com/maps/api/js?key=${this.MAPS_KEY}&v=weekly&libraries=places,marker&loading=async`;
-
-      script.async = true;
-      script.defer = true;
-
-      script.onload = () => {
-        this.scriptLoaded = true;
-        resolve();
-      };
-
-      script.onerror = reject;
-
-      document.head.appendChild(script);
+    // 1. Establecemos las opciones globales de la API de Google Maps (se ejecuta 1 sola vez)
+    setOptions({
+      key: this.MAPS_KEY, // Ojo: en setOptions la propiedad es 'key', no 'apiKey'
+      v: 'weekly',
     });
+
+    // 2. Cargamos las librerías necesarias con 1 solo parámetro cada una
+    this.loadingPromise = Promise.all([
+      importLibrary('maps'),
+      importLibrary('places'),
+      importLibrary('marker'),
+    ])
+      .then(() => {
+        this.scriptLoaded = true;
+      })
+      .catch((err) => {
+        this.loadingPromise = undefined;
+        console.error('Error al cargar la API de Google Maps:', err);
+        throw err;
+      });
 
     return this.loadingPromise;
   }

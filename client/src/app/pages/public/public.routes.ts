@@ -1,4 +1,7 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { PlacesMapComponent } from '@pages/public/components/places-map/places-map.component';
+import { MapsService } from '@services/maps.service';
 
 
 export const PublicRoutes: Routes = [
@@ -12,7 +15,16 @@ export const PublicRoutes: Routes = [
   },
   {
     path: 'places',
+    resolve: {
+      mapsLoaded: () => inject(MapsService).load(),
+    },
     loadComponent: () => import('./components/places-map/places-map.component').then(m => m.PlacesMapComponent),
+    children: [
+      {
+        path: ':name',
+        loadComponent: () => import('./components/places-map/places-map.component').then(m => m.PlacesMapComponent),
+      }
+    ]
   },
   {
     path: 'additionals',

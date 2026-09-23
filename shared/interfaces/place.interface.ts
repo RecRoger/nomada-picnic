@@ -12,6 +12,7 @@ export interface IPlace {
   address?: string;
   description?: string;
   detail?: string;
+  meta?: string;
   tags?: string[];
   images?: string[];
   location?: IPlaceLocation;

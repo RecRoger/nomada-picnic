@@ -6,6 +6,7 @@ export interface ICost {
   type: CostsTypes;
   description?: string;
   detail?: string;
+  meta?: string;
   images?: string[];
   tags?: string[];
   providerCost?: number;

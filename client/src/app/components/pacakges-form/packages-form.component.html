@@ -19,18 +19,25 @@
   <div class="form-row">
     <app-form-control
       class="form-control"
+      [control]="getControl('meta')"
+      label="{{ 'COMMON.META' | translate }}"
+      type="text">
+    </app-form-control>
+
+    <app-form-control
+      class="form-control"
       [control]="getControl('description')"
       label="{{ 'COMMON.DESCRIPTION' | translate }}"
       type="textarea">
     </app-form-control>
-      
-    <app-form-control
-      class="form-control"
-      [control]="getControl('detail')"
-      label="{{ 'COMMON.DETAIL' | translate }}"
-      type="textarea">
-    </app-form-control>
   </div>
+      
+  <app-form-control
+    class="form-control"
+    [control]="getControl('detail')"
+    label="{{ 'COMMON.DETAIL' | translate }}"
+    type="textarea">
+  </app-form-control>
 
   <div class="form-row">
     <div class="items-form-list">

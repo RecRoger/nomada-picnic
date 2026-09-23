@@ -57,6 +57,7 @@
       <td mat-cell *matCellDef="let pkg" [attr.colspan]="columnsToDisplayWithExpand.length">
         <div class="element-detail-wrapper" [class.expanded]="expandedElements.includes(pkg._id || '')"
           [@detailExpand]="expandedElements.includes(pkg._id || '') ? 'expanded' : 'collapsed'">
+          <p class="package-description">Meta descripcion para seo: {{pkg.meta || 'Sin Meta'}}</p>
           <p class="package-description">{{pkg.description}}</p>
           <p class="package-detail">
             {{pkg.detail}}

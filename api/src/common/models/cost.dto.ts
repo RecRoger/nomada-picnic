@@ -24,6 +24,11 @@ export class CostDto implements IPicnicPackage {
   @ApiProperty({ description: 'Detalle en html del costo para mostrar en la vista de detalle de adicionales', example: 'Costo referente a armado de <b>picnic</b> en el lugar del evento' })
   detail: string;
 
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ description: 'Metadescripcion para seo', example: 'adicionales ricos' })
+  meta?: string;
+
   @IsArray()
   @IsOptional()
   @IsString({ each: true })

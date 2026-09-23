@@ -46,6 +46,7 @@ export class PackagesFormComponent implements OnInit {
       name: [this.package?.name || '', Validators.required],
       description: [this.package?.description || '', Validators.required],
       detail: [this.package?.detail || ''],
+      meta: [this.package?.meta || ''],
       tag: [this.package?.tag || ''],
       minGuests: [this.package?.minGuests || 2],
       maxGuests: [this.package?.maxGuests || 30, Validators.required],

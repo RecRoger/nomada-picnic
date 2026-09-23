@@ -180,6 +180,7 @@ export class AdminCostsComponent implements OnInit {
     formData.append('type', costForm.type)
     formData.append('description', costForm.description + '')
     formData.append('detail', costForm.detail + '')
+    formData.append('meta', costForm.meta + '')
     formData.append('tags', costForm.tags?.join('|') as string)
     formData.append('guestsCoverage', costForm.guestsCoverage + '')
     formData.append('providerCost', costForm.providerCost + '')

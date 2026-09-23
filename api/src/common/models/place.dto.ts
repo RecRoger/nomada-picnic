@@ -36,6 +36,11 @@ export class PlaceDto implements IPlace {
   @ApiProperty({ description: 'Html envevible al detalle del parque', example: 'Bla Bla <b>Bla</b>' })
   detail?: string;
 
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ description: 'Metadescripcion para seo', example: 'lugares especiales en BA' })
+  meta?: string;
+
   @IsArray()
   @IsOptional()
   @IsString({ each: true })

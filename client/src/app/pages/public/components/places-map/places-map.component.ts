@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
-import { Component, DestroyRef, inject, Input, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -157,12 +157,19 @@ export class PlacesMapComponent implements OnInit {
   }
 
   public openModal(place?: IPlace): void {
+    this.seoService.setSeoData({
+      url: `places/${urlParameter(place?.name)}`,
+      page: 'PLACE',
+      title: `${place?.name}`,
+      description: place?.meta || place?.description
+    })
     this.dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
       width: '1200px',
       maxWidth: '90vw',
       height: 'auto',
       autoFocus: false,
+      restoreFocus: false,
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
@@ -172,6 +179,10 @@ export class PlacesMapComponent implements OnInit {
         })
         this.router.navigate(['/picnics'])
       } else {
+        this.seoService.setSeoData({
+          url: 'places',
+          page: 'PLACES',
+        })
         this.router.navigate(['/places'])
       }
     });

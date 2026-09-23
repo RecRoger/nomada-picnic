@@ -57,6 +57,7 @@ export class CostsFormComponent implements OnInit {
       name: [this.cost?.name || '', Validators.required],
       description: [this.cost?.description || '', Validators.required],
       detail: [this.cost?.detail || ''],
+      meta: [this.cost?.meta || ''],
       type: [this.cost?.type || CostsTypes.PRODUCTION, Validators.required],
       images: [null],
       tags: this.fb.array(this.cost?.tags || []),

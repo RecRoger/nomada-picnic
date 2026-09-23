@@ -35,6 +35,11 @@ export class PicnicPackageDto implements IPicnicPackage {
   })
   detail?: string;
 
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ description: 'Metadescripcion para seo', example: 'Paquete especial para picnics premium' })
+  meta?: string;
+
   @IsString({ message: 'El tag debe ser un texto' })
   @IsOptional()
   @ApiProperty({

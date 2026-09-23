@@ -22,6 +22,9 @@ export class PicnicPackage {
   })
   description: string;
 
+  @Prop()
+  meta: string;
+
   @Prop({
     type: String,
     trim: true,

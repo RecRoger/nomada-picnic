@@ -161,6 +161,7 @@ export class AdminPackagesComponent implements OnInit {
     formData.append('name', packageForm.name)
     formData.append('description', packageForm.description + '')
     formData.append('detail', packageForm.detail + '')
+    formData.append('meta', packageForm.meta + '')
     formData.append('tag', packageForm.tag + '')
     formData.append('extraTransport', packageForm.extraTransport + '')
     formData.append('includedItems', packageForm.includedItems?.join('|') as string)

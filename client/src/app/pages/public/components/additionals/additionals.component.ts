@@ -1,7 +1,7 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { AdditionalDialogComponent } from '@components/additional-dialog/additional-dialog.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -16,6 +16,8 @@ import { normalizeString } from 'src/app/core/functions/search';
 import { CartService } from '@services/cart.service';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { SeoService } from '@services/seo.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { urlParameter } from 'src/app/core/functions/url-parameter';
 
 @Component({
   selector: 'app-additionals',
@@ -63,7 +65,15 @@ export class AdditionalsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
   private readonly destroyRef = inject(DestroyRef)
+
   private seoService = inject(SeoService);
+
+  private readonly router = inject(Router)
+
+  private readonly route = inject(ActivatedRoute);
+
+  private dialogRef: MatDialogRef<AdditionalDialogComponent> | null = null;
+
   ngOnInit(): void {
     this.seoService.setSeoData({
       url: 'additionals',
@@ -72,6 +82,23 @@ export class AdditionalsComponent implements OnInit {
     this.cartService.openPriceDisclaimer()
     this.getAdditionals()
     this.setFilters();
+  }
+
+  public checkAdditionalParam(): void {
+    this.route.firstChild?.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+      if (params['name']) {
+        const name = params['name'];
+        const selectedAdditonal = this.additionalsList.find(additional => urlParameter(additional.name) === name)
+        if (selectedAdditonal) {
+          this.openModal(selectedAdditonal);
+        } else {
+          this.router.navigate(['/additionals'])
+        }
+      } else if (this.dialogRef) {
+        this.dialogRef.close();
+        this.dialogRef = null;
+      }
+    });
   }
 
   public selectCategory(id: string): void {
@@ -88,15 +115,28 @@ export class AdditionalsComponent implements OnInit {
   }
 
   public checkAdditional(additional: ICost): void {
-    const dialogRef = this.dialog.open(AdditionalDialogComponent, {
+    this.router.navigate(['/additionals', urlParameter(additional?.name)])
+    this.openModal(additional)
+  }
+
+  public openModal(additional: ICost): void {
+    this.seoService.setSeoData({
+      url: `additionals/${urlParameter(additional?.name)}`,
+      page: 'ADDITIONAL',
+      title: `${additional?.name}`,
+      description: additional?.meta || additional?.description
+    })
+    this.dialogRef = this.dialog.open(AdditionalDialogComponent, {
       data: additional,
       width: '1000px',
       maxWidth: '90vw',
       height: 'auto',
-      panelClass: 'nomada-additional-dialog-panel'
+      panelClass: 'nomada-additional-dialog-panel',
+      autoFocus: false,
+      restoreFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const cartAdditionals = this.cartService.additionals()
         const cartItem = cartAdditionals.find((item: ICartAdditional) => item.cost._id === additional._id)
@@ -109,10 +149,17 @@ export class AdditionalsComponent implements OnInit {
         } else {
           this.cartService.addAdditional(additional, result)
         }
+      } else {
+        this.seoService.setSeoData({
+          url: 'additionals',
+          page: 'ADDITIONALS',
+        })
+        this.router.navigate(['/additionals'])
       }
     });
 
   }
+
 
   private getAdditionals(): void {
     forkJoin([
@@ -125,6 +172,7 @@ export class AdditionalsComponent implements OnInit {
       const rawTags = this.additionalsList.flatMap(additional => additional.tags);
       this.tagList = Array.from(new Set(rawTags)) as string[];
       this.filterCosts()
+      this.checkAdditionalParam()
     })
   }
 

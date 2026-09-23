@@ -29,10 +29,22 @@ export const PublicRoutes: Routes = [
   {
     path: 'additionals',
     loadComponent: () => import('./components/additionals/additionals.component').then(m => m.AdditionalsComponent),
+    children: [
+      {
+        path: ':name',
+        loadComponent: () => import('./components/additionals/additionals.component').then(m => m.AdditionalsComponent),
+      }
+    ]
   },
   {
     path: 'picnics',
     loadComponent: () => import('./components/picnic-packages/picnic-packages.component').then(m => m.PicnicPackagesComponent),
+    children: [
+      {
+        path: ':name',
+        loadComponent: () => import('./components/picnic-packages/picnic-packages.component').then(m => m.PicnicPackagesComponent),
+      }
+    ]
   },
   {
     path: 'contact',

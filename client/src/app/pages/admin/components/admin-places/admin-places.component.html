@@ -42,6 +42,7 @@
                   }
                 </div>
               }
+              <p>Meta-descripcion para seo: {{ place.meta || 'Sin Meta' }}</p>
               <p>{{ place.address }}</p>
               <p>{{ place.description }}</p>
               @if (place.tags?.length) {

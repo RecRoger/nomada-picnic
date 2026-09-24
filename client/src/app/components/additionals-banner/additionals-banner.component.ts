@@ -1,5 +1,5 @@
-import { AsyncPipe, CurrencyPipe, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AsyncPipe, isPlatformBrowser } from '@angular/common';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CarouselComponent, CarouselOptions } from '@components/carousel/carousel.component';
 import { MOST_SELL_TAG } from '@constants/important-tags';
@@ -17,7 +17,6 @@ import { forkJoin, map, Observable } from 'rxjs';
     RouterLink,
     CarouselComponent,
     AsyncPipe,
-    CurrencyPipe,
     ApiImageUrlPipe,
   ],
   templateUrl: './additionals-banner.component.html',

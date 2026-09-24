@@ -138,6 +138,7 @@ export class PicnicsController {
   })
   @ApiQuery({ name: 'payOption', required: false, enum: PaymentTypes })
   @ApiQuery({ name: 'payMethod', required: false, enum: PaymentMethods })
+  @ApiQuery({ name: 'id', required: false })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'La reserva del picnic ha sido creada exitosamente.',
@@ -156,9 +157,10 @@ export class PicnicsController {
   async create(
     @Query('payOption') payOption: PaymentTypes,
     @Query('payMethod') payMethod: PaymentMethods,
+    @Query('id') id: string,
     @Body() createPicnicDto: CreatePicnicDto
   ): Promise<string> {
-    return this.picnicsService.createPicnic(createPicnicDto, payOption, payMethod);
+    return this.picnicsService.createPicnic(createPicnicDto, payOption, payMethod, id);
   }
 
   @Post('webhook')

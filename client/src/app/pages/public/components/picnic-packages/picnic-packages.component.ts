@@ -116,6 +116,7 @@ export class PicnicPackagesComponent implements OnInit {
           basePrice: group.price,
         })
 
+        this.router.navigate(['/picnics'])
         const dialogRef2 = this.dialog.open(RecommendedDialogComponent, {
           data: event,
           width: '700px',

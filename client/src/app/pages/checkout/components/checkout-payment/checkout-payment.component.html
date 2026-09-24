@@ -10,6 +10,22 @@
         {{'CHECKOUT.PAYMENT.HEADER.SUBTITLE' | translate}}
       </p>
     </header>
+
+    @if(showErrorAlert()){
+      <div class="c-checkout-payment--error">
+        <button class="c-checkout-payment--error-close" (click)="showErrorAlert.set(false)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <div class="c-checkout-payment--error-icon">
+          <span [innerHTML]="'⚠️' | appleEmoji"></span>
+        </div>
+        <div class="c-checkout-payment--error-content">
+          <h3 class="c-checkout-payment--error-content-title">{{'CHECKOUT.PAYMENT.ERROR.TITLE' | translate}}</h3>
+          <p class="c-checkout-payment--error-content-text">{{'CHECKOUT.PAYMENT.ERROR.TEXT' | translate}}</p>
+        </div>
+
+      </div>
+    }
   
     <!-- Tarjeta Principal -->
     <div class="c-checkout-payment--card">
@@ -52,11 +68,11 @@
        <div class="c-checkout-payment--card-methods" [formGroup]="form">
          <mat-radio-group formControlName="payMethod">
            <div class="c-checkout-payment--card-methods-collapse">
-             <mat-radio-button value="MP">
+             <mat-radio-button [value]="PAYMENT_METHODS.MP">
                <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.MP_TITLE' | translate}}</span>
              </mat-radio-button>
 
-             @if (form.get('payMethod')!.value == 'MP') {
+             @if (form.get('payMethod')!.value == PAYMENT_METHODS.MP) {
                <div class="c-checkout-payment--card-methods-content" @expandCollapse>
                  <span class="c-checkout-payment--card-methods-title">
                    {{'CHECKOUT.PAYMENT.METHODS.MP_LABEL' | translate}}
@@ -71,10 +87,10 @@
            </div>
 
            <div class="c-checkout-payment--card-methods-collapse">
-             <mat-radio-button value="OTHER">
+             <mat-radio-button [value]="PAYMENT_METHODS.OTHER">
                <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.OTHER_TITLE' | translate}}</span>
              </mat-radio-button>
-             @if (form.get('payMethod')!.value && form.get('payMethod')!.value != 'MP') {
+             @if (form.get('payMethod')!.value && form.get('payMethod')!.value != PAYMENT_METHODS.MP) {
                <div class="c-checkout-payment--card-methods-content" @expandCollapse>
                  <span class="c-checkout-payment--card-methods-title">
                    {{'CHECKOUT.PAYMENT.METHODS.OTHER_LABEL' | translate}}

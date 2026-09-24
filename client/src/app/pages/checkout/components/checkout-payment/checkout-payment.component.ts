@@ -1,8 +1,8 @@
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
@@ -12,6 +12,9 @@ import { AlertTypes, PaymentMethods } from '@shared/enums';
 import { MatRadioModule } from '@angular/material/radio';
 import { catchError } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
+import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -20,10 +23,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
     CurrencyPipe,
     DecimalPipe,
     LoaderComponent,
+    MatIconModule,
     MatExpansionModule,
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
+    AppleEmojiPipe,
   ],
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.scss',
@@ -43,6 +48,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class CheckoutPaymentComponent implements OnInit {
   private cartService = inject(CartService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private bookingService = inject(BookingPicnicsService);
   private notificationService = inject(NotificationService);
   private fb = inject(FormBuilder);
@@ -50,10 +56,16 @@ export class CheckoutPaymentComponent implements OnInit {
   readonly booking = this.cartService.booking;
   readonly totalAmount = this.cartService.totalAmount;
 
+  public showErrorAlert = signal<boolean>(false)
+
+  public errorId? = undefined
+
   readonly today = new Date();
   readonly tempBookingCode = `NP-${this.today.getFullYear()}-${(this.today.getMonth() + 1)
     .toString()
     .padStart(2, '0')}${this.today.getDate().toString().padStart(2, '0')}`;
+
+  readonly PAYMENT_METHODS = PaymentMethods
 
   readonly MP_PAYMENTH_METHODS = [
     'CREDIT',
@@ -79,13 +91,29 @@ export class CheckoutPaymentComponent implements OnInit {
     payMethod: ['', Validators.required],
   })
 
+  private readonly destroyRef = inject(DestroyRef)
+
   async ngOnInit(): Promise<void> {
+    this.checkParams()
     await this.getDolar();
+  }
+
+  public checkParams(): void {
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+      if (params['error']) {
+        this.showErrorAlert.set(true)
+        this.errorId = params['picnicId']
+      }
+    })
   }
 
   async onPay(partialPay = false): Promise<void> {
     this.loadPayment = true
-    this.bookingService.saveBooking(this.form.get('payMethod')!.value as string, partialPay).pipe(catchError((err) => {
+    this.bookingService.saveBooking(
+      this.form.get('payMethod')!.value as string,
+      partialPay,
+      this.errorId
+    ).pipe(catchError((err) => {
       this.loadPayment = false
       this.notificationService.openNotification({ message: 'Ha ocurrido un error, intentelo nuevamente mas tarde' }, AlertTypes.ERROR)
       throw err

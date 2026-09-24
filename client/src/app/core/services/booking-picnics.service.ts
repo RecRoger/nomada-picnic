@@ -67,7 +67,7 @@ export class BookingPicnicsService {
   }
 
 
-  public saveBooking(payMethod: string, partialPay = false): Observable<string | null> {
+  public saveBooking(payMethod: string, partialPay = false, errorId = undefined): Observable<string | null> {
     const bookingBody = this.mapCartToCreatePicnicDto({
       booking: this.cartService.booking(),
       additionals: this.cartService.additionals(),
@@ -77,6 +77,7 @@ export class BookingPicnicsService {
       params: {
         payOption: partialPay ? PaymentTypes.DEPOSIT : PaymentTypes.FULL,
         payMethod,
+        id: errorId || ''
       }
     }).pipe(
       map((response: any) => {

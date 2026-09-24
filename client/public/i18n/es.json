@@ -734,6 +734,10 @@
       },
       "REFFERENCE": "Número de reserva temporal",
       "EXPERIENCE": "Experiencia",
+      "ERROR": {
+        "TITLE": "Detectamos un error en el pago",
+        "TEXT": "No se realizó ningún cargo. Revisá los datos de tu medio de pago y volvé a intentarlo nuevamente."
+      },
       "METHODS": {
         "MP_TITLE": "Pagar con Mercado Pago",
         "OTHER_TITLE": "Coordinar otra forma de pago",

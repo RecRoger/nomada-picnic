@@ -43,7 +43,7 @@ export class CartDetailComponent implements OnInit {
   ]
   public currentPage = signal<string>(this.detailPages[0])
 
-  public minDate = new Date(new Date().setDate(new Date().getDate() + 2));
+  public minDate = new Date(new Date().setDate(new Date().getDate() + 3));
   public maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
 
   public availableTimes = [

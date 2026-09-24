@@ -208,9 +208,12 @@ export class PicnicsService {
     };
   }
 
-  async createPicnic(dto: CreatePicnicDto, paymentOption: PaymentTypes = PaymentTypes.FULL, paymentMethods: PaymentMethods = PaymentMethods.OTHER): Promise<string> {
+  async createPicnic(dto: CreatePicnicDto, paymentOption: PaymentTypes = PaymentTypes.FULL, paymentMethods: PaymentMethods = PaymentMethods.OTHER, errorId = undefined): Promise<string> {
     this.logger.log('[createPicnic]', dto.clientInfo.name)
-
+    if (errorId) {
+      this.logger.log('[createPicnic] Eliminar reserva fallida')
+      await this.removePicnic(errorId)
+    }
     try {
       const additionalsTotal = dto.additionals.reduce((sum, item) => sum + item.totalPrice, 0);
       const totalAmount = dto.booking.basePrice + additionalsTotal;
@@ -283,7 +286,7 @@ export class PicnicsService {
     } = await exchangeResp.json();
 
     this.DOLAR_EXCHANGE = data.venta;
-    this.logger.log('[generatePayment] tasa de cambio $' + this.DOLAR_EXCHANGE)
+    this.logger.log('[getExchange] tasa de cambio $' + this.DOLAR_EXCHANGE)
     return this.DOLAR_EXCHANGE
   }
 

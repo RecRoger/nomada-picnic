@@ -57,11 +57,14 @@ export class SeoService {
       this.meta.updateTag({ property: 'og:type', content: 'website' });
       this.meta.updateTag({ property: 'og:title', content: fullTitle });
       this.meta.updateTag({ property: 'og:description', content: finalDesc });
-      this.meta.updateTag({ property: 'og:image', content: config.image || defaultImage });
-      this.meta.updateTag({ property: 'og:image:width', content: '1200' });
-      this.meta.updateTag({ property: 'og:image:height', content: '630' });
       this.meta.updateTag({ property: 'og:url', content: currentUrl });
       this.meta.updateTag({ property: 'og:site_name', content: 'Nómada Picnic' });
+      this.meta.updateTag({ property: 'og:image', content: config.image || defaultImage });
+      this.meta.updateTag({ property: 'og:image:secure_url', content: config.image || defaultImage });
+      this.meta.updateTag({ property: 'og:image:type', content: 'image/png' });
+      this.meta.updateTag({ property: 'og:image:alt', content: fullTitle });
+      this.meta.updateTag({ property: 'og:image:width', content: '1200' });
+      this.meta.updateTag({ property: 'og:image:height', content: '630' });
 
       // 3. Twitter / X Cards
       this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });

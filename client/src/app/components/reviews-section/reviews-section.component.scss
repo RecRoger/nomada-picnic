@@ -120,12 +120,16 @@ $color-bubble-bg: #ff8a65; // Tono terracota/salmón
 
       &--info {
         @include u.flex(row, flex-end, center, 0.75rem);
+        flex-wrap: wrap;
 
         &-rating {
           display: flex;
           gap: 2px;
-          font-size: 0.9rem;
+          font-size: 0.8rem;
           color: var(--color-white);
+          @include u.style-starting-from(desktop) {
+            font-size: 0.9rem;
+          }
         }
 
         &-author {

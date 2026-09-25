@@ -8,6 +8,10 @@ import { PicnicEventDto } from 'src/common/models/picnic-events.dto';
 export class PicnicEventsService {
   private readonly logger = new Logger(PicnicEventsService.name);
 
+  private readonly placeId = process.env['GOOGLE_PLACE_ID'];
+
+  private readonly apiKey = process.env['GOOGLE_MAPS_API_KEY'];
+
   constructor(
     @InjectModel(PicnicEvent.name)
     private readonly eventModel: Model<PicnicEventDocument>,
@@ -66,6 +70,7 @@ export class PicnicEventsService {
   }
 
   async delete(id: string): Promise<boolean> {
+    this.logger.log(`[delete]`, `id: ${id}`);
     if (!Types.ObjectId.isValid(id)) {
       throw new NotFoundException(`El ID '${id}' no es un ObjectId válido`);
     }
@@ -74,5 +79,35 @@ export class PicnicEventsService {
       throw new NotFoundException(`Evento con ID '${id}' no encontrado`);
     }
     return true;
+  }
+
+  async getReviews(): Promise<any> {
+    this.logger.log(`[getReviews]`);
+    const url = `https://places.googleapis.com/v1/places/${this.placeId}?fields=reviews,rating,userRatingCount&key=${this.apiKey}&languageCode=es`;
+
+    const response = await fetch(url, {
+      headers: {
+        'X-Goog-LanguageCode': 'es',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error obteniendo reseñas de Google: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    this.logger.log(`[getReviews] total count: ${data.reviews?.length}`);
+    const reviews = data.reviews?.filter((review: any) => review.rating >= 4)
+      .filter((review: any) => review.text?.text && review.text.text.trim().length > 0)
+      .map((review: any) => ({
+        authorName: review.authorAttribution?.displayName,
+        authorPhoto: review.authorAttribution?.photoUri,
+        rating: review.rating,
+        text: review.originalText?.text,
+        relativePublishTimeDescription: review.relativePublishTimeDescription,
+        publishTime: review.publishTime,
+      }));
+    this.logger.log(`[getReviews] count: ${reviews?.length}`);
+    return reviews || [];
   }
 }

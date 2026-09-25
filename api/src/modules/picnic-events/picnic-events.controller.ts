@@ -109,4 +109,24 @@ export class PicnicEventsController {
   async delete(@Param('id') id: string): Promise<boolean> {
     return this.picnicEventsService.delete(id);
   }
+
+  @Get('reviews')
+  @ApiOperation({ summary: 'Obtener la lista de nuestros comentarios' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de comentarios obtenida con éxito',
+    schema: {
+      properties: {
+        status: { type: 'string', example: 'SUCCESS' },
+        message: { type: 'string', example: 'Operación exitosa' },
+        data: {
+          type: 'array',
+          items: { type: 'Object' }, // Si usas la clase del Schema
+        },
+      },
+    },
+  })
+  async findReviews(): Promise<any[]> {
+    return this.picnicEventsService.getReviews();
+  }
 }

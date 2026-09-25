@@ -9,6 +9,7 @@ import { PlacesBannerComponent } from '@components/places-banner/places-banner.c
 import { AdditionalsBannerComponent } from '@components/additionals-banner/additionals-banner.component';
 import { StoryBannerComponent } from '@components/story-banner/story-banner.component';
 import { SeoService } from '@services/seo.service';
+import { ReviewsSectionComponent } from '@components/reviews-section/reviews-section.component';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ import { SeoService } from '@services/seo.service';
     PlacesBannerComponent,
     AdditionalsBannerComponent,
     StoryBannerComponent,
+    ReviewsSectionComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

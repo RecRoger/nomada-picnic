@@ -1,0 +1,61 @@
+@if(reviews$ | async; as reviews) {
+  @if(reviews.length) {
+    <section class="c-reviews-section">
+      <div class="c-reviews-section--content">
+        <h2 class="c-reviews-section--content-title">
+          {{'PUBLIC.REVIEWS.TTITLE_1' | translate}}<br />
+          <span class="highlighed">{{'PUBLIC.REVIEWS.TITLE_2' | translate}}</span>
+        </h2>
+        <p class="c-reviews-section--content-subtitle">
+          {{'PUBLIC.REVIEWS.SUBTITLE' | translate}}
+        </p>
+        <ul class="c-reviews-section--content-list">
+          <li class="list-item">
+            <span class="icon" [innerHTML]="'⭐' | appleEmoji"></span>
+            <span>{{'PUBLIC.REVIEWS.ITEM_1' | translate}}</span>
+          </li>
+          <li class="list-item">
+            <span class="icon" [innerHTML]="'🌿' | appleEmoji"></span>
+            <span>{{'PUBLIC.REVIEWS.ITEM_2' | translate}}</span>
+          </li>
+          <li class="list-item">
+            <span class="icon" [innerHTML]="'🧺' | appleEmoji"></span>
+            <span>{{'PUBLIC.REVIEWS.ITEM_3' | translate}}</span>
+          </li>
+        </ul>
+        <div class="c-reviews-section--content-actions">
+          <a 
+            href="https://maps.app.goo.gl/Qh41imPivF3MPdmb9" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="map-button">
+            {{'PUBLIC.REVIEWS.BUTTON' | translate}}
+          </a>
+        </div>
+      </div>
+
+      <div class="c-reviews-section--comments">
+        @for (review of reviews; track $index) {
+          <div class="speech-bubble">
+            <div class="speech-bubble--content">
+              <p class="speech-bubble--text">
+                “{{ review.text }}”
+              </p>
+    
+              <div class="speech-bubble--info">
+                <div class="speech-bubble--info-rating">
+                  @for (stars of getStarsArray(review.rating); track $index) {
+                    <mat-icon>star</mat-icon>
+                  }
+                </div>
+                <span class="speech-bubble--info-author">
+                  {{ review.authorName }}
+                </span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  }
+}

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
-import { IApiResponse, IPicnicEvent } from '@shared/interfaces';
+import { IApiResponse, IClientsReviews, IPicnicEvent } from '@shared/interfaces';
 import { AlertTypes } from '@shared/enums';
 import { API_URL } from '@constants/api-url';
 
@@ -86,6 +86,21 @@ export class EventsService {
       catchError((error) => {
         console.error('No se eliminó el evento:', error);
         return of(false);
+      })
+    );
+  }
+
+  public getReviews(): Observable<IClientsReviews[]> {
+    return this.http.get<IApiResponse<IClientsReviews[]>>(`${API_URL}/api/events/reviews`).pipe(
+      map((response) => {
+        if (response) {
+          return response.data as IClientsReviews[]
+        }
+        return []
+      }),
+      catchError((error) => {
+        console.error('No se eliminó el evento:', error);
+        return of([]);
       })
     );
   }

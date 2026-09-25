@@ -1,12 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapsService {
-  private readonly MAPS_KEY = 'AIzaSyB64dsMLc_CM0NGwz7o9gLmOd5MrOW7qeM';
+  private readonly MAPS_KEY = environment.mapsId;
   private platformId = inject(PLATFORM_ID);
 
   private scriptLoaded = false;

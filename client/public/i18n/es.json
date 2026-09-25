@@ -323,6 +323,15 @@
         "BUTTON": "Conocé nuestra historia"
       }
     },
+    "REVIEWS": {
+      "TTITLE_1": "MOMENTOS QUE HABLAN",
+      "TITLE_2": "POR SÍ SOLOS",
+      "SUBTITLE": "Personas que eligieron vivir su experiencia Nómada en Buenos Aires.",
+      "ITEM_1": "5 estrellas en Google",
+      "ITEM_2": "Experiencias reales en Buenos Aires",
+      "ITEM_3": "Picnics personalizados al aire libre",
+      "BUTTON": "Leer más reseñas en Google"
+    },
     "FEATURES": {
       "TITLE": "¿Por qué elegirnos?",
       "DESCRIPTION": "En Nómada Picnic no solo armamos picnics, creamos experiencias pensadas en cada detalle para que vos solo tengas que llegar y disfrutar.",
@@ -645,8 +654,8 @@
       "TITLE": "Antes de comenzar",
       "SUBTITLE": "<strong>Nuestros precios están expresados en USD</strong> para <strong>mantener el valor de tu reserva</strong> estable frente a las variaciones del peso argentino y de los costos de nuestros proveedores.",
       "NOTIFICATION": {
-        "TITLE":"¿Por qué?",
-        "TEXT":"Como muchas reservas se hacen con <strong>meses de anticipación</strong>, esta es la forma de <strong>mantener el mismo valor</strong> desde que reservás hasta el día de tu picnic, <strong>sin importar el tiempo que pase.</strong>"
+        "TITLE": "¿Por qué?",
+        "TEXT": "Como muchas reservas se hacen con <strong>meses de anticipación</strong>, esta es la forma de <strong>mantener el mismo valor</strong> desde que reservás hasta el día de tu picnic, <strong>sin importar el tiempo que pase.</strong>"
       },
       "TEXT": "Podés pagar el total o una seña del 50% <strong>mediante Mercado Pago.</strong> Al momento de reservar, <strong>convertimos el monto a pesos argentinos según la cotización del día.</strong>",
       "METHODS": {
@@ -655,7 +664,7 @@
         "CASH": "Efectivo",
         "CRYPTO": "USDT"
       },
-      "BUTTON":"Entendido, continuar"
+      "BUTTON": "Entendido, continuar"
     }
   },
   "CHECKOUT": {

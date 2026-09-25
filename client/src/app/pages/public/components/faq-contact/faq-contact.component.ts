@@ -16,21 +16,25 @@ export class FAQContactComponent implements OnInit {
 
   public readonly questions = (length: number, offset: number = 1): StaticData[] => Array.from({ length }, (_, index) => ({
     title: "PUBLIC.FAQ.CONTENT.QUESTION_" + (index + offset),
-    data1: "PUBLIC.FAQ.CONTENT.ANSWER_" + (index + offset)
+    data: "PUBLIC.FAQ.CONTENT.ANSWER_" + (index + offset)
   }))
 
   public readonly faqContent = [
     {
       title: 'PUBLIC.FAQ.CONTENT.TITLE_1',
-      list: this.questions(3)
+      list: this.questions(4)
     },
     {
       title: 'PUBLIC.FAQ.CONTENT.TITLE_2',
-      list: this.questions(4, 4)
+      list: this.questions(5, 5)
     },
     {
       title: 'PUBLIC.FAQ.CONTENT.TITLE_3',
-      list: this.questions(2, 8)
+      list: this.questions(3, 10)
+    },
+    {
+      title: 'PUBLIC.FAQ.CONTENT.TITLE_4',
+      list: this.questions(6, 13)
     },
   ]
 

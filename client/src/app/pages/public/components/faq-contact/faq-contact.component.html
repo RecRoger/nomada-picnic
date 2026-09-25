@@ -17,7 +17,7 @@
               <mat-expansion-panel-header>
                 <mat-panel-title> <div class="faq-question">{{faq.title | translate}}</div> </mat-panel-title>
               </mat-expansion-panel-header>
-              <p class="faq-answer" [innerHTML]="faq.data1 | translate"></p>
+              <div class="faq-answer" [innerHTML]="faq.data | translate"></div>
             </mat-expansion-panel>
         }
       </div>

@@ -6,7 +6,7 @@
   text-align: center;
 
   @include u.style-up-to(tablet) {
-    padding: var(--space-xl) var(--space-md);
+    padding: var(--space-xl) var(--space-xl);
   }
 
   &--header {

@@ -14,12 +14,12 @@ import { BUSINESS_NUMBER } from '@shared/const';
 export class TycComponent implements OnInit {
   public WH_NUMBER = BUSINESS_NUMBER
 
-  public readonly tycInfo: StaticData[] = Array.from({ length: 16 }, (_, index) => ({
+  public readonly tycInfo: StaticData[] = Array.from({ length: 26 }, (_, index) => ({
     title: "PUBLIC.TYC.TERMS.TITLE_" + (index + 1),
     data1: "PUBLIC.TYC.TERMS.DATA_" + (index + 1),
-    ...(index === 3 ? {
-      highligthed: "PUBLIC.TYC.TERMS.DATA_4_TIP",
-      data2: "PUBLIC.TYC.TERMS.DATA_4_END"
+    ...([1, 3, 5, 8, 10, 12, 13, 17, 19, 24].includes(index + 1) ? {
+      highligthed: `PUBLIC.TYC.TERMS.DATA_${index + 1}_TIP`,
+      data2: `PUBLIC.TYC.TERMS.DATA_${index + 1}_END`
     } : {})
   }))
 

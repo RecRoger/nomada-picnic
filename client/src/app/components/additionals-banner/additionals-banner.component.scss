@@ -11,7 +11,7 @@
 
   &--container {
     @include u.flex(column-reverse, center, center, var(--space-lg));
-    padding: 1rem;
+    padding: 1rem 2rem;
     margin: 0 0 22rem;
 
     @include u.style-starting-from(mobile) {

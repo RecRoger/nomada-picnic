@@ -109,6 +109,7 @@ $color-bubble-bg: #ff8a65; // Tono terracota/salmón
         color: var(--color-text-muted);
 
         display: -webkit-box;
+        line-clamp: 3; // Modifica este número según las líneas que quieras mostrar
         -webkit-line-clamp: 3; // Modifica este número según las líneas que quieras mostrar
         -webkit-box-orient: vertical;
         overflow: hidden;

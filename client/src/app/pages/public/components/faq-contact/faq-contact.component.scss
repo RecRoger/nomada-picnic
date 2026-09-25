@@ -7,7 +7,7 @@
   &-hero {
     background-color: var(--color-brand-blue);
     @include u.flex(row);
-    padding: 120px var(--space-md) var(--space-lg);
+    padding: 120px 2rem var(--space-lg);
 
     &--content {
       max-width: 750px;
@@ -35,7 +35,7 @@
   &-content {
     max-width: 680px;
     margin: auto;
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-lg) 2rem;
 
     &--section {
       margin: var(--space-lg) 0 var(--space-xxl);
@@ -56,7 +56,7 @@
       }
 
       .faq-answer {
-        margin-top: 0;
+        margin-bottom: var(--space-md);
         color: var(--color-text-muted);
       }
     }

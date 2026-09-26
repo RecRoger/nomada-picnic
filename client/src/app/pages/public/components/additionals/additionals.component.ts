@@ -1,4 +1,4 @@
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, Location } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -72,6 +72,8 @@ export class AdditionalsComponent implements OnInit {
 
   private readonly route = inject(ActivatedRoute);
 
+  private readonly location = inject(Location);
+
   private dialogRef: MatDialogRef<AdditionalDialogComponent> | null = null;
 
   ngOnInit(): void {
@@ -115,7 +117,7 @@ export class AdditionalsComponent implements OnInit {
   }
 
   public checkAdditional(additional: ICost): void {
-    this.router.navigate(['/additionals', urlParameter(additional?.name)])
+    this.location.replaceState(`/additionals/${urlParameter(additional?.name)}`)
     this.openModal(additional)
   }
 
@@ -150,11 +152,11 @@ export class AdditionalsComponent implements OnInit {
           this.cartService.addAdditional(additional, result)
         }
       }
+      this.location.replaceState(`/additionals`);
       this.seoService.setSeoData({
         url: 'additionals',
         page: 'ADDITIONALS',
       })
-      this.router.navigate(['/additionals'])
     });
 
   }

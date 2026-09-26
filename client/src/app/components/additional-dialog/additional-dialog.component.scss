@@ -93,17 +93,26 @@
     word-break: break-word;
 
     &-tags {
-      @include u.flex(row);
+      @include u.flex(row, flex-start, center, 0.5rem);
       flex-wrap: nowrap;
       overflow-x: auto;
-      gap: 0.5rem;
       margin-bottom: 1rem;
+      padding-bottom: 0.8rem;
       -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
+      /* Estilo de Scrollbar sutil */
       &::-webkit-scrollbar {
-        display: none; // Chrome, Safari y Opera
+        height: 6px;
       }
-      scrollbar-width: none; // Firefox
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #d1d1d6;
+        border-radius: 10px;
+      }
 
       .additional-tag {
         @include u.pill(var(--color-black), var(--color-bg-cream));

@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgTemplateOutlet, Location } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
@@ -101,6 +101,8 @@ export class PlacesMapComponent implements OnInit {
 
   private readonly route = inject(ActivatedRoute);
 
+  private readonly location = inject(Location);
+
   private readonly destroyRef = inject(DestroyRef)
 
   readonly dialog = inject(MatDialog);
@@ -150,9 +152,17 @@ export class PlacesMapComponent implements OnInit {
     }
   }
 
+  public setTab(tab: "map" | "list"): void {
+    this.activeTab.set(tab);
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  }
+
   public checkPlace(id: string): void {
     const place = this.placesList.find(place => place._id === id)
-    this.router.navigate(['/places', urlParameter(place?.name)])
+    this.location.replaceState(`/places/${urlParameter(place?.name)}`)
     this.openModal(place)
   }
 
@@ -179,11 +189,11 @@ export class PlacesMapComponent implements OnInit {
         })
         this.router.navigate(['/picnics'])
       } else {
+        this.location.replaceState('/places')
         this.seoService.setSeoData({
           url: 'places',
           page: 'PLACES',
         })
-        this.router.navigate(['/places'])
       }
     });
   }

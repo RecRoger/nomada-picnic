@@ -1,4 +1,4 @@
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe, Location } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -34,6 +34,7 @@ export class PicnicPackagesComponent implements OnInit {
   protected readonly packageService = inject(PackagesService);
   protected readonly cartService = inject(CartService);
   protected readonly router = inject(Router);
+  private readonly location = inject(Location);
   protected readonly route = inject(ActivatedRoute);
 
   public packagesList: IPicnicPackage[] = []
@@ -84,7 +85,7 @@ export class PicnicPackagesComponent implements OnInit {
 
   public checkPackage(id: string): void {
     const pkg = this.packagesList.find(place => place._id === id)
-    this.router.navigate(['/picnics', urlParameter(pkg?.name)])
+    this.location.replaceState(`/picnics/${urlParameter(pkg?.name)}`)
     this.openModal(pkg)
   }
 
@@ -116,7 +117,6 @@ export class PicnicPackagesComponent implements OnInit {
           basePrice: group.price,
         })
 
-        this.router.navigate(['/picnics'])
         const dialogRef2 = this.dialog.open(RecommendedDialogComponent, {
           data: event,
           width: '700px',
@@ -132,18 +132,17 @@ export class PicnicPackagesComponent implements OnInit {
           }
         })
 
-      } else {
-        this.seoService.setSeoData({
-          url: 'picnics',
-          page: 'PICNICS',
-        })
-        this.router.navigate(['/picnics'])
       }
+      this.location.replaceState('/picnics')
+      this.seoService.setSeoData({
+        url: 'picnics',
+        page: 'PICNICS',
+      })
     });
   }
 
   public corpoContact() {
-    const dialogRef = this.dialog.open(AgencyFormDialogComponent, {
+    this.dialog.open(AgencyFormDialogComponent, {
       autoFocus: false,
       maxWidth: '90vw',
       maxHeight: '90vh',

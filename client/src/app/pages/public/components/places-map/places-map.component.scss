@@ -2,11 +2,11 @@
 
 .c-places-map {
   padding: 8rem 2rem 10rem;
-  // max-width: 1440px;
   margin: 0 auto -4rem;
   background-color: var(--color-bg-softcream);
   @include u.style-up-to(tablet) {
-    padding: 7rem 1rem;
+    position: relative;
+    padding: 2rem 1.5rem 5rem;
   }
 
   &--header {
@@ -26,14 +26,20 @@
 
   &--tabs {
     display: none;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--color-outline);
-    padding-bottom: 0;
-    overflow-x: auto;
-    scroll-behavior: smooth;
+    z-index: 3;
+    width: 100%;
+    background-color: var(--color-bg-softcream);
+    position: fixed;
+    left: 0;
+    padding: 5rem 1.5rem 0;
     @include u.style-up-to(tablet) {
-      @include u.flex(row, flex-start, center, 2rem);
+      display: block;
+    }
+
+    &__container {
+      @include u.flex(row, flex-start, center, 0.5rem);
+      border-bottom: 1px solid var(--color-outline);
+      width: calc(100% - 3rem);
     }
 
     .tab-btn {
@@ -64,8 +70,9 @@
     gap: 2rem;
     height: calc(100vh - 180px);
     @include u.style-up-to(tablet) {
-      display: block; // Rompemos el Grid
+      display: block;
       height: auto;
+      margin-top: 9rem;
     }
   }
 
@@ -154,16 +161,25 @@
 
   &--tags {
     &-list {
-      padding-top: 0.5rem;
+      padding: 0.5rem 0;
       @include u.flex(row, flex-start, center, 0.5rem);
       flex-wrap: nowrap;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
+      /* Estilo de Scrollbar sutil */
       &::-webkit-scrollbar {
-        display: none; // Chrome, Safari y Opera
+        height: 6px;
       }
-      scrollbar-width: none; // Firefox
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #d1d1d6;
+        border-radius: 10px;
+      }
       .place-tag {
         @include u.custom-button(
           var(--color-brand-blue),
@@ -192,9 +208,6 @@
 
   &--list {
     @include u.flex(column, flex-start, stretch, 2rem);
-    @include u.style-up-to(tablet) {
-      padding: 0 1rem;
-    }
 
     .place-card {
       background: var(--color-white);

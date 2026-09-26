@@ -1,16 +1,18 @@
 <section class="c-places-map">
   <!-- Tabs solo visibles en Mobile -->
   <div class="c-places-map--tabs">
-    <button class="tab-btn"
-      [class.active]="activeTab() === 'list'" 
-      (click)="activeTab.set('list')">
-      Lista
-    </button>
-    <button class="tab-btn"
-    [class.active]="activeTab() === 'map'" 
-    (click)="activeTab.set('map')">
-      Mapa
-    </button>
+    <div class="c-places-map--tabs__container">
+      <button class="tab-btn"
+        [class.active]="activeTab() === 'list'" 
+        (click)="setTab('list')">
+        Lista
+      </button>
+      <button class="tab-btn"
+      [class.active]="activeTab() === 'map'" 
+      (click)="setTab('map')">
+        Mapa
+      </button>
+    </div>
   </div>
 
   <div class="c-places-map--layout">

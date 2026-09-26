@@ -146,7 +146,12 @@
   </div>
 
   <div class="c-cart-detail--footer">
-    <span class="c-cart-detail--footer-text">Vie 7 de agosto 2026 · 15:00 · Lago de Regatas · Romántico</span>
+    <span class="c-cart-detail--footer-text">
+      {{ booking?.eventDate ? ((booking?.eventDate | date:'shortDate':'':'es') +' · ') : '' }}
+      {{ booking?.eventTime ? (booking.eventTime + ' · ') : ''}}
+      {{ place?.name ? (place?.name + ' · ') : ''}}
+      {{ place?.name ? event?.name : ''}}
+    </span>
     @if (currentPage() === detailPages[0]) {
       <button class="c-cart-detail--footer-button" (click)="cartService.toggleDetails()">{{'PUBLIC.CART.DETAILS.CONFIRM_BTN' | translate}}</button>
     } @else {

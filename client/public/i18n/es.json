@@ -594,7 +594,7 @@
       },
       "THIRD": {
         "TITLE": "Confirmá tu reserva",
-        "TEXT": "Pagá la seña del 50% o el total por <b>Mercado Pago</b>, o coordiná otro medio de pago por <b>WhatsApp</b>."
+        "TEXT": "Pagá la seña del 50% o el total por <b>Mercado Pago</b>. Tambien podés coordiná otro medio de pago por <b>WhatsApp</b>."
       },
       "FORTH": {
         "TITLE": "Recibí todo listo",
@@ -687,7 +687,7 @@
       },
       "DETAIL": {
         "INCLUDES": "Que incluye:",
-        "BUTTON": "Añadir mi picnic al carrito"
+        "BUTTON": "Añadir al carrito"
       },
       "PRICES": {
         "LABEL": "Invitados",

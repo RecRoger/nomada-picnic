@@ -48,9 +48,24 @@ export class CartDetailComponent implements OnInit {
 
   public availableTimes = [
     { time: '10:00', label: 'MORNING' },
+    { time: '10:30', label: 'MORNING' },
+    { time: '11:00', label: 'MORNING' },
+    { time: '11:30', label: 'MORNING' },
+    { time: '12:00', label: 'NOON' },
     { time: '12:30', label: 'NOON' },
+    { time: '13:00', label: 'NOON' },
+    { time: '13:30', label: 'NOON' },
+    { time: '14:00', label: 'EVENING' },
+    { time: '14:30', label: 'EVENING' },
     { time: '15:00', label: 'EVENING' },
+    { time: '15:30', label: 'EVENING' },
+    { time: '16:00', label: 'LATE_EVENING' },
+    { time: '16:30', label: 'LATE_EVENING' },
+    { time: '17:00', label: 'LATE_EVENING' },
     { time: '17:30', label: 'LATE_EVENING' },
+    { time: '18:00', label: 'DOWN' },
+    { time: '18:30', label: 'DOWN' },
+    { time: '19:70', label: 'DOWN' },
     { time: '19:30', label: 'DOWN' },
   ]
 

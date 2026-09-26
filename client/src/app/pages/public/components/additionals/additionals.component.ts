@@ -149,13 +149,12 @@ export class AdditionalsComponent implements OnInit {
         } else {
           this.cartService.addAdditional(additional, result)
         }
-      } else {
-        this.seoService.setSeoData({
-          url: 'additionals',
-          page: 'ADDITIONALS',
-        })
-        this.router.navigate(['/additionals'])
       }
+      this.seoService.setSeoData({
+        url: 'additionals',
+        page: 'ADDITIONALS',
+      })
+      this.router.navigate(['/additionals'])
     });
 
   }

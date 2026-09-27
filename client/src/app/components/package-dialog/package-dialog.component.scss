@@ -159,6 +159,35 @@
       line-height: 1.5;
       margin-bottom: 1rem;
     }
+
+    &-notification {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: var(--color-brand-lime50);
+      border-radius: var(--radius-card-sm);
+
+      .notification-icon {
+        width: 20px;
+        display: block;
+        ::ng-deep img.emoji {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+      }
+
+      .notification-title {
+        @include u.flex(row, flex-start, center, 0.5rem);
+        color: var(--color-text-muted);
+        font-size: 1rem;
+        margin: 0 0 0.5rem;
+      }
+      .notification-text {
+        color: var(--color-text-muted);
+        font-size: 0.8rem;
+        margin: 0;
+      }
+    }
   }
 
   &--events {

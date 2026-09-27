@@ -9,6 +9,7 @@ import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { RECOMENDED_TAG } from '@constants/important-tags';
 import { GuestsPricesComponent } from '@components/guests-prices/guests-prices.component';
 import { EventSelectorComponent } from '@components/event-selector/event-selector.component';
+import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 
 @Component({
   selector: 'app-package-dialog',
@@ -21,6 +22,7 @@ import { EventSelectorComponent } from '@components/event-selector/event-selecto
     GuestsPricesComponent,
     EventSelectorComponent,
     CurrencyPipe,
+    AppleEmojiPipe
   ],
   templateUrl: './package-dialog.component.html',
   styleUrl: './package-dialog.component.scss'

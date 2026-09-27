@@ -38,7 +38,7 @@
        <div class="c-additionals--filters-tags">
          <span class="c-additionals--filters-tags_label">TAGS:</span>
          <div class="c-additionals--filters-tags_list">
-           @for (tag of tagList; track tag) {
+           @for (tag of (tagList | slice:0:(!showTags?2:tagList.length)); track tag) {
              <button 
                class="tag-chip"
                [class.selected]="filterForm.get('tags')?.value?.includes(tag)"
@@ -46,10 +46,23 @@
                {{ tag }}
              </button>
            }
+           <button 
+               class="more-tags"
+               (click)="showTags = !showTags">
+               <mat-icon>{{!showTags ? 'chevron_right' : 'close'}}</mat-icon> 
+             </button>
          </div>
        </div>
      }
+
+    <div class="c-additionals--prices-notification">
+      <h4 class="notification-title">
+        <span class="notification-icon" [innerHTML]="'💡' | appleEmoji"></span> {{'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TITLE' | translate}}
+      </h4>
+      <p class="notification-text" [innerHTML]="'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TEXT' | translate"></p>
+    </div>
   </div>
+
 
   @if (additionalsList.length) {
     <div class="c-additionals--list">

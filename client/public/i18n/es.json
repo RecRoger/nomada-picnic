@@ -721,7 +721,11 @@
         "CASH": "Efectivo",
         "CRYPTO": "USDT"
       },
-      "BUTTON": "Entendido, continuar"
+      "BUTTON": "Entendido, continuar",
+      "BLOCK_NOTIFICATION": {
+        "TITLE": "¡Importante!",
+        "TEXT": "Nuestros precios están en dólares, pero los pagos por Mercado Pago se realizan siempre en pesos argentinos. <b>Convertimos el monto según la cotización del día antes de realizar el pago</b>.<br><br>También podés pagar por transferencia, efectivo o USDT si así lo preferís."
+      }
     }
   },
   "CHECKOUT": {

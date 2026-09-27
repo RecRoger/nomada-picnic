@@ -36,6 +36,12 @@
         <div class="c-package-dialog--prices-label">{{'PUBLIC.PACKAGES.PRICES.LABEL' | translate}}</div>
         <h3 class="c-package-dialog--prices-title">{{'PUBLIC.PACKAGES.PRICES.TITLE' | translate}}</h3>
         <p class="c-package-dialog--prices-text">{{'PUBLIC.PACKAGES.PRICES.TEXT' | translate}}</p>
+        <div class="c-package-dialog--prices-notification">
+          <h4 class="notification-title">
+            <span class="notification-icon" [innerHTML]="'💡' | appleEmoji"></span> {{'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TITLE' | translate}}
+          </h4>
+          <p class="notification-text" [innerHTML]="'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TEXT' | translate"></p>
+        </div>
         <app-guests-prices [packageId]="package._id || ''" (selectPrice)="selectPrice($event)"></app-guests-prices>
       </div>
       <div class="c-package-dialog--events">

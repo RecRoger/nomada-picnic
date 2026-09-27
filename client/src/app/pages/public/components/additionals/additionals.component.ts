@@ -18,6 +18,7 @@ import { LoaderComponent } from '@components/loader/loader.component';
 import { SeoService } from '@services/seo.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { urlParameter } from 'src/app/core/functions/url-parameter';
+import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 
 @Component({
   selector: 'app-additionals',
@@ -31,6 +32,7 @@ import { urlParameter } from 'src/app/core/functions/url-parameter';
     FormsModule,
     ReactiveFormsModule,
     LoaderComponent,
+    AppleEmojiPipe
   ],
   templateUrl: './additionals.component.html',
   styleUrl: './additionals.component.scss'
@@ -54,13 +56,15 @@ export class AdditionalsComponent implements OnInit {
 
   public typesList: string[] = [
     'all',
-    CostsTypes.FURNITURE,
-    CostsTypes.DRINKS,
-    CostsTypes.ADDITIONAL,
     CostsTypes.FOOD,
+    CostsTypes.FURNITURE,
+    // CostsTypes.DRINKS,
+    CostsTypes.ADDITIONAL,
   ];
 
   public tagList: string[] = [];
+
+  public showTags = false;
 
   readonly dialog = inject(MatDialog);
 

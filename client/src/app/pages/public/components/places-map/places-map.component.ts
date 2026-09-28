@@ -24,6 +24,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { SeoService } from '@services/seo.service';
 import { urlParameter } from 'src/app/core/functions/url-parameter';
+import { AnalyticsService } from '@services/analytics.service';
 
 
 @Component({
@@ -109,7 +110,9 @@ export class PlacesMapComponent implements OnInit {
 
   private platformId = inject(PLATFORM_ID);
 
-  private seoService = inject(SeoService);
+  private readonly seoService = inject(SeoService);
+
+  private readonly analyticsService = inject(AnalyticsService);
 
   private dialogRef: MatDialogRef<PlaceDialogComponent> | null = null;
 
@@ -170,9 +173,10 @@ export class PlacesMapComponent implements OnInit {
     this.seoService.setSeoData({
       url: `places/${urlParameter(place?.name)}`,
       page: 'PLACE',
-      title: `${place?.name}`,
+      title: `Picnics en ${place?.name}`,
       description: place?.meta || place?.description
     })
+    this.analyticsService.viewItemEvent('place', place?.name || 'No name')
     this.dialogRef = this.dialog.open(PlaceDialogComponent, {
       data: place,
       width: '1200px',
@@ -187,6 +191,7 @@ export class PlacesMapComponent implements OnInit {
         this.cartService.updateBookingDetails({
           place
         })
+        this.analyticsService.addToCartEvent('place', place?.name || 'No name')
         this.router.navigate(['/picnics'])
       } else {
         this.location.replaceState('/places')

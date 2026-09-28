@@ -247,4 +247,35 @@
     //   cursor: not-allowed;
     // }
   }
+
+  &__confirmation {
+    @include u.flex(column, flex-start, center, 1rem);
+    padding: 2rem;
+
+    &-icon {
+      width: 50px;
+      span {
+        ::ng-deep img.emoji {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+    &-title {
+      color: var(--color-text-dark);
+      margin: 0;
+    }
+    &-text {
+      color: var(--color-text-muted);
+      margin: 0;
+      text-align: center;
+    }
+    &-button {
+      @include u.custom-button(var(--color-white), var(--color-brand-coral));
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+  }
 }

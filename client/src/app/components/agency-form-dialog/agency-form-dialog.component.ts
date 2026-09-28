@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
@@ -12,8 +11,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MailService } from '@services/mail.service';
 import { IAgencyContact } from '@shared/interfaces';
 import { catchError } from 'rxjs';
-import { NotificationService } from '@services/notification.service';
-import { AlertTypes } from '@shared/enums';
+import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-agency-form-dialog',
@@ -28,7 +27,8 @@ import { AlertTypes } from '@shared/enums';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    AppleEmojiPipe
   ],
   providers: [
     provideNativeDateAdapter(),
@@ -42,20 +42,22 @@ export class AgencyFormDialogComponent {
 
   private mailService = inject(MailService);
 
-  private notificationService = inject(NotificationService);
+  private analyticsService = inject(AnalyticsService);
 
   public minDate = new Date(new Date().setDate(new Date().getDate() + 2));
   public maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
 
-  isSubmitting = signal(false);
+  public isSubmitting = signal(false);
 
-  clientTypes = [
+  public showConfirmation = false;
+
+  public clientTypes = [
     'TOURISM',
     'BUSINESS',
     'EVENTS',
     'ORGANIZATION',
   ];
-  eventTypes = [
+  public eventTypes = [
     'CORPO',
     'TEAM_BUILDER',
     'BUSINESS',
@@ -63,18 +65,18 @@ export class AgencyFormDialogComponent {
     'TOURISM',
     'OTHER',
   ];
-  guestsRanges = [
+  public guestsRanges = [
     '-10',
     '10 - 20',
     '20 - 30',
     '30 - 40',
     '+30',
   ];
-  placesOptions = [
+  public placesOptions = [
     'PARTICULAR',
     'RECOMMENDED',
   ];
-  servicesList = [
+  public servicesList = [
     'FULL',
     'CATERING',
     'DECORATION',
@@ -86,7 +88,7 @@ export class AgencyFormDialogComponent {
     'OTHER',
   ];
 
-  form: FormGroup = this.fb.group({
+  public form: FormGroup = this.fb.group({
     fullName: ['', [Validators.required]],
     company: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
@@ -103,7 +105,7 @@ export class AgencyFormDialogComponent {
     comments: ['']
   });
 
-  toggleService(serviceName: string): void {
+  public toggleService(serviceName: string): void {
     const currentServices: string[] = this.form.get('services')?.value || [];
     const index = currentServices.indexOf(serviceName);
 
@@ -116,12 +118,12 @@ export class AgencyFormDialogComponent {
     this.form.patchValue({ services: currentServices });
   }
 
-  isServiceSelected(serviceName: string): boolean {
+  public isServiceSelected(serviceName: string): boolean {
     const currentServices: string[] = this.form.get('services')?.value || [];
     return currentServices.includes(serviceName);
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -130,6 +132,9 @@ export class AgencyFormDialogComponent {
     const contactForm = this.form.value as IAgencyContact
     this.form.disable();
     this.isSubmitting.set(true);
+    this.analyticsService.logEvent('generate_lead', {
+      form_type: 'corporate', company_name: this.form.value.company
+    })
     this.mailService.sendAgencyContact(contactForm).pipe(catchError((err) => {
       this.form.enable();
       this.isSubmitting.set(false);
@@ -137,9 +142,9 @@ export class AgencyFormDialogComponent {
       throw err
     })).subscribe(response => {
       if (response) {
-        this.notificationService.openNotification({ message: 'PUBLIC.PACKAGES.CORPORATIVE.FORM.SUCCESS' }, AlertTypes.SUCCESS)
         this.form.enable();
         this.form.reset();
+        this.showConfirmation = true;
       }
       this.isSubmitting.set(false);
     })

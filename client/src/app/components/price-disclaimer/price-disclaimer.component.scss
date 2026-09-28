@@ -24,15 +24,15 @@
     font-weight: 800;
     margin: 0 0 16px;
     color: var(--color-text-dark);
-    @include u.flex(row, flex-start, center, 0.5rem);
+    @include u.flex(row, flex-start, center, 1rem);
 
     .icon {
-      width: 2rem;
+      width: 1.8rem;
       display: inline-block;
       @include u.flex(row, center, center);
 
       @include u.style-up-to(tablet) {
-        width: 2.7rem;
+        width: 1.8rem;
       }
 
       ::ng-deep img.emoji {
@@ -44,29 +44,28 @@
   }
 
   &--notification {
-    background-color: var(--color-bg-cream);
+    background-color: var(--color-brand-blue);
     border-radius: var(--radius-card-sm);
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-white);
 
     &-title {
       font-size: 1rem;
       font-weight: 700;
-      color: var(--color-text-dark);
       margin: 0 0 8px 0;
     }
 
     &-text {
-      font-size: 0.93rem;
-      line-height: 1.5;
-      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.2;
       margin: 0;
-      text-align: justify;
+      // text-align: justify;
     }
   }
 
   &--payments {
-    margin-bottom: 28px;
+    margin-bottom: 1rem;
     &-label {
       display: block;
       font-size: 0.85rem;
@@ -99,14 +98,12 @@
   }
 
   &--actions {
-    margin-top: 8px;
     @include u.flex(row, flex-end, center);
     &-button {
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
       padding: 14px 28px;
       font-size: 1rem;
       font-weight: 700;
-      // margin-left: auto;
 
       @include u.style-up-to(tablet) {
         width: 100%;
@@ -115,10 +112,9 @@
   }
 
   .disclaimer-text {
-    font-size: 0.98rem;
-    line-height: 1.55;
+    font-size: 0.95rem;
+    line-height: 1.2;
     color: var(--color-text-muted);
-    margin: 0 0 20px 0;
-    text-align: justify;
+    margin: 0 0 1rem 0;
   }
 }

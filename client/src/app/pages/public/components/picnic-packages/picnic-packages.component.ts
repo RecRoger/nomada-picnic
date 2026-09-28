@@ -10,6 +10,7 @@ import { PackageDialogComponent } from '@components/package-dialog/package-dialo
 import { RecommendedDialogComponent } from '@components/recommended-dialog copy/recommended-dialog.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
+import { AnalyticsService } from '@services/analytics.service';
 import { CartService } from '@services/cart.service';
 import { PackagesService } from '@services/packages.service';
 import { SeoService } from '@services/seo.service';
@@ -54,7 +55,9 @@ export class PicnicPackagesComponent implements OnInit {
 
   private readonly destroyRef = inject(DestroyRef)
 
-  private seoService = inject(SeoService);
+  private readonly seoService = inject(SeoService);
+
+  private readonly analyticsService = inject(AnalyticsService);
 
   private dialogRef: MatDialogRef<PackageDialogComponent> | null = null;
 
@@ -93,9 +96,10 @@ export class PicnicPackagesComponent implements OnInit {
     this.seoService.setSeoData({
       url: `picnics/${urlParameter(pkg?.name)}`,
       page: 'PACKAGES',
-      title: `${pkg?.name}`,
+      title: `${pkg?.name} en Buenos Aires`,
       description: pkg?.meta || pkg?.description
     })
+    this.analyticsService.viewItemEvent('package', pkg?.name || 'No name')
     this.dialogRef = this.dialog.open(PackageDialogComponent, {
       data: pkg,
       width: '1200px',
@@ -115,6 +119,11 @@ export class PicnicPackagesComponent implements OnInit {
           minGuests: group.minGuests,
           maxGuests: group.maxGuests,
           basePrice: group.price,
+        })
+
+        this.analyticsService.addToCartEvent('package', pkg?.name || 'No name', {
+          number_of_guests: group.maxGuests,
+          price_total: group.price
         })
 
         const dialogRef2 = this.dialog.open(RecommendedDialogComponent, {

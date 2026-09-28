@@ -19,6 +19,7 @@ import { SeoService } from '@services/seo.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { urlParameter } from 'src/app/core/functions/url-parameter';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-additionals',
@@ -70,7 +71,9 @@ export class AdditionalsComponent implements OnInit {
 
   private readonly destroyRef = inject(DestroyRef)
 
-  private seoService = inject(SeoService);
+  private readonly seoService = inject(SeoService);
+
+  private readonly analyticsService = inject(AnalyticsService);
 
   private readonly router = inject(Router)
 
@@ -132,6 +135,7 @@ export class AdditionalsComponent implements OnInit {
       title: `${additional?.name}`,
       description: additional?.meta || additional?.description
     })
+    this.analyticsService.viewItemEvent('additional', additional?.name || 'No name')
     this.dialogRef = this.dialog.open(AdditionalDialogComponent, {
       data: additional,
       width: '1000px',
@@ -147,6 +151,9 @@ export class AdditionalsComponent implements OnInit {
         const cartAdditionals = this.cartService.additionals()
         const cartItem = cartAdditionals.find((item: ICartAdditional) => item.cost._id === additional._id)
         if (cartItem) {
+          this.analyticsService.addToCartEvent('additional', additional?.name || 'No name', {
+            item_quantity: result
+          })
           if (additional.multipleAllowed) {
             this.cartService.updateAdditionalQuantity(additional._id!, cartItem.quantity + result)
           } else {

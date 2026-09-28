@@ -6,6 +6,7 @@ import { FooterComponent } from '@components/footer/footer.component';
 import { ShoppingCartComponent } from '@components/shopping-cart/shopping-cart.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CartService } from '@services/cart.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +26,11 @@ export class AppComponent implements OnInit {
 
   private translate = inject(TranslateService)
 
+  private analyticsService = inject(AnalyticsService)
+
   ngOnInit(): void {
     this.translate.use('es');
+    this.analyticsService.init();
   }
 
 }

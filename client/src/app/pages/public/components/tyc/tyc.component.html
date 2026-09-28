@@ -22,11 +22,11 @@
 
           @if (last) {
             <div class="contact-card--actions">
-              <a class="button-phone" href="tel:+{{WH_NUMBER}}">{{'COMMON.WA_BUTTON' | translate}} <span class="phone-number">{{'COMMON.BUSINESS_PHONE'|translate}}</span></a>
-              <a class="button-mail" href="mailto:contacto@nomadapicnic.com">{{'COMMON.BUSINESS_MAIL'|translate}}</a>
+              <button class="button-phone" (click)="contactWhatsapp()">{{'COMMON.WA_BUTTON' | translate}} <span class="phone-number">{{'COMMON.BUSINESS_PHONE'|translate}}</span></button>
+              <a class="button-mail" href="mailto:contacto@nomadapicnic.com" (click)="emitEvent('email')">{{'COMMON.BUSINESS_MAIL'|translate}}</a>
               <a 
                 href="https://www.instagram.com/nomadapicnic" 
-                target="_blank" 
+                target="_blank"  (click)="emitEvent('instagram')"
                 rel="noopener noreferrer" 
                 class="button-instagram">
                 <!-- Ícono SVG oficial de Instagram -->

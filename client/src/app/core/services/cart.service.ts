@@ -4,6 +4,7 @@ import { Injectable, signal, computed, inject, effect, PLATFORM_ID } from '@angu
 import { MatDialog } from '@angular/material/dialog';
 import { PriceDisclaimerComponent } from '@components/price-disclaimer/price-disclaimer.component';
 import { API_URL } from '@constants/api-url';
+import { AnalyticsService } from '@services/analytics.service';
 import { CostsService } from '@services/costs.service';
 import { PackagesService } from '@services/packages.service';
 import { IBookingCart, IBookingClientInfo, ICartAdditional, ICost, IPicnicBooking } from '@shared/interfaces';
@@ -72,6 +73,8 @@ export class CartService {
   private platformId = inject(PLATFORM_ID);
 
   private isBrowser = isPlatformBrowser(this.platformId);
+
+  private readonly analyticsService = inject(AnalyticsService);
 
   readonly dialog = inject(MatDialog);
 
@@ -258,6 +261,10 @@ export class CartService {
   }
 
   public openCart(): void {
+    this.analyticsService.logEvent('view_cart', {
+      items_count: this.totalItems(),
+      price_total: this.totalAmount()
+    })
     this.isOpen.set(true);
   }
 

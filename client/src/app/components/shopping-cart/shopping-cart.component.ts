@@ -10,6 +10,7 @@ import { CartDetailComponent } from '@components/cart-detail/cart-detail.compone
 import { ICartAdditional } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { Router, RouterLink } from '@angular/router';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -31,7 +32,9 @@ import { Router, RouterLink } from '@angular/router';
 export class ShoppingCartComponent {
   protected cartService = inject(CartService)
 
-  private router = inject(Router)
+  private readonly router = inject(Router)
+
+  private readonly analyticsService = inject(AnalyticsService)
 
   public removePicnic(): void {
     this.cartService.removeBooking()
@@ -56,6 +59,11 @@ export class ShoppingCartComponent {
 
   public goToCheckout(): void {
     this.cartService.closeCart()
+    this.analyticsService.logEvent('begin_checkout', {
+      package_name: this.cartService.booking()?.package?.name,
+      items_count: this.cartService.totalItems(),
+      price_total: this.cartService.totalAmount()
+    })
     this.router.navigate(['/checkout'])
   }
 }

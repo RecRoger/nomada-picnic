@@ -1,0 +1,39 @@
+<div class="c-currency-dropdown" [class.is-open]="isOpen()">
+  <button 
+    type="button" 
+    class="c-currency-dropdown__trigger"
+    (click)="toggleDropdown()"
+    [attr.aria-expanded]="isOpen()"
+    aria-label="Seleccionar moneda"
+  >
+    <img 
+      [src]="flagUrls[currencyService.currentCurrency()]" 
+      [alt]="currencyService.currentCurrency()"
+      class="c-currency-dropdown__flag" 
+    />
+    <span class="c-currency-dropdown__code">{{ currencyService.currentCurrency() }}</span>
+    <span class="c-currency-dropdown__symbol">({{ currencyService.activeConfig().symbol }})</span>
+    <span class="c-currency-dropdown__arrow" aria-hidden="true">▾</span>
+  </button>
+
+  @if (isOpen()) {
+    <ul class="c-currency-dropdown__menu" role="listbox">
+      @for (item of availableCurrencies; track item.code) {
+        <li 
+          class="c-currency-dropdown__item"
+          [class.is-selected]="currencyService.currentCurrency() === item.code"
+          (click)="selectCurrency(item.code)"
+          role="option"
+        >
+          <img 
+            [src]="flagUrls[item.code]" 
+            [alt]="item.code" 
+            class="c-currency-dropdown__flag" 
+          />
+          <span class="c-currency-dropdown__code">{{ item.code }}</span>
+          <span class="c-currency-dropdown__symbol">{{ item.symbol }}</span>
+        </li>
+      }
+    </ul>
+  }
+</div>

@@ -88,7 +88,7 @@
   }
 
   &--filters {
-    @include u.flex(column, flex-start, stretch, 1rem);
+    @include u.flex(column, flex-start, stretch, 0.5rem);
     padding: 1rem 1rem 0.5rem;
     @include u.style-starting-from(tablet) {
       padding: 1rem 3rem 0.5rem;
@@ -198,8 +198,15 @@
     }
   }
 
+  &--prices-currency {
+    margin-left: auto;
+    display: block;
+    @include u.style-up-to(mobile) {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
   &--prices-notification {
-    margin-top: 1rem;
     padding: 1rem;
     background-color: var(--color-brand-lime);
     border-radius: var(--radius-card-sm);
@@ -236,7 +243,7 @@
   }
 
   &--list {
-    margin: 2rem 1rem 3rem;
+    margin: 1rem 1rem 3rem;
 
     @include u.grid-columns(1, 2rem);
     grid-template-columns: repeat(1, 1fr);
@@ -244,7 +251,7 @@
 
     @include u.style-starting-from(tablet) {
       grid-template-columns: repeat(2, 1fr);
-      margin: 2rem 3rem 3rem;
+      margin: 1rem 3rem 3rem;
     }
     @include u.style-starting-from(desktop) {
       grid-template-columns: repeat(4, 1fr);

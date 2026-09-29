@@ -37,7 +37,7 @@
   }
 
   &--header {
-    @include u.flex(row, space-between, center, 1.5rem);
+    @include u.flex(row, space-between, center, 0.5rem);
     border-bottom: 1px solid var(--color-outline);
     padding: 1rem;
     flex-shrink: 0;
@@ -47,6 +47,10 @@
       font-weight: 700;
       font-size: 1.25rem;
       margin: 0;
+    }
+
+    &-currency {
+      margin-left: auto;
     }
   }
 

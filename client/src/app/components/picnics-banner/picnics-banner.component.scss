@@ -21,7 +21,7 @@
   &--container {
     background-color: var(--color-brand-lime);
     border-radius: var(--radius-card-xl);
-    padding: 2rem;
+    padding: 3rem 2.5rem;
     @include u.flex(column-reverse);
     max-width: 900px;
     margin: 0 auto;

@@ -1,8 +1,9 @@
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CustomCurrencyPipe } from '@pipes/custom-currency.pipe';
 import { PackagesService } from '@services/packages.service';
 import { IPackagePrice } from '@shared/interfaces';
 import { Observable } from 'rxjs';
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
     AsyncPipe,
     TranslatePipe,
     MatIconModule,
-    CurrencyPipe,
+    CustomCurrencyPipe,
     LoaderComponent,
   ],
   templateUrl: './guests-prices.component.html',

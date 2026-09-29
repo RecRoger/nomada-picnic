@@ -45,7 +45,6 @@
     margin: 0 auto 5rem auto;
 
     &-title {
-      // font-family: "TuFuenteHeavy", sans-serif;
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0;
     }
@@ -62,6 +61,8 @@
         var(--color-brand-blue),
         var(--color-brand-lime)
       );
+      font-size: 1rem;
+      font-weight: 600;
     }
   }
 

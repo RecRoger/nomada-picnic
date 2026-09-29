@@ -1,5 +1,5 @@
-import { CommonModule, CurrencyPipe, Location } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +20,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { urlParameter } from 'src/app/core/functions/url-parameter';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { AnalyticsService } from '@services/analytics.service';
+import { CustomCurrencyPipe } from '@pipes/custom-currency.pipe';
+import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
+import { CurrencyService } from '@services/currency.service';
 
 @Component({
   selector: 'app-additionals',
@@ -28,7 +31,8 @@ import { AnalyticsService } from '@services/analytics.service';
     TranslatePipe,
     MatButtonModule,
     MatIconModule,
-    CurrencyPipe,
+    CurrencySelectorComponent,
+    CustomCurrencyPipe,
     ApiImageUrlPipe,
     FormsModule,
     ReactiveFormsModule,
@@ -42,6 +46,10 @@ export class AdditionalsComponent implements OnInit {
   protected readonly fb = inject(FormBuilder)
 
   protected readonly cartService = inject(CartService)
+
+  private readonly currencyService = inject(CurrencyService);
+
+  protected readonly isUsd = computed(() => this.currencyService.currentCurrency() === 'USD');
 
   public filteredList: ICost[] = []
 

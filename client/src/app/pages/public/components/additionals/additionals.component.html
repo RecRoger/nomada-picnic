@@ -52,15 +52,20 @@
                <mat-icon>{{!showTags ? 'chevron_right' : 'close'}}</mat-icon> 
              </button>
          </div>
-       </div>
-     }
-
-    <div class="c-additionals--prices-notification">
-      <h4 class="notification-title">
-        <span class="notification-icon" [innerHTML]="'💡' | appleEmoji"></span> {{'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TITLE' | translate}}
-      </h4>
-      <p class="notification-text" [innerHTML]="'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TEXT' | translate"></p>
-    </div>
+         <app-currency-selector class="c-additionals--prices-currency hide-mobile"></app-currency-selector>
+        </div>
+      }
+      
+    <app-currency-selector class="c-additionals--prices-currency hide-desktop hide-tablet"></app-currency-selector>
+     
+    @if(isUsd()) {
+      <div class="c-additionals--prices-notification">
+        <h4 class="notification-title">
+          <span class="notification-icon" [innerHTML]="'💡' | appleEmoji"></span> {{'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TITLE' | translate}}
+        </h4>
+        <p class="notification-text" [innerHTML]="'PUBLIC.DISCLAIMER.BLOCK_NOTIFICATION.TEXT' | translate"></p>
+      </div>
+    }
   </div>
 
 
@@ -91,7 +96,7 @@
             </p>
             <div class="product-card__footer">
               <div class="product-card__price">
-                <span class="amount">{{ item.finalPrice | currency: 'US$ ':'code':'1.0-2' }}</span>
+                <span class="amount">{{ item.finalPrice | customCurrency }}</span>
               </div>
 
               <button type="button" class="btn-add">

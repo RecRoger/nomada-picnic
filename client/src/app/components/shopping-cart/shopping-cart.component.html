@@ -17,6 +17,7 @@
     <div class="c-shopping-cart--main">
       <div class="c-shopping-cart--header">
         <h3 class="c-shopping-cart--header-title">{{'PUBLIC.CART.TITLE' | translate}}</h3>
+        <app-currency-selector class="c-shopping-cart--header-currency"></app-currency-selector>
         <button mat-icon-button (click)="cartService.closeCart()">
           <mat-icon>close</mat-icon>
         </button>
@@ -56,7 +57,7 @@
                 </p>
               </div>
               <span class="package-price">
-                {{ booking.basePrice | currency:'US$ ':'code':'1.0-0' }}
+                {{ booking.basePrice | customCurrency }}
               </span>
             </div>
 
@@ -115,7 +116,7 @@
                 </div>
                 <div class="c-cart-additional--info">
                   <h4 class="c-cart-additional--info-title">{{ additional.cost.name }}</h4>
-                  <span class="c-cart-additional--info-price">{{ additional.cost.finalPrice | currency:'US$ ':'code':'1.0-0' }}</span>
+                  <span class="c-cart-additional--info-price">{{ additional.cost.finalPrice | customCurrency }}</span>
                 
                   @if(additional.cost.multipleAllowed) {
                     <div class="c-cart-additional--info-quantity">
@@ -139,7 +140,7 @@
                 </div>
                 <div class="c-cart-additional--actions">
                   <span class="c-cart-additional--actions-subtotal">
-                    {{ (additional.totalPrice) | currency:'US$ ':'code':'1.0-0' }}
+                    {{ (additional.totalPrice) | customCurrency }}
                   </span>
                   <button type="button" class="c-cart-additional--actions-remove-btn" (click)="removeAdditional(additional)">
                     {{'COMMON.DELETE' | translate}}
@@ -155,7 +156,7 @@
         <div class="c-shopping-cart--footer-summary">
           <span class="c-shopping-cart--footer-summary-label">Total ({{ cartService.totalItems() }} productos)</span>
           <span class="c-shopping-cart--footer-summary-price">
-            {{ cartService.totalAmount() | currency:'US$ ':'code':'1.0-2' }}
+            {{ cartService.totalAmount() | customCurrency }}
           </span>
         </div>
   

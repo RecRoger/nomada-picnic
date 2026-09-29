@@ -1,4 +1,4 @@
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -13,6 +13,7 @@ import { CostsTypes } from '@shared/enums';
 import { CartService } from '@services/cart.service';
 import { MatIconModule } from '@angular/material/icon';
 import { LoaderComponent } from '@components/loader/loader.component';
+import { CustomCurrencyPipe } from '@pipes/custom-currency.pipe';
 
 @Component({
   selector: 'app-recommended-dialog',
@@ -22,7 +23,7 @@ import { LoaderComponent } from '@components/loader/loader.component';
     MatDialogModule,
     MatButtonModule,
     ApiImageUrlPipe,
-    CurrencyPipe,
+    CustomCurrencyPipe,
     AppleEmojiPipe,
     MatIconModule,
     LoaderComponent,

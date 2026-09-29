@@ -1,5 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
@@ -10,6 +9,9 @@ import { RECOMENDED_TAG } from '@constants/important-tags';
 import { GuestsPricesComponent } from '@components/guests-prices/guests-prices.component';
 import { EventSelectorComponent } from '@components/event-selector/event-selector.component';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
+import { CustomCurrencyPipe } from '@pipes/custom-currency.pipe';
+import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
+import { CurrencyService } from '@services/currency.service';
 
 @Component({
   selector: 'app-package-dialog',
@@ -21,14 +23,19 @@ import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
     ApiImageUrlPipe,
     GuestsPricesComponent,
     EventSelectorComponent,
-    CurrencyPipe,
-    AppleEmojiPipe
+    CustomCurrencyPipe,
+    AppleEmojiPipe,
+    CurrencySelectorComponent,
   ],
   templateUrl: './package-dialog.component.html',
   styleUrl: './package-dialog.component.scss'
 })
 export class PackageDialogComponent {
   readonly dialogRef = inject(MatDialogRef<PackageDialogComponent>);
+
+  private readonly currencyService = inject(CurrencyService);
+
+  protected readonly isUsd = computed(() => this.currencyService.currentCurrency() === 'USD');
 
   public readonly recomendedTag = RECOMENDED_TAG
 
@@ -37,6 +44,7 @@ export class PackageDialogComponent {
   public selectedPrice?: IPackagePrice;
 
   public selectedEvent?: IPicnicEvent;
+
 
   public selectPrice(group?: IPackagePrice): void {
     this.selectedPrice = group

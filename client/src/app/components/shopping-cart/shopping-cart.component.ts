@@ -4,13 +4,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { CartService } from '@services/cart.service';
 import { MatIconModule } from '@angular/material/icon';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { CartDetailComponent } from '@components/cart-detail/cart-detail.component';
 import { ICartAdditional } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { Router, RouterLink } from '@angular/router';
 import { AnalyticsService } from '@services/analytics.service';
+import { CustomCurrencyPipe } from '@pipes/custom-currency.pipe';
+import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -21,7 +23,8 @@ import { AnalyticsService } from '@services/analytics.service';
     MatIconModule,
     MatButtonModule,
     AppleEmojiPipe,
-    CurrencyPipe,
+    CustomCurrencyPipe,
+    CurrencySelectorComponent,
     CartDetailComponent,
     ApiImageUrlPipe,
     RouterLink,

@@ -1,1 +1,19 @@
-<div #lottieContainer class="c-animation" (click)="toggleAnimation()"></div>
+<div class="c-animation" [class.is-clickable]="clickeable()" (click)="toggleAnimation()">
+  <!-- Placeholder / Poster estático -->
+  @if (poster() && !isLoaded()) {
+    <img 
+      [src]="poster()" 
+      alt="Cargando animación..." 
+      class="c-animation__poster"
+      loading="eager"
+      fetchpriority="high"
+    />
+  }
+
+  <!-- Contenedor del Lottie SVG -->
+  <div 
+    #lottieContainer 
+    class="c-animation__lottie"
+    [class.is-visible]="isLoaded() || !poster()"
+  ></div>
+</div>

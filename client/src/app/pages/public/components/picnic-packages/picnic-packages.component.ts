@@ -24,7 +24,6 @@ import { urlParameter } from 'src/app/core/functions/url-parameter';
     AsyncPipe,
     TranslatePipe,
     MatIconModule,
-    // CurrencyPipe,
     ApiImageUrlPipe,
     LoaderComponent
   ],

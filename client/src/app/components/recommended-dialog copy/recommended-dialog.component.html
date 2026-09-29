@@ -18,7 +18,7 @@
             <div class="product-card__body">
               <h3 class="product-card__title">{{ additional.name }}</h3>
               <div class="product-card__price">
-                {{ additional.finalPrice | currency: 'US$ ':'code':'1.0-2' }}
+                {{ additional.finalPrice | customCurrency }}
               </div>
               <button type="button"
                 class="product-card__add"

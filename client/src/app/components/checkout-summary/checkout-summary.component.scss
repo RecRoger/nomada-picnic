@@ -28,12 +28,13 @@
     padding: 0;
 
     &-item {
-      @include u.flex(row, space-between, stretch, 1rem);
+      @include u.flex(row, space-between, stretch, 0rem);
       font-size: 0.9rem;
       color: var(--color-text-dark);
 
       .item-price {
         font-family: var(--font-money);
+        white-space: nowrap;
       }
     }
   }
@@ -48,6 +49,7 @@
     .item-price {
       font-family: var(--font-money);
       color: var(--color-brand-blue);
+      white-space: nowrap;
       font-size: 1.3rem;
     }
   }

@@ -18,20 +18,20 @@
     @if (booking()?.package; as pkg) {
       <li class="c-checkout-summary--list-item">
         <span>{{ pkg.name }}</span>
-        <span class="item-price">{{ booking()?.basePrice | currency: 'US$ ':'code':'1.0-2' }}</span>
+        <span class="item-price">{{ booking()?.basePrice | customCurrency }}</span>
       </li>
     }
     @for (item of additionals(); track item.cost._id) {
       <li class="c-checkout-summary--list-item">
         <span>{{ item.cost.name }}</span>
-        <span class="item-price">{{ item.totalPrice | currency: 'US$ ':'code':'1.0-2' }}</span>
+        <span class="item-price">{{ item.totalPrice | customCurrency }}</span>
       </li>
     }
   </ul>
 
   <div class="c-checkout-summary--total">
     <span>{{'CHECKOUT.SUMMARY.TOTAL_LABEL' | translate}}</span>
-    <span class="item-price">{{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}</span>
+    <span class="item-price">{{ totalAmount() | customCurrency }}</span>
   </div>
 
   <button class="c-checkout-summary--button-continue"

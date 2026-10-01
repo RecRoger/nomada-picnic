@@ -1,5 +1,5 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
-import { CurrencyService } from '@services/currency.service';
+import { CurrencyCode, CurrencyService } from '@services/currency.service';
 
 @Pipe({
   name: 'customCurrency',
@@ -8,13 +8,13 @@ import { CurrencyService } from '@services/currency.service';
 export class CustomCurrencyPipe implements PipeTransform {
   private readonly currencyService = inject(CurrencyService);
 
-  transform(amountInUSD: number | null | undefined, customDecimals?: number): string {
+  transform(amountInUSD: number | null | undefined, forced?: CurrencyCode, showCode?: boolean, customDecimals?: number): string {
     if (amountInUSD == null || isNaN(amountInUSD)) {
       return '';
     }
 
     // Leemos directamente los Signals dentro del método transform
-    const config = this.currencyService.activeConfig();
+    const config = forced ? this.currencyService.currencies()[forced] : this.currencyService.activeConfig();
     const convertedValue = amountInUSD * config.rate;
     const decimals = customDecimals ?? config.decimals;
 
@@ -30,6 +30,6 @@ export class CustomCurrencyPipe implements PipeTransform {
       maximumFractionDigits: decimals
     }).format(convertedValue);
 
-    return `${config.symbol} ${formattedNumber}`;
+    return `${config.symbol} ${formattedNumber}${showCode ? ' ' + config.code : ''}`;
   }
 }

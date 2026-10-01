@@ -1,5 +1,4 @@
-import { CurrencyPipe, DecimalPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,20 +7,23 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { BookingPicnicsService } from '@services/booking-picnics.service';
 import { CartService } from '@services/cart.service';
 import { NotificationService } from '@services/notification.service';
-import { AlertTypes, PaymentMethods } from '@shared/enums';
+import { AlertTypes, PaymentMethods, PaymentTypes } from '@shared/enums';
 import { MatRadioModule } from '@angular/material/radio';
 import { catchError } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
+import { CustomCurrencyPipe } from '@pipes/custom-currency.pipe';
+import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
+import { CurrencyService } from '@services/currency.service';
 
 @Component({
   selector: 'app-checkout-payment',
   imports: [
     TranslatePipe,
-    CurrencyPipe,
-    DecimalPipe,
+    CustomCurrencyPipe,
+    CurrencySelectorComponent,
     LoaderComponent,
     MatIconModule,
     MatExpansionModule,
@@ -46,6 +48,7 @@ import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
   ]
 })
 export class CheckoutPaymentComponent implements OnInit {
+  private readonly currencyService = inject(CurrencyService);
   private cartService = inject(CartService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -67,6 +70,8 @@ export class CheckoutPaymentComponent implements OnInit {
 
   readonly PAYMENT_METHODS = PaymentMethods
 
+  readonly PAYMENT_OPTIONS = PaymentTypes
+
   readonly MP_PAYMENTH_METHODS = [
     'CREDIT',
     'DEBIT',
@@ -83,19 +88,20 @@ export class CheckoutPaymentComponent implements OnInit {
     'OTHER',
   ];
 
-  public loadPayment = false
+  protected readonly isUsd = computed(() => this.currencyService.currentCurrency() === 'USD');
+  protected readonly isArs = computed(() => this.currencyService.currentCurrency() === 'ARS');
 
-  public DOLLAR_VALUE = 1500
+  public loadPayment = false
 
   public form = this.fb.group({
     payMethod: ['', Validators.required],
+    paymentOption: ['', Validators.required]
   })
 
   private readonly destroyRef = inject(DestroyRef)
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.checkParams()
-    await this.getDolar();
   }
 
   public checkParams(): void {
@@ -107,35 +113,33 @@ export class CheckoutPaymentComponent implements OnInit {
     })
   }
 
-  async onPay(partialPay = false): Promise<void> {
-    this.loadPayment = true
-    this.bookingService.saveBooking(
-      this.form.get('payMethod')!.value as string,
-      partialPay,
-      this.errorId
-    ).pipe(catchError((err) => {
-      this.loadPayment = false
-      this.notificationService.openNotification({ message: 'Ha ocurrido un error, intentelo nuevamente mas tarde' }, AlertTypes.ERROR)
-      throw err
-    })).subscribe(resp => {
-      if (resp) {
-        if (this.form.get('payMethod')!.value !== PaymentMethods.MP) {
-          this.cartService.clearCart()
+  public selectOption(option: string): void {
+    this.form.get('paymentOption')?.setValue(option)
+  }
+
+  async onPay(): Promise<void> {
+    if (this.form.valid) {
+      this.loadPayment = true
+      this.bookingService.saveBooking(
+        this.form.get('payMethod')!.value as string,
+        this.form.get('paymentOption')!.value as string,
+        this.errorId
+      ).pipe(catchError((err) => {
+        this.loadPayment = false
+        this.notificationService.openNotification({ message: 'Ha ocurrido un error, intentelo nuevamente mas tarde' }, AlertTypes.ERROR)
+        throw err
+      })).subscribe(resp => {
+        if (resp) {
+          if (this.form.get('payMethod')!.value !== PaymentMethods.MP) {
+            this.cartService.clearCart()
+          }
+          window.location.href = resp;
         }
-        window.location.href = resp;
-      }
-    })
+      })
+    }
   }
 
   onBack(): void {
     this.router.navigate(['/checkout/form']);
-  }
-
-  async getDolar() {
-    await fetch('https://dolarapi.com/v1/dolares/oficial')
-      .then(response => response.json())
-      .then(data => {
-        this.DOLLAR_VALUE = data.venta
-      });
   }
 }

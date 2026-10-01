@@ -19,9 +19,9 @@ export class CurrencySelectorComponent {
 
   // Mapeo de banderas SVG usando banderas vectoriales confiables de CDN (Flagpack / Flag Icons)
   protected readonly flagUrls: Record<CurrencyCode, string> = {
-    USD: 'https://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg',
-    ARS: 'https://purecatamphetamine.github.io/country-flag-icons/3x2/AR.svg',
-    BRL: 'https://purecatamphetamine.github.io/country-flag-icons/3x2/BR.svg'
+    USD: 'images/graphics/US.svg',
+    ARS: 'images/graphics/AR.svg',
+    BRL: 'images/graphics/BR.svg'
   };
 
   protected get availableCurrencies(): CurrencyConfig[] {

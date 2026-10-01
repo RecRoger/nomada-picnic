@@ -67,7 +67,7 @@ export class BookingPicnicsService {
   }
 
 
-  public saveBooking(payMethod: string, partialPay = false, errorId = undefined): Observable<string | null> {
+  public saveBooking(payMethod: string, payOption: string = PaymentTypes.FULL, errorId = undefined): Observable<string | null> {
     const bookingBody = this.mapCartToCreatePicnicDto({
       booking: this.cartService.booking(),
       additionals: this.cartService.additionals(),
@@ -75,7 +75,7 @@ export class BookingPicnicsService {
     })
     return this.http.post(API_URL + '/api/picnics', bookingBody, {
       params: {
-        payOption: partialPay ? PaymentTypes.DEPOSIT : PaymentTypes.FULL,
+        payOption,
         payMethod,
         id: errorId || ''
       }

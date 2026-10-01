@@ -23,6 +23,7 @@ import { AnalyticsService } from '@services/analytics.service';
 import { CustomCurrencyPipe } from '@pipes/custom-currency.pipe';
 import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
 import { CurrencyService } from '@services/currency.service';
+import { MOST_SELL_TAG } from '@constants/important-tags';
 
 @Component({
   selector: 'app-additionals',
@@ -74,6 +75,8 @@ export class AdditionalsComponent implements OnInit {
   public tagList: string[] = [];
 
   public showTags = false;
+
+  public readonly MOST_SELLED = MOST_SELL_TAG
 
   readonly dialog = inject(MatDialog);
 
@@ -224,7 +227,12 @@ export class AdditionalsComponent implements OnInit {
         })
       }
     }
-    const rawTags = this.filteredList.flatMap(additional => additional.tags);
+    const rawTags = this.filteredList.flatMap(additional => additional.tags)
+      .sort((a, b) => {
+        if (a === this.MOST_SELLED) return -1;
+        if (b === this.MOST_SELLED) return 1;
+        return a?.localeCompare(b || '') || 0;
+      });
     this.tagList = Array.from(new Set(rawTags)) as string[];
 
     if (tagsValues.length > 1) {

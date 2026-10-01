@@ -1,5 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { catchError, forkJoin, of } from 'rxjs';
 
 export type CurrencyCode = 'USD' | 'ARS' | 'BRL';
 
@@ -11,10 +13,20 @@ export interface CurrencyConfig {
   decimals: number;
 }
 
+interface DolarApiResponse {
+  compra: number;
+  venta: number;
+}
+
+interface ExchangeRateApiResponse {
+  rates: Record<string, number>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CurrencyService {
+  private readonly http = inject(HttpClient);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
@@ -22,7 +34,7 @@ export class CurrencyService {
 
   // Configuración y tasas de cambio
   // (Puedes actualizarlas mediante un endpoint o WebSocket según necesites)
-  readonly currencies = signal<Record<CurrencyCode, CurrencyConfig>>({
+  public currencies = signal<Record<CurrencyCode, CurrencyConfig>>({
     USD: { code: 'USD', symbol: 'US$', flag: '🇺🇸', rate: 1, decimals: 2 },
     ARS: { code: 'ARS', symbol: '$', flag: '🇦🇷', rate: 1530, decimals: 0 },
     BRL: { code: 'BRL', symbol: 'R$', flag: '🇧🇷', rate: 5.22, decimals: 2 }
@@ -51,5 +63,41 @@ export class CurrencyService {
     const config = this.activeConfig();
     const convertedValue = amountInUSD * config.rate;
     return { value: convertedValue, config };
+  }
+
+  fetchExchangeRates(): void {
+    const ars$ = this.http.get<DolarApiResponse>('https://dolarapi.com/v1/dolares/oficial').pipe(
+      catchError(err => {
+        console.error('Error al obtener cotización ARS:', err);
+        return of(null);
+      })
+    );
+
+    const brl$ = this.http.get<ExchangeRateApiResponse>('https://open.er-api.com/v6/latest/USD').pipe(
+      catchError(err => {
+        console.error('Error al obtener cotización BRL:', err);
+        return of(null);
+      })
+    );
+
+    forkJoin([ars$, brl$]).subscribe(([arsData, brlData]) => {
+      this.currencies.update(current => {
+        const updated = { ...current };
+        if (arsData?.venta) {
+          updated.ARS = {
+            ...updated.ARS,
+            rate: arsData.venta
+          };
+        }
+        if (brlData?.rates?.['BRL']) {
+          updated.BRL = {
+            ...updated.BRL,
+            rate: brlData.rates['BRL']
+          };
+        }
+
+        return updated;
+      });
+    });
   }
 }

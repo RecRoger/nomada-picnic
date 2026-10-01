@@ -52,7 +52,6 @@
     "TOTAL": "Total",
     "SUBTOTAL": "Subtotal",
     "EXCHANGE": "Tasa de cambio",
-    "EXCHANGE_TOTAL": "Total al cambio",
     "FINAL_PRICE": "Precio Final",
     "PAID_TOTAL": "Total abonado",
     "PENDING_TOTAL": "Saldo pendiente",
@@ -809,11 +808,22 @@
       },
       "REFFERENCE": "Número de reserva temporal",
       "EXPERIENCE": "Experiencia",
+      "BASE_PRICE": {
+        "TITLE": "Precio base del a reserva",
+        "SUBTITLE": "Este es el valor fijo de tu picnic."
+      },
+      "EXCHANGE": {
+        "SELECTOR_LABEL": "Mostrado en",
+        "VALUE_LABEL": "Tasa de cambio de hoy",
+        "PRICE_LABEL": "Total de la reserva",
+        "BASE_PRICE": "(equivalente a {{price}})"
+      },
       "ERROR": {
         "TITLE": "Detectamos un error en el pago",
         "TEXT": "No se realizó ningún cargo. Revisá los datos de tu medio de pago y volvé a intentarlo nuevamente."
       },
       "METHODS": {
+        "TITLE": "Métodos de pago",
         "MP_TITLE": "Pagar con Mercado Pago",
         "OTHER_TITLE": "Coordinar otra forma de pago",
         "MP_LABEL": "Métodos disponibles en Mercado Pago",
@@ -828,6 +838,18 @@
         "TRANSFER_PESOS": "Transferencia en pesos",
         "CRYPTO": "Transferencia con cripto",
         "OTHER": "Otros métodos"
+      },
+      "OPTIONS": {
+        "TITLE": "¿Cómo deseas reservar tu picnic?",
+        "DEPOSIT_TITLE": "Pagar seña del 50%",
+        "DEPOSIT_SUBTITLE": "Asegura tu fecha con el 50% del valor",
+        "FULL_TITLE": "Pagar total de la reserva",
+        "FULL_SUBTITLE": "Paga el total y no tendrás saldos pendientes",
+        "DEPOSIT_LABEL": "Seña a pagar",
+        "PENDING_LABEL": "Saldo Pendiente",
+        "DEPOSIT_TEXT": "El saldo se abona el día del picnic.<br>Su valor en pesos se calculará segun el tipo de cambio vigente ese dia",
+        "TOTAL_LABEL": "Total a pagar hoy",
+        "TOTAL_TEXT": "Al pagar el total, no quedan saldos pendientes"
       },
       "BUTTONS": {
         "LABEL": "¿Cómo deseas reservar tu picnic?",

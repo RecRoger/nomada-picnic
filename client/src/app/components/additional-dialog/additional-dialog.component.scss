@@ -2,7 +2,7 @@
 
 .c-additional-dialog {
   height: auto;
-  max-height: 80vh;
+  max-height: 85vh;
   @include u.flex(column, center, center, 1rem);
   padding: 1.5rem;
   width: 100%;
@@ -30,7 +30,7 @@
 
   &--media {
     position: relative;
-    height: 200px;
+    height: 450px;
     width: 100%;
     border-radius: var(--radius-card-sm);
     overflow: hidden;
@@ -207,7 +207,7 @@
     padding: 1rem !important;
   }
   .c-carousel--arrows-control {
-    background-color: var(--color-bg-cream) !important;
+    background-color: var(--color-bg-cream50) !important;
     color: var(--color-black) !important;
     padding: 0.3rem 0.3rem !important;
     font-size: var(--font-sm, 14px) !important;

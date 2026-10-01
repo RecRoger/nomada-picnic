@@ -2,7 +2,7 @@
 
 .c-checkout-payment {
   @include u.flex(column, flex-start, center, 1rem);
-  max-width: 500px;
+  max-width: 650px;
   margin: 0 auto;
 
   &--header {
@@ -84,84 +84,131 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 
+    @include u.style-up-to(tablet) {
+      padding: 2rem 1.5rem;
+    }
+
     &-details {
       @include u.flex(column, flex-start, stretch, 1rem);
+      padding-bottom: 1rem;
     }
 
     &-row {
       @include u.flex(row, space-between, center, 1rem);
-
-      &--total {
-        border-top: 1px solid var(--color-outline);
-        margin-top: 1.2rem;
-        padding-top: 1rem;
-      }
-
-      &--exchange {
-        margin: 1rem 0;
-      }
     }
 
     &-label {
       color: var(--color-text-muted);
     }
 
-    &-value {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--color-text-dark);
+    &-base-price {
+      background-color: var(--color-bg-cream);
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      border-radius: var(--radius-polaroid);
 
-      &--code {
-        font-family: var(--font-money);
-        font-size: 0.9rem;
-        letter-spacing: 0.05em;
+      .price-info {
+        color: var(--color-text-muted);
+        &--title {
+          font-size: 0.9rem;
+          display: block;
+          font-weight: 600;
+          margin-bottom: 0.2rem;
+        }
+        &--subtitle {
+          display: block;
+          font-size: 0.7rem;
+        }
       }
-    }
-
-    &-total {
-      &-label {
-        font-size: 1.1rem;
-        font-weight: 800;
-      }
-
-      &-price {
+      .base-price {
+        color: var(--color-text-muted);
         font-family: var(--font-money);
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: var(--color-brand-blue);
+        white-space: nowrap;
+        font-size: 1.2rem;
+        font-weight: 600;
+
+        @include u.style-up-to(tablet) {
+          font-size: 1rem;
+        }
       }
     }
 
     &-exchange {
-      &-label {
-        font-size: var(--font-small);
-        &-total {
-          font-size: 1rem;
-          font-weight: 700;
+      margin-top: 0;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--color-outline);
+      @include u.flex(row, flex-start, center, 1rem);
+      @include u.style-up-to(tablet) {
+        flex-direction: column;
+      }
+
+      .exchange-info {
+        @include u.flex(column, flex-start, stretch, 0.5rem);
+
+        &--selector {
+          @include u.flex(row, flex-start, center, 1rem);
+          @include u.style-up-to(tablet) {
+            justify-content: space-between;
+          }
+          &-label {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+          }
         }
       }
-      &-price {
-        font-size: var(--font-small);
-        font-family: var(--font-money);
-        &-total {
-          font-size: 1.2rem;
-          color: var(--color-brand-blue);
+      .exchange-value {
+        margin: 0;
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        &--amount {
+          font-family: var(--font-money);
+          display: block;
+          white-space: nowrap;
+          @include u.style-up-to(tablet) {
+            display: inline-block;
+          }
+        }
+      }
+
+      .exchange-prices {
+        @include u.flex(column, flex-start, stretch, 0.5rem);
+        margin-left: auto;
+        text-align: right;
+        color: var(--color-text-muted);
+        &--label {
+          font-size: 0.9rem;
+          display: block;
           font-weight: 700;
+        }
+        &--amount {
+          color: var(--color-brand-blue);
+          font-size: 1.2rem;
+          display: block;
+          font-weight: 700;
+          font-family: var(--font-money);
+          white-space: nowrap;
+        }
+        &--hint {
+          font-size: 0.75rem;
+          display: block;
         }
       }
     }
 
     &-methods {
-      margin-top: 2rem;
+      margin-top: 1rem;
+
+      &__main-title {
+        color: var(--color-text-muted);
+        margin-bottom: 0.5rem;
+      }
 
       &-collapse-title {
         font-weight: 500;
       }
 
       &-content {
-        padding: 1rem 0 1rem 1rem;
-        margin-top: 0.5rem;
-        border-top: 2px solid var(--color-outline);
+        padding: 0.2rem 0 1rem 1rem;
       }
 
       &-title {
@@ -171,6 +218,132 @@
         letter-spacing: 0.05em;
         display: block;
         margin-bottom: 0.8rem;
+      }
+    }
+
+    &-options {
+      margin-top: 1rem;
+      background-color: var(--color-bg-cream);
+      padding: 1rem;
+      border-radius: var(--radius-polaroid);
+
+      &__main-title {
+        color: var(--color-text-muted);
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      &-items {
+        @include u.flex(row, space-between, stretch, 1rem);
+        @include u.style-up-to(tablet) {
+          flex-direction: column;
+        }
+      }
+
+      &-item {
+        border-radius: var(--radius-polaroid);
+        padding: 0.5rem 1rem 1rem 0.5rem;
+        width: 100%;
+        border: 2px solid transparent;
+        background-color: var(--color-white);
+        transition: all 0.3s;
+
+        &.active {
+          border: 2px solid var(--color-brand-blue);
+          background-color: var(--color-brand-blue50);
+
+          .c-checkout-payment--card-options-item-info {
+            background-color: var(--color-white);
+          }
+
+          .item-info--price-amount {
+            color: var(--color-brand-blue);
+          }
+        }
+
+        @include u.style-up-to(tablet) {
+          width: auto;
+        }
+
+        &-title {
+          margin: 0.5rem 0 0;
+          color: var(--color-text-dark);
+          font-weight: 700;
+          font-size: 1.2rem;
+          .subtitle {
+            display: block;
+            color: var(--color-text-muted);
+            font-weight: 400;
+            font-size: 0.8rem;
+          }
+        }
+
+        &-info {
+          margin: 0.5rem 0 0 0.5rem;
+          padding: 1rem;
+          background-color: var(--color-bg-softcream);
+          border-radius: var(--radius-polaroid);
+
+          .item-info--price {
+            @include u.flex(column, flex-start, stretch, 0.2rem);
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-outline);
+            &-label {
+              display: block;
+              color: var(--color-text-muted);
+              font-weight: 500;
+              font-size: 1rem;
+            }
+            &-amount {
+              display: block;
+              font-size: 1.5rem;
+              font-weight: 700;
+              font-family: var(--font-money);
+              color: var(--color-brand-coral);
+            }
+            &-hint {
+              display: block;
+              color: var(--color-text-muted);
+              font-family: var(--font-money);
+              font-size: 1rem;
+            }
+          }
+
+          .item-info--pending {
+            @include u.flex(column, flex-start, stretch, 0.2rem);
+            padding-top: 1rem;
+            &-label {
+              display: block;
+              color: var(--color-text-muted);
+              font-weight: 500;
+              font-size: 1rem;
+            }
+            &-amount {
+              display: block;
+              font-size: 1.2rem;
+              font-weight: 700;
+              color: var(--color-text-dark);
+              font-family: var(--font-money);
+            }
+          }
+
+          .item-info--message {
+            @include u.flex(row, flex-start, flex-start, 0.5rem);
+            margin-top: 1rem;
+            color: var(--color-text-muted);
+            &-icon {
+              min-width: 1.5rem;
+              font-size: 1.5rem;
+              display: block;
+              &.check-green {
+                color: rgb(84, 200, 84);
+              }
+            }
+            &-text {
+              font-size: 0.75rem;
+            }
+          }
+        }
       }
     }
 
@@ -204,40 +377,24 @@
 
     &-actions {
       @include u.flex(column, flex-start, center, 1rem);
-      margin-top: 1rem;
-
-      &-label {
-        margin-bottom: 0;
-      }
-
-      .action-buttons {
-        @include u.flex(row, center, center, 1rem);
-        flex-wrap: wrap;
-      }
+      margin-top: 2rem;
     }
 
     &-btn-total {
       @include u.custom-button(var(--color-white), var(--color-brand-coral));
-      padding: 0.7rem 1rem;
+      padding: 1rem 1.5rem;
       font-size: 0.95rem;
       font-weight: 700;
-    }
-    &-btn-partial {
-      @include u.custom-button(
-        var(--color-brand-coral),
-        transparent,
-        2px solid var(--color-brand-coral)
-      );
-      padding: 0.7rem 1rem;
-      font-size: 0.95rem;
-      font-weight: 700;
+      @include u.style-up-to(tablet) {
+        width: 100%;
+      }
     }
 
     &-btn-back {
       @include u.custom-button(var(--color-text-dark), transparent);
       font-size: 0.85rem;
       font-weight: 700;
-      padding: 0.5rem;
+      padding: 0.5rem 1rem;
     }
   }
 
@@ -287,6 +444,10 @@
 
 /* Customización mínima para integrar mat-checkbox con la tipografía */
 :host ::ng-deep {
+  .c-checkout-payment--card-options-item .mat-internal-form-field {
+    align-items: flex-start !important;
+  }
+
   .mat-mdc-radio-button
     .mdc-radio__native-control:enabled:checked
     + .mdc-radio__background
@@ -296,7 +457,7 @@
     + .mdc-radio__background
     > .mdc-radio__inner-circle {
     // background-color: var(--color-brand-blue);
-    border-color: var(--color-brand-blue);
+    border-color: var(--color-brand-blue) !important;
   }
   .mat-mdc-radio-button
     .mdc-radio:hover
@@ -308,10 +469,10 @@
     > .mdc-radio__native-control:enabled:checked
     + .mdc-radio__background
     > .mdc-radio__inner-circle {
-    border-color: var(--color-brand-blue);
+    border-color: var(--color-brand-blue) !important;
   }
   .mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element,
   .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
-    background-color: var(--color-brand-blue);
+    background-color: var(--color-brand-blue) !important;
   }
 }

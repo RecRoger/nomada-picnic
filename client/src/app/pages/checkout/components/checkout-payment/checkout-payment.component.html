@@ -44,87 +44,155 @@
           </span>
         </div>
       </div>
-  
-      <div class="c-checkout-payment--card-row c-checkout-payment--card-row--total">
-        <span class="c-checkout-payment--card-total-label">{{'COMMON.TOTAL' | translate}}</span>
-        <span class="c-checkout-payment--card-total-price">
-          {{ totalAmount() | currency: 'US$ ':'code':'1.0-2' }}
-        </span>
+      @if(!isUsd()) {
+        <div class="c-checkout-payment--card-row c-checkout-payment--card-base-price">
+            <div class="price-info">
+              <span class="price-info--title">
+                {{'CHECKOUT.PAYMENT.BASE_PRICE.TITLE' | translate}}
+              </span>
+              <span class="price-info--subtitle">
+                {{'CHECKOUT.PAYMENT.BASE_PRICE.SUBTITLE' | translate}}
+              </span>
+            </div>
+            <span class="base-price">
+              {{ totalAmount() | customCurrency:'USD' }}
+            </span>
+        </div>
+      }
+      <div class="c-checkout-payment--card-exchange">
+        <div class="exchange-info">
+          <div class="exchange-info--selector">
+            <p class="exchange-info--selector-label">
+              {{'CHECKOUT.PAYMENT.EXCHANGE.SELECTOR_LABEL' | translate}}
+            </p>
+            <app-currency-selector></app-currency-selector>
+          </div>
+          @if(!isUsd()) {
+            <p class="exchange-value">
+              {{'CHECKOUT.PAYMENT.EXCHANGE.VALUE_LABEL' | translate}}
+              <span class="exchange-value--amount">
+                {{ 1 | customCurrency:undefined:true }} = {{1 | customCurrency:'USD':false:0 }}
+              </span>
+            </p>
+          }
+        </div>
+        <div class="exchange-prices">
+          <span class="exchange-prices--label">{{'CHECKOUT.PAYMENT.EXCHANGE.PRICE_LABEL' | translate}}</span>
+          <span class="exchange-prices--amount">{{ totalAmount() | customCurrency }}</span>
+          @if(!isUsd()) {
+            <span class="exchange-prices--hint">{{'CHECKOUT.PAYMENT.EXCHANGE.BASE_PRICE' | translate:({price: totalAmount() | customCurrency:'USD'})}}</span>
+          }
+        </div>
       </div>
-      <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange">
-        <span class="c-checkout-payment--card-exchange-label">{{'COMMON.EXCHANGE' | translate}}</span>
-        <span class="c-checkout-payment--card-exchange-price">
-          ${{ DOLLAR_VALUE | number:'1.0-2' }} x 1 US$
-        </span>
-      </div>
-      <div class="c-checkout-payment--card-row c-checkout-payment--card-row--exchange-total">
-        <span class="c-checkout-payment--card-exchange-label-total">{{'COMMON.EXCHANGE_TOTAL' | translate}}</span>
-        <span class="c-checkout-payment--card-exchange-price-total">
-          ${{ DOLLAR_VALUE * totalAmount() | number:'1.0-2' }}
-        </span>
-      </div>
-      
+
       <!-- Métodos Disponibles -->
-       <div class="c-checkout-payment--card-methods" [formGroup]="form">
-         <mat-radio-group formControlName="payMethod">
-           <div class="c-checkout-payment--card-methods-collapse">
-             <mat-radio-button [value]="PAYMENT_METHODS.MP">
-               <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.MP_TITLE' | translate}}</span>
-             </mat-radio-button>
+      <div class="c-checkout-payment--card-methods" [formGroup]="form">
+        <div class="c-checkout-payment--card-methods__main-title">
+            {{'CHECKOUT.PAYMENT.METHODS.TITLE' | translate}}
+        </div>
+        <mat-radio-group formControlName="payMethod">
+          <div class="c-checkout-payment--card-methods-collapse">
+            <mat-radio-button [value]="PAYMENT_METHODS.MP">
+              <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.MP_TITLE' | translate}}</span>
+            </mat-radio-button>
+            @if (form.get('payMethod')!.value == PAYMENT_METHODS.MP) {
+              <div class="c-checkout-payment--card-methods-content" @expandCollapse>
+                <span class="c-checkout-payment--card-methods-title">
+                  {{'CHECKOUT.PAYMENT.METHODS.MP_LABEL' | translate}}
+                </span>
+                <div class="c-checkout-payment--card-tags">
+                  @for (method of MP_PAYMENTH_METHODS; track method) {
+                    <span class="c-checkout-payment--card-tag">{{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
 
-             @if (form.get('payMethod')!.value == PAYMENT_METHODS.MP) {
-               <div class="c-checkout-payment--card-methods-content" @expandCollapse>
-                 <span class="c-checkout-payment--card-methods-title">
-                   {{'CHECKOUT.PAYMENT.METHODS.MP_LABEL' | translate}}
-                 </span>
-                 <div class="c-checkout-payment--card-tags">
-                   @for (method of MP_PAYMENTH_METHODS; track method) {
-                     <span class="c-checkout-payment--card-tag">{{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}</span>
-                   }
-                 </div>
-               </div>
-             }
-           </div>
+          <div class="c-checkout-payment--card-methods-collapse">
+            <mat-radio-button [value]="PAYMENT_METHODS.OTHER">
+              <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.OTHER_TITLE' | translate}}</span>
+            </mat-radio-button>
+            @if (form.get('payMethod')!.value && form.get('payMethod')!.value != PAYMENT_METHODS.MP) {
+              <div class="c-checkout-payment--card-methods-content" @expandCollapse>
+                <span class="c-checkout-payment--card-methods-title">
+                  {{'CHECKOUT.PAYMENT.METHODS.OTHER_LABEL' | translate}}
+                </span>
+                <mat-radio-group class="c-checkout-payment--card-tags" formControlName="payMethod">
+                  @for (method of OTHER_PAYMENTH_METHODS; track method) {
+                    <mat-radio-button [value]="method" class="c-checkout-payment--card-tag radio-tag" [class.active]="form.get('payMethod')!.value == method">
+                    {{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}
+                  </mat-radio-button>
+                  }
+                </mat-radio-group>
+              </div>
+            }
+          </div>
+        </mat-radio-group>
+      </div>
 
-           <div class="c-checkout-payment--card-methods-collapse">
-             <mat-radio-button [value]="PAYMENT_METHODS.OTHER">
-               <span class="c-checkout-payment--card-methods-collapse-title">{{'CHECKOUT.PAYMENT.METHODS.OTHER_TITLE' | translate}}</span>
-             </mat-radio-button>
-             @if (form.get('payMethod')!.value && form.get('payMethod')!.value != PAYMENT_METHODS.MP) {
-               <div class="c-checkout-payment--card-methods-content" @expandCollapse>
-                 <span class="c-checkout-payment--card-methods-title">
-                   {{'CHECKOUT.PAYMENT.METHODS.OTHER_LABEL' | translate}}
-                 </span>
-                 <mat-radio-group class="c-checkout-payment--card-tags" formControlName="payMethod">
-                   @for (method of OTHER_PAYMENTH_METHODS; track method) {
-                     <mat-radio-button [value]="method" class="c-checkout-payment--card-tag radio-tag" [class.active]="form.get('payMethod')!.value == method">
-                      {{'CHECKOUT.PAYMENT.METHODS.'+method | translate}}
-                    </mat-radio-button>
-                   }
-                 </mat-radio-group>
-               </div>
-             }
-           </div>
-         </mat-radio-group>
-       </div>
+      <div class="c-checkout-payment--card-options" [formGroup]="form">
+        <div class="c-checkout-payment--card-options__main-title">
+            {{'CHECKOUT.PAYMENT.OPTIONS.TITLE' | translate}}
+        </div>
+        <mat-radio-group class="c-checkout-payment--card-options-items" formControlName="paymentOption">
+          <div class="c-checkout-payment--card-options-item" 
+          [class.active]="this.form.get('paymentOption').value == PAYMENT_OPTIONS.DEPOSIT"
+          (click)="selectOption(PAYMENT_OPTIONS.DEPOSIT)">
+            <mat-radio-button [value]="PAYMENT_OPTIONS.DEPOSIT">
+              <p class="c-checkout-payment--card-options-item-title">
+                {{'CHECKOUT.PAYMENT.OPTIONS.DEPOSIT_TITLE' | translate}}
+                <span class="subtitle">{{'CHECKOUT.PAYMENT.OPTIONS.DEPOSIT_SUBTITLE' | translate}}</span>
+              </p>
+            </mat-radio-button>
+            <div class="c-checkout-payment--card-options-item-info">
+              <div class="item-info--price">
+                <span class="item-info--price-label">{{'CHECKOUT.PAYMENT.OPTIONS.DEPOSIT_LABEL' | translate}}</span>
+                <span class="item-info--price-amount">{{(totalAmount()/2)| customCurrency:'ARS':true}}</span>
+                <span class="item-info--price-hint">({{(totalAmount()/2) | customCurrency:'USD':false:0}})</span>
+              </div>
+              <div class="item-info--pending">
+                <span class="item-info--pending-label">{{'CHECKOUT.PAYMENT.OPTIONS.PENDING_LABEL' | translate}}</span>
+                <span class="item-info--pending-amount">{{(totalAmount()/2) | customCurrency:'USD':false:0}}</span>
+              </div>
+              <div class="item-info--message">
+                <mat-icon class="item-info--message-icon">info_i</mat-icon>
+                <div class="item-info--message-text" [innerHTML]="'CHECKOUT.PAYMENT.OPTIONS.DEPOSIT_TEXT' | translate"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="c-checkout-payment--card-options-item" 
+          [class.active]="this.form.get('paymentOption').value == PAYMENT_OPTIONS.FULL"
+          (click)="selectOption(PAYMENT_OPTIONS.FULL)">
+            <mat-radio-button [value]="PAYMENT_OPTIONS.FULL">
+              <p class="c-checkout-payment--card-options-item-title">
+                {{'CHECKOUT.PAYMENT.OPTIONS.FULL_TITLE' | translate}}
+                <span class="subtitle">{{'CHECKOUT.PAYMENT.OPTIONS.FULL_SUBTITLE' | translate}}</span>
+              </p>
+            </mat-radio-button>
+            <div class="c-checkout-payment--card-options-item-info">
+              <div class="item-info--price">
+                <span class="item-info--price-label">{{'CHECKOUT.PAYMENT.OPTIONS.TOTAL_LABEL' | translate}}</span>
+                <span class="item-info--price-amount">{{totalAmount()| customCurrency:'ARS':true}}</span>
+                <span class="item-info--price-hint">({{totalAmount() | customCurrency:'USD':false:0}})</span>
+              </div>
+              <div class="item-info--message">
+                <mat-icon class="item-info--message-icon check-green">check_circle</mat-icon>
+                <div class="item-info--message-text">{{'CHECKOUT.PAYMENT.OPTIONS.TOTAL_TEXT' | translate}}</div>
+              </div>
+            </div>
+          </div>
+        </mat-radio-group>
+      </div>
+
   
       <!-- Acciones -->
       <div class="c-checkout-payment--card-actions">
-        <p class="c-checkout-payment--card-actions-label">
-          {{'CHECKOUT.PAYMENT.BUTTONS.LABEL' | translate}}
-        </p>
-        <div class="action-buttons">
-          <button class="c-checkout-payment--card-btn-partial" 
-            [disabled]="form.invalid"
-            (click)="onPay(true)">
-            {{'CHECKOUT.PAYMENT.BUTTONS.PARTIAL' | translate}}
-          </button>
-          <button class="c-checkout-payment--card-btn-total" 
-            [disabled]="form.invalid"
-            (click)="onPay()">
-            {{'CHECKOUT.PAYMENT.BUTTONS.TOTAL' | translate}}
-          </button>
-        </div>
+        <button class="c-checkout-payment--card-btn-total" 
+          [disabled]="form.invalid" (click)="onPay()">
+          {{'CHECKOUT.PAYMENT.BUTTONS.TOTAL' | translate}}
+        </button>
         <button class="c-checkout-payment--card-btn-back" (click)="onBack()">
           {{'CHECKOUT.PAYMENT.BUTTONS.BACK' | translate}}
         </button>

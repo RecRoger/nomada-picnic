@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,6 +19,7 @@ export class SeoService {
   private meta = inject(Meta);
   private title = inject(Title);
   private translateService = inject(TranslateService);
+  private readonly document = inject(DOCUMENT);
 
   public setNoIndex(): void {
     this.meta.addTag({ name: 'robots', content: 'noindex, nofollow' });
@@ -48,6 +50,17 @@ export class SeoService {
       const currentUrl = config.url
         ? `https://nomadapicnic.com/${config.url}`
         : 'https://nomadapicnic.com';
+
+      let link: HTMLLinkElement | null = this.document.querySelector("link[rel='canonical']");
+
+      if (link) {
+        link.setAttribute('href', currentUrl);
+      } else {
+        link = this.document.createElement('link');
+        link.setAttribute('rel', 'canonical');
+        link.setAttribute('href', currentUrl);
+        this.document.head.appendChild(link);
+      }
 
       // 1. Título y Descripción Estándar
       this.title.setTitle(fullTitle);

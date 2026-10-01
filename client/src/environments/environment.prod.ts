@@ -2,6 +2,7 @@
 export const environment = {
   production: true,
   mapsId: 'AIzaSyB64dsMLc_CM0NGwz7o9gLmOd5MrOW7qeM',
+  gmId: 'G-VSG9GD7KPB',
   bucketUrl: 'https://storage.googleapis.com/nomada-storage-bucket',
   apiUrl: 'https://nomada-backend-389141432152.us-east1.run.app',
   appVersion: new Date().getTime(),

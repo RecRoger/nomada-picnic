@@ -2,6 +2,7 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 declare const gtag: Function;
 
@@ -12,7 +13,7 @@ export class AnalyticsService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private readonly router = inject(Router);
-  private readonly trackingId = 'G-VSG9GD7KPB';
+  private readonly trackingId = environment.gmId;
 
   public init(): void {
     if (!isPlatformBrowser(this.platformId)) {

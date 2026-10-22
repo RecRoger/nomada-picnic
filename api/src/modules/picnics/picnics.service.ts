@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { BUSINESS_NUMBER, PAYMENT_METHODS_MAP } from '@shared/const';
 import { BookingStatus, PaymentMethods, PaymentTypes } from '@shared/enums';
@@ -6,13 +6,15 @@ import { IBookingConfirmationEmail, ICost, IPaginatedPicnics, IPicnicEvent, IPic
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 import MercadoPagoConfig, { Payment, Preference } from 'mercadopago';
 import { Model, Types } from 'mongoose';
-import { PicnicPackage, PicnicPackageDocument } from 'src/common/database/schemas/picnic-packages.schema';
+import { PicnicPackageDocument } from 'src/common/database/schemas/picnic-packages.schema';
 import { Picnic, PicnicsDocument } from 'src/common/database/schemas/picnics.schema';
 import { Place, PlacesDocument } from 'src/common/database/schemas/places.schema';
 import { CreatePicnicDto, UpdatePicnicDto } from 'src/common/models/create-picnic.dto';
 import { QueryPicnicDto } from 'src/common/models/query-picnic.dto';
 import { GoogleCalendarService } from 'src/modules/calendar/google-calendar.service';
 import { MailService } from 'src/modules/mails/mail.service';
+import { PicnicPackageService } from 'src/modules/picnic-packages/picnic-packages.service';
+import { ProductionCostsService } from 'src/modules/production-costs/production-costs.service';
 
 @Injectable()
 export class PicnicsService {
@@ -22,10 +24,11 @@ export class PicnicsService {
 
   constructor(
     @InjectModel(Picnic.name) private picnicsModel: Model<PicnicsDocument>,
-    @InjectModel(PicnicPackage.name) private packagesModel: Model<PicnicPackageDocument>,
     @InjectModel(Place.name) private placesModel: Model<PlacesDocument>,
     private readonly mailService: MailService,
     private readonly calendarService: GoogleCalendarService,
+    private readonly picnicPackageService: PicnicPackageService,
+    private readonly productionCostsService: ProductionCostsService,
   ) {
     this.mpClient = new MercadoPagoConfig({
       accessToken: process.env.MP_ACCESS_TOKEN || '',
@@ -215,8 +218,31 @@ export class PicnicsService {
       await this.removePicnic(errorId)
     }
     try {
-      const additionalsTotal = dto.additionals.reduce((sum, item) => sum + item.totalPrice, 0);
-      const totalAmount = dto.booking.basePrice + additionalsTotal;
+      if (dto.booking.minGuest > dto.booking.maxGuest) {
+        throw new BadRequestException('La cantidad mínima de invitados no puede ser mayor a la máxima');
+      }
+
+      const [pkgPrice, realCosts] = await Promise.all([
+        this.picnicPackageService.getPackagePrice(dto.booking.packageId, dto.booking.maxGuest),
+        this.productionCostsService.findByIds(dto.additionals.map((add) => add.costId)),
+      ]);
+
+      const realAdditionals = dto.additionals.map((add) => {
+        const cost = realCosts.find((c) => c._id.toString() === add.costId);
+        if (!cost) {
+          throw new BadRequestException(`Adicional con ID '${add.costId}' no encontrado`);
+        }
+        const unitPrice = cost.finalPrice;
+        return {
+          cost: add.costId,
+          unitPrice,
+          quantity: add.quantity,
+          totalPrice: unitPrice * add.quantity,
+        };
+      });
+
+      const additionalsTotal = realAdditionals.reduce((sum, item) => sum + item.totalPrice, 0);
+      const totalAmount = pkgPrice.price + additionalsTotal;
 
       const isDeposit = paymentOption === PaymentTypes.DEPOSIT;
       const depositAmount = totalAmount * 0.5;
@@ -230,13 +256,8 @@ export class PicnicsService {
         maxGuest: dto.booking.maxGuest,
         eventDate: new Date(dto.booking.eventDate),
         eventTime: dto.booking.eventTime,
-        basePrice: dto.booking.basePrice,
-        additionals: dto.additionals.map((add) => ({
-          cost: add.costId,
-          unitPrice: add.unitPrice,
-          quantity: add.quantity,
-          totalPrice: add.totalPrice,
-        })),
+        basePrice: pkgPrice.price,
+        additionals: realAdditionals,
         clientInfo: dto.clientInfo,
         status: BookingStatus.PENDING,
         totalAmount,
@@ -250,7 +271,7 @@ export class PicnicsService {
       const savedPicnic = await newPicnic.save();
       this.logger.log('[createPicnic] Picnic guardado en BD (PENDING)')
 
-      const pkg = await this.packagesModel.findById(dto.booking.packageId).lean().exec()
+      const pkg = pkgPrice.pkg;
       const place = await this.placesModel.findById(dto.booking.placeId).lean().exec()
       if (paymentMethods == PaymentMethods.MP) {
         const payLink = await this.generatePayment(
@@ -266,6 +287,9 @@ export class PicnicsService {
       }
 
     } catch (err) {
+      if (err instanceof HttpException) {
+        throw err;
+      }
       this.logger.error(`Error booking picnic: ${err.message}`, err.stack, PicnicsService.name);
       throw new Error('Error al guardar la reserva del picnic');
     }

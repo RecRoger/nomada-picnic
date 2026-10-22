@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AgencyFormDialogComponent } from '@components/agency-form-dialog/agency-form-dialog.component';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { PackageDialogComponent } from '@components/package-dialog/package-dialog.component';
-import { RecommendedDialogComponent } from '@components/recommended-dialog copy/recommended-dialog.component';
+import { RecommendedDialogComponent } from '@components/recommended-dialog/recommended-dialog.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
 import { AnalyticsService } from '@services/analytics.service';
@@ -65,7 +65,6 @@ export class PicnicPackagesComponent implements OnInit {
       url: 'picnics',
       page: 'PICNICS',
     })
-    this.cartService.openPriceDisclaimer()
   }
 
   public checkPackageParam(): void {

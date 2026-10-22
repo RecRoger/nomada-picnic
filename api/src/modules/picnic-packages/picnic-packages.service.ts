@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CostsTypes, PlacesTypes } from '@shared/enums';
 import { ICost } from '@shared/interfaces';
@@ -134,6 +134,43 @@ export class PicnicPackageService {
       this.logger.error(` - Error finding Packages: ${err.message}`, err.stack);
       throw new Error('Error al consultar paquetes');
     }
+  }
+
+  /**
+   * Precio real (server-side) de un paquete para una cantidad exacta de invitados.
+   * Reutiliza la misma fórmula que findPackagePrices, usada para cotizar al cliente.
+   */
+  async getPackagePrice(packageId: string, guestsCount: number): Promise<{ price: number; pkg: PicnicPackageDocument }> {
+    this.logger.log('[getPackagePrice]', `packageId: ${packageId}, guestsCount: ${guestsCount}`);
+    const pkg = await this.packageModel.findById(packageId).populate('productionCostIds').lean().exec();
+    if (!pkg) {
+      throw new NotFoundException(`Paquete de picnic con ID '${packageId}' no encontrado`);
+    }
+    const minGuests = pkg.minGuests || 2;
+    const maxGuests = pkg.maxGuests || 10;
+    if (guestsCount < minGuests || guestsCount > maxGuests) {
+      throw new BadRequestException(`La cantidad de invitados debe estar entre ${minGuests} y ${maxGuests} para este paquete`);
+    }
+    const courtesyCosts = await this.costModel.find({ type: CostsTypes.GIFTS }).lean().exec();
+    const basePlace = await this.placeModel.findOne({ type: PlacesTypes.BASIC, zone: 0 }).lean().exec();
+    const baseTransportCost = basePlace?.transportationCost || 0;
+    const halfGuests = (minGuests + maxGuests) / 2;
+
+    const baseCost = this.calculatePackageBaseCost(
+      pkg,
+      courtesyCosts as unknown as Cost[],
+      baseTransportCost,
+      guestsCount,
+    );
+    const price = this.calculatePriceFromBaseCost(
+      baseCost,
+      pkg.profitPercent,
+      pkg.expensesPercent,
+      pkg.bigExpensesPercent,
+      guestsCount >= halfGuests,
+    );
+
+    return { price, pkg: pkg as unknown as PicnicPackageDocument };
   }
 
   async create(pkg: PicnicPackageDto, file: Express.Multer.File): Promise<PicnicPackageDto> {

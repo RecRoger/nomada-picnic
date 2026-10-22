@@ -23,6 +23,11 @@ export class ProductionCostsService {
     return costsQuery;
   }
 
+  async findByIds(ids: string[]): Promise<CostDocument[]> {
+    this.logger.log('[findByIds]', `ids: ${ids.length}`)
+    return this.costsModel.find({ _id: { $in: ids } }).exec();
+  }
+
   async findAll(type?: string): Promise<CostDto[]> {
     this.logger.log('[findAll]', type || 'All')
     const costsQuery = !type ? this.costsModel.find().exec() : this.costsModel.find({ type }, {

@@ -209,6 +209,10 @@
   &--list {
     @include u.flex(column, flex-start, stretch, 2rem);
 
+    .modal-link {
+      text-decoration: none;
+    }
+
     .place-card {
       background: var(--color-white);
       border-radius: var(--radius-card-sm);

@@ -1,5 +1,5 @@
-import { CommonModule, Location } from '@angular/common';
-import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, computed, DestroyRef, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,14 +9,13 @@ import { CostsService } from '@services/costs.service';
 import { CostsTypes } from '@shared/enums';
 import { ICartAdditional, ICost } from '@shared/interfaces';
 import { ApiImageUrlPipe } from '@pipes/api-image-url.pipe';
-import { forkJoin } from 'rxjs';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { normalizeString } from 'src/app/core/functions/search';
 import { CartService } from '@services/cart.service';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { SeoService } from '@services/seo.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { urlParameter } from 'src/app/core/functions/url-parameter';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { AnalyticsService } from '@services/analytics.service';
@@ -38,12 +37,23 @@ import { MOST_SELL_TAG } from '@constants/important-tags';
     FormsModule,
     ReactiveFormsModule,
     LoaderComponent,
-    AppleEmojiPipe
+    AppleEmojiPipe,
+    RouterLink
   ],
   templateUrl: './additionals.component.html',
   styleUrl: './additionals.component.scss'
 })
 export class AdditionalsComponent implements OnInit {
+  private static lastListScrollY = 0;
+
+  private readonly platformId = inject(PLATFORM_ID);
+
+  public rememberScroll(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      AdditionalsComponent.lastListScrollY = window.scrollY;
+    }
+  }
+
   protected readonly fb = inject(FormBuilder)
 
   protected readonly cartService = inject(CartService)
@@ -52,7 +62,9 @@ export class AdditionalsComponent implements OnInit {
 
   protected readonly isUsd = computed(() => this.currencyService.currentCurrency() === 'USD');
 
-  public filteredList: ICost[] = []
+  private costService = inject(CostsService)
+
+  public filteredList: ICost[] = this.costService.getAllAdditionalCostsSnapshot() ?? []
 
   public filterForm = this.fb.group({
     keyword: '',
@@ -60,9 +72,7 @@ export class AdditionalsComponent implements OnInit {
     tags: [['']],
   })
 
-  private costService = inject(CostsService)
-
-  public additionalsList: ICost[] = []
+  public additionalsList: ICost[] = this.costService.getAllAdditionalCostsSnapshot() ?? []
 
   public typesList: string[] = [
     'all',
@@ -90,8 +100,6 @@ export class AdditionalsComponent implements OnInit {
 
   private readonly route = inject(ActivatedRoute);
 
-  private readonly location = inject(Location);
-
   private dialogRef: MatDialogRef<AdditionalDialogComponent> | null = null;
 
   ngOnInit(): void {
@@ -103,15 +111,21 @@ export class AdditionalsComponent implements OnInit {
     this.setFilters();
   }
 
+  public getItemUrl(name: string): string {
+    return `/additionals/${urlParameter(name)}`
+  }
+
   public checkAdditionalParam(): void {
-    this.route.firstChild?.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       if (params['name']) {
         const name = params['name'];
         const selectedAdditonal = this.additionalsList.find(additional => urlParameter(additional.name) === name)
         if (selectedAdditonal) {
           this.openModal(selectedAdditonal);
         } else {
-          this.router.navigate(['/additionals'])
+          this.router.navigate(['/additionals'], {
+            state: { preventScrollTop: true }
+          })
         }
       } else if (this.dialogRef) {
         this.dialogRef.close();
@@ -133,12 +147,8 @@ export class AdditionalsComponent implements OnInit {
     }
   }
 
-  public checkAdditional(additional: ICost): void {
-    this.location.replaceState(`/additionals/${urlParameter(additional?.name)}`)
-    this.openModal(additional)
-  }
-
   public openModal(additional: ICost): void {
+    const scrollYAtOpen = AdditionalsComponent.lastListScrollY;
     this.seoService.setSeoData({
       url: `additionals/${urlParameter(additional?.name)}`,
       page: 'ADDITIONAL',
@@ -173,24 +183,23 @@ export class AdditionalsComponent implements OnInit {
           this.cartService.addAdditional(additional, result)
         }
       }
-      this.location.replaceState(`/additionals`);
+      this.router.navigate([`/additionals`], {
+        state: { preventScrollTop: true }
+      });
       this.seoService.setSeoData({
         url: 'additionals',
         page: 'ADDITIONALS',
       })
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => window.scrollTo(0, scrollYAtOpen), 10);
+      }
     });
-
   }
 
 
   private getAdditionals(): void {
-    forkJoin([
-      this.costService.getCostsCached(CostsTypes.FURNITURE),
-      this.costService.getCostsCached(CostsTypes.DRINKS),
-      this.costService.getCostsCached(CostsTypes.ADDITIONAL),
-      this.costService.getCostsCached(CostsTypes.FOOD)
-    ]).subscribe(([respFurniture, respDrinks, respAdditional, respFood]) => {
-      this.additionalsList = [...respFurniture, ...respDrinks, ...respAdditional, ...respFood]
+    this.costService.getAllAdditionalCostsCached().subscribe((list) => {
+      this.additionalsList = list
       const rawTags = this.additionalsList.flatMap(additional => additional.tags);
       this.tagList = Array.from(new Set(rawTags)) as string[];
       this.filterCosts()

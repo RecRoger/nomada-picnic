@@ -19,32 +19,29 @@ export const PublicRoutes: Routes = [
       mapsLoaded: () => inject(MapsService).load(),
     },
     loadComponent: () => import('./components/places-map/places-map.component').then(m => m.PlacesMapComponent),
-    children: [
-      {
-        path: ':name',
-        loadComponent: () => import('./components/places-map/places-map.component').then(m => m.PlacesMapComponent),
-      }
-    ]
+  },
+  {
+    path: 'places/:name',
+    resolve: {
+      mapsLoaded: () => inject(MapsService).load(),
+    },
+    loadComponent: () => import('./components/places-map/places-map.component').then(m => m.PlacesMapComponent),
   },
   {
     path: 'additionals',
     loadComponent: () => import('./components/additionals/additionals.component').then(m => m.AdditionalsComponent),
-    children: [
-      {
-        path: ':name',
-        loadComponent: () => import('./components/additionals/additionals.component').then(m => m.AdditionalsComponent),
-      }
-    ]
+  },
+  {
+    path: 'additionals/:name',
+    loadComponent: () => import('./components/additionals/additionals.component').then(m => m.AdditionalsComponent),
   },
   {
     path: 'picnics',
     loadComponent: () => import('./components/picnic-packages/picnic-packages.component').then(m => m.PicnicPackagesComponent),
-    children: [
-      {
-        path: ':name',
-        loadComponent: () => import('./components/picnic-packages/picnic-packages.component').then(m => m.PicnicPackagesComponent),
-      }
-    ]
+  },
+  {
+    path: 'picnics/:name',
+    loadComponent: () => import('./components/picnic-packages/picnic-packages.component').then(m => m.PicnicPackagesComponent),
   },
   {
     path: 'contact',

@@ -1,9 +1,9 @@
-import { AsyncPipe, Location } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AgencyFormDialogComponent } from '@components/agency-form-dialog/agency-form-dialog.component';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { PackageDialogComponent } from '@components/package-dialog/package-dialog.component';
@@ -15,7 +15,7 @@ import { CartService } from '@services/cart.service';
 import { PackagesService } from '@services/packages.service';
 import { SeoService } from '@services/seo.service';
 import { IPackagePrice, IPicnicEvent, IPicnicPackage } from '@shared/interfaces';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, shareReplay, tap } from 'rxjs';
 import { urlParameter } from 'src/app/core/functions/url-parameter';
 
 @Component({
@@ -25,7 +25,8 @@ import { urlParameter } from 'src/app/core/functions/url-parameter';
     TranslatePipe,
     MatIconModule,
     ApiImageUrlPipe,
-    LoaderComponent
+    LoaderComponent,
+    RouterLink
   ],
   templateUrl: './picnic-packages.component.html',
   styleUrl: './picnic-packages.component.scss'
@@ -34,7 +35,6 @@ export class PicnicPackagesComponent implements OnInit {
   protected readonly packageService = inject(PackagesService);
   protected readonly cartService = inject(CartService);
   protected readonly router = inject(Router);
-  private readonly location = inject(Location);
   protected readonly route = inject(ActivatedRoute);
 
   public packagesList: IPicnicPackage[] = []
@@ -47,7 +47,8 @@ export class PicnicPackagesComponent implements OnInit {
       }),
       tap(_ => {
         this.checkPackageParam()
-      })
+      }),
+      shareReplay({ bufferSize: 1, refCount: false })
     );
 
   readonly dialog = inject(MatDialog);
@@ -67,27 +68,27 @@ export class PicnicPackagesComponent implements OnInit {
     })
   }
 
+  public getItemUrl(name: string): string {
+    return `/picnics/${urlParameter(name)}`
+  }
+
   public checkPackageParam(): void {
-    this.route.firstChild?.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       if (params['name']) {
         const name = params['name'];
         const selectedPkg = this.packagesList.find(pkg => urlParameter(pkg.name) === name)
         if (selectedPkg) {
           this.openModal(selectedPkg);
         } else {
-          this.router.navigate(['/picnics'])
+          this.router.navigate(['/picnics'], {
+            state: { preventScrollTop: true }
+          })
         }
       } else if (this.dialogRef) {
         this.dialogRef.close();
         this.dialogRef = null;
       }
     });
-  }
-
-  public checkPackage(id: string): void {
-    const pkg = this.packagesList.find(place => place._id === id)
-    this.location.replaceState(`/picnics/${urlParameter(pkg?.name)}`)
-    this.openModal(pkg)
   }
 
   public openModal(pkg?: IPicnicPackage): void {
@@ -140,7 +141,9 @@ export class PicnicPackagesComponent implements OnInit {
         })
 
       }
-      this.location.replaceState('/picnics')
+      this.router.navigate(['/picnics'], {
+        state: { preventScrollTop: true }
+      })
       this.seoService.setSeoData({
         url: 'picnics',
         page: 'PICNICS',

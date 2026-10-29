@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser, NgTemplateOutlet, Location } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapAdvancedMarker } from '@angular/google-maps';
 import { MAT_FORMS_MODULES } from '@constants/material-modules';
@@ -9,7 +9,7 @@ import { PlacesTypes } from '@shared/enums';
 import { IPlace } from '@shared/interfaces';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, of, shareReplay, tap } from 'rxjs';
 import { MAP_OPTIONS } from '@constants/map-options';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -20,7 +20,7 @@ import { RECOMENDED_TAG } from '@constants/important-tags';
 import { normalizeString } from 'src/app/core/functions/search';
 import { AppleEmojiPipe } from '@pipes/aple-emoji.pipe';
 import { CartService } from '@services/cart.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoaderComponent } from '@components/loader/loader.component';
 import { SeoService } from '@services/seo.service';
 import { urlParameter } from 'src/app/core/functions/url-parameter';
@@ -42,7 +42,8 @@ import { AnalyticsService } from '@services/analytics.service';
     ReactiveFormsModule,
     AppleEmojiPipe,
     NgTemplateOutlet,
-    LoaderComponent
+    LoaderComponent,
+    RouterLink
   ],
   templateUrl: './places-map.component.html',
   styleUrl: './places-map.component.scss',
@@ -78,18 +79,20 @@ export class PlacesMapComponent implements OnInit {
   })
 
   public places$ = this.placesService.getPlacesCached(PlacesTypes.PUBLIC)
-    .pipe(tap(resp => {
-      this.placesList = resp
-      this.filteredList = this.placesList
-      if (resp.length) {
-        this.options = this.placesList.map(place => place.name)
-        const rawTags = this.placesList.flatMap(place => place.tags);
-        this.tagList = Array.from(new Set(rawTags)) as string[];
-        this.setMarkers()
-        this.filterCosts()
-        this.checkPlaceParam()
-      }
-    })
+    .pipe(
+      tap(resp => {
+        this.placesList = resp
+        this.filteredList = this.placesList
+        if (resp.length) {
+          this.options = this.placesList.map(place => place.name)
+          const rawTags = this.placesList.flatMap(place => place.tags);
+          this.tagList = Array.from(new Set(rawTags)) as string[];
+          this.setMarkers()
+          this.filterCosts()
+          this.checkPlaceParam()
+        }
+      }),
+      shareReplay({ bufferSize: 1, refCount: false })
     )
 
   public readonly recomendedTag = RECOMENDED_TAG
@@ -101,8 +104,6 @@ export class PlacesMapComponent implements OnInit {
   private readonly router = inject(Router)
 
   private readonly route = inject(ActivatedRoute);
-
-  private readonly location = inject(Location);
 
   private readonly destroyRef = inject(DestroyRef)
 
@@ -129,15 +130,22 @@ export class PlacesMapComponent implements OnInit {
     }
   }
 
+
+  public getItemUrl(name: string): string {
+    return `/places/${urlParameter(name)}`
+  }
+
   public checkPlaceParam(): void {
-    this.route.firstChild?.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       if (params['name']) {
         const name = params['name'];
         const selectedPlace = this.placesList.find(place => urlParameter(place.name) === name)
         if (selectedPlace) {
           this.openModal(selectedPlace);
         } else {
-          this.router.navigate(['/places'])
+          this.router.navigate(['/places'], {
+            state: { preventScrollTop: true }
+          })
         }
       } else if (this.dialogRef) {
         this.dialogRef.close();
@@ -163,11 +171,11 @@ export class PlacesMapComponent implements OnInit {
     });
   }
 
-  public checkPlace(id: string): void {
-    const place = this.placesList.find(place => place._id === id)
-    this.location.replaceState(`/places/${urlParameter(place?.name)}`)
-    this.openModal(place)
-  }
+  // public checkPlace(id: string): void {
+  //   const place = this.placesList.find(place => place._id === id)
+  //   this.location.replaceState(`/places/${urlParameter(place?.name)}`)
+  //   this.openModal(place)
+  // }
 
   public openModal(place?: IPlace): void {
     this.seoService.setSeoData({
@@ -194,7 +202,9 @@ export class PlacesMapComponent implements OnInit {
         this.analyticsService.addToCartEvent('place', place?.name || 'No name')
         this.router.navigate(['/picnics'])
       } else {
-        this.location.replaceState('/places')
+        this.router.navigate(['/places'], {
+          state: { preventScrollTop: true }
+        })
         this.seoService.setSeoData({
           url: 'places',
           page: 'PLACES',

@@ -35,50 +35,52 @@
         <div class="c-places-map--list">
           @if(filteredList.length) {
             @for (place of filteredList; track $index) {
-              <article class="place-card" (click)="checkPlace(place._id || '')">
-                
-                <div class="place-card--image-wrapper">
-                  @if (place.images?.length) {
-                    <img class="card-img" [src]="place.images[0] | apiImageUrl" [alt]="place.name" />
-                  }
-                  <!-- Badges flotantes -->
-                  @if (place?.tags?.includes(recomendedTag)) {
-                    <div class="badge-recommended">
-                      <mat-icon class="icon">star</mat-icon>
-                      {{'PUBLIC.PLACES.FAVORITE' | translate}}
+              <a class="modal-link" [routerLink]="getItemUrl(place.name)" [state]="{ preventScrollTop: true }">
+                <article class="place-card">
+                  
+                  <div class="place-card--image-wrapper">
+                    @if (place.images?.length) {
+                      <img class="card-img" [src]="place.images[0] | apiImageUrl" [alt]="place.name" />
+                    }
+                    <!-- Badges flotantes -->
+                    @if (place?.tags?.includes(recomendedTag)) {
+                      <div class="badge-recommended">
+                        <mat-icon class="icon">star</mat-icon>
+                        {{'PUBLIC.PLACES.FAVORITE' | translate}}
+                      </div>
+                    }
+                  </div>
+      
+                  <div class="place-card--content">
+                    <div class="place-card--header">
+                      <h3 class="place-card--header-title">{{ place.name }}</h3>
+                      <button class="place-card--header-action">
+                        {{'COMMON.SEE_MORE' | translate}}
+                        <mat-icon class="action-icon">chevron_right</mat-icon>
+                      </button>
                     </div>
-                  }
-                </div>
-    
-                <div class="place-card--content">
-                  <div class="place-card--header">
-                    <h3 class="place-card--header-title">{{ place.name }}</h3>
-                    <button class="place-card--header-action">
-                      {{'COMMON.SEE_MORE' | translate}}
-                      <mat-icon class="action-icon">chevron_right</mat-icon>
-                    </button>
+      
+                    <!-- Dirección -->
+                    <p class="place-card--address">
+                      <mat-icon class="address-icon">location_on</mat-icon>
+                      <span>{{ place.address }}</span>
+                    </p>
+      
+                    <!-- Descripción -->
+                    <p class="place-card--description">{{ place.description }}</p>
+      
+                    <!-- Tags -->
+                    <div class="place-card--tags">
+                      @for (tag of place.tags?.slice(0,3); track $index) {
+                        <span class="tag">{{ tag }}</span>
+                      }
+                      @if(place.tags && place.tags.length > 3) {
+                        <span class="tag-more" >+{{ place.tags.length - 3 }}</span>
+                      }
+                    </div>
                   </div>
-    
-                  <!-- Dirección -->
-                  <p class="place-card--address">
-                    <mat-icon class="address-icon">location_on</mat-icon>
-                    <span>{{ place.address }}</span>
-                  </p>
-    
-                  <!-- Descripción -->
-                  <p class="place-card--description">{{ place.description }}</p>
-    
-                  <!-- Tags -->
-                  <div class="place-card--tags">
-                    @for (tag of place.tags?.slice(0,3); track $index) {
-                      <span class="tag">{{ tag }}</span>
-                    }
-                    @if(place.tags && place.tags.length > 3) {
-                      <span class="tag-more" >+{{ place.tags.length - 3 }}</span>
-                    }
-                  </div>
-                </div>
-              </article>
+                </article>
+              </a>
             }
           } @else {
             <div class="empty-card">

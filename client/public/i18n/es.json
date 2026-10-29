@@ -619,6 +619,7 @@
       "ADD": "Añadir al carrito."
     },
     "PACKAGES": {
+      "GUESTS_GAP": "Desde {{minGuests}} hasta {{maxGuests}} invitados",
       "HERO": {
         "LINE_1": "ELEGÍ LA EXPERIENCIA NÓMADA ",
         "LINE_2": " PERFECTA ",

@@ -15,7 +15,12 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimationsAsync(),
-    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
+    provideRouter(routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'disabled', // <--- Desactivamos el comportamiento global por defecto
+        anchorScrolling: 'enabled'
+      })
+    ),
     { provide: LOCALE_ID, useValue: 'es' },
     provideHttpClient(withFetch()),
     provideTranslateService({

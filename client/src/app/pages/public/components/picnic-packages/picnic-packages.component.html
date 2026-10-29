@@ -17,35 +17,33 @@
     @if (packagesList$ | async; as packages) {
       <div class="c-picnic-packages--container-grid">
         @for (pkg of packages; track pkg._id) {
-          <article class="package-card" (click)="checkPackage(pkg._id || '')">
-            
-            <!-- Lado Izquierdo: Información -->
-            <div class="package-card--info">
-              <h2 class="package-card--info-title">{{ pkg.name }}</h2>
-              <p class="package-card--info-description">{{ pkg.description }}</p>
+          <a class="modal-link" [routerLink]="getItemUrl(pkg.name)" [state]="{ preventScrollTop: true }">
+            <article class="package-card">
               
-              <!-- <div class="package-card--info-price">
-                <span class="price-label">{{'COMMON.PRICE_FROM' | translate}}</span>
-                <span class="amount">{{ pkg.minPrice  | currency: 'US$ ':'code':'1.0-2'  }}</span>
-              </div> -->
-
-              <button type="button" class="package-card--info-button">
-                {{'COMMON.SEE_MORE' | translate}}
-              </button>
-            </div>
-
-            <div class="package-card--image">
-              @if (pkg.tag) {
-                <div class="package-tag">
-                  {{pkg.tag}}
-                </div>
-              }
-              @if (pkg.image) {
-                <img class="package-image" [src]="pkg.image | apiImageUrl" [alt]="pkg.name"/>
-              }
-            </div>
-
-          </article>
+              <!-- Lado Izquierdo: Información -->
+              <div class="package-card--info">
+                <h2 class="package-card--info-title">{{ pkg.name }}</h2>
+                <h3 class="package-card--info-subtitle">{{'PUBLIC.PACKAGES.GUESTS_GAP' | translate: pkg}}</h3>
+                <p class="package-card--info-description">{{ pkg.description }}</p>
+  
+                <button type="button" class="package-card--info-button">
+                  {{'COMMON.SEE_MORE' | translate}}
+                </button>
+              </div>
+  
+              <div class="package-card--image">
+                @if (pkg.tag) {
+                  <div class="package-tag">
+                    {{pkg.tag}}
+                  </div>
+                }
+                @if (pkg.image) {
+                  <img class="package-image" [src]="pkg.image | apiImageUrl" [alt]="pkg.name"/>
+                }
+              </div>
+  
+            </article>
+          </a>
         } @empty {
           <p class="empty-state">{{'PUBLIC.PACKAGES.NO_PACKAGES' | translate}}</p>
         }

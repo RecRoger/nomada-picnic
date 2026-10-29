@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of, shareReplay } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, shareReplay, tap } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
 import { IApiResponse, ICost } from '@shared/interfaces';
 import { AlertTypes, CostsTypes } from '@shared/enums';
@@ -16,11 +16,41 @@ export class CostsService {
 
   private typedCosts$: { [type: string]: Observable<ICost[]> } = {}
 
+  private allAdditionalCosts$?: Observable<ICost[]>;
+
+  /**
+   * Snapshot sincrónico del último valor resuelto de getAllAdditionalCostsCached().
+   * Permite a un componente inicializar su estado desde el constructor (antes de
+   * que corra ngOnInit), evitando un render intermedio con la lista vacía cuando
+   * el componente se recrea por navegación (ver AdditionalsComponent).
+   */
+  private allAdditionalCostsSnapshot: ICost[] | null = null;
+
   public getCostsCached(type: string): Observable<ICost[]> {
     if (!this.typedCosts$[type]) {
       this.typedCosts$[type] = this.getCosts(type).pipe(shareReplay(1))
     }
     return this.typedCosts$[type]
+  }
+
+  public getAllAdditionalCostsSnapshot(): ICost[] | null {
+    return this.allAdditionalCostsSnapshot;
+  }
+
+  public getAllAdditionalCostsCached(): Observable<ICost[]> {
+    if (!this.allAdditionalCosts$) {
+      this.allAdditionalCosts$ = forkJoin([
+        this.getCostsCached(CostsTypes.FURNITURE),
+        this.getCostsCached(CostsTypes.DRINKS),
+        this.getCostsCached(CostsTypes.ADDITIONAL),
+        this.getCostsCached(CostsTypes.FOOD),
+      ]).pipe(
+        map(([furniture, drinks, additional, food]) => [...furniture, ...drinks, ...additional, ...food]),
+        tap((list) => this.allAdditionalCostsSnapshot = list),
+        shareReplay(1),
+      );
+    }
+    return this.allAdditionalCosts$;
   }
 
   public getCosts(type?: string): Observable<ICost[]> {

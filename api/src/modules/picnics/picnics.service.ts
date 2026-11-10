@@ -428,12 +428,20 @@ export class PicnicsService {
         const isFullyPaid = newPendingAmount === 0;
         const newStatus = isFullyPaid ? BookingStatus.PAID : BookingStatus.PARTIALLY_PAID;
 
-        await this.picnicsModel.findByIdAndUpdate(picnicId, {
-          status: newStatus,
-          paymentId: paymentId,
-          paidAmount: newPaidAmount,
-          pendingAmount: newPendingAmount,
-        });
+        const updated = await this.picnicsModel.findOneAndUpdate(
+          { _id: picnicId, paymentId: { $ne: String(paymentId) } },
+          {
+            status: newStatus,
+            paymentId: String(paymentId),
+            paidAmount: newPaidAmount,
+            pendingAmount: newPendingAmount,
+          },
+        );
+
+        if (!updated) {
+          this.logger.log(`[processPaymentWebhook] Pago ${paymentId} ya procesado para picnic ${picnicId}, se ignora`);
+          return;
+        }
 
         this.logger.log(
           `[processPaymentWebhook] Picnic ${picnicId} actualizado. Pagado: ${newPaidAmount}, Pendiente: ${newPendingAmount}, Estado: ${newStatus}`

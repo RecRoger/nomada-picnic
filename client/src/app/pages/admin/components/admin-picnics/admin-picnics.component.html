@@ -83,6 +83,7 @@
                 <h4><mat-icon>info</mat-icon> Detalles:</h4>
                 <p><strong>Bebidas de cortesia:</strong> {{ element.clientInfo?.giftDrinks.join(', ')}}</p>
                 <p><strong>Nombre del homenajeado:</strong> {{ element.clientInfo?.honoredName}}</p>
+                <p><strong>Mensaje de la pizarra:</strong> {{ element.clientInfo?.boardMessage || 'Sin mensaje' }}</p>
                 <p><strong>Observaciones:</strong> {{ element.clientInfo?.comments}}</p>
 
               </div>

@@ -166,6 +166,10 @@ export class GoogleCalendarService {
       ? additionals.map((add) => `• ${add.quantity}x ${add.cost.name} ${!production ? `: ${add.totalPrice} US$` : ''}`).join('\n')
       : 'Sin adicionales';
 
+    const boardMessageBlock = production
+      ? `\n🖍️ MENSAJE DE LA PIZARRA:\n${clientInfo.boardMessage ? `"${clientInfo.boardMessage}"` : 'Sin mensaje'}\n`
+      : '';
+
     const totalInPesos = (totalAmount * exchangeRate).toLocaleString('es-AR');
     const depositInPesos = (depositAmount * exchangeRate).toLocaleString('es-AR');
     const pendingInPesos = (pendingAmount * exchangeRate).toLocaleString('es-AR');
@@ -188,7 +192,7 @@ ${includedItemsList}
 
 ➕ Adicionales:
 ${additionalsList}
-
+${boardMessageBlock}
 🎁 CORTESÍA:
 ${courtesyAmount} bebidas 🍾 (${clientInfo.giftDrinks.map(item => DRINKS_MAP[item]).join(', ')})
 ${courtesyAmount} Servicios de pan y Untable 🥖

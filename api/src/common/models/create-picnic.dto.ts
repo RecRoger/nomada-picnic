@@ -106,11 +106,12 @@ export class PicnicBookingDto {
   eventDate: string;
 
   @ApiProperty({
-    description: 'Hora pactada para la experiencia',
+    description: 'Hora pactada para la experiencia (HH:mm, hora de Argentina)',
     example: '16:00',
   })
   @IsString()
   @IsNotEmpty()
+  @Matches(/^([01]\d|2[0-3]):[0-5]\d$/, { message: 'eventTime debe tener formato HH:mm' })
   eventTime: string;
 
   @ApiProperty({
@@ -279,11 +280,12 @@ export class UpdatePicnicDto extends PartialType(CreatePicnicDto) {
   eventDate: string;
 
   @ApiProperty({
-    description: 'Hora pactada para la experiencia',
+    description: 'Hora pactada para la experiencia (HH:mm, hora de Argentina)',
     example: '16:00',
   })
   @IsString()
   @IsOptional()
+  @Matches(/^([01]\d|2[0-3]):[0-5]\d$/, { message: 'eventTime debe tener formato HH:mm' })
   eventTime: string;
 
   @ApiProperty({

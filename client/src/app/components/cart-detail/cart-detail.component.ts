@@ -65,7 +65,7 @@ export class CartDetailComponent implements OnInit {
     { time: '17:30', label: 'LATE_EVENING' },
     { time: '18:00', label: 'DOWN' },
     { time: '18:30', label: 'DOWN' },
-    { time: '19:70', label: 'DOWN' },
+    { time: '19:00', label: 'DOWN' },
     { time: '19:30', label: 'DOWN' },
   ]
 

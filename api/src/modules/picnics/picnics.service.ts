@@ -512,17 +512,14 @@ export class PicnicsService {
 
   private async createClientCalendarEvent(picnicData: IPicnicDetail): Promise<void> {
     this.logger.log('[createClientCalendarEvent]', picnicData._id!);
-    const [hours, minutes] = picnicData.eventTime.split(':').map(Number);
-    const startDateTime = new Date(picnicData.eventDate);
-    startDateTime.setHours(hours || 13, minutes || 0, 0, 0);
-
     const description = this.calendarService.createEventDescription(picnicData, this.DOLAR_EXCHANGE)
 
     await this.calendarService.createPicnicEvent({
       summary: `🧺 Picnic Nómada - Picnic de ${picnicData.event.name}`,
       clientEmail: picnicData.clientInfo.email,
       clientName: `${picnicData.clientInfo.name} ${picnicData.clientInfo.lastname}`,
-      startDateTime,
+      eventDate: picnicData.eventDate,
+      eventTime: picnicData.eventTime,
       durationHours: 3,
       latitude: picnicData.place?.location.lat,
       longitude: picnicData.place?.location.lng,
@@ -533,17 +530,15 @@ export class PicnicsService {
 
   private async createProductionCalendarEvent(picnicData: IPicnicDetail): Promise<void> {
     this.logger.log('[createProductionCalendarEvent]', picnicData._id!);
-    const [hours, minutes] = picnicData.eventTime.split(':').map(Number);
-    const startDateTime = new Date(picnicData.eventDate);
-    startDateTime.setHours((hours - 1) || 11, minutes || 0, 0, 0);
-
     const description = this.calendarService.createEventDescription(picnicData, this.DOLAR_EXCHANGE, true)
 
     await this.calendarService.createProductionEvent({
       summary: `[PRODUCCION] - Picnic de ${picnicData.event.name} ${picnicData._id}`,
       clientEmail: picnicData.clientInfo.email,
       clientName: `${picnicData.clientInfo.name} ${picnicData.clientInfo.lastname}`,
-      startDateTime,
+      eventDate: picnicData.eventDate,
+      eventTime: picnicData.eventTime,
+      startOffsetMinutes: -60,
       durationHours: 3,
       latitude: picnicData.place?.location.lat,
       longitude: picnicData.place?.location.lng,

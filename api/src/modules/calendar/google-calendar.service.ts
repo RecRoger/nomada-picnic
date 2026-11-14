@@ -4,6 +4,8 @@ import { ICalendarEvent } from '@shared/interfaces';
 import { IPicnicDetail } from '@shared/interfaces/picnic-detail.interface';
 import { calendar_v3, google } from 'googleapis';
 
+const EVENT_TIME_ZONE = 'America/Argentina/Buenos_Aires';
+
 @Injectable()
 export class GoogleCalendarService {
   private readonly logger = new Logger(GoogleCalendarService.name);
@@ -32,11 +34,38 @@ export class GoogleCalendarService {
     return cleaned;
   }
 
+  /**
+   * Devuelve "YYYY-MM-DDTHH:mm:ss" SIN offset, como hora de reloj en Argentina.
+   * Google Calendar interpreta un dateTime sin offset usando el `timeZone` del
+   * evento; si en cambio se manda un ISO en UTC (con "Z"), Google ignora el
+   * `timeZone` y el evento queda corrido 3 horas. Por eso no se usa
+   * toISOString() sobre la hora real ni setHours() (que depende del TZ del servidor).
+   */
+  private toLocalDateTime(eventDate: Date | string, eventTime: string, offsetMinutes = 0): string {
+    if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(eventTime)) {
+      throw new Error(`eventTime inválido: "${eventTime}" (se esperaba HH:mm)`);
+    }
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: EVENT_TIME_ZONE,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(new Date(eventDate));
+    const part = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+    const [hours, minutes] = eventTime.split(':').map(Number);
+
+    // Date.UTC se usa solo como aritmética de "hora de reloj" (resuelve el
+    // desborde de minutos/días); el resultado nunca se interpreta como UTC.
+    const wallClock = new Date(Date.UTC(part('year'), part('month') - 1, part('day'), hours, minutes + offsetMinutes));
+    return wallClock.toISOString().slice(0, 19);
+  }
+
   async createPicnicEvent(data: ICalendarEvent, production = false): Promise<string | null> {
     try {
       this.logger.log(`[createPicnicEvent] ${data.summary}`);
-      const endDateTime = new Date(data.startDateTime);
-      endDateTime.setHours(endDateTime.getHours() + (data.durationHours || 3));
+      const startOffset = data.startOffsetMinutes ?? 0;
+      const start = this.toLocalDateTime(data.eventDate, data.eventTime, startOffset);
+      const end = this.toLocalDateTime(data.eventDate, data.eventTime, startOffset + (data.durationHours || 3) * 60);
 
       const locationString = data.latitude && data.longitude
         ? `${data.locationName || 'Punto de encuentro'} https://maps.google.com/?q=${data.latitude},${data.longitude}`
@@ -48,12 +77,12 @@ export class GoogleCalendarService {
         description: data.description,
         colorId: !production ? '10' : '6',
         start: {
-          dateTime: data.startDateTime.toISOString(),
-          timeZone: 'America/Argentina/Buenos_Aires',
+          dateTime: start,
+          timeZone: EVENT_TIME_ZONE,
         },
         end: {
-          dateTime: endDateTime.toISOString(),
-          timeZone: 'America/Argentina/Buenos_Aires',
+          dateTime: end,
+          timeZone: EVENT_TIME_ZONE,
         },
         attendees: [
           { email: data.clientEmail, displayName: data.clientName },
@@ -90,8 +119,9 @@ export class GoogleCalendarService {
   async createProductionEvent(data: ICalendarEvent): Promise<string | null> {
     try {
       this.logger.log(`[createProductionEvent] ${data.summary}`);
-      const endDateTime = new Date(data.startDateTime);
-      endDateTime.setHours(endDateTime.getHours() + (data.durationHours || 4));
+      const startOffset = data.startOffsetMinutes ?? 0;
+      const start = this.toLocalDateTime(data.eventDate, data.eventTime, startOffset);
+      const end = this.toLocalDateTime(data.eventDate, data.eventTime, startOffset + (data.durationHours || 4) * 60);
 
       const locationString = data.latitude && data.longitude
         ? `${data.locationName || 'Punto de encuentro'} https://maps.google.com/?q=${data.latitude},${data.longitude}`
@@ -103,12 +133,12 @@ export class GoogleCalendarService {
         description: data.description,
         colorId: '6',
         start: {
-          dateTime: data.startDateTime.toISOString(),
-          timeZone: 'America/Argentina/Buenos_Aires',
+          dateTime: start,
+          timeZone: EVENT_TIME_ZONE,
         },
         end: {
-          dateTime: endDateTime.toISOString(),
-          timeZone: 'America/Argentina/Buenos_Aires',
+          dateTime: end,
+          timeZone: EVENT_TIME_ZONE,
         },
         attendees: [
           ...PRODUCTION_EMAIL,
@@ -170,6 +200,10 @@ export class GoogleCalendarService {
       ? `\n🖍️ MENSAJE DE LA PIZARRA:\n${clientInfo.boardMessage ? `"${clientInfo.boardMessage}"` : 'Sin mensaje'}\n`
       : '';
 
+    const observationsBlock = production
+      ? `\n🖍️ Observaciones:\n${clientInfo.comments ? `${clientInfo.comments}` : 'Sin observaciones'}\n`
+      : '';
+
     const totalInPesos = (totalAmount * exchangeRate).toLocaleString('es-AR');
     const depositInPesos = (depositAmount * exchangeRate).toLocaleString('es-AR');
     const pendingInPesos = (pendingAmount * exchangeRate).toLocaleString('es-AR');
@@ -197,6 +231,7 @@ ${boardMessageBlock}
 ${courtesyAmount} bebidas 🍾 (${clientInfo.giftDrinks.map(item => DRINKS_MAP[item]).join(', ')})
 ${courtesyAmount} Servicios de pan y Untable 🥖
 ${maxGuest} Medialunas de cortesía 🥐
+${observationsBlock}
 
 💲 PRECIOS: 
 Costo básico picnic: ${pkg.name} (${picnic.basePrice} US$)
